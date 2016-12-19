@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util" xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd  
+            http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd              
+            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+            http://www.springframework.org/schema/cache   
+            http://www.springframework.org/schema/cache/spring-cache.xsd
+            ">
+
+    <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager"
+                           ignore-default-model-on-redirect="true"
+    >
+    </mvc:annotation-driven>
+
+    <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <property name="favorPathExtension" value="false"/>
+        <property name="favorParameter" value="false"/>
+        <property name="ignoreAcceptHeader" value="false"/>
+        <property name="mediaTypes">
+            <value>
+                atom=application/atom+xml
+                html=text/html
+                json=application/json
+                *=*/*
+            </value>
+        </property>
+    </bean>
+    <!--COOKIE登录 -->
+    <context:component-scan base-package="com.tongna.adminstore.controller"/>
+
+
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+          p:defaultEncoding="utf-8" p:maxUploadSize="100000000"/>
+
+    <bean
+            class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+    </bean>
+
+
+    <bean
+            class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <ref bean="jacksonMessageConverter"/>    <!-- 注册JSON Converter -->
+            </list>
+        </property>
+    </bean>
+    <bean id="jacksonMessageConverter"
+          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+
+
+    <bean id="shiro" class="com.jagregory.shiro.freemarker.ShiroTags"></bean>
+    <bean id="menuOpenDirective" class="com.ada.admin.freemaker.MenuOpenDirective"></bean>
+    <bean id="menusDirective" class="com.ada.admin.freemaker.MenusDirective"></bean>
+    <bean id="menuchildsDirective" class="com.ada.admin.freemaker.MenuChildsDirective"></bean>
+
+    <!-- freemarker的配置 -->
+    <bean id="freemarkerConfigurer"
+          class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/WEB-INF/ftl/"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="tag_syntax">square_bracket</prop>
+                <prop key="template_update_delay">5</prop>
+                <prop key="defaultEncoding">UTF-8</prop>
+                <prop key="url_escaping_charset">UTF-8</prop>
+                <prop key="locale">zh_CN</prop>
+                <prop key="boolean_format">true,false</prop>
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+                <prop key="date_format">yyyy-MM-dd</prop>
+                <prop key="time_format">HH:mm:ss</prop>
+                <prop key="number_format">0.######</prop>
+                <prop key="whitespace_stripping">true</prop>
+            </props>
+        </property>
+        <property name="freemarkerVariables">
+            <map>
+                <entry key="shiro" value-ref="shiro"/>
+                <entry key="menuopentag" value-ref="menuOpenDirective"/>
+                <entry key="menustag" value-ref="menusDirective"/>
+                <entry key="menuchilds" value-ref="menuchildsDirective"/>
+                <entry key="siteurl" value="#{servletContext.contextPath}/"/>
+                <entry key="sitename" value="数据中心"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="viewClass"
+                  value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
+        <property name="suffix" value=".html"/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
+        <property name="exposeRequestAttributes" value="false"/>
+        <property name="exposeSessionAttributes" value="false"/>
+        <property name="exposeSpringMacroHelpers" value="true"/>
+    </bean>
+    <!-- 将Controller抛出的异常转到特定View, 保持SiteMesh的装饰效果 -->
+    <!-- <prop key="java.lang.Throwable">error/500</prop> -->
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="org.apache.shiro.authz.UnauthorizedException">admin/error/403</prop>
+            </props>
+        </property>
+    </bean>
+    <import resource="applicationContext.xml"/>
+
+    <bean name="openSessionInViewInterceptor"
+          class="org.springframework.orm.hibernate5.support.OpenSessionInViewInterceptor">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory"/>
+        </property>
+    </bean>
+
+
+    <mvc:interceptors>
+        <ref bean="openSessionInViewInterceptor"/>
+    </mvc:interceptors>
+
+
+    <import resource="context-shiro.xml"/>
+
+    <mvc:view-controller path="demo" view-name="/theme/default/login"/>
+
+</beans>

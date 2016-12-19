@@ -1,0 +1,53 @@
+[#include "/admin/common/layout_add.html"]
+[@layout menus="1,2,53" title="添加"/]
+[#macro form]
+<form role="form" method="post" class="form-horizontal"
+	  action="${siteurl}admin/userloginlog/model_update.htm">
+	<input type="hidden" name="id" value="${model.id}" />
+	<input type="hidden" name="pageNumber" value="${page.pageNumber}" />
+	<div class="form-group">
+		<label for="form-field-1"
+			   class="col-sm-3 control-label no-padding-right"> 姓名</label>
+
+		<div class="col-sm-9">
+			<input required="required"  type="text" value="${(model.name)!''}" name="name" class="col-xs-10 col-sm-10"
+				   placeholder=" 姓名" id="form-field-1">
+		</div>
+	</div>
+	<div class="clearfix form-actions">
+		<div class="col-md-offset-3 col-md-9">
+			<button type="submit" class="btn btn-info">
+				<i class="ace-icon fa fa-check bigger-110"></i> 保存
+			</button>
+
+			&nbsp; &nbsp; &nbsp;
+			<button type="reset" class="btn">
+				<i class="ace-icon fa fa-undo bigger-110"></i> 重置
+			</button>
+		</div>
+	</div>
+
+	<div class="hr hr-24"></div>
+
+</form>
+[/#macro]
+
+[#macro breadcrumb]
+<ul class="breadcrumb">
+	<li>
+		<i class="ace-icon fa fa-home home-icon"></i> <a href="#">首页</a>
+	</li>
+	<li>
+         <a href="${siteurl}admin/userloginlog/view_list.htm">列表</a>
+    </li>
+	<li class="active">更新</li>
+</ul>
+[/#macro]
+
+[#macro scripts]
+
+[/#macro]
+[#macro links]
+<!--脚步及其css 导入路径  -->
+
+[/#macro]

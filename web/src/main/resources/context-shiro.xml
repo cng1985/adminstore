@@ -1,0 +1,64 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd"
+	default-lazy-init="true">
+
+	<description>Shiro安全配置</description>
+
+	<bean id="userRealm" class="com.ada.shiro.realm.UserRealm"></bean>
+
+	<!-- Shiro的主要业务层对象基于web的应用程序 -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="userRealm" />
+		<property name="cacheManager" ref="shiroEhcacheManager" />
+	</bean>
+
+	<bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManagerConfigFile" value="classpath:cache/ehcache-shiro.xml" />
+	</bean>
+
+	<!-- Shiro Filter -->
+	<bean id="myCaptchaFilter" class="com.ada.shiro.filter.FormAuthenticationCaptchaFilter">
+		<property name="loginUrl" value="/login.htm" />
+	</bean>
+	<bean id="rolesAuthorizationFilter" class="com.ada.shiro.filter.RolesAuthorizationFilter">
+	</bean>
+	<!-- Shiro Filter -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="/login.htm" />
+		<property name="successUrl" value="/loginok.htm" />
+		<property name="filters">
+			<map>
+				<entry key="authc" value-ref="myCaptchaFilter" />
+				<entry key="anyRoles" value-ref="rolesAuthorizationFilter" />
+			</map>
+		</property>
+		<property name="filterChainDefinitions">
+			<value>
+				/static/** = anon
+				/login.htm = authc
+				/admin/**=user,anyRoles[admin,cityadmin,sadmin,superadmin]
+				/home/** =user
+			</value>
+		</property>
+	</bean>
+
+
+	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+
+	<!-- AOP式方法级权限检查 -->
+	<bean
+		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+		depends-on="lifecycleBeanPostProcessor">
+		<property name="proxyTargetClass" value="true" />
+	</bean>
+	<bean
+		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		<property name="securityManager" ref="securityManager" />
+	</bean>
+</beans>

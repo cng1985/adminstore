@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>菜单管理</title>
+		[#include "/admin/common/commonurl.html"]
+		<style type="text/css">
+			.titleinfo {
+				width: 60px;
+			}
+		</style>
+	</head>
+
+	<body class="no-skin">
+		<div id="navbar" class="navbar navbar-default">
+			<script type="text/javascript">
+				try {
+					ace.settings.check('navbar', 'fixed')
+				} catch (e) {
+				}
+			</script>
+
+			[#include "/admin/common/navbar.html"]
+
+			<!-- /.navbar-container -->
+		</div>
+
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try {
+					ace.settings.check('main-container', 'fixed')
+				} catch (e) {
+				}
+			</script>
+
+			<div id="sidebar" class="sidebar                  responsive">
+				<script type="text/javascript">
+					try {
+						ace.settings.check('sidebar', 'fixed')
+					} catch (e) {
+					}
+				</script>
+				[#include "/admin/common/shortcuts.html"]
+				<!-- /.sidebar-shortcuts -->
+
+				<!-- .nav-list -->
+				[#include "/admin/common/commonmenu.html"]
+				<ul class="nav nav-list">
+					[@menustag id=1] [#list list as item]
+					[@menu item "1,81"] [/@menu] [/#list] [/@menustag]
+				</ul>
+				<!-- /.nav-list -->
+
+				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+					<i class="ace-icon fa fa-angle-double-left"
+					data-icon1="ace-icon fa fa-angle-double-left"
+					data-icon2="ace-icon fa fa-angle-double-right"></i>
+				</div>
+
+				<script type="text/javascript">
+					try {
+						ace.settings.check('sidebar', 'collapsed')
+					} catch (e) {
+					}
+				</script>
+			</div>
+
+			<div class="main-content">
+				<div class="breadcrumbs" id="breadcrumbs">
+					<script type="text/javascript">
+						try {
+							ace.settings.check('breadcrumbs', 'fixed')
+						} catch (e) {
+						}
+					</script>
+
+					<ul class="breadcrumb">
+						<li>
+							<i class="ace-icon fa fa-home home-icon"></i><a href="#">首页</a>
+						</li>
+
+						<li class="active">
+							菜单管理
+						</li>
+					</ul>
+					<!-- /.breadcrumb -->
+
+					
+					<!-- /.nav-search -->
+				</div>
+
+				<div class="page-content">
+
+					[#include "/admin/common/settings.html"]
+
+					<!-- /.page-header -->
+					<div class="row">
+
+						<div class="col-xs-12">
+							<ul class="breadcrumb">
+								[#if tops??]
+								[#list tops as item]
+								[#if item.id==id]
+								<li>
+									${item.name}
+								</li>
+								[#else]
+								<li>
+									<a  href="${siteurl}admin/menu/list.htm?id=${item.id}">${item.name}</a>
+									[/#if]
+								</li>
+								[/#list]
+								[/#if]
+							</ul>
+						</div>
+
+						<div class="col-xs-12">
+
+							<div class="widget-box">
+
+								<form class="form-inline" role="form"
+								action="${siteurl}admin/menu/model_add.htm" method="post">
+									<input type="hidden" name="parent.id" value="${id}">
+									<div class="widget-body">
+										<div class="widget-main">
+											<div class="row">
+												<div class="col-xs-12 col-sm-12 ">
+													<div class="form-group">
+														<label for="control-label no-padding-right">分类</label>
+														<input type="text" name="name" placeholder="分类 "
+														class="form-control search-query">
+
+													</div>
+
+													<div class ="form-group" >
+
+														<label for="control-label no-padding-right">url</label>
+														<input class="form-control"
+														type="text" placeholder="url" name="path" id="path">
+													</div>
+													<div class ="form-group" >
+
+														<label for="control-label no-padding-right">排序号</label>
+														<input class="form-control"
+														type="number" placeholder="排序号" name="sortnum" id="path">
+													</div>
+													<div class ="form-group">
+
+														<label for="control-label no-padding-right"
+														for="form-field-11 control-label no-padding-right"
+														>图标</label>
+														<select class="form-control" name="icon">
+															<option value="menu-icon fa fa-angle-right ">默认</option>
+															<option value="menu-icon fa fa-music">music</option>
+															<option value="menu-icon fa fa-desktop">desktop</option>
+															<option value="menu-icon fa fa-list">list</option>
+															<option value="menu-icon fa fa-picture-o">picture</option>
+															<option value="menu-icon fa fa-list-alt">fa-list-alt</option>
+															<option value="menu-icon fa fa-calendar">fa-calendar</option>
+															<option value="menu-icon fa fa fa-tag">fa fa-tag</option>
+															<option value="menu-icon fa fa fa-tachometer">fa-tachometer</option>
+															<option value="menu-icon fa fa fa-home">fa-home</option>
+														</select>
+
+														<span>
+															<button class="btn btn-purple btn-sm" type="submit">
+																添加 <i
+																class="ace-icon fa fa-plus icon-on-right bigger-110"></i>
+															</button> </span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+						<div class="col-xs-12">
+							<div class="table-responsive">
+								<table class="table table-striped table-bordered table-hover">
+									<tr>
+										<td class="col-xs-2">菜单标题</td>
+										<td class="col-xs-1 text-center">图标</td>
+										<td class="col-xs-7 text-center">url</td>
+										<td class="col-xs-2 text-center">操作</td>
+									</tr>
+									[#list list as item]
+									<tr id="trr${item.id}">
+										<td>${item.name!""}</td>
+										<td class="text-center"><i class="${item.icon!''}"></i></td>
+										<td class="col-xs-2">${item.path!""}</td>
+										<td class="text-center">
+										<div
+										class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+
+											<a href="${siteurl}admin/menu/list.htm?id=${item.id}">
+											<button class="btn btn-xs btn-info">
+												<i class="icon-edit bigger-120">查看子菜单</i>
+											</button> </a>
+											
+											<a  class="btn btn-xs btn-danger"
+											href="${siteurl}admin/menu/view_update.htm?id=${item.id}">
+												<i class="icon-trash bigger-120">更新</i>
+											 </a>
+											<a  onclick="return confirm('删除后无法恢复,确定要删除吗')"
+											href="${siteurl}admin/menu/model_delete.htm?typeid=${item.id}">
+											<button class="btn btn-xs btn-danger">
+												<i class="icon-trash bigger-120">删除</i>
+											</button> </a>
+										</div></td>
+									</tr>
+									[/#list]
+								</table>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<!-- /.main-content -->
+
+			[#include "/admin/common/footer.html"]
+
+		</div>
+		<!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		[#include "/admin/common/scripts.html"]
+
+		<!-- inline scripts related to this page -->
+	</body>
+</html>

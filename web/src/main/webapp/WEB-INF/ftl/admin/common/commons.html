@@ -1,0 +1,153 @@
+[#macro user_panel]
+<!-- 左边导航栏的用户信息 -->
+<div class="user-panel hidden">
+    <div class="pull-left image">
+        <img src="${siteurl}dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+    </div>
+    <div class="pull-left info">
+        <p>${(user.name)!""}</p>
+        <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
+    </div>
+</div>
+[/#macro]
+
+[#macro sidebar_form]
+<!-- 左边导航栏的搜索功能 -->
+<form action="#" method="get" class="sidebar-form hidden">
+    <div class="input-group">
+        <input type="text" name="q" class="form-control" placeholder="Search...">
+              <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+    </div>
+</form>
+[/#macro]
+
+
+
+[#macro menu item ids]
+[#if item.menus??]
+[@shiro.hasPermission name=item.permission]
+<li class="treeview [@menuopentag ids=ids id=item.id][/@menuopentag]">
+    <a href="#">
+        <i class="${item.icon!'fa fa-dashboard'}"></i> <span>${item.name!""}</span>
+                                <span class="pull-right-container">
+                                  <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+    </a>
+    <ul class="treeview-menu">
+        [#list item.childrens as item]
+        [@menu item ids]
+        [/@menu]
+        [/#list]
+    </ul>
+</li>
+[/@shiro.hasPermission]
+[#else]
+[@shiro.hasPermission name=item.permission]
+<li class="[@menuopentag ids=ids id=item.id][/@menuopentag]">
+    <a href="${siteurl}${item.path!'#'}">
+        <i class="${item.icon!'fa fa-dashboard'}"></i> <span>${item.name!""}</span>
+    </a>
+</li>
+[/@shiro.hasPermission]
+[/#if]
+[/#macro]
+
+[#macro pagersimple page  url]
+<div class="box-footer clearfix">
+    <ul class="pagination pagination-sm no-margin pull-right">
+
+
+        [#if page.pageNumber > 1]
+        <li><a href="${url}&pageNumber=${page.pageNumber-1}">«</a></li>
+        [#else]
+
+        [/#if]
+
+        [#list page.firstNo..page.endNo as item]
+        [#if page.pageNumber?number==item]
+        <li class="active"><a href="${url}">${item}</a></li>
+        [#else]
+        <li ><a href="${url}&pageNumber=${item}">${item}</a></li>
+        [/#if]
+        [/#list]
+
+        [#if page.pageNumber lt page.totalPages]
+        <li><a href="${url}&pageNumber=${page.pageNumber+1}">»</a></li>
+        [#else]
+
+        [/#if]
+
+
+    </ul>
+</div>
+[/#macro]
+
+
+[#macro  searchitem name value]
+[#if page.searchProperty??]
+<li val="${name}" [#if page.searchProperty==name]class="active"[/#if]><a href="#">${value}</a></li>
+[#else]
+<li val="${name}" ><a href="#">${value}</a></li>
+[/#if]
+[/#macro]
+
+
+[#macro pager page ]
+
+<input type="hidden" id="searchProperty" name="searchProperty" value="${(page.searchProperty)!''}" />
+<input type="hidden" id="orderProperty" name="orderProperty" value="${(page.orderProperty)!}" />
+<input type="hidden" id="orderDirection" name="orderDirection" value="${(page.orderDirection)!}" />
+<div class="box-footer clearfix">
+    [#if page.totalPages > 1]
+    <span class="pageSkip pull-right pagination " style="margin-left: 20px;margin-top: 25px;">
+			<span >共${page.totalPages}页,每页
+
+			<input class="input-mini spinner-inpu" id="pageSize" name="pageSize" value="${page.pageSize}" />
+			到第 <input class="input-mini spinner-inpu" id="pageNumber" name="pageNumber" value="${page.pageNumber}" maxlength="9" onpaste="return false;" />页
+			</span>
+			<button class="btn btn-xs btn-primary" type="submit">
+			<i class="ace-icon glyphicon glyphicon-search"></i>
+			</button>
+		</span>
+    <ul class="pagination pull-right">
+        [#if page.pageNumber==1]
+        <li class="firstPage">&nbsp;</li>
+        [#else]
+        <li class="firstPage"><a class="firstPage" href="javascript: $.pageSkip(1);">首页</a></li>
+        [/#if]
+        [#if page.pageNumber > 2]
+        <li>	<a class="previousPage" href="javascript: $.pageSkip(${page.pageNumber-1});">
+            <i class="ace-icon fa fa-angle-double-left"></i>
+        </a>
+        </li>
+        [#else]
+        [/#if]
+        [#list page.firstNo..page.endNo as  segmentPageNumber]
+        [#if segmentPageNumber_index == 0 && segmentPageNumber > 2]
+
+        [/#if]
+        [#if segmentPageNumber != page.pageNumber]
+        <li><a href="javascript: $.pageSkip(${segmentPageNumber});">${segmentPageNumber}</a></li>
+        [#else]
+        <li class="active"><span class="currentPage">${segmentPageNumber}</span></li>
+        [/#if]
+        [/#list]
+        [#if page.pageNumber lt page.totalPages]
+        <li><a class="nextPage" href="javascript: $.pageSkip(${page.pageNumber+1});">
+            <i class="ace-icon fa fa-angle-double-right"></i>
+        </a></li>
+        [#else]
+        [/#if]
+        [#if page.pageNumber==page.totalPages]
+        <span class="lastPage">&nbsp;</span>
+        [#else]
+        <li><a class="lastPage" href="javascript: $.pageSkip(${page.totalPages});">最后一页</a></li>
+        [/#if]
+    </ul>
+
+    [/#if]
+</div>
+[/#macro]
