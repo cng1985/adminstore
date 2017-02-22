@@ -44,14 +44,14 @@ public class UserRoleAction {
 		return "/admin/userrole/list";
 	}
 
-	@RequiresPermissions("role:add")
+	@RequiresPermissions("role:list")
 	@RequestMapping("/admin/userrole/view_add")
 	public String add(ModelMap model) {
 		model.addAttribute("menus", menuService.findChild(1));
 		return "/admin/userrole/add";
 	}
 
-	@RequiresPermissions("role:update")
+	@RequiresPermissions("role:list")
 	@RequestMapping("/admin/userrole/view_edit")
 	public String edit(Pageable pageable, Long id, HttpServletRequest request, ModelMap model) {
 		model.addAttribute("menus", menuService.findChild(1));
@@ -60,14 +60,14 @@ public class UserRoleAction {
 		return "/admin/userrole/edit";
 	}
 
-	@RequiresPermissions("role:view")
+	@RequiresPermissions("role:list")
 	@RequestMapping("/admin/userrole/view_view")
 	public String view(Long id,HttpServletRequest request, ModelMap model) {
 		model.addAttribute("model", manager.findById(id));
 		return "/admin/userrole/view";
 	}
 
-	@RequiresPermissions("role:add")
+	@RequiresPermissions("role:list")
 	@RequestMapping("/admin/userrole/model_save")
 	public String save(UserRole bean, HttpServletRequest request, ModelMap model) {
 	
@@ -83,7 +83,7 @@ public class UserRoleAction {
 		return view;
 	}
 
-	@RequiresPermissions("role:update")
+	@RequiresPermissions("role:list")
 	@RequestMapping("/admin/userrole/model_update")
 	public String update(Pageable pageable, UserRole bean, HttpServletRequest request, ModelMap model) {
 		
@@ -100,7 +100,7 @@ public class UserRoleAction {
 		return view;
 	}
 
-	@RequiresPermissions("role:delete")
+	@RequiresPermissions("role:list")
 	@RequestMapping("/admin/userrole/model_delete")
 	public String delete(Pageable pageable, Long id, HttpServletRequest request, ModelMap model) {
 			 
@@ -113,7 +113,7 @@ public class UserRoleAction {
 		return list(pageable, request, model);
 	}
 
-	@RequiresPermissions("role:delete")
+	@RequiresPermissions("role:list")
 	@RequestMapping("/admin/userrole/model_deletes")
 	public String deletes(Pageable pageable, Long[] ids, HttpServletRequest request, ModelMap model) {
 			 

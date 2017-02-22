@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>功能管理</title>
+	<title>角色管理</title>
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<!-- Bootstrap 3.3.6 -->
@@ -50,7 +50,7 @@
 				<li class="header">主面板</li>
 				[@menustag id=1]
 					[#list list as item]
-						[@menu item "1,2,5"]
+						[@menu item "1,2,4"]
 						[/@menu]
 					[/#list]
 				[/@menustag]
@@ -66,8 +66,8 @@
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 			<h1>
-				功能列表
-				<small>管理你的功能</small>
+				角色管理
+				<small>管理你的角色</small>
 			</h1>
 		</section>
 		<!-- Main content -->
@@ -76,75 +76,61 @@
 			<!-- Default box -->
 			<form id="listForm" action="${siteurl}admin/userrole/view_list.htm" method="post">
 				<div class="row">
-				<div class="col-xs-12">
-					<div class="box box-solid">
-						<form action="#" method="post" >
-							<div class="input-group">
-								<input name="username" class="form-control" placeholder="用户名搜索..." type="text">
-                                  <span class="input-group-btn">
-                                    <button type="submit" name="search"  class="btn btn-flat"><i class="fa fa-search"></i>
-                                    </button>
-                                  </span>
+					<div class="col-xs-12">
+						<div class="box">
+							<div class="box-header">
+								<h3 class="box-title">功能</h3>
 							</div>
-						</form>
-					</div>
-				</div>
-				<div class="col-xs-12">
-					<div class="box">
-						<div class="box-header">
-							<h3 class="box-title">功能</h3>
+							<div class="box-body">
+								<a class="btn btn-app" href="${siteurl}admin/userrole/view_add.htm">
+									<i class="fa  fa-plus"></i> 添加
+								</a>
+							</div>
+							<!-- /.box-body -->
 						</div>
-						<div class="box-body">
-							<a class="btn btn-app" href="${siteurl}admin/userrole/view_add.htm">
-								<i class="fa  fa-plus"></i> 添加
-							</a>
-						</div>
-						<!-- /.box-body -->
 					</div>
-				</div>
-				<div class="col-xs-12">
-					<div class="box box-solid">
-						<div class="box-body table-responsive no-padding">
-							<table class="table table-bordered table-hover dataTable">
-								<thead>
-								<tr role="row">
-									<td class="col-xs-2">角色名</td>
-									<td class="col-xs-1 text-center">角色别名</td>
-									<td class="col-xs-6 text-center">描述</td>
-									<td class="col-xs-2 text-center">更新时间</td>
-									<td class="col-xs-1 text-center">操作</td>
-								</tr>
-								</thead>
-								<tbody>
-								[#list list as item]
-								<tr id="trr${item.id}">
-									<td>${item.name!""}</td>
-									<td class="text-center">${item.alias!""}</td>
-									<td class="">${item.description!""}</td>
-									<td class="text-center">${item.lastDate?string('yyyy-MM-dd HH:mm:ss')}</td>
-									<td class="text-center">
-										<div style="display: inline-block;">
-											<a  class="menubutton btn btn-xs btn-danger"
-												href="${siteurl}admin/userrole/view_edit.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
-												<i class="icon-trash bigger-120">更新</i>
-											</a>
-											<a  class="menubutton btn btn-xs btn-danger"  onclick="return confirm('删除后无法恢复,确定要删除吗')"
-												href="${siteurl}admin/userrole/model_delete.htm?id=${item.id}">
-												<i class="icon-trash bigger-120">删除</i>
-											</a>
-										</div></td>
-								</tr>
-								[/#list]
-								</tbody>
-							</table>
+					<div class="col-xs-12">
+						<div class="box box-solid">
+							<div class="box-body table-responsive no-padding">
+								<table class="table table-bordered table-hover dataTable">
+									<thead>
+									<tr role="row">
+										<td class="col-xs-2">角色名</td>
+										<td class="col-xs-1 text-center">角色别名</td>
+										<td class="col-xs-6 text-center">描述</td>
+										<td class="col-xs-2 text-center">更新时间</td>
+										<td class="col-xs-1 text-center">操作</td>
+									</tr>
+									</thead>
+									<tbody>
+									[#list list as item]
+									<tr id="trr${item.id}">
+										<td>${item.name!""}</td>
+										<td class="text-center">${item.alias!""}</td>
+										<td class="">${item.description!""}</td>
+										<td class="text-center">${item.lastDate?string('yyyy-MM-dd HH:mm:ss')}</td>
+										<td class="text-center">
+											<div style="display: inline-block;">
+												<a  class="menubutton btn btn-xs btn-danger"
+													href="${siteurl}admin/userrole/view_edit.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
+													<i class="icon-trash bigger-120">更新</i>
+												</a>
+												<a  class="menubutton btn btn-xs btn-danger"  onclick="return confirm('删除后无法恢复,确定要删除吗')"
+													href="${siteurl}admin/userrole/model_delete.htm?id=${item.id}">
+													<i class="icon-trash bigger-120">删除</i>
+												</a>
+											</div></td>
+									</tr>
+									[/#list]
+									</tbody>
+								</table>
+							</div>
+							[@pager page=page   /]
 						</div>
-						[@pager page=page   /]
 					</div>
-				</div>
 			</div>
 			</form>
 			<!-- /.box -->
-
 		</section>
 		<!-- /.content -->
 	</div>

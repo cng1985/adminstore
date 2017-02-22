@@ -44,7 +44,7 @@ public class MenuAction {
 		return "admin/menu/index";
 	}
 
-	@RequiresPermissions("menu:add")
+	@RequiresPermissions("menu:list")
 	@RequestMapping(value = "menu/view_add", method = RequestMethod.GET)
 	public String view_add(HttpServletRequest request, int pid, HttpServletResponse response, Model model) {
 		Menu item = menuService.findById(pid);
@@ -52,7 +52,7 @@ public class MenuAction {
 		return "admin/menu/view_add";
 	}
 
-	@RequiresPermissions("menu:add")
+	@RequiresPermissions("menu:list")
 	@RequestMapping(value = "menu/model_add", method = RequestMethod.POST)
 	public String model_add(Menu menu, HttpServletRequest request, HttpServletResponse response, Model model) {
 
@@ -66,14 +66,14 @@ public class MenuAction {
 		}
 	}
 
-	@RequiresPermissions("menu:update")
+	@RequiresPermissions("menu:list")
 	@RequestMapping(value = "menu/view_update", method = RequestMethod.GET)
 	public String view_update(Integer id, HttpServletRequest request, HttpServletResponse response, Model model) {
 		model.addAttribute("model", menuService.findById(id));
 		return "admin/menu/view_update";
 	}
 
-	@RequiresPermissions("menu:update")
+	@RequiresPermissions("menu:list")
 	@RequestMapping(value = "menu/model_update")
 	public String model_update(Menu menu, HttpServletRequest request, HttpServletResponse response, Model model) {
 
@@ -89,7 +89,7 @@ public class MenuAction {
 		return "redirect:/admin/menu/list.htm?id=" + id;
 	}
 
-	@RequiresPermissions("menu:delete")
+	@RequiresPermissions("menu:list")
 	@RequestMapping(value = "menu/model_delete", method = RequestMethod.GET)
 	public String model_delete(int typeid, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Menu menu = menuService.findById(typeid);
