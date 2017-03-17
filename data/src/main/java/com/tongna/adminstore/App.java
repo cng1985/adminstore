@@ -4,6 +4,7 @@ import com.ada.imake.ChainMake;
 import com.ada.imake.template.hibernate.TemplateHibernateDir;
 import com.ada.imake.templates.ace.TemplateAceDir;
 import com.ada.imake.templates.adminlte.TemplateAdminLTE;
+import com.tongna.adminstore.data.entity.Member;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -26,10 +27,10 @@ public class App
         make.setView(view);
 
         List<Class<?>> cs=new ArrayList<Class<?>>();
-        cs.add(com.ada.site.entity.App.class);
+        cs.add(Member.class);
 
-        make.setDao(false);
-        make.setService(false);
+        make.setDao(true);
+        make.setService(true);
         make.setView(true);
         make.setAction(true);
         make.makes(cs);
