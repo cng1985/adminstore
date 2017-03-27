@@ -36,7 +36,7 @@ public class App
         make.setView(true);
         make.setAction(true);
         make.makes(cs);
-        System.out.println("ok");
+        System.out.println("okx");
 
     }
 
