@@ -1,9 +1,11 @@
 package com.tongna.adminstore;
 
+import com.ada.area.entity.Area;
 import com.ada.imake.ChainMake;
 import com.ada.imake.template.hibernate.TemplateHibernateDir;
 import com.ada.imake.templates.ace.TemplateAceDir;
 import com.ada.imake.templates.adminlte.TemplateAdminLTE;
+import com.ada.user.entity.UserAccount;
 import com.tongna.adminstore.data.entity.Member;
 
 import java.io.File;
@@ -27,10 +29,10 @@ public class App
         make.setView(view);
 
         List<Class<?>> cs=new ArrayList<Class<?>>();
-        cs.add(Member.class);
+        cs.add(UserAccount.class);
 
-        make.setDao(true);
-        make.setService(true);
+        make.setDao(false);
+        make.setService(false);
         make.setView(true);
         make.setAction(true);
         make.makes(cs);
