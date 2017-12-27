@@ -17,3 +17,7 @@
 4. 修改数据库连接。打开`/src/main/resources/jdbc.propertis`文件，根据实际情况修改`jdbc.url`、`jdbc.username`、`jdbc.password`的值。
 5. 运行程序。在eclipse中，右键点击项目名，选择`Run as` - `Maven build...`，`Goals`填入`tomcat6:run`或`tomcat7:run`，然后点击`Run`。
 6. 访问系统。前台地址：[http://localhost:8080/web](http://localhost:8080/)，手机站地址：[http://127.0.0.1:8080/](http://127.0.0.1:8080/)；后台地址：[http://localhost:8080/cmscp/index.do](http://localhost:8080/cmscp/index.do)，用户名：admin，密码：空。
+
+## 界面效果
+
+![菜单管理功能](http://image.yichisancun.com/7075c8f053f0b2aa0f06ad08b750029d "菜单管理功能")
