@@ -50,7 +50,7 @@
 				<li class="header">主面板</li>
 				[@menustag id=1]
 					[#list list as item]
-						[@menu item "1,100,111"]
+						[@menu item "1,22,39"]
 						[/@menu]
 					[/#list]
 				[/@menustag]
@@ -67,7 +67,7 @@
 		<section class="content-header">
 			<h1>
 				信息列表
-				<small>管理你的数据</small>
+				<small></small>
 			</h1>
 		</section>
 		<!-- Main content -->
@@ -77,19 +77,17 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<div class=" box box-body">
-							<div class="col-xs-12 ">
-								<a class="btn btn-primary" href="${siteurl}admin/useraccount/view_add.htm">
-									<i class="fa  fa-plus"></i> 添加
-								</a>
+							<div class="col-xs-2 ">
 							</div>
-							<div class="col-xs-12 box-body" style="padding-left: 0;">
-								<div class="col-xs-3">
-									<input name="name" maxlength="20" class="form-control" placeholder="名称搜索..." type="text">
-								</div>
-								<div class="col-xs-1">
-									<button type="submit" name="search"  class="btn btn-success"><i class="fa fa-search"></i> 搜索</button>
+							<div class="col-xs-10 " style="padding-left: 0;">
+								<button type="submit" name="search" class="btn btn-success pull-right">
+									<i class="fa fa-search"></i> 搜索
+								</button>
+								<div class="col-xs-4 pull-right">
+									<input name="name" value="${(so.name)!''}" maxlength="20" class="form-control" placeholder="名称搜索..." type="text">
 								</div>
 							</div>
+
 						</div>
 					</div>
 					<div class="col-xs-12">
@@ -100,29 +98,31 @@
 									<tr role="row">
 										<td class="col-xs-2">用户名</td>
 										<td class="col-xs-1 text-center">姓名</td>
-										<td class="col-xs-6 text-center">url</td>
-										<td class="col-xs-2 text-center">更新时间</td>
-										<td class="col-xs-1 text-center">操作</td>
+										<td class="col-xs-2 text-center">账号类型</td>
+										<td class="col-xs-3 text-center">登陆次数</td>
+										<td class="col-xs-2 text-center">最后登陆时间</td>
+										<td class="col-xs-2 text-center">操作</td>
 									</tr>
 									</thead>
 									<tbody>
 									[#list list as item]
 									<tr id="trr${item.id}">
 										<td>${item.username!""}</td>
-										<td class="text-center">${item.name!""}</td>
-										<td class="">${item.path!""}</td>
-										<td class="text-center">${item.lastDate?string('yyyy-MM-dd HH:mm:ss')}</td>
+										<td class="text-center">${(item.user.name)!""}</td>
+										<td class="text-center">${item.accountType!""}</td>
+										<td class="text-center">${item.loginSize!""}</td>
+										<td class="text-center">${(item.lastDate?string('yyyy-MM-dd HH:mm:ss'))!''}</td>
 										<td class="text-center">
 											<div style="display: inline-block;">
 												[@shiro.hasPermission name="useraccount:update"]
 												<a  class="menubutton btn btn-sm btn-success"
 													href="${siteurl}admin/useraccount/view_edit.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
-													<i class="fa fa-edit">更新</i>
+													<i class="fa fa-edit">重置密码</i>
 												</a>
 												[/@shiro.hasPermission]
 												[@shiro.hasPermission name="useraccount:delete"]
 												<a  class="menubutton btn btn-sm btn-danger"  onclick="return confirm('删除后无法恢复,确定要删除吗')"
-													href="${siteurl}admin/useraccount/model_delete.htm?id=${item.id}">
+													href="${siteurl}admin/useraccount/model_delete.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
 													<i class="fa fa-trash">删除</i>
 												</a>
 												[/@shiro.hasPermission]
@@ -169,6 +169,15 @@
 <!-- AdminLTE for demo purposes -->
 <script src="${siteurl}dist/js/demo.js"></script>
 <script src="${siteurl}dist/js/list.js"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        [#if erro??]
+        alert("${erro}");
+        [/#if]
+    });
+</script>
 
 </body>
 </html>

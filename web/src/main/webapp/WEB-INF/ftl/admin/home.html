@@ -25,6 +25,21 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     [#include "/admin/common/commons.html"]
+
+    <!-- jQuery 2.2.3 -->
+    <script src="${siteurl}plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <!-- Bootstrap 3.3.6 -->
+    <script src="${siteurl}bootstrap/js/bootstrap.min.js"></script>
+    <!-- SlimScroll -->
+    <script src="${siteurl}plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="${siteurl}plugins/fastclick/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="${siteurl}dist/js/app.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="${siteurl}dist/js/demo.js"></script>
+    <script src="${siteurl}dist/js/list.js"></script>
+    [#include "/admin/common/fileuploads.html"]
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
@@ -50,7 +65,7 @@
                 <li class="header">主面板</li>
                 [@menustag id=1]
                 [#list list as item]
-                [@menu item "1,11"]
+                [@menu item "1,19"]
                 [/@menu]
                 [/#list]
                 [/@menustag]
@@ -66,17 +81,75 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                信息列表
-                <small>管理你的数据</small>
+                首页
             </h1>
         </section>
         <!-- Main content -->
         <section class="content">
 
-            <!-- Default box -->
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
 
-            <!-- /.box -->
+                        <div class="info-box-content">
+                            <span class="info-box-text">CPU Traffic</span>
+                            <span class="info-box-number">90<small>%</small></span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
 
+                        <div class="info-box-content">
+                            <span class="info-box-text">Likes</span>
+                            <span class="info-box-number">41,410</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+
+                <!-- fix for small devices only -->
+                <div class="clearfix visible-sm-block"></div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Sales</span>
+                            <span class="info-box-number">760</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">New Members</span>
+                            <span class="info-box-number">2,000</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <div>
+                <form >
+                [@fileinput name="url" /]
+                </form>
+            </div>
         </section>
         <!-- /.content -->
     </div>
@@ -94,19 +167,7 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery 2.2.3 -->
-<script src="${siteurl}plugins/jQuery/jquery-2.2.3.min.js"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="${siteurl}bootstrap/js/bootstrap.min.js"></script>
-<!-- SlimScroll -->
-<script src="${siteurl}plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="${siteurl}plugins/fastclick/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="${siteurl}dist/js/app.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="${siteurl}dist/js/demo.js"></script>
-<script src="${siteurl}dist/js/list.js"></script>
+
 
 </body>
 </html>

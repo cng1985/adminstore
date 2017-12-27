@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta charset="utf-8" />
+<title>列表</title> 
+[#include "/admin/common/commonurl.html"]
+<style type="text/css">
+.disabled{
+background: #E19487 !important;
+}
+</style>
+</head>
+
+<body class="no-skin">
+	<div id="navbar" class="navbar navbar-default">
+		<script type="text/javascript">
+			try {
+				ace.settings.check('navbar', 'fixed')
+			} catch (e) {
+			}
+		</script>
+
+		[#include "/admin/common/navbar.html"]
+
+		<!-- /.navbar-container -->
+	</div>
+
+	<div class="main-container" id="main-container">
+		<script type="text/javascript">
+			try {
+				ace.settings.check('main-container', 'fixed')
+			} catch (e) {
+			}
+		</script>
+
+		<div id="sidebar" class="sidebar                  responsive">
+			<script type="text/javascript">
+				try {
+					ace.settings.check('sidebar', 'fixed')
+				} catch (e) {
+				}
+			</script>
+			[#include "/admin/common/shortcuts.html"]
+			<!-- /.sidebar-shortcuts -->
+
+			<!-- .nav-list -->
+			[#include "/admin/common/commonmenu.html"]
+			<ul class="nav nav-list">[@menustag id=1] [#list list as item]
+				[@menu item "1,17,19"] [/@menu] [/#list] [/@menustag]
+			</ul>
+			<!-- /.nav-list -->
+
+			<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+				<i class="ace-icon fa fa-angle-double-left"
+					data-icon1="ace-icon fa fa-angle-double-left"
+					data-icon2="ace-icon fa fa-angle-double-right"></i>
+			</div>
+
+			<script type="text/javascript">
+				try {
+					ace.settings.check('sidebar', 'collapsed')
+				} catch (e) {
+				}
+
+				function updatering() {
+					$("#processinfos").slideDown();
+					$.get("${siteurl}ring/downring.htm", function() {
+						$("#processinfos").slideUp();
+					});
+				}
+			</script>
+		</div>
+
+		<div class="main-content">
+			<div class="breadcrumbs" id="breadcrumbs">
+				<script type="text/javascript">
+					try {
+						ace.settings.check('breadcrumbs', 'fixed')
+					} catch (e) {
+					}
+				</script>
+
+				<ul class="breadcrumb">
+					<li><i class="ace-icon fa fa-home home-icon"></i> <a href="#">首页</a>
+					</li>
+
+					<li class="active">管理</li>
+				</ul>
+				<!-- /.breadcrumb -->
+
+				<div class="nav-search" id="nav-search">
+					<form class="form-search">
+						<span class="input-icon"> <input type="text"
+							placeholder="Search ..." class="nav-search-input"
+							id="nav-search-input" autocomplete="off" /> <i
+							class="ace-icon fa fa-search nav-search-icon"></i>
+						</span>
+					</form>
+				</div>
+				<!-- /.nav-search -->
+			</div>
+
+
+
+			<div class="page-content">
+				[#include "/admin/common/page2.html"] [#include
+				"/admin/common/settings.html"]
+				<form id="listForm"
+					action="${siteurl}admin/appversion/view_list.htm" method="get">
+					<div class="row">
+
+						<div class="col-xs-12">
+							<div class="widget-box">
+
+
+								<div class="widget-body">
+									<div class="widget-main">
+										<div class="row">
+											<div class="col-xs-3">
+												<a class="btn btn-primary btn-sm" href="${siteurl}admin/appversion/view_add.htm">
+														<i class="ace-icon fa fa-pencil align-top bigger-125"></i>
+														添加
+												</a> <a class="disabled" id="deleteButton" href="#">
+													<button   class="btn btn-danger btn-sm">
+														<i class="ace-icon fa fa-trash-o align-top bigger-125"></i>
+														批量删除
+													</button>
+												</a>
+											</div>
+											<div class="col-xs-12 col-sm-6 form-inline">
+												<div class="input-group">
+													<div class="btn-group">
+														<button class="btn btn-primary btn-white dropdown-toggle"
+															data-toggle="dropdown">
+															<span id="searchval">筛选 </span><i
+																class="ace-icon fa fa-angle-down icon-on-right"></i>
+														</button>
+
+														<ul id="searchPropertyOption" class="dropdown-menu ">
+															<li val="name"><a href="#">名称</a></li>
+															<li val="name1" class="acivit"><a href="#">名称11</a></li>
+
+														</ul>
+													</div>
+												</div>
+												<div class="input-group">
+
+													<input type="text" name="searchValue" placeholder="关键词"
+														class="form-control search-query"> <span
+														class="input-group-btn">
+														<button class="btn btn-purple btn-sm" type="submit">
+															搜索 <i
+																class="ace-icon fa fa-search icon-on-right bigger-110"></i>
+														</button>
+													</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12">
+
+
+							<div class="table-responsive">
+								<table id="listTable" class="table table-striped table-bordered table-hover">
+									<tr>
+										<td><input type="checkbox" id="selectAll"></td>
+										<td class="col-xs-3">广告位名称</td>
+										<td class="col-xs-7 text-center">描述</td>
+										<td class="col-xs-2 text-center">操作</td>
+									</tr>
+									[#if list??] 
+									[#list list as item]
+									<tr id="trr${item.id!''}">
+										<td><input type="checkbox" value="${item.id}" name="ids">
+										</td>
+										<td>${item.name!""}</td>
+										<td class="text-left">${item.description!""}</td>
+
+										<td class="text-center">
+											<div style="display: inline-block;">
+
+												<a  class="btn btn-xs btn-info"
+													href="${siteurl}admin/appversion/view_edit.htm?id=${item.id!''}">
+														<i class="icon-trash bigger-120">更新</i>
+												</a> <a class="btn btn-xs btn-danger" onclick="return confirm('删除后无法恢复,确定要删除吗')"
+													href="${siteurl}admin/appversion/model_delete.htm?id=${item.id!''}&pageNumber=${page.pageNumber}">
+														<i class="icon-trash bigger-120">删除</i>
+												</a>
+											</div>
+										</td>
+									</tr>
+									[/#list]
+									 [/#if]
+								</table>
+							</div>
+							[@pager page ][/@pager]
+
+
+						</div>
+					</div>
+				</form>
+
+			</div>
+		</div>
+		<!-- /.main-content -->
+
+		[#include "/admin/common/footer.html"]
+
+	</div>
+	<!-- /.main-container -->
+
+	<!-- basic scripts -->
+
+	[#include "/admin/common/scripts.html"]
+
+	<!-- inline scripts related to this page -->
+</body>
+</html>

@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta charset="utf-8" />
+<title>编辑</title> 
+
+[#include "/admin/common/commonurl.html"]
+
+
+</head>
+
+<body class="no-skin">
+	<div id="navbar" class="navbar navbar-default">
+		<script type="text/javascript">
+			try {
+				ace.settings.check('navbar', 'fixed')
+			} catch (e) {
+			}
+		</script>
+
+		[#include "/admin/common/navbar.html"]
+
+		<!-- /.navbar-container -->
+	</div>
+
+	<div class="main-container" id="main-container">
+		<script type="text/javascript">
+			try {
+				ace.settings.check('main-container', 'fixed')
+			} catch (e) {
+			}
+		</script>
+
+		<div id="sidebar" class="sidebar                  responsive">
+			<script type="text/javascript">
+				try {
+					ace.settings.check('sidebar', 'fixed')
+				} catch (e) {
+				}
+			</script>
+			[#include "/admin/common/shortcuts.html"]
+			<!-- /.sidebar-shortcuts -->
+
+			<!-- .nav-list -->
+			[#include "/admin/common/commonmenu.html"]
+			<ul class="nav nav-list">[@menustag id=1] [#list list as item]
+				[@menu item "1,12,24"] [/@menu] [/#list] [/@menustag]
+			</ul>
+			<!-- /.nav-list -->
+
+			<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+				<i class="ace-icon fa fa-angle-double-left"
+					data-icon1="ace-icon fa fa-angle-double-left"
+					data-icon2="ace-icon fa fa-angle-double-right"></i>
+			</div>
+
+			<script type="text/javascript">
+				try {
+					ace.settings.check('sidebar', 'collapsed')
+				} catch (e) {
+				}
+
+				function updatering() {
+					$("#processinfos").slideDown();
+					$.get("${siteurl}ring/downring.htm", function() {
+						$("#processinfos").slideUp();
+					});
+				}
+			</script>
+		</div>
+
+		<div class="main-content">
+			<div class="breadcrumbs" id="breadcrumbs">
+				<script type="text/javascript">
+					try {
+						ace.settings.check('breadcrumbs', 'fixed')
+					} catch (e) {
+					}
+				</script>
+
+				<ul class="breadcrumb">
+					<li><i class="ace-icon fa fa-home home-icon"></i> <a href="#">首页</a>
+					</li>
+
+					<li class="active">更新</li>
+				</ul>
+				<!-- /.breadcrumb -->
+
+				<div class="nav-search" id="nav-search">
+					<form class="form-search">
+						<span class="input-icon"> <input type="text"
+							placeholder="Search ..." class="nav-search-input"
+							id="nav-search-input" autocomplete="off" /> <i
+							class="ace-icon fa fa-search nav-search-icon"></i>
+						</span>
+					</form>
+				</div>
+				<!-- /.nav-search -->
+			</div>
+
+
+
+			<div class="page-content">
+				[#include "/admin/common/page.html"] [#include
+				"/admin/common/settings.html"]
+				<div class="row">
+					<div class="col-xs-12">
+
+						<form role="form" method="post" class="form-horizontal"
+							action="${siteurl}admin/appversion/model_update.htm">
+							<input type="hidden" name="id" value="${model.id}" />
+							<input type="hidden" name="pageNumber" value="${page.pageNumber}" />
+							<div class="form-group">
+								<label for="form-field-1"
+									class="col-sm-3 control-label no-padding-right"> 姓名</label>
+
+								<div class="col-sm-9">
+									<input required="required"  type="text" value="${(model.name)!''}" name="name" class="col-xs-10 col-sm-10"
+										placeholder=" 姓名" id="form-field-1">
+								</div>
+							</div>
+							<div class="clearfix form-actions">
+								<div class="col-md-offset-3 col-md-9">
+									<button type="submit" class="btn btn-info">
+										<i class="ace-icon fa fa-check bigger-110"></i> 保存
+									</button>
+
+									&nbsp; &nbsp; &nbsp;
+									<button type="reset" class="btn">
+										<i class="ace-icon fa fa-undo bigger-110"></i> 重置
+									</button>
+								</div>
+							</div>
+
+							<div class="hr hr-24"></div>
+
+
+
+
+						</form>
+
+
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+		<!-- /.main-content -->
+
+		[#include "/admin/common/footer.html"]
+
+	</div>
+	<!-- /.main-container -->
+
+	<!-- basic scripts -->
+
+	[#include "/admin/common/scripts.html"]
+
+</body>
+</html>

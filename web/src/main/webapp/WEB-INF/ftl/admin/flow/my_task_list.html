@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta charset="utf-8" />
+<title>列表</title> 
+[#include "/admin/common/commonurl.html"]
+<style type="text/css">
+.disabled{
+background: #E19487 !important;
+}
+</style>
+</head>
+
+<body class="no-skin">
+	<div id="navbar" class="navbar navbar-default">
+		[#include "/admin/common/navbar.html"]
+		<!-- /.navbar-container -->
+	</div>
+
+	<div class="main-container" id="main-container">
+
+		<div id="sidebar" class="sidebar  responsive">
+			[#include "/admin/common/shortcuts.html"]
+			<!-- /.sidebar-shortcuts -->
+
+			<!-- .nav-list -->
+			[#include "/admin/common/commonmenu.html"]
+			<ul class="nav nav-list">
+				[@menustag id=1]
+				 [#list list as item]
+					[@menu item "1,16"] 
+					[/@menu] 
+					[/#list] 
+				[/@menustag]
+			</ul>
+			<!-- /.nav-list -->
+
+			<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+				<i class="ace-icon fa fa-angle-double-left"
+					data-icon1="ace-icon fa fa-angle-double-left"
+					data-icon2="ace-icon fa fa-angle-double-right"></i>
+			</div>
+
+		</div>
+
+		<div class="main-content">
+			<div class="breadcrumbs" id="breadcrumbs">
+				<ul class="breadcrumb">
+					<li><i class="ace-icon fa fa-home home-icon"></i> <a href="#">首页</a>
+					</li>
+					<li class="active">管理</li>
+				</ul>
+				<!-- /.breadcrumb -->
+
+			</div>
+
+
+
+			<div class="page-content">
+				[#include "/admin/common/page2.html"]
+				 [#include "/admin/common/settings.html"]
+				<form id="listForm"
+					action="${siteurl}admin/flow/task_list.htm" method="post">
+					<div class="row">
+
+						<div class="col-xs-12">
+
+							<div class="widget-box">
+
+
+								<div class="widget-body">
+									<div class="widget-main">
+										<div class="row">
+											<div class="col-sm-9 col-md-8 col-lg-9  form-inline">
+												<div class="input-group">
+
+													<input type="text" name="name"   value="${(so.name)!''}"  placeholder="关键词"
+														   class="form-control search-query">
+													<span class="input-group-btn">
+														<button class="btn btn-purple btn-sm" type="submit">
+															搜索 <i
+																class="ace-icon fa fa-search icon-on-right bigger-110"></i>
+														</button>
+													</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xs-12">
+
+
+							<div class="table-responsive">
+								<table id="listTable" class="table table-striped table-bordered table-hover">
+									<tr>
+										<td class="col-xs-2">流程id</td>
+										<td class="col-xs-5">流程名称</td>
+										<td class="col-xs-1 text-center">创建时间</td>
+										<td class="col-xs-2 text-center">当前节点</td>
+										<td class="col-xs-2 text-center">操作</td>
+									</tr>
+									[#if list??] 
+									[#list list as item]
+									<tr id="trr${item.id!''}">
+										<td>${item.id!""}</td>
+										<td>${item.flowName!""}</td>
+										<td class="text-center">
+											${item.addDate!""}
+										</td>
+										<td class="text-center">
+										${item.name!""}
+										</td>
+										<td class="text-center">
+											<div style="display: inline-block;">
+                                                <a href="${siteurl}admin/flow/image.htm?taskid=${item.id}">查看流程图</a>
+                                                [#if item.catalog??]
+												    [#if item.catalog ='update']
+												    <a href="${siteurl}${item.updateUrl!''}?taskid=${item.id}&id=${item.oid!''}">修改</a>
+												    [#elseif item.catalog ='update_edit']
+												    <a href="${siteurl}admin/guarantee/update_edit.htm?taskid=${item.id}&id=${item.oid!''}">完善信息</a>
+												    [#elseif item.catalog ='approval']
+												    <a href="${siteurl}admin/flow/task.htm?taskid=${item.id}">审批</a>
+													[#elseif item.catalog ='confirm_guarantee_upload']
+													<a href="${siteurl}admin/guarantee/url_edit.htm?taskid=${item.id}&id=${item.oid!''}">上传扫描件</a>
+													[#elseif item.catalog ='approval_accompany_updatemoney']
+													<a href="${siteurl}admin/accompanybid/view_updatemoney.htm?taskid=${item.id}&id=${item.oid!''}">审核</a>
+													[#elseif item.catalog ='confirm_customerbilling']
+													<a href="${siteurl}admin/customerbilling/view_confirm.htm?id=${item.id!''}">确认</a>
+													[#elseif item.catalog ='confirm']
+													<a href="${siteurl}admin/flow/task.htm?taskid=${item.id}&type=100">审批</a>
+												    [#else]
+												    <a href="${siteurl}admin/${item.catalog!''}?taskid=${item.id}&id=${item.oid!''}">审批</a>
+												    [/#if]
+											    [/#if]
+											    
+											</div>
+										</td>
+									</tr>
+									[/#list]
+									 [/#if]
+								</table>
+							</div>
+                           [@pager page ][/@pager]
+
+						</div>
+					</div>
+				</form>
+
+			</div>
+		</div>
+		<!-- /.main-content -->
+
+		[#include "/admin/common/footer.html"]
+
+	</div>
+	<!-- /.main-container -->
+
+	<!-- basic scripts -->
+
+	[#include "/admin/common/scripts.html"]
+
+	<!-- inline scripts related to this page -->
+</body>
+</html>

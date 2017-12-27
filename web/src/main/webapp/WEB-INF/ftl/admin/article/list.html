@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>管理</title>
+	<!-- Tell the browser to be responsive to screen width -->
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<!-- Bootstrap 3.3.6 -->
+	<link rel="stylesheet" href="${siteurl}bootstrap/css/bootstrap.min.css">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="${siteurl}plugins/FontAwesome/css/font-awesome.min.css">
+	<!-- Ionicons -->
+	<link rel="stylesheet" href="${siteurl}plugins/ionicons201/css/ionicons.min.css">
+	<!-- Theme style -->
+	<link rel="stylesheet" href="${siteurl}dist/css/AdminLTE.min.css">
+	<!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+	<link rel="stylesheet" href="${siteurl}dist/css/skins/_all-skins.min.css">
+	<!-- bootstrap-switch -->
+	<link rel="stylesheet" href="${siteurl}plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css">
+	<!-- layer -->
+	<link rel="stylesheet" href="${siteurl}plugins/layer/skin/default/layer.css">
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	[#include "/admin/common/commons.html"]
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<!-- Site wrapper -->
+	<div class="wrapper">
+
+		<header class="main-header">
+			<!-- Header Navbar: style can be found in header.less -->
+			[#include "/admin/common/nav.html"]
+		</header>
+
+	<!-- =============================================== -->
+
+	<!-- Left side column. contains the sidebar -->
+		<aside class="main-sidebar">
+		<!-- sidebar: style can be found in sidebar.less -->
+		<section class="sidebar">
+			[@user_panel /]
+			<!-- search form -->
+			[@sidebar_form /]
+			<!-- /.search form -->
+			<!-- sidebar menu: : style can be found in sidebar.less -->
+			<ul class="sidebar-menu">
+				<li class="header">主面板</li>
+				[@menustag id=1]
+					[#list list as item]
+						[@menu item "1,33,35"]
+						[/@menu]
+					[/#list]
+				[/@menustag]
+			</ul>
+		</section>
+		<!-- /.sidebar -->
+	</aside>
+
+	<!-- =============================================== -->
+
+	<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<h1>
+				信息列表
+				<small>管理你的数据</small>
+			</h1>
+		</section>
+		<!-- Main content -->
+		<section class="content">
+			<!-- Default box -->
+			<form id="listForm" action="${siteurl}admin/article/view_list.htm" method="post">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class=" box box-body">
+							<div class="col-xs-2 ">
+								<a class="btn btn-primary" href="${siteurl}admin/article/view_add.htm">
+									<i class="fa fa-plus"></i> 添加
+								</a>
+							</div>
+							<div class="col-xs-10" style="padding-left: 0;">
+
+								<button type="submit" name="search"  class="btn btn-success pull-right"><i class="fa fa-search"></i> 搜索</button>
+
+								<div class="col-xs-3 pull-right">
+									<select class="form-control" id="catalogarticle" name="catalogId" >
+										<option value="">所有</option>
+										[#if catalogs??]
+										[#list catalogs as catalog]
+										<option value="${catalog.id}" [#if so?? && so.catalog?? && so.catalog.id =item.id] selected="selected" [/#if]>${catalog.name!''}</option>
+										[/#list]
+										[/#if]
+									</select>
+
+								</div>
+								<div class="col-xs-4 pull-right">
+									<input name="title" maxlength="20" value="${(so.title)!''}" class="form-control" placeholder="名称搜索..." type="text">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12">
+						<div class="box box-solid">
+							<div class="box-body table-responsive no-padding">
+								<table class="table table-bordered table-hover dataTable">
+									<thead>
+									<tr role="row">
+										<td class="">标题</td>
+										<td class="col-xs-2 text-center">文章分类</td>
+										<td class="col-xs-1 text-center">推送首页</td>
+										<td class="col-xs-1 text-center">荣誉新闻</td>
+										<td class="col-xs-2 text-center">更新时间</td>
+										<td class="col-xs-2 text-center">操作</td>
+									</tr>
+									</thead>
+									<tbody>
+									[#list list as item]
+									<tr id="trr${item.id}">
+										<td>${item.title!""}</td>
+										<td class="text-center">${(item.catalog.name)!""}</td>
+										<td class="text-center">
+											<div class="switch">
+												[#if item.recommend?? && item.recommend == true]
+												<input type="checkbox" class="recommend" data-size="small" value="${(item.id)!''}" checked/>
+												[#else]
+												<input type="checkbox" class="recommend" data-size="small" value="${(item.id)!''}"/>
+												[/#if]
+											</div>
+										</td>
+										<td class="text-center">
+											<div class="switch">
+												[#if item.honor?? && item.honor == true]
+												<input type="checkbox" class="honor" data-size="small" value="${(item.id)!''}" checked/>
+												[#else]
+												<input type="checkbox" class="honor" data-size="small" value="${(item.id)!''}"/>
+												[/#if]
+											</div>
+										</td>
+										<td class="text-center">${item.lastDate?string('yyyy-MM-dd HH:mm:ss')}</td>
+										<td class="text-center">
+											<div style="display: inline-block;">
+												[@shiro.hasPermission name="article:update"]
+												<a  class="menubutton btn btn-sm btn-success"
+													href="${siteurl}admin/article/view_edit.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
+													<i class="fa fa-edit">更新</i>
+												</a>
+												[/@shiro.hasPermission]
+												[@shiro.hasPermission name="article:update"]
+												<a  class="menubutton btn btn-sm btn-success"
+													href="${siteurl}admin/article/view_view.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
+													<i class="fa fa-edit">预览</i>
+												</a>
+												[/@shiro.hasPermission]
+												[@shiro.hasPermission name="article:delete"]
+												<a  class="menubutton btn btn-sm btn-danger"  onclick="return confirm('删除后无法恢复,确定要删除吗')"
+													href="${siteurl}admin/article/model_delete.htm?id=${item.id}">
+													<i class="fa fa-trash">删除</i>
+												</a>
+												[/@shiro.hasPermission]
+											</div>
+										</td>
+									</tr>
+									[/#list]
+									</tbody>
+								</table>
+							</div>
+							[@pager page=page   /]
+						</div>
+				    </div>
+			    </div>
+			</form>
+			<!-- /.box -->
+		</section>
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+
+	[#include "/admin/common/footer.html"]
+
+	<!-- Control Sidebar -->
+	[#include "/admin/common/aside.html"]
+
+	<!-- /.control-sidebar -->
+	<!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+		<div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="${siteurl}plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="${siteurl}bootstrap/js/bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script src="${siteurl}plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="${siteurl}plugins/fastclick/fastclick.js"></script>
+<!-- bootstrap-switch -->
+<script src="${siteurl}plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<!-- layer -->
+<script src="${siteurl}/plugins/layer/layer.js"></script>
+<!-- AdminLTE App -->
+<script src="${siteurl}dist/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="${siteurl}dist/js/demo.js"></script>
+<script src="${siteurl}dist/js/list.js"></script>
+<script>
+    $('input[type="checkbox"]').bootstrapSwitch();
+
+	var recommendUrl = '${siteurl}admin/article/view_push_home.htm';
+	var honorUrl = '${siteurl}admin/article/view_set_honor.htm';
+
+    var recommendSwitchs = $('input[type="checkbox"].recommend');
+    var honorSwitchs = $('input[type="checkbox"].honor');
+
+    recommendSwitchs.on('switchChange.bootstrapSwitch', function(event, state) {
+        $.get(recommendUrl, {id: this.value, state: state}, function (res) {
+			if (res.code !== 0){
+			    this.checked = !state; //更新失败，回退
+			}
+			layer.msg(res.msg, {icon: 1});
+        });
+    });
+
+    honorSwitchs.on('switchChange.bootstrapSwitch', function(event, state) {
+        $.get(honorUrl, {id: this.value, state: state}, function (res) {
+			if (res.code !== 0){
+			    this.checked = !state; //更新失败，回退
+			}
+			layer.msg(res.msg, {icon: 1});
+        });
+    });
+</script>
+</body>
+</html>

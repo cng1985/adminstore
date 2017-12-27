@@ -1,11 +1,11 @@
 package com.tongna.adminstore;
 
-import com.ada.area.entity.Area;
-import com.ada.imake.ChainMake;
-import com.ada.imake.template.hibernate.TemplateHibernateDir;
-import com.ada.imake.templates.ace.TemplateAceDir;
-import com.ada.imake.templates.adminlte.TemplateAdminLTE;
-import com.ada.user.entity.UserAccount;
+import com.quhaodian.area.data.entity.Area;
+import com.quhaodian.imake.ChainMake;
+import com.quhaodian.imake.template.hibernate.TemplateHibernateDir;
+import com.quhaodian.imake.templates.ace.TemplateAceDir;
+import com.quhaodian.imake.templates.adminlte.TemplateAdminLTE;
+import com.quhaodian.user.data.entity.UserAccount;
 import com.tongna.adminstore.data.entity.Member;
 
 import java.io.File;

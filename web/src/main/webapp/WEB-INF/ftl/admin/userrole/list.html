@@ -77,16 +77,22 @@
 			<form id="listForm" action="${siteurl}admin/userrole/view_list.htm" method="post">
 				<div class="row">
 					<div class="col-xs-12">
-						<div class="box">
-							<div class="box-header">
-								<h3 class="box-title">功能</h3>
-							</div>
-							<div class="box-body">
-								<a class="btn btn-app" href="${siteurl}admin/userrole/view_add.htm">
+						<div class=" box box-body">
+							<div class="col-xs-2 ">
+								<a class="btn btn-primary" href="${siteurl}admin/userrole/view_add.htm">
 									<i class="fa  fa-plus"></i> 添加
 								</a>
 							</div>
-							<!-- /.box-body -->
+							<div class="col-xs-10 " style="padding-left: 0;">
+								<button type="submit" name="search" class="btn btn-success pull-right"><i
+										class="fa fa-search"></i> 搜索
+								</button>
+								<div class="col-xs-4 pull-right">
+									<input name="name" value="${(so.name)!''}" maxlength="20" class="form-control" placeholder="名称搜索..."
+										   type="text">
+								</div>
+							</div>
+
 						</div>
 					</div>
 					<div class="col-xs-12">
@@ -97,9 +103,11 @@
 									<tr role="row">
 										<td class="col-xs-2">角色名</td>
 										<td class="col-xs-1 text-center">角色别名</td>
-										<td class="col-xs-6 text-center">描述</td>
+										<td class="col-xs-1 text-center">类型</td>
+										<td class="col-xs-1 text-center">分类</td>
+										<td class="col-xs-3 text-center">描述</td>
 										<td class="col-xs-2 text-center">更新时间</td>
-										<td class="col-xs-1 text-center">操作</td>
+										<td class="col-xs-2 text-center">操作</td>
 									</tr>
 									</thead>
 									<tbody>
@@ -107,18 +115,26 @@
 									<tr id="trr${item.id}">
 										<td>${item.name!""}</td>
 										<td class="text-center">${item.alias!""}</td>
+										<td class="text-center">${item.type!""}</td>
+										<td class="text-center">${(item.catalog.name)!""}</td>
 										<td class="">${item.description!""}</td>
 										<td class="text-center">${item.lastDate?string('yyyy-MM-dd HH:mm:ss')}</td>
 										<td class="text-center">
 											<div style="display: inline-block;">
-												<a  class="menubutton btn btn-xs btn-danger"
+												<a  class="menubutton btn btn-sm btn-success"
 													href="${siteurl}admin/userrole/view_edit.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
-													<i class="icon-trash bigger-120">更新</i>
+													<i class="fa fa-edit">更新</i>
 												</a>
-												<a  class="menubutton btn btn-xs btn-danger"  onclick="return confirm('删除后无法恢复,确定要删除吗')"
+												[#if item.type?? && item.type=='系统']
+												<a  class="menubutton btn btn-sm btn-default  disabled" >
+													<i class="fa fa-trash">删除</i>
+												</a>
+												[#else]
+												<a  class="menubutton btn btn-sm btn-danger"  onclick="return confirm('删除后无法恢复,确定要删除吗')"
 													href="${siteurl}admin/userrole/model_delete.htm?id=${item.id}">
-													<i class="icon-trash bigger-120">删除</i>
+													<i class="fa fa-trash">删除</i>
 												</a>
+												[/#if]
 											</div></td>
 									</tr>
 									[/#list]

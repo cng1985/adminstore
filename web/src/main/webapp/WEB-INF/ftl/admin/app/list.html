@@ -50,7 +50,7 @@
 				<li class="header">主面板</li>
 				[@menustag id=1]
 					[#list list as item]
-						[@menu item "1,8,9"]
+						[@menu item "1,2,9"]
 						[/@menu]
 					[/#list]
 				[/@menustag]
@@ -107,38 +107,46 @@
 						<div class="box-body table-responsive no-padding">
 							<table class="table table-bordered table-hover dataTable">
 								<thead>
-								<tr role="row">
-									<td class="col-xs-1">程序名称</td>
-									<td class="col-xs-2 text-center">程序包名</td>
-									<td class="col-xs-6 text-center">下载地址</td>
-									<td class="col-xs-2 text-center">当前版本</td>
-									<td class="col-xs-1 text-center">操作</td>
-								</tr>
+									<tr>
+										<td class="col-xs-2">程序名称</td>
+										<td class="col-xs-1 text-center">访问次数</td>
+										<td class="col-xs-2 text-center">程序key</td>
+										<td class="col-xs-4 text-center">密钥</td>
+										<td class="col-xs-1 text-center">版本</td>
+										<td class="col-xs-2 text-center">操作</td>
+									</tr>
 								</thead>
 								<tbody>
-								[#list list as item]
-								<tr id="trr${item.id}">
-									<td>${item.name!""}</td>
-									<td class="text-center">${item.packageName!""}</td>
-									<td class="">${item.downUrl!""}</td>
-									<td class="text-center">${item.versionName}</td>
-									<td class="text-center">
-										<div style="display: inline-block;">
-											[@shiro.hasPermission name="app:update"]
-											<a  class="menubutton btn btn-xs btn-danger"
-												href="${siteurl}admin/app/view_edit.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
-												<i class="icon-trash bigger-120">更新</i>
-											</a>
-											[/@shiro.hasPermission]
-											[@shiro.hasPermission name="app:delete"]
-											<a  class="menubutton btn btn-xs btn-danger"  onclick="return confirm('删除后无法恢复,确定要删除吗')"
-												href="${siteurl}admin/app/model_delete.htm?id=${item.id}">
-												<i class="icon-trash bigger-120">删除</i>
-											</a>
-											[/@shiro.hasPermission]
-										</div></td>
-								</tr>
-								[/#list]
+									[#if list??]
+									[#list list as item]
+									<tr id="trr${item.id!''}">
+										<td>${item.name!""}</td>
+										<td class="text-center">${item.counts!"0"}</td>
+										<td>${item.appKey!""}</td>
+										<td class="text-left">${item.appSecret!""}</td>
+										<td class="text-left">${item.versionName!""}</td>
+
+										<td class="text-center">
+											<div style="display: inline-block;">
+
+												<a  class="btn btn-xs btn-info"
+													href="${siteurl}admin/appversion/view_add.htm?id=${item.id!''}">
+													<i class="icon-trash bigger-120">添加版本</i>
+												</a>
+												<a  class="btn btn-xs btn-info"
+													href="${siteurl}admin/app/view_edit.htm?id=${item.id!''}">
+													<i class="icon-trash bigger-120">更新</i>
+												</a>
+
+												<a class="btn btn-xs btn-danger" onclick="return confirm('删除后无法恢复,确定要删除吗')"
+												   href="${siteurl}admin/app/model_delete.htm?id=${item.id!''}&pageNumber=${page.pageNumber}">
+													<i class="icon-trash bigger-120">删除</i>
+												</a>
+											</div>
+										</td>
+									</tr>
+									[/#list]
+									[/#if]
 								</tbody>
 							</table>
 						</div>

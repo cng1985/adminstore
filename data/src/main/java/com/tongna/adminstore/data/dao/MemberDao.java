@@ -1,8 +1,8 @@
 package com.tongna.adminstore.data.dao;
 
 
-import  com.ada.data.core.CriteriaDao;
-import  com.ada.data.core.Updater;
+import  com.quhaodian.data.core.CriteriaDao;
+import  com.quhaodian.data.core.Updater;
 import  com.tongna.adminstore.data.entity.Member;
 
 public interface MemberDao extends CriteriaDao<Member,Long>{

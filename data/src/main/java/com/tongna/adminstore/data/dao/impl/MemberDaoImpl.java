@@ -4,7 +4,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ada.data.core.CriteriaDaoImpl;
+import com.quhaodian.data.core.CriteriaDaoImpl;
 import com.tongna.adminstore.data.dao.MemberDao;
 import com.tongna.adminstore.data.entity.Member;
 

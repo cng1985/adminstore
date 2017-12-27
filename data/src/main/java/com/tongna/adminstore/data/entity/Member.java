@@ -1,6 +1,6 @@
 package com.tongna.adminstore.data.entity;
 
-import com.ada.data.entity.AbstractEntity;
+import com.quhaodian.data.entity.AbstractEntity;
 
 /**
  * @author 陈联高

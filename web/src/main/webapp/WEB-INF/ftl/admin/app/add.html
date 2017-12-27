@@ -53,7 +53,7 @@
 				<li class="header">主面板</li>
 				[@menustag id=1]
 				[#list list as item]
-				[@menu item "1,8,9"]
+				[@menu item "1,2,9"]
 				[/@menu]
 				[/#list]
 				[/@menustag]
@@ -107,6 +107,24 @@
 								<label for="packageName" class="col-sm-2 control-label">程序包名</label>
 								<div class="col-sm-10">
 									<input class="form-control" id="packageName" name="packageName" placeholder="程序包名" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="appKey"
+									   class="col-sm-2 control-label no-padding-right"> 程序key</label>
+
+								<div class="col-sm-10">
+									<input readonly="readonly"   type="text" name="appKey"   value="${appKey!''}"  class="form-control"
+										   placeholder="程序key" id="appKey">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="appSecret"
+									   class="col-sm-2 control-label no-padding-right"> 程序密钥</label>
+
+								<div class="col-sm-10">
+									<input readonly="readonly"  maxlength="50"   type="text" name="appSecret"   value="${appSecret!''}"  class="form-control"
+										   placeholder="程序密钥" id="appSecret">
 								</div>
 							</div>
 							<div class="form-group">

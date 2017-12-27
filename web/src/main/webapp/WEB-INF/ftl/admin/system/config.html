@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>TeaCMS-后台管理</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <script src="/static/plugins/pace-0.7.5/pace.js"></script>
+    <link href="/static/plugins/pace-0.7.5/themes/black/pace-theme-center-circle.css" rel="stylesheet" />
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/static/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="/static/css/skins/my_all-skins.css">
+    <!-- MyAdminLTE.css -->
+    <link rel="stylesheet" href="/static/css/MyAdminLTE.css">
+
+    <!-- Lobibox -->
+    <link rel="stylesheet" href="/static/plugins/lobibox/css/lobibox.min.css">
+
+    <style>
+        .form-horizontal.tasi-form .form-group {
+            border-bottom: 1px solid #eff2f7;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-horizontal.tasi-form .form-group:last-child {
+            border-bottom: none;
+            padding-bottom: 10px;
+            margin-bottom: 0px;
+        }
+
+        .form-horizontal .control-label {
+            font-weight: 300;
+            font-size: 14px;
+            text-align: left;
+        }
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="hold-transition skin-blue sidebar-mini fixed">
+<#import "/_admin/lib/sidebar_templet.ftl" as sidebar_templet>
+<!-- Site wrapper -->
+<div class="wrapper">
+<#-- header -->
+<#include "/_admin/header.ftl">
+<#-- sidebar -->
+<@sidebar_templet.sidebar "config"></@sidebar_templet.sidebar>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                设置
+                <small>System Config</small>
+            </h1>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+
+            <!-- Default box -->
+            <div class="box box-primary">
+
+                <div class="box-body">
+                    <h1></h1>
+                    <div class="form" style="padding-left: 30px; padding-right: 30px;">
+                        <form id="configForm" class="form-horizontal tasi-form" method="post">
+                            <input type="hidden" name="id" value="${webConfig.id}">
+                            <div class="form-group ">
+                                <label for="title" class="control-label col-lg-2">网站标题</label>
+                                <div class="col-lg-10">
+                                    <input class="form-control" id="title" name="title" type="text"
+                                           value="${webConfig.title}" maxlength="255" placeholder="请输入网站标题"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="keywords" class="control-label col-lg-2">SEO 关键词</label>
+                                <div class="col-lg-10">
+                                    <input class="form-control" id="keywords" name="keywords" type="text"
+                                           value="${webConfig.keywords}" placeholder="请输入 SEO 关键词"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="description" class="control-label col-lg-2">SEO 网站描述</label>
+                                <div class="col-lg-10">
+                                    <textarea class="form-control" id="description" name="description" rows="3"
+                                              placeholder="请输入 SEO 网站描述">${webConfig.description}</textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="domainName" class="control-label col-lg-2">多说名称</label>
+                                <div class="col-lg-10">
+                                    <input class="form-control" id="domainName" name="shortName" type="text"
+                                           value="${webConfig.shortName}" placeholder="请输入网站域名"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="domainName" class="control-label col-lg-2">网站域名</label>
+                                <div class="col-lg-10">
+                                    <input class="form-control" id="domainName" name="domainName" type="text"
+                                           value="${webConfig.domainName}" placeholder="请输入网站域名"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="icp" class="control-label col-lg-2">ICP 备案号</label>
+                                <div class="col-lg-10">
+                                    <input class="form-control" id="icp" name="icp" type="text" value="${webConfig.icp}"
+                                           placeholder="请输入 ICP 备案号"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="pageSize" class="control-label col-lg-2 col-sm-3">文章分页条数</label>
+                                <div class="col-lg-10">
+                                    <select class="form-control" id="pageSize" name="pagesize">
+                                        <option value="1" <#if webConfig.pagesize == 1>selected</#if>>1</option>
+                                        <option value="5" <#if webConfig.pagesize == 5>selected</#if>>5</option>
+                                        <option value="10" <#if webConfig.pagesize == 10>selected</#if>>10</option>
+                                        <option value="15" <#if webConfig.pagesize == 15>selected</#if>>15</option>
+                                        <option value="20" <#if webConfig.pagesize == 20>selected</#if>>20</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-lg-offset-1 col-lg-10">
+                                    <button class="btn btn-danger btn-block" type="submit">保存</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box -->
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+<#include "/_admin/footer.ftl">
+
+    <!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="/static/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="/static/plugins/jQueryForm/jquery.form.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="/static/js/bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script src="/static/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="/static/plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="/static/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/static/js/demo.js"></script>
+<script src="/static/js/common.js"></script>
+<script src="/static/plugins/lobibox/js/lobibox.min.js"></script>
+<script>
+    function deletMSG(type , msg) {
+        Lobibox.notify(type, {
+            size: 'mini',
+            soundPath: '/static/plugins/lobibox/sounds/',
+            position: 'center bottom',
+            msg: msg
+        });
+    }
+    $('#configForm').submit(function () {
+
+        ajaxSubmitForm("/admin/updatewebconfig", $(this).serialize(),
+                function (data) {
+                    if (data >= 1) {
+                        deletMSG('success', '保存成功!');
+                    }
+                },
+                function (data) {
+                    deletMSG('error', '网络错误，请刷新!');
+                }
+        );
+
+        return false; //阻止表单默认提交
+    });
+</script>
+</body>
+</html>

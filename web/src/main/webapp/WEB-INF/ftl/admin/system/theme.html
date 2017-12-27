@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>主题配置</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="${siteurl}bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="${siteurl}plugins/FontAwesome/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="${siteurl}plugins/ionicons201/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="${siteurl}dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="${siteurl}dist/css/skins/_all-skins.min.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="${siteurl}plugins/lobibox/css/lobibox.min.css">
+
+    [#include "/admin/common/commons.html"]
+
+    <style>
+        .box-theme {
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .box-theme span {
+            opacity: 1;
+            position: absolute;
+            top: 35%;
+            right: 25%;
+            left: 25%;
+            background: #23282d;
+            background: rgba(0,0,0,.7);
+            color: #fff;
+            font-size: 15px;
+            text-shadow: 0 1px 0 rgba(0,0,0,.6);
+            -webkit-font-smoothing: antialiased;
+            font-weight: 600;
+            padding: 15px 12px;
+            text-align: center;
+            -webkit-border-radius: 3px;
+            border-radius: 3px;
+            -webkit-transition: opacity .1s ease-in-out;
+            transition: opacity .1s ease-in-out;
+        }
+        .box-theme i:HOVER {
+            background: rgba(0, 0, 0, 0.3);
+            transition: .3s all;
+        }
+        .box-theme i {
+            position: absolute;
+            display: inline-block;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%
+        }
+        .box-theme-img {
+            width: 100%;
+            float: left;
+        }
+        .box-theme-title {
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            background: #23282d;
+            height: 50px;
+            border: 1px solid #000;
+        }
+        .box-theme-title h2 {
+            margin: 0;
+            font-size: 20px;
+            line-height: 50px;
+            float: left;
+            height: 100%;
+            padding-left: 15px;
+            color: #fff;
+            font-weight: 300;
+        }
+        .box-theme-title button {
+            margin-top: 8px;
+            margin-right: 12px;
+        }
+        .more-details {
+            display: inline-block;
+        }
+        .theme-body {
+            padding-top: 25px;
+        }
+    </style>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper">
+
+    <header class="main-header">
+        <!-- Header Navbar: style can be found in header.less -->
+        [#include "/admin/common/nav.html"]
+    </header>
+
+    <!-- =============================================== -->
+
+    <!-- Left side column. contains the sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            [@user_panel /]
+            <!-- search form -->
+            [@sidebar_form /]
+            <!-- /.search form -->
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu">
+                <li class="header">主面板</li>
+                [@menustag id=1]
+                [#list list as item]
+                [@menu item "1,2,10"]
+                [/@menu]
+                [/#list]
+                [/@menustag]
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- =============================================== -->
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                主题
+                <small>Theme</small>
+            </h1>
+        </section>
+        <!-- Main content -->
+        <section class="content">
+
+
+            <!-- Default box -->
+            <div class="box box-primary">
+
+                <div class="box-body theme-body">
+
+                    [#list themes as item]
+                        <div class="col-md-4 col-sm-6">
+                            <div class="box-theme">
+                                <img class="box-theme-img" src="${siteurl}${item.screenShot!''}" width="350" height="260" alt="">
+                                <span id="${item.id}" class="more-details" id="SimpleHome-action" [#if  item.id != webConfig.theme]style="display: none"[/#if]>当前主题</span>
+                                <i></i>
+                                <div class="box-theme-title">
+                                    <h2>${item.name!"未知"}</h2>
+                                    <!--<button class="btn btn-default pull-right">启用</button>-->
+                                    <button class="btn btn-success pull-right" onclick="setTheme('${item.id}')">启用</button>
+                                </div>
+                            </div>
+                        </div>
+                    [/#list]
+
+                </div>
+            </div>
+            <!-- /.box -->
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    [#include "/admin/common/footer.html"]
+
+    <!-- Control Sidebar -->
+    [#include "/admin/common/aside.html"]
+
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="${siteurl}plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="${siteurl}bootstrap/js/bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script src="${siteurl}plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="${siteurl}plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="${siteurl}dist/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="${siteurl}dist/js/demo.js"></script>
+<script src="${siteurl}dist/js/list.js"></script>
+<script src="${siteurl}plugins/lobibox/js/lobibox.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+    var ajaxConfig = {
+        type: "POST",
+        dataType: "json",
+        async: false
+    };
+    /**
+     * AJAX JSON 方式
+     * @param url
+     * @param data
+     * @param successFn
+     * @param errorFn
+     */
+    function ajaxSubmit(url, data, successFn, errorFn) {
+        ajaxConfig.url = url;
+        ajaxConfig.contentType = 'application/json;charset=UTF-8';
+        if (data != null) {
+            ajaxConfig.data = data;
+        };
+        ajaxConfig.success = function (data) {
+            successFn(data);
+        };
+        ajaxConfig.error = function (data) {
+            errorFn(data);
+        };
+        $.ajax(ajaxConfig);
+    };
+
+    /**
+     * AJAX Form 表单方式 $(this).serialize()
+     * @param url
+     * @param data
+     * @param successFn
+     * @param errorFn
+     */
+    function ajaxSubmitForm(url, data, successFn, errorFn) {
+        ajaxConfig.url = url;
+        ajaxConfig.contentType = 'application/x-www-form-urlencoded;charset=utf-8';
+        if (data != null) {
+            ajaxConfig.data = data;
+        };
+        ajaxConfig.success = function (data) {
+            successFn(data);
+        };
+        ajaxConfig.error = function (data) {
+            errorFn(data);
+        };
+        $.ajax(ajaxConfig);
+    };
+
+    function deletMSG(type , msg) {
+        Lobibox.notify(type, {
+            size: 'mini',
+            soundPath: '/static/plugins/lobibox/sounds/',
+            position: 'center bottom',
+            msg: msg
+        });
+    }
+    function setTheme(temp) {
+        $(".more-details").css({"display":"none"})
+        $("#"+temp).css({"display":"block"});
+        var data={};
+        data.theme=temp;
+        $.post("${siteurl}admin/updatetheme.htm",data,function (backdata) {
+            if (backdata.code == 0) {
+                deletMSG('success', '启用成功!');
+            } else {
+                deletMSG('error', '启用失败!');
+            }
+        });
+    }
+</script>
+</body>
+</html>

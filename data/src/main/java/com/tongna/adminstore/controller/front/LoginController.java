@@ -9,11 +9,15 @@
  */
 package com.tongna.adminstore.controller.front;
 
-import com.ada.shiro.utils.UserUtil;
-import com.ada.user.entity.UserInfo;
-import com.ada.user.entity.UserLoginLog;
-import com.ada.user.service.UserInfoService;
-import com.ada.user.service.UserLoginLogService;
+import com.quhaodian.shiro.utils.UserUtil;
+import com.quhaodian.user.data.entity.UserAccount;
+import com.quhaodian.user.data.entity.UserInfo;
+import com.quhaodian.user.data.entity.UserLoginLog;
+import com.quhaodian.user.data.service.UserAccountService;
+import com.quhaodian.user.data.service.UserInfoService;
+import com.quhaodian.user.data.service.UserLoginLogService;
+import com.quhaodian.user.data.vo.UserAccountVo;
+import com.quhaodian.web.controller.front.BaseController;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -21,6 +25,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -40,12 +46,15 @@ public class LoginController extends BaseController {
     @Autowired
     UserInfoService userInfoService;
 
+    @Autowired
+    UserAccountService userAccountService;
+
     /**
      * 跳转登录页
      *
      * @return
      */
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    @GetMapping(value = "/index")
     public String index() {
         return getView(Views.LOGIN);
     }
@@ -58,7 +67,7 @@ public class LoginController extends BaseController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @PostMapping(value = "/login")
     public String login(String username, String password, ModelMap model) {
         String ret = getView(Views.LOGIN);
 
@@ -120,12 +129,11 @@ public class LoginController extends BaseController {
                            HttpServletRequest request, HttpServletResponse response,
                            Model model) {
 
-        UserInfo user = new UserInfo();
-        user.setName(name);
+        UserAccount user = new UserAccount();
         user.setUsername(username);
-        user.setPlainPassword(password);
-        UserInfo userx = userInfoService.reg(user);
-        if (userx != null && userx.getId() > 0) {
+        user.setPassword(password);
+        UserAccountVo userx = userAccountService.reg(user);
+        if (userx.getCode()==0) {
             model.addAttribute("msg", "注册成功");
             return "redirect:/login.htm";
         } else {

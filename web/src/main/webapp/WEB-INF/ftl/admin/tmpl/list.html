@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>管理</title>
+	<!-- Tell the browser to be responsive to screen width -->
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<!-- Bootstrap 3.3.6 -->
+	<link rel="stylesheet" href="${siteurl}bootstrap/css/bootstrap.min.css">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="${siteurl}plugins/FontAwesome/css/font-awesome.min.css">
+	<!-- Ionicons -->
+	<link rel="stylesheet" href="${siteurl}plugins/ionicons201/css/ionicons.min.css">
+	<!-- zTree -->
+	<link rel="stylesheet" href="${siteurl}plugins/zTree_v3/css/zTreeStyle/zTreeStyle.css">
+	<!-- Theme style -->
+	<link rel="stylesheet" href="${siteurl}dist/css/AdminLTE.min.css">
+	<!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+	<link rel="stylesheet" href="${siteurl}dist/css/skins/_all-skins.min.css">
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	[#include "/admin/common/commons.html"]
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<!-- Site wrapper -->
+	<div class="wrapper">
+
+		<header class="main-header">
+			<!-- Header Navbar: style can be found in header.less -->
+			[#include "/admin/common/nav.html"]
+		</header>
+
+	<!-- =============================================== -->
+
+	<!-- Left side column. contains the sidebar -->
+		<aside class="main-sidebar">
+		<!-- sidebar: style can be found in sidebar.less -->
+		<section class="sidebar">
+			[@user_panel /]
+			<!-- search form -->
+			[@sidebar_form /]
+			<!-- /.search form -->
+			<!-- sidebar menu: : style can be found in sidebar.less -->
+			<ul class="sidebar-menu">
+				<li class="header">主面板</li>
+				[@menustag id=1]
+					[#list list as item]
+						[@menu item "1,2,11"]
+						[/@menu]
+					[/#list]
+				[/@menustag]
+			</ul>
+		</section>
+		<!-- /.sidebar -->
+	</aside>
+
+	<!-- =============================================== -->
+
+	<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<h1>
+				模板列表
+				<small></small>
+			</h1>
+		</section>
+		<!-- Main content -->
+		<section class="content">
+			<!-- Default box -->
+			<div class="col-md-3" style="border: 1px solid #ccc;height:600px;overflow-y: scroll">
+				<ul id="tree" class="ztree"></ul>
+			</div>
+			<div class="col-md-9" style="border: 1px solid #ccc;height:600px;position: relative;">
+				<input id="content" type="hidden" name="content">
+				<div id="editor" style="height: 550px;font-size: 16px;"></div>
+				<div class="col-md-6 text-center" style="line-height: 50px">
+					<button type="button" class="btn btn-default">取消</button>
+				</div>
+				<div class="col-md-6 text-center" style="line-height: 50px">
+					<button type="button" class="btn btn-primary" onclick="submitForm()">更新</button>
+				</div>
+				<img id="loading" src="${siteurl}dist/img/loading.svg" alt=""
+					 style="position: absolute;left: 50%;top: 200px;display: none">
+			</div>
+			<!-- /.box -->
+		</section>
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+
+	[#include "/admin/common/footer.html"]
+
+	<!-- Control Sidebar -->
+	[#include "/admin/common/aside.html"]
+
+	<!-- /.control-sidebar -->
+	<!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+		<div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="${siteurl}plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="${siteurl}bootstrap/js/bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script src="${siteurl}plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="${siteurl}plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="${siteurl}dist/js/app.min.js"></script>
+<!-- ztree -->
+<script src="${siteurl}plugins/zTree_v3/js/jquery.ztree.all.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="${siteurl}dist/js/demo.js"></script>
+<script src="${siteurl}dist/js/list.js"></script>
+<!-- 在线编辑器 -->
+<script src="${siteurl}plugins/ace-webide/src-min/ace.js"></script>
+<script>
+	var currPath,zTreeObj;
+    // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+    var setting = {
+        callback: {
+            onClick: fileOnClick
+        }
+    };
+    // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
+    var zNodes = ${tree};
+    $(document).ready(function(){
+        zTreeObj = $.fn.zTree.init($("#tree"), setting, zNodes);
+    });
+
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/eclipse");
+    editor.getSession().setMode("ace/mode/javascript");
+    editor.commands.addCommand({
+        name: 'myCommand',
+        bindKey: {win: 'Ctrl-S',  mac: 'Command-S'},
+        exec: function(editor) {
+            console.log('user press key ctrl + s');
+            submitForm();
+        },
+        readOnly: false // false if this command should not apply in readOnly mode
+    });
+    function submitForm() {
+        if (!currPath){
+            alert("请选择文件");
+		}
+        var text = editor.getValue();
+        if (!text){
+            alert('代码为空');
+        }
+        $.post("${siteurl}admin/tmpl/view_save.htm", {filename: currPath, content: text}, function (res) {
+			if(res == 0) {
+                alert("保存成功");
+            }else{
+			    alert("保存失败")
+			}
+        })
+    }
+    function fileOnClick(event, treeId, treeNode, clickFlag) {
+        var name = treeNode.path;
+        currPath = treeNode.path;
+        if (!name) return;
+		if (name.indexOf(".html") !== -1 ||
+            name.indexOf(".ftl") !== -1 ||
+            name.indexOf(".js") !== -1 ||
+            name.indexOf(".css") !== -1){
+		    loading(true);
+			$.get("${siteurl}admin/tmpl/view_file.htm", {filename: name}, function (res) {
+                editor.setValue(res, -1);
+		    	loading(false);
+            })
+		}
+    }
+    function loading(enable) {
+		if(enable){
+		    $('#loading').show();
+            editor.setReadOnly(true);
+		}else {
+		    $('#loading').hide();
+            editor.setReadOnly(false);
+		}
+    }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        [#if erro??]
+        alert("${erro}");
+        [/#if]
+    });
+</script>
+
+</body>
+</html>

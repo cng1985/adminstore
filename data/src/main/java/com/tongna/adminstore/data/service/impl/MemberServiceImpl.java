@@ -4,18 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ada.data.core.Updater;
+import com.quhaodian.data.core.Updater;
 import com.tongna.adminstore.data.dao.MemberDao;
 import com.tongna.adminstore.data.entity.Member;
 import com.tongna.adminstore.data.service.MemberService;
 
-import com.ada.data.page.Filter;
-import com.ada.data.page.Order;
-import com.ada.data.page.Page;
-import com.ada.data.page.Pageable;
+import com.quhaodian.data.page.Filter;
+import com.quhaodian.data.page.Order;
+import com.quhaodian.data.page.Page;
+import com.quhaodian.data.page.Pageable;
 import java.util.List;
 import java.util.LinkedList;
-import com.ada.data.utils.FilterUtils;
+import com.quhaodian.data.utils.FilterUtils;
 
 
 @Service

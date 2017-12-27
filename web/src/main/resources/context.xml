@@ -56,9 +56,9 @@
 
 
     <bean id="shiro" class="com.jagregory.shiro.freemarker.ShiroTags"></bean>
-    <bean id="menuOpenDirective" class="com.ada.admin.freemaker.MenuOpenDirective"></bean>
-    <bean id="menusDirective" class="com.ada.admin.freemaker.MenusDirective"></bean>
-    <bean id="menuchildsDirective" class="com.ada.admin.freemaker.MenuChildsDirective"></bean>
+    <bean id="menuOpenDirective" class="com.quhaodian.user.freemaker.MenuOpenDirective"></bean>
+    <bean id="menusDirective" class="com.quhaodian.user.freemaker.MenusDirective"></bean>
+    <bean id="menuchildsDirective" class="com.quhaodian.user.freemaker.MenuChildsDirective"></bean>
 
     <!-- freemarker的配置 -->
     <bean id="freemarkerConfigurer"

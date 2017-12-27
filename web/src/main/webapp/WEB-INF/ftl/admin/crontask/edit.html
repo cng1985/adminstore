@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>更新任务信息</title>
+	<!-- Tell the browser to be responsive to screen width -->
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<!-- Bootstrap 3.3.6 -->
+	<link rel="stylesheet" href="${siteurl}bootstrap/css/bootstrap.min.css">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="${siteurl}plugins/FontAwesome/css/font-awesome.min.css">
+	<!-- Ionicons -->
+	<link rel="stylesheet" href="${siteurl}plugins/ionicons201/css/ionicons.min.css">
+	<!-- Theme style -->
+	<link rel="stylesheet" href="${siteurl}dist/css/AdminLTE.min.css">
+	<!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+	<link rel="stylesheet" href="${siteurl}dist/css/skins/_all-skins.min.css">
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	[#include "/admin/common/commons.html"]
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper">
+
+	<header class="main-header">
+		<!-- Header Navbar: style can be found in header.less -->
+		[#include "/admin/common/nav.html"]
+	</header>
+
+	<!-- =============================================== -->
+
+	<!-- Left side column. contains the sidebar -->
+	<aside class="main-sidebar">
+		<!-- sidebar: style can be found in sidebar.less -->
+		<section class="sidebar">
+			<!-- Sidebar user panel -->
+			<!-- Sidebar user panel -->
+			[@user_panel /]
+			<!-- search form -->
+			[@sidebar_form /]
+			<!-- /.search form -->
+			<!-- sidebar menu: : style can be found in sidebar.less -->
+			<ul class="sidebar-menu">
+				<li class="header">主面板</li>
+				[@menustag id=1]
+				[#list list as item]
+				[@menu item "1,2,33"]
+				[/@menu]
+				[/#list]
+				[/@menustag]
+			</ul>
+		</section>
+		<!-- /.sidebar -->
+	</aside>
+
+	<!-- =============================================== -->
+
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<h1>
+				更新任务信息
+			</h1>
+		</section>
+		<!-- Main content -->
+		<section class="content">
+
+			<!-- Default box -->
+			<div class="col-xs-12">
+				<div class="box box-default box-solid">
+					<div class="box-header with-border">
+					</div>
+					<!-- /.box-header -->
+					<!-- form start -->
+					<form class="form-horizontal" action="${siteurl}admin/crontask/model_update.htm" method="post">
+						<input type="hidden" name="id" value="${model.id}">
+						<input type="hidden" name="pageNumber" value="${pageNumber!'1'}">
+						<div class="box-body">
+							<div class="form-group">
+							<label
+									class="col-sm-2 control-label no-padding-right"> 名称</label>
+
+							<div class="col-sm-9">
+								<input required="required" value="${model.name!''}" type="text" name="name" class="form-control"
+									   placeholder="名称" >
+							</div>
+						</div>
+						<div class="form-group">
+							<label
+									class="col-sm-2 control-label no-padding-right"> url</label>
+
+							<div class="col-sm-9">
+								<input required="required"  value="${model.url!''}" type="text" name="url" class="form-control"
+									   placeholder="url" >
+							</div>
+						</div>
+						<div class="form-group">
+							<label
+									class="col-sm-2 control-label no-padding-right"> cron表达式</label>
+
+							<div class="col-sm-9">
+								<input required="required"    value="${model.cron!''}"  type="text" name="cron" class="form-control"
+									   placeholder="名称" >
+								<ul>
+									<li>秒（0~59）</li>
+									<li>分钟（0~59）</li>
+									<li>小时（0~23）</li>
+									<li>天（月）（0~31，但是你需要考虑你月的天数）</li>
+									<li>月（0~11）</li>
+									<li>天（星期）（1~7 1=SUN 或 SUN，MON，TUE，WED，THU，FRI，SAT）</li>
+									<li>年份（1970－2099）</li>
+								</ul>
+								<div>
+									“*”字符代表所有可能的值,“/”字符用来指定数值的增量,“？”字符仅被用于天（月）和天（星期）两个子表达式，表示不指定值, “L” 字符仅被用于天（月）和天（星期）两个子表达式，它是单词“last”的缩写
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label
+									class="col-sm-2 control-label no-padding-right"> 是否打开日志</label>
+
+							<div class="col-sm-9">
+								<label class="radio-inline">
+									<input type="radio" [#if model.recordState?? &&   model.recordState="打开" ]checked="checked" [/#if] name="recordState"  value="ON"> 打开
+								</label>
+								<label class="radio-inline">
+									<input type="radio" [#if model.recordState?? &&  model.recordState="关闭" ]checked="checked" [/#if] name="recordState"   value="OFF"> 关闭
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label
+									class="col-sm-2 control-label no-padding-right"> 描述</label>
+
+							<div class="col-sm-9">
+								<textarea  type="text" name="note" class="form-control">${model.note!''}</textarea>
+							</div>
+						</div>
+						</div>
+						<!-- /.box-body -->
+						<div class="box-footer">
+							<button type="submit" class="btn btn-primary pull-right">更新</button>
+						</div>
+						<!-- /.box-footer -->
+					</form>
+				</div>
+			</div>
+			<!-- /.box -->
+
+		</section>
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+
+	[#include "/admin/common/footer.html"]
+
+	<!-- Control Sidebar -->
+	[#include "/admin/common/aside.html"]
+
+	<!-- /.control-sidebar -->
+	<!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+	<div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="${siteurl}plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="${siteurl}bootstrap/js/bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script src="${siteurl}plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="${siteurl}plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="${siteurl}dist/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="${siteurl}dist/js/demo.js"></script>
+</body>
+</html>

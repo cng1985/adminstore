@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta charset="utf-8" />
+<title>添加</title>
+[#include "/admin/common/commonurl.html"]
+[#include "/admin/common/scripts.html"]
+
+
+[#macro showErrors separator classOrStyle=""]
+    [#if list??]
+	    [#list errors as error]
+	    {error.objectName!"1"}
+	    [/#list]
+    [/#if]
+    
+    
+    [#if fileds??]
+	     [#list fileds as error]
+	    {error.objectName!"1"}
+	    [/#list]
+    [/#if]
+[/#macro>
+
+</head>
+
+<body class="no-skin">
+	<div id="navbar" class="navbar navbar-default">
+
+		[#include "/admin/common/navbar.html"]
+
+		<!-- /.navbar-container -->
+	</div>
+
+	<div class="main-container" id="main-container">
+
+		<div id="sidebar" class="sidebar                  responsive">
+			[#include "/admin/common/shortcuts.html"]
+			<!-- /.sidebar-shortcuts -->
+
+			<!-- .nav-list -->
+			[#include "/admin/common/commonmenu.html"]
+			<ul class="nav nav-list">
+				[@menustag id=1] 
+				[#list list as item]
+					[@menu item "1,10,11"]
+					 [/@menu] [/#list]
+				[/@menustag]
+			</ul>
+			<!-- /.nav-list -->
+
+			<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+				<i class="ace-icon fa fa-angle-double-left"
+					data-icon1="ace-icon fa fa-angle-double-left"
+					data-icon2="ace-icon fa fa-angle-double-right"></i>
+			</div>
+
+		</div>
+
+		<div class="main-content">
+			<div class="breadcrumbs" id="breadcrumbs">
+				<ul class="breadcrumb">
+					<li><i class="ace-icon fa fa-home home-icon"></i> <a href="#">首页</a>
+					</li>
+					<li class="active">添加</li>
+				</ul>
+				<!-- /.breadcrumb -->
+
+				<div class="nav-search" id="nav-search">
+					<form class="form-search">
+						<span class="input-icon"> <input type="text"
+							placeholder="Search ..." class="nav-search-input"
+							id="nav-search-input" autocomplete="off" /> <i
+							class="ace-icon fa fa-search nav-search-icon"></i>
+						</span>
+					</form>
+				</div>
+				<!-- /.nav-search -->
+			</div>
+
+
+
+			<div class="page-content">
+				[#include "/admin/common/page.html"] [#include
+				"/admin/common/settings.html"]
+				<div class="row" style="height: 800px;">
+					<div class="col-xs-12">
+
+					<span style="white-space:pre">	</span><!-- 流程图 -->
+						<img style="position: absolute; top: 0px; left: 0px;"
+							src="${siteurl}admin/flow/read.htm?processDefinitionId=${task.processDefinitionId!''}&resourceType=image">
+					
+						<!-- 流程图中当前活动框 -->
+						<div style="background:rgba(255,0,0,0.5); position: absolute;border:2px solid red;border-radius:10px; width: ${width }px;height:${height }px;top:${y }px;left: ${x }px;"></div>
+
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+		<!-- /.main-content -->
+
+		[#include "/admin/common/footer.html"]
+
+	</div>
+	<!-- /.main-container -->
+
+	<!-- basic scripts -->
+
+
+</body>
+</html>

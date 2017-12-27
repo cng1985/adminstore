@@ -1,0 +1,98 @@
+[#include "/admin/common/layout_simple.html"]
+[@layout menus="1,118" /]
+[#macro title]
+数据更新
+[/#macro]
+[@links /]
+[#macro form]
+<form role="form" method="post" class="form-horizontal"
+	  action="${siteurl}admin/flow/approve.htm">
+	<input type="hidden" name="taskid" value="${task.id}" />
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"> 审批任务:</label>
+		<div class="col-sm-9" style="line-height: 35px;">
+			${(model.name)!''}
+		</div>
+	</div>
+	[#if type?? && type==100]
+	<div class="form-group">
+		<input type="hidden" name="approval" value="1" required="required"/>
+	</div>
+	</div>
+	[#else]
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"> 是否同意:</label>
+		<div class="col-sm-9" style="line-height: 35px;">
+			<label>同意 <input type="radio" name="approval" value="1" required="required"/></label>
+			<label>不同意 <input type="radio" name="approval" value="0"  required="required" /></label>
+		</div>
+	</div>
+	[/#if]
+
+	<div class="form-group">
+		<label class="col-sm-3 control-label no-padding-right"> 审批意见</label>
+		<div class="col-sm-9">
+			<textarea class="col-xs-10 col-sm-10" name="note"></textarea>
+		</div>
+	</div>
+	<div class="clearfix form-actions">
+		<div class="col-md-offset-3 col-md-9">
+			<button type="submit" class="btn btn-info">
+				<i class="ace-icon fa fa-check bigger-110"></i> [#if type?? && type==100]确认[#else]审批[/#if]
+			</button>
+		</div>
+	</div>
+	<div class="form-group">
+         <div id="dataid"></div>
+         <h2>审批记录</h2>
+		<div class="scroll-content">
+            [#if records??]
+            [#list records as item]
+			<div class="itemdiv commentdiv">
+				<div class="body">
+					<div class="name">
+						<a href="#">${(item.user)!""} </a> 审批状态:${(item.state)!""}
+					</div>
+
+					<div class="time">
+						<i class="ace-icon fa fa-clock-o"></i> <span class="blue">${item.addDate?string('yyyy-MM-dd HH:mm:ss')!""}</span>
+					</div>
+
+					<div class="text">
+						<i class="ace-icon fa fa-quote-left"></i>${item.note!""}
+					</div>
+				</div>
+			</div>
+            [/#list]
+            [/#if]
+
+		</div>
+	</div>
+
+	<div class="hr hr-24"></div>
+
+</form>
+[/#macro]
+
+[#macro breadcrumb]
+<ul class="breadcrumb">
+	<li>
+		<i class="ace-icon fa fa-home home-icon"></i> <a href="#">首页</a>
+	</li>
+	<li>
+         <a href="${siteurl}admin/flow/task_list.htm">列表</a>
+    </li>
+	<li class="active">审批</li>
+</ul>
+[/#macro]
+[#macro scripts]
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#dataid").load("${siteurl}${model.viewurl}?id=${model.oid}&taskid=${task.id}");
+    });
+</script>
+[/#macro]
+[#macro links]
+<link rel="stylesheet" href="${siteurl}assets/plugs/nice-validator/jquery.validator.css" />
+<script src="${siteurl}assets/plugs/nice-validator/jquery.validator.js?local=zh-CN"></script>
+[/#macro]

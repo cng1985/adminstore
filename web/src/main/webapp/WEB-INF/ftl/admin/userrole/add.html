@@ -102,6 +102,31 @@
 									<input class="form-control" id="description" name="description" placeholder="描述" value=""   type="text">
 								</div>
 							</div>
+							<div class="form-group">
+								<label for="description" class="col-sm-2 control-label">类型</label>
+								<div class="col-sm-10 ">
+									<label class="checkbox-inline">
+										<input name="type" type="radio" id="inlineCheckbox1" value="SYSTEM"> 系统角色
+									</label>
+									<label class="checkbox-inline">
+										<input  name="type" type="radio" id="inlineCheckbox2" value="CUSTOM"> 自定义角色
+									</label>
+								</div>
+							</div>
+							[#if catalogs??]
+							<div class="form-group">
+								<label for="catalog" class="col-sm-2 control-label">角色分类</label>
+								<div class="col-sm-10">
+									<select class="form-control" id="catalog"   name="catalog.id" >
+										[#list catalogs as item]
+										<option value="${item.id}">${item.name}</option>
+										[/#list]
+									</select>
+								</div>
+							</div>
+							[/#if]
+
+
 							[#list menus as item]
 							<div class="form-group">
 								<label  class="col-sm-2 control-label no-padding-right"> ${item.name}
