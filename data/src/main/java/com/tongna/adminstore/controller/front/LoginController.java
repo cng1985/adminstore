@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -59,47 +60,11 @@ public class LoginController extends BaseController {
         return getView(Views.LOGIN);
     }
 
-    /**
-     * 提交登录
-     *
-     * @param username
-     * @param password
-     * @param model
-     * @return
-     */
+
     @PostMapping(value = "/login")
-    public String login(String username, String password, ModelMap model) {
-        String ret = getView(Views.LOGIN);
-
-        if (StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
-            return ret;
-        }
-
-        AuthenticationToken token = new UsernamePasswordToken(username,
-                password);
-        if (token == null) {
-            model.put("message", "用户名或密码错误");
-            return ret;
-        }
-
-        try {
-            SecurityUtils.getSubject().login(token);
-
-            ret = Views.REDIRECT_HOME;
-
-            // 更新消息数量
-            // pushBadgesCount();
-        } catch (AuthenticationException e) {
-            if (e instanceof UnknownAccountException) {
-                model.put("message", "用户不存在");
-            } else if (e instanceof LockedAccountException) {
-                model.put("message", "用户被禁用");
-            } else {
-                model.put("message", "用户认证失败");
-            }
-        }
-
-        return ret;
+    public String loginWork(RedirectAttributes attributes) {
+        attributes.addFlashAttribute("msg", "密码错误");
+        return "redirect:login.htm";
     }
 
     @RequestMapping(value = "/loginok", method = RequestMethod.GET)
