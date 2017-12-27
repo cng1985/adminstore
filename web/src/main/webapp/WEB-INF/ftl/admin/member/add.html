@@ -51,7 +51,7 @@
 				<li class="header">主面板</li>
 				[@menustag id=1]
 				[#list list as item]
-				[@menu item ""]
+				[@menu item "1,20,21"]
 				[/@menu]
 				[/#list]
 				[/@menustag]
@@ -82,30 +82,30 @@
 					</div>
 					<!-- /.box-header -->
 					<!-- form start -->
-					<form class="form-horizontal" action="${siteurl}admin/userinfo/model_save.htm" method="post">
+					<form class="form-horizontal" action="${siteurl}admin/member/model_save.htm" method="post">
 						<div class="box-body">
 							<div class="form-group">
 								<label for="username" class="col-sm-2 control-label">用户名</label>
 								<div class="col-sm-10">
-									<input class="form-control" value="${(model.username)!''}" id="username" name="username" placeholder="用户名" type="text">
+									<input class="form-control" id="username" name="username" placeholder="用户名" type="text">
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="name" class="col-sm-2 control-label">姓名</label>
 								<div class="col-sm-10">
-									<input class="form-control"  value="${(model.name)!''}"  id="name" name="name" placeholder="姓名" type="text">
+									<input class="form-control" id="name" name="name" placeholder="姓名" type="text">
 								</div>
 							</div>
 							<div class="form-group">
 								<label  class="col-sm-2 control-label" for="password">密码</label>
 								<div class="col-sm-10">
-									<input class="form-control"  value="${(model.password)!''}"   id="password" name="plainPassword"  placeholder="密码" type="password">
+									<input class="form-control" id="password" name="plainPassword"  placeholder="密码" type="password">
 								</div>
 							</div>
 						</div>
 						<!-- /.box-body -->
 						<div class="box-footer">
-							<a href="${siteurl}admin/userinfo/view_list.htm" class="btn btn-default">取消</a>
+							<a href="${siteurl}admin/member/view_list.htm" class="btn btn-default">取消</a>
 							<button type="submit" class="btn btn-primary pull-right">注册</button>
 						</div>
 						<!-- /.box-footer -->

@@ -87,7 +87,7 @@
                 <entry key="menustag" value-ref="menusDirective"/>
                 <entry key="menuchilds" value-ref="menuchildsDirective"/>
                 <entry key="siteurl" value="#{servletContext.contextPath}/"/>
-                <entry key="sitename" value="数据中心"/>
+                <entry key="sitename" value="后台管理"/>
             </map>
         </property>
     </bean>

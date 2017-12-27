@@ -18,8 +18,6 @@
          folder instead of downloading all of them to reduce the load. -->
 	<link rel="stylesheet" href="${siteurl}dist/css/skins/_all-skins.min.css">
 
-	<link rel="stylesheet" href="${siteurl}plugins/sweetalert/sweetalert.css">
-
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -54,7 +52,7 @@
 				<li class="header">主面板</li>
 				[@menustag id=1]
 				[#list list as item]
-				[@menu item "1,20,22"]
+				[@menu item "1,20,21"]
 				[/@menu]
 				[/#list]
 				[/@menustag]
@@ -68,6 +66,12 @@
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<h1>
+				用户管理
+				<small>管理你的用户</small>
+			</h1>
+		</section>
 		<!-- Main content -->
 		<section class="content">
 
@@ -75,23 +79,35 @@
 			<div class="col-xs-12">
 				<div class="box box-default box-solid">
 					<div class="box-header with-border">
-						<h3 class="box-title">重置密码</h3>
+						<h3 class="box-title">更新用户信息</h3>
 					</div>
 					<!-- /.box-header -->
 					<!-- form start -->
-					<form class="form-horizontal" >
-						<input type="hidden" name="id" id="id" value="${model.id}">
+					<form class="form-horizontal" action="${siteurl}admin/member/model_update.htm" method="post">
+						<input type="hidden" name="id" value="${model.id}">
+						<input type="hidden" name="no" value="${page.no!'1'}">
 						<div class="box-body">
 							<div class="form-group">
-								<label for="password" class="col-sm-2 control-label">新密码</label>
+								<label for="name" class="col-sm-2 control-label">用户</label>
 								<div class="col-sm-10">
-									<input class="form-control" id="password" name="password"  placeholder="新密码" type="password">
+									<input class="form-control" id="name" name="name" value="${model.name!''}" placeholder="用户名" type="text">
 								</div>
+							</div>
+							<label for="roles"
+								   class="col-sm-2 control-label">角色</label>
+							<div class="col-sm-10" id="roles">
+								[#if roles?? && roles?size>0]
+								[#list roles as item]
+								<label class="checkbox-inline">
+									<input  [#if model.roles?? && model.roles?seq_contains(item)]checked="checked"[/#if] type="checkbox" name="roles" value="${item.id}">${item.name!""}
+								</label>
+								[/#list]
+								[/#if]
 							</div>
 						</div>
 						<!-- /.box-body -->
 						<div class="box-footer">
-							<button id="buttonx" type="button" class="btn btn-primary pull-right">确定</button>
+							<button type="submit" class="btn btn-primary pull-right">更新</button>
 						</div>
 						<!-- /.box-footer -->
 					</form>
@@ -124,28 +140,9 @@
 <script src="${siteurl}plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="${siteurl}plugins/fastclick/fastclick.js"></script>
-
-<script src="${siteurl}plugins/sweetalert/sweetalert.min.js"></script>
-
 <!-- AdminLTE App -->
 <script src="${siteurl}dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="${siteurl}dist/js/demo.js"></script>
-<script type="text/javascript">
-	$(document).ready(function () {
-		$("#buttonx").click(function () {
-		    var data={};
-		    data.id=$("#id").val();
-            data.password=$("#password").val();
-			$.post("${siteurl}admin/useraccount/restpassword.htm",data,function (bacedata) {
-			    if (bacedata.code==0){
-                    swal("提示！", ""+bacedata.msg, "success");
-				}else{
-                    swal("Oops!", ""+bacedata.msg, "error")
-				}
-            })
-        });
-    });
-</script>
 </body>
 </html>

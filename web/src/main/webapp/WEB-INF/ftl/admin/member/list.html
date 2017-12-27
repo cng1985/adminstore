@@ -25,6 +25,24 @@
 	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 	[#include "/admin/common/commons.html"]
+
+	<!-- jQuery 2.2.3 -->
+	<script src="${siteurl}plugins/jQuery/jquery-2.2.3.min.js"></script>
+	<!-- Bootstrap 3.3.6 -->
+	<script src="${siteurl}bootstrap/js/bootstrap.min.js"></script>
+	<!-- SlimScroll -->
+	<script src="${siteurl}plugins/slimScroll/jquery.slimscroll.min.js"></script>
+	<!-- FastClick -->
+	<script src="${siteurl}plugins/fastclick/fastclick.js"></script>
+	<!-- AdminLTE App -->
+	<script src="${siteurl}dist/js/app.min.js"></script>
+	<!-- AdminLTE for demo purposes -->
+	<script src="${siteurl}dist/js/demo.js"></script>
+	<script src="${siteurl}dist/js/list.js"></script>
+
+	<link rel="stylesheet" href="${siteurl}plugins/bootstrap-datepicker/css/bootstrap-datepicker3.css">
+	<script src="${siteurl}plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+	<script src="${siteurl}plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
@@ -50,7 +68,7 @@
 				<li class="header">主面板</li>
 				[@menustag id=1]
 					[#list list as item]
-						[@menu item "1,20,22"]
+						[@menu item "1,20,21"]
 						[/@menu]
 					[/#list]
 				[/@menustag]
@@ -73,11 +91,14 @@
 		<!-- Main content -->
 		<section class="content">
 			<!-- Default box -->
-			<form id="listForm" action="${siteurl}admin/useraccount/view_list.htm" method="post">
+			<form id="listForm" action="${siteurl}admin/member/view_list.htm" method="post">
 				<div class="row">
 					<div class="col-xs-12">
 						<div class=" box box-body">
 							<div class="col-xs-2 ">
+								<a class="btn btn-primary" href="${siteurl}admin/member/view_add.htm">
+									<i class="fa  fa-plus"></i> 添加
+								</a>
 							</div>
 							<div class="col-xs-10 " style="padding-left: 0;">
 								<button type="submit" name="search" class="btn btn-success pull-right">
@@ -96,33 +117,39 @@
 								<table class="table table-bordered table-hover dataTable">
 									<thead>
 									<tr role="row">
-										<td class="col-xs-2">用户名</td>
-										<td class="col-xs-1 text-center">姓名</td>
-										<td class="col-xs-2 text-center">账号类型</td>
-										<td class="col-xs-3 text-center">登陆次数</td>
-										<td class="col-xs-2 text-center">最后登陆时间</td>
-										<td class="col-xs-2 text-center">操作</td>
+										<td class="col-xs-2">姓名</td>
+										<td class="col-xs-1 text-center">性别</td>
+										<td class="col-xs-1 text-center">人才类型</td>
+										<td class="col-xs-1 text-center">推荐情况</td>
+										<td class="col-xs-2 text-center">个人介绍</td>
+										<td class="col-xs-2 text-center">更新时间</td>
+										<td class="col-xs-3 text-center">操作</td>
 									</tr>
 									</thead>
 									<tbody>
 									[#list list as item]
 									<tr id="trr${item.id}">
-										<td>${item.username!""}</td>
-										<td class="text-center">${(item.user.name)!""}</td>
-										<td class="text-center">${item.accountType!""}</td>
-										<td class="text-center">${item.loginSize!""}</td>
+										<td>${item.name!""}</td>
+										<td class="text-center">${item.sex!""}</td>
+										<td class="">${(item.memberType.name)!""}</td>
+										<td class="text-center">${item.recommendType!"未推荐"}</td>
+										<td class="">${(item.note)!""}</td>
 										<td class="text-center">${(item.lastDate?string('yyyy-MM-dd HH:mm:ss'))!''}</td>
 										<td class="text-center">
 											<div style="display: inline-block;">
-												[@shiro.hasPermission name="useraccount:update"]
+												<a  class="menubutton btn btn-sm btn-success" onclick="openDialog(${item.id},'${item.name}')"
+													href="#">
+													<i class="fa fa-edit">推荐</i>
+												</a>
+												[@shiro.hasPermission name="member:update"]
 												<a  class="menubutton btn btn-sm btn-success"
-													href="${siteurl}admin/useraccount/view_edit.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
-													<i class="fa fa-edit">重置密码</i>
+													href="${siteurl}admin/member/view_edit.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
+													<i class="fa fa-edit">更新</i>
 												</a>
 												[/@shiro.hasPermission]
-												[@shiro.hasPermission name="useraccount:delete"]
+												[@shiro.hasPermission name="member:delete"]
 												<a  class="menubutton btn btn-sm btn-danger"  onclick="return confirm('删除后无法恢复,确定要删除吗')"
-													href="${siteurl}admin/useraccount/model_delete.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
+													href="${siteurl}admin/member/model_delete.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
 													<i class="fa fa-trash">删除</i>
 												</a>
 												[/@shiro.hasPermission]
@@ -156,19 +183,7 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery 2.2.3 -->
-<script src="${siteurl}plugins/jQuery/jquery-2.2.3.min.js"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="${siteurl}bootstrap/js/bootstrap.min.js"></script>
-<!-- SlimScroll -->
-<script src="${siteurl}plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="${siteurl}plugins/fastclick/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="${siteurl}dist/js/app.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="${siteurl}dist/js/demo.js"></script>
-<script src="${siteurl}dist/js/list.js"></script>
+
 
 
 <script type="text/javascript">
@@ -177,6 +192,66 @@
         alert("${erro}");
         [/#if]
     });
+</script>
+
+
+
+
+<div id="showDialog" class="modal fade" tabindex="-1" role="dialog">
+	<form class="form-horizontal" action="${siteurl}admin/member/recommend.htm" method="post">
+		<input type="hidden" id="rid" name="member.id">
+		<input type="hidden" name="pageNumber" value="${(page.pageNumber)!'1'}">
+
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">推荐</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="name" class="col-sm-2 control-label">学校</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="name" placeholder="学校">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="expireDate" class="col-sm-2 control-label">到期时间</label>
+						<div class="col-sm-10">
+							<input required="required" type="text" name="expireDate" class="form-control" id="expireDate" placeholder="到期时间">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="submit" class="btn btn-primary">保存</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</form>
+</div><!-- /.modal -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        [#if erro??]
+        alert("${erro}");
+        [/#if]
+
+
+            $('#expireDate').datepicker({
+                format: "yyyy-mm-dd",
+                todayBtn: true,
+                clearBtn: true,
+                language: "zh-CN",
+                calendarWeeks: true,
+                autoclose: true
+            });
+    });
+
+    function openDialog(id,name) {
+        $("#rid").val(id);
+        $("#name").val(name);
+        $("#showDialog").modal('show');
+    }
 </script>
 
 </body>
