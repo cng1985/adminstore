@@ -78,7 +78,7 @@ public class MemberAction {
 
     @RequiresPermissions("member")
     @RequestMapping("/admin/member/view_add")
-    public String add(ModelMap model) {
+    public String add() {
         return "/admin/member/add";
     }
 
