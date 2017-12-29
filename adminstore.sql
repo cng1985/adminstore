@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `menu` (
   CONSTRAINT `FKqcf9gem97gqa5qjm4d3elcqt5` FOREIGN KEY (`pid`) REFERENCES `menu` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.menu 的数据：~19 rows (大约)
+-- 正在导出表  adminstore.menu 的数据：~23 rows (大约)
 DELETE FROM `menu`;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
 INSERT INTO `menu` (`id`, `addDate`, `code`, `ids`, `lastDate`, `levelInfo`, `lft`, `name`, `rgt`, `sortNum`, `catalog`, `icon`, `nums`, `path`, `permission`, `pid`) VALUES
@@ -254,13 +254,15 @@ CREATE TABLE IF NOT EXISTS `site_link_type` (
   PRIMARY KEY (`id`),
   KEY `FKsve8aryqrci3acgot8k7rt6ix` (`pid`),
   CONSTRAINT `FKsve8aryqrci3acgot8k7rt6ix` FOREIGN KEY (`pid`) REFERENCES `site_link_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.site_link_type 的数据：~1 rows (大约)
+-- 正在导出表  adminstore.site_link_type 的数据：~3 rows (大约)
 DELETE FROM `site_link_type`;
 /*!40000 ALTER TABLE `site_link_type` DISABLE KEYS */;
 INSERT INTO `site_link_type` (`id`, `addDate`, `code`, `ids`, `lastDate`, `levelInfo`, `lft`, `name`, `rgt`, `sortNum`, `pid`) VALUES
-	(1, '2017-12-27 13:59:20', '', '1', '2017-12-27 13:59:20', 1, 1, '根节点', 2, 0, NULL);
+	(1, '2017-12-27 13:59:20', '', '1', '2017-12-27 13:59:20', 1, 1, '根节点', 6, 0, NULL),
+	(2, '2017-12-29 08:52:53', '001', '1,2', '2017-12-29 08:52:53', 2, 2, '开源网站', 3, NULL, 1),
+	(3, '2017-12-29 08:53:07', '002', '1,3', '2017-12-29 08:53:07', 2, 4, '朋友网站', 5, NULL, 1);
 /*!40000 ALTER TABLE `site_link_type` ENABLE KEYS */;
 
 -- 导出  表 adminstore.site_template_web 结构
@@ -290,7 +292,7 @@ CREATE TABLE IF NOT EXISTS `site_theme_config` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.site_theme_config 的数据：~1 rows (大约)
+-- 正在导出表  adminstore.site_theme_config 的数据：~0 rows (大约)
 DELETE FROM `site_theme_config`;
 /*!40000 ALTER TABLE `site_theme_config` DISABLE KEYS */;
 INSERT INTO `site_theme_config` (`id`, `name`, `path`, `screenShot`) VALUES
@@ -318,7 +320,7 @@ CREATE TABLE IF NOT EXISTS `user_account` (
 DELETE FROM `user_account`;
 /*!40000 ALTER TABLE `user_account` DISABLE KEYS */;
 INSERT INTO `user_account` (`id`, `addDate`, `lastDate`, `accountType`, `loginSize`, `password`, `salt`, `username`, `user_id`) VALUES
-	(1, '2017-12-27 13:53:50', '2017-12-27 15:19:28', 2, 26, 'b63e05a75d3c13c53becedeb885bda5b67a6664a', 'e1e8c5fab5a28e13', 'admin', 1);
+	(1, '2017-12-27 13:53:50', '2017-12-29 08:52:35', 2, 39, 'b63e05a75d3c13c53becedeb885bda5b67a6664a', 'e1e8c5fab5a28e13', 'admin', 1);
 /*!40000 ALTER TABLE `user_account` ENABLE KEYS */;
 
 -- 导出  表 adminstore.user_feedback 结构
@@ -370,11 +372,11 @@ CREATE TABLE IF NOT EXISTS `user_info` (
   CONSTRAINT `FK3193uu2asgocbhkk1mus5wfd7` FOREIGN KEY (`household_id`) REFERENCES `area` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.user_info 的数据：~1 rows (大约)
+-- 正在导出表  adminstore.user_info 的数据：~0 rows (大约)
 DELETE FROM `user_info`;
 /*!40000 ALTER TABLE `user_info` DISABLE KEYS */;
 INSERT INTO `user_info` (`id`, `addDate`, `lastDate`, `avatar`, `catalog`, `loginSize`, `name`, `phone`, `registerType`, `state`, `edge`, `introduce`, `note`, `sex`, `household_id`) VALUES
-	(1, '2017-12-27 14:44:05', '2017-12-27 15:19:29', NULL, 0, 8, 'admin', NULL, '账号', NULL, NULL, NULL, NULL, NULL, NULL);
+	(1, '2017-12-27 14:44:05', '2017-12-29 08:52:35', NULL, 0, 22, 'admin', NULL, '账号', NULL, NULL, NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `user_info` ENABLE KEYS */;
 
 -- 导出  表 adminstore.user_info_attribute 结构
@@ -436,9 +438,9 @@ CREATE TABLE IF NOT EXISTS `user_login_log` (
   PRIMARY KEY (`id`),
   KEY `FKj91w0nnfocpdp796lr3ot4lxs` (`user_id`),
   CONSTRAINT `FKj91w0nnfocpdp796lr3ot4lxs` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.user_login_log 的数据：~2 rows (大约)
+-- 正在导出表  adminstore.user_login_log 的数据：~10 rows (大约)
 DELETE FROM `user_login_log`;
 /*!40000 ALTER TABLE `user_login_log` DISABLE KEYS */;
 INSERT INTO `user_login_log` (`id`, `addDate`, `lastDate`, `ip`, `state`, `user_id`) VALUES
@@ -448,7 +450,10 @@ INSERT INTO `user_login_log` (`id`, `addDate`, `lastDate`, `ip`, `state`, `user_
 	(4, '2017-12-27 14:23:55', '2017-12-27 14:23:55', '0:0:0:0:0:0:0:1', 1, 1),
 	(5, '2017-12-27 14:41:50', '2017-12-27 14:41:50', '0:0:0:0:0:0:0:1', 1, 1),
 	(6, '2017-12-27 14:43:53', '2017-12-27 14:43:53', '0:0:0:0:0:0:0:1', 1, 1),
-	(7, '2017-12-27 14:45:51', '2017-12-27 14:45:51', '0:0:0:0:0:0:0:1', 1, 1);
+	(7, '2017-12-27 14:45:51', '2017-12-27 14:45:51', '0:0:0:0:0:0:0:1', 1, 1),
+	(8, '2017-12-28 13:57:50', '2017-12-28 13:57:50', '0:0:0:0:0:0:0:1', 1, 1),
+	(9, '2017-12-29 08:50:12', '2017-12-29 08:50:12', '0:0:0:0:0:0:0:1', 1, 1),
+	(10, '2017-12-29 08:52:35', '2017-12-29 08:52:35', '0:0:0:0:0:0:0:1', 1, 1);
 /*!40000 ALTER TABLE `user_login_log` ENABLE KEYS */;
 
 -- 导出  表 adminstore.user_oauth_config 结构
@@ -514,7 +519,7 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 DELETE FROM `user_role`;
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
 INSERT INTO `user_role` (`id`, `addDate`, `lastDate`, `alias`, `description`, `name`, `roleType`, `catalog_id`) VALUES
-	(1, '2017-12-27 14:45:45', '2017-12-27 14:45:45', '', '', 'admin', 0, 2);
+	(1, '2017-12-29 08:52:28', '2017-12-29 08:52:28', '', '', 'admin', 0, 2);
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 
 -- 导出  表 adminstore.user_role_authority 结构
@@ -526,7 +531,7 @@ CREATE TABLE IF NOT EXISTS `user_role_authority` (
   CONSTRAINT `FKo6xok4ngrsuacqkyjpqbykn9l` FOREIGN KEY (`role_id`) REFERENCES `user_role` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.user_role_authority 的数据：~18 rows (大约)
+-- 正在导出表  adminstore.user_role_authority 的数据：~19 rows (大约)
 DELETE FROM `user_role_authority`;
 /*!40000 ALTER TABLE `user_role_authority` DISABLE KEYS */;
 INSERT INTO `user_role_authority` (`role_id`, `permission`) VALUES
@@ -535,9 +540,6 @@ INSERT INTO `user_role_authority` (`role_id`, `permission`) VALUES
 	(1, 'member'),
 	(1, 'useraccount'),
 	(1, 'userloginlog'),
-	(1, '12'),
-	(1, 'flow'),
-	(1, 'act'),
 	(1, '15'),
 	(1, 'sendcode_plugin'),
 	(1, 'storage_plugin'),

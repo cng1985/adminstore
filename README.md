@@ -14,7 +14,7 @@
 1. 创建数据库。如使用MySQL，字符集选择为`utf8`或者`utf8mb4`（支持更多特殊字符，推荐）。
 2. 执行数据库脚本。数据库脚本在`database`目录下。
 3. 在eclipse中导入maven项目。点击eclipse菜单`File` - `Import`，选择`Maven` - `Existing Maven Projects`。创建好maven项目后，会开始从maven服务器下载第三方jar包（如spring等），需要一定时间，请耐心等待。
-4. 创建mysql数据库，导入adminstore.sql
+4. 创建mysql数据库，导入`adminstore.sql`
 5. 修改数据库连接。打开`/web/src/main/resources/jdbc.propertis`文件，根据实际情况修改`jdbc.url`、`jdbc.username`、`jdbc.password`的值。
 6. 运行程序。在eclipse中，右键点击项目名，选择`Run as` - `Maven build...`，`Goals`填入`jetty:run`或`tomcat7:run`，然后点击`Run`。
 7. 访问系统。前台地址：[http://localhost:8080/web](http://localhost:8080/)，手机站地址：[http://127.0.0.1:8080/](http://127.0.0.1:8080/)；后台地址：[http://localhost:8080/cmscp/index.do](http://localhost:8080/cmscp/index.do)，用户名：admin，密码：123456。
@@ -22,3 +22,9 @@
 ## 界面效果
 
 ![菜单管理功能](http://image.yichisancun.com/7075c8f053f0b2aa0f06ad08b750029d "菜单管理功能")
+![模板管理功能](http://image.yichisancun.com/f932a35746388fea26d761420d3cf4fe "模板管理功能")
+![插件管理功能](http://image.yichisancun.com/70026a48c20b7ab6c10e59700db302e3 "插件管理功能")
+![插件管理功能](http://image.yichisancun.com/70026a48c20b7ab6c10e59700db302e3 "插件管理功能")
+![登陆日志管理功能](http://image.yichisancun.com/25c3c517571f72eae5dc9fb53b2c5a0f "登陆日志管理功能")
+
+
