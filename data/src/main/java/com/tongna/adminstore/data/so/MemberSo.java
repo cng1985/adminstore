@@ -1,6 +1,5 @@
 package com.tongna.adminstore.data.so;
 
-import com.quhaodian.area.data.entity.Area;
 import com.quhaodian.data.page.Filter;
 import com.quhaodian.data.page.Search;
 
