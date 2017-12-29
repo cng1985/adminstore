@@ -9,6 +9,16 @@
 - MySQL5.0或更高版本
 - Maven3.0或更高版本。
 
+## 技术选型：
+
+* SSH (Spring、SpringMVC、Hibernate）
+* 安全权限 Shiro
+* 缓存 Ehcache
+* 视图模板 freemarker 
+* [discover](https://gitee.com/quhaodian/disconver)
+* AdminLTE
+* bootstrap
+
 ## 搭建步骤
 
 1. 创建数据库。如使用MySQL，字符集选择为`utf8`或者`utf8mb4`（支持更多特殊字符，推荐）。
@@ -17,15 +27,23 @@
 4. 创建mysql数据库，导入`adminstore.sql`
 5. 修改数据库连接。打开`/web/src/main/resources/jdbc.propertis`文件，根据实际情况修改`jdbc.url`、`jdbc.username`、`jdbc.password`的值。
 6. 运行程序。在eclipse中，右键点击项目名，选择`Run as` - `Maven build...`，`Goals`填入`jetty:run`或`tomcat7:run`，然后点击`Run`。
-7. 访问系统。前台地址：[http://localhost:8080/web](http://localhost:8080/)，手机站地址：[http://127.0.0.1:8080/](http://127.0.0.1:8080/)；后台地址：[http://localhost:8080/cmscp/index.do](http://localhost:8080/cmscp/index.do)，用户名：admin，密码：123456。
+7. 访问系统。前台地址：[http://localhost:8080/web](http://localhost:8080/)，手机站地址：[http://127.0.0.1:8080/](http://127.0.0.1:8080/)；后台地址：[http://localhost:8080/web/login.htm](http://localhost:8080/web/login.htm)，用户名：admin，密码：123456。
+
+
+## 交流方式
+
+* QQ群:141837028   [discover开源QQ群](//shang.qq.com/wpa/qunwpa?idkey=d1a308945e4b2ff8aeb1711c2c7914342dae15e9ce7041e94756ab355430dc78)
 
 ## 界面效果
-
 
 ![部分er图](http://image.yichisancun.com/bd042b2c2a55f57bc6dc3d3568a790ed "部分er图")
 ![菜单管理功能](http://image.yichisancun.com/7075c8f053f0b2aa0f06ad08b750029d "菜单管理功能")
 ![模板管理功能](http://image.yichisancun.com/f932a35746388fea26d761420d3cf4fe "模板管理功能")
 ![插件管理功能](http://image.yichisancun.com/70026a48c20b7ab6c10e59700db302e3 "插件管理功能")
 ![登陆日志管理功能](http://image.yichisancun.com/25c3c517571f72eae5dc9fb53b2c5a0f "登陆日志管理功能")
+
+## 已经使用的项目
+
+* [ucms](https://gitee.com/cng1985/iwan)
 
 
