@@ -28,7 +28,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- *
  * Created by imake on 2017年08月29日17:08:12.
  */
 
@@ -37,138 +36,143 @@ import java.util.Date;
 @Controller
 public class MemberAction {
 
-	public static final String MODEL = "model";
+    public static final String MODEL = "model";
 
-	private static final Logger log = LoggerFactory.getLogger(MemberAction.class);
+    private static final Logger log = LoggerFactory.getLogger(MemberAction.class);
+    public static final String REDIRECT_LIST_HTML = "redirect:/admin/member/view_list.htm";
 
-	@Autowired
-	private MemberService manager;
+    @Autowired
+    private MemberService manager;
 
 
-	@Autowired
-	private UserRoleService roleService;
+    @Autowired
+    private UserRoleService roleService;
 
-	@Autowired
-	private UserInfoService userInfoService;
+    @Autowired
+    private UserInfoService userInfoService;
 
-	@InitBinder
-	public void initBinder(WebDataBinder binder) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		dateFormat.setLenient(false);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
-	}
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
 
-	@RequiresPermissions("member")
-	@RequestMapping("/admin/member/view_list")
-	public String list(Pageable pageable, MemberSo so, ModelMap model) {
+    @RequiresPermissions("member")
+    @RequestMapping("/admin/member/view_list")
+    public String list(Pageable pageable, MemberSo so, ModelMap model) {
 
-		if (pageable!=null) {
-			if (pageable.getOrders()==null||pageable.getOrders().isEmpty()) {
-				pageable.getOrders().add(Order.desc("id"));
-			}
-		}
-		pageable.getFilters().addAll(FilterUtils.getFilters(so));
-		Page<Member> pagination = manager.page(pageable);
-		model.addAttribute("list", pagination.getContent());
-		model.addAttribute("page", pagination);
-		model.addAttribute("so", so);
-		return "/admin/member/list";
-	}
+        if (pageable == null) {
+            pageable = new Pageable();
+        }
+        if (pageable.getOrders() == null || pageable.getOrders().isEmpty()) {
+            pageable.getOrders().add(Order.desc("id"));
+        }
+        pageable.getFilters().addAll(FilterUtils.getFilters(so));
+        Page<Member> pagination = manager.page(pageable);
+        model.addAttribute("list", pagination.getContent());
+        model.addAttribute("page", pagination);
+        model.addAttribute("so", so);
+        return "/admin/member/list";
+    }
 
-	@RequiresPermissions("member")
-	@RequestMapping("/admin/member/view_add")
-	public String add(ModelMap model) {
-		return "/admin/member/add";
-	}
+    @RequiresPermissions("member")
+    @RequestMapping("/admin/member/view_add")
+    public String add(ModelMap model) {
+        return "/admin/member/add";
+    }
 
-	@RequiresPermissions("member")
-	@RequestMapping("/admin/member/view_edit")
-	public String edit(Pageable pageable,Long id, ModelMap model) {
-		model.addAttribute(MODEL, manager.findById(id));
-		model.addAttribute("page", pageable);
-		model.addAttribute("roles", roleService.list(0,1000,null,null));
+    @RequiresPermissions("member")
+    @RequestMapping("/admin/member/view_edit")
+    public String edit(Pageable pageable, Long id, ModelMap model) {
+        model.addAttribute(MODEL, manager.findById(id));
+        model.addAttribute("page", pageable);
+        model.addAttribute("roles", roleService.list(0, 1000, null, null));
 
-		return "/admin/member/edit";
-	}
+        return "/admin/member/edit";
+    }
 
-	@RequiresPermissions("member")
-	@RequestMapping("/admin/member/view_view")
-	public String view(Long id,ModelMap model) {
-		model.addAttribute(MODEL, manager.findById(id));
-		return "/admin/member/view";
-	}
+    @RequiresPermissions("member")
+    @RequestMapping("/admin/member/view_view")
+    public String view(Long id, ModelMap model) {
+        model.addAttribute(MODEL, manager.findById(id));
+        return "/admin/member/view";
+    }
 
-	@RequiresPermissions("member")
-	@RequestMapping("/admin/member/model_save")
-	public String save(Member bean,ModelMap model) {
+    @RequiresPermissions("member")
+    @RequestMapping("/admin/member/model_save")
+    public String save(Member bean, ModelMap model) {
 
-		String view="redirect:view_list.htm";
-		try {
-			manager.save(bean);
-			log.info("save object id={}", bean.getId());
-		} catch (Exception e) {
-			log.error("保存失败",e);
-			model.addAttribute("erro", e.getMessage());
-			view="/admin/member/add";
-		}
-		return view;
-	}
+        String view = "redirect:view_list.htm";
+        try {
+            manager.save(bean);
+            log.info("save object id={}", bean.getId());
+        } catch (Exception e) {
+            log.error("保存失败", e);
+            model.addAttribute("erro", e.getMessage());
+            view = "/admin/member/add";
+        }
+        return view;
+    }
 
-	@RequiresPermissions("member")
-	@RequestMapping("/admin/member/model_update")
-	public String update(Pageable pageable, Member bean,Long[] roles, RedirectAttributes redirectAttributes, ModelMap model) {
+    @RequiresPermissions("member")
+    @RequestMapping("/admin/member/model_update")
+    public String update(Pageable pageable, Member bean, Long[] roles, RedirectAttributes redirectAttributes, ModelMap model) {
 
-		String view="redirect:/admin/member/view_list.htm";
-		try {
-			manager.update(bean);
-			if (roles!=null){
-				for (Long role : roles) {
-					userInfoService.addRole(bean.getId(),role);
-				}
-			}
-			redirectAttributes.addAttribute("pageNumber",pageable.getPageNumber());
-		} catch (Exception e) {
-			log.error("更新失败",e);
-			model.addAttribute("erro", e.getMessage());
-			model.addAttribute(MODEL,bean);
-			model.addAttribute("page", pageable);
-			view="/admin/member/edit";
-		}
-		return view;
-	}
-	@RequiresPermissions("member")
-	@RequestMapping("/admin/member/model_delete")
-	public String delete(Pageable pageable, Long id, RedirectAttributes redirectAttributes) {
+        String view = REDIRECT_LIST_HTML;
+        try {
+            manager.update(bean);
+            if (roles != null) {
+                for (Long role : roles) {
+                    userInfoService.addRole(bean.getId(), role);
+                }
+            }
+            initPageNum(pageable, redirectAttributes);
+        } catch (Exception e) {
+            log.error("更新失败", e);
+            model.addAttribute("erro", e.getMessage());
+            model.addAttribute(MODEL, bean);
+            model.addAttribute("page", pageable);
+            view = "/admin/member/edit";
+        }
+        return view;
+    }
 
-		String view="redirect:/admin/member/view_list.htm";
+    private void initPageNum(Pageable pageable, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addAttribute("pageNumber", pageable.getPageNumber());
+    }
 
-		try {
-			redirectAttributes.addAttribute("pageNumber",pageable.getPageNumber());
-			manager.deleteById(id);
-		} catch (DataIntegrityViolationException e) {
-			log.error("删除失败",e);
-			redirectAttributes.addFlashAttribute("erro", "该条数据不能删除，请先删除和他相关的类容!");
-		}
+    @RequiresPermissions("member")
+    @RequestMapping("/admin/member/model_delete")
+    public String delete(Pageable pageable, Long id, RedirectAttributes redirectAttributes) {
 
-		return view;
-	}
+        String view = REDIRECT_LIST_HTML;
 
-	@RequiresPermissions("member")
-	@RequestMapping("/admin/member/model_deletes")
-	public String deletes(Pageable pageable, Long[] ids,RedirectAttributes redirectAttributes) {
+        try {
+            initPageNum(pageable, redirectAttributes);
+            manager.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            log.error("删除失败", e);
+            redirectAttributes.addFlashAttribute("erro", "该条数据不能删除，请先删除和他相关的类容!");
+        }
 
-		String view="redirect:/admin/member/view_list.htm";
+        return view;
+    }
 
-		try{
-			redirectAttributes.addAttribute("pageNumber",pageable.getPageNumber());
-			manager.deleteByIds(ids);
-		} catch (DataIntegrityViolationException e) {
-			log.error("批量删除失败",e);
-			redirectAttributes.addFlashAttribute("erro", "该条数据不能删除，请先删除和他相关的类容!");
-		}
-		return view;
-	}
-	private void initRedirectData(Pageable pageable, RedirectAttributes redirectAttributes) {
-		redirectAttributes.addAttribute("pageNumber",pageable.getPageNumber());
-	}
+    @RequiresPermissions("member")
+    @RequestMapping("/admin/member/model_deletes")
+    public String deletes(Pageable pageable, Long[] ids, RedirectAttributes redirectAttributes) {
+
+        String view = REDIRECT_LIST_HTML;
+
+        try {
+            initPageNum(pageable, redirectAttributes);
+            manager.deleteByIds(ids);
+        } catch (DataIntegrityViolationException e) {
+            log.error("批量删除失败", e);
+            redirectAttributes.addFlashAttribute("erro", "该条数据不能删除，请先删除和他相关的类容!");
+        }
+        return view;
+    }
+
 }

@@ -18,13 +18,12 @@ import com.quhaodian.user.data.service.UserInfoService;
 import com.quhaodian.user.data.service.UserLoginLogService;
 import com.quhaodian.user.data.vo.UserAccountVo;
 import com.quhaodian.web.controller.front.BaseController;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +40,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 public class LoginController extends BaseController {
+
+    private static final Logger log = LoggerFactory.getLogger(LoginController.class);
+
 
     @Autowired
     UserLoginLogService loginLogService;
@@ -75,7 +77,7 @@ public class LoginController extends BaseController {
             try {
                 bean.setIp(getIpAddr(request));
             } catch (Exception e) {
-                e.printStackTrace();
+                log.info("登陆失败",e);
             }
             bean.setUser(user);
             bean.setState(1);

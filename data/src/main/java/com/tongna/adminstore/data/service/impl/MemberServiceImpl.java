@@ -1,21 +1,19 @@
 package com.tongna.adminstore.data.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.quhaodian.data.core.Updater;
-import com.tongna.adminstore.data.dao.MemberDao;
-import com.tongna.adminstore.data.entity.Member;
-import com.tongna.adminstore.data.service.MemberService;
-
 import com.quhaodian.data.page.Filter;
 import com.quhaodian.data.page.Order;
 import com.quhaodian.data.page.Page;
 import com.quhaodian.data.page.Pageable;
-import java.util.List;
-import java.util.LinkedList;
 import com.quhaodian.data.utils.FilterUtils;
+import com.tongna.adminstore.data.dao.MemberDao;
+import com.tongna.adminstore.data.entity.Member;
+import com.tongna.adminstore.data.service.MemberService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 @Service
