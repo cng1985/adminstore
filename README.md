@@ -21,9 +21,10 @@
 
 ## 界面效果
 
+
+![部分er图](http://image.yichisancun.com/bd042b2c2a55f57bc6dc3d3568a790ed "部分er图")
 ![菜单管理功能](http://image.yichisancun.com/7075c8f053f0b2aa0f06ad08b750029d "菜单管理功能")
 ![模板管理功能](http://image.yichisancun.com/f932a35746388fea26d761420d3cf4fe "模板管理功能")
-![插件管理功能](http://image.yichisancun.com/70026a48c20b7ab6c10e59700db302e3 "插件管理功能")
 ![插件管理功能](http://image.yichisancun.com/70026a48c20b7ab6c10e59700db302e3 "插件管理功能")
 ![登陆日志管理功能](http://image.yichisancun.com/25c3c517571f72eae5dc9fb53b2c5a0f "登陆日志管理功能")
 
