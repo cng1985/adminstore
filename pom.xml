@@ -12,8 +12,8 @@
 
     <repositories>
         <repository>
-            <id>releases</id>
-            <url>http://192.168.0.199:8081/nexus/content/groups/public/</url>
+            <id>aliyun</id>
+            <url>http://maven.aliyun.com/nexus/content/repositories/central/</url>
         </repository>
     </repositories>
 
