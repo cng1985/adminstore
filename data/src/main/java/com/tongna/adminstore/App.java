@@ -3,6 +3,7 @@ package com.tongna.adminstore;
 import com.quhaodian.imake.ChainMake;
 import com.quhaodian.imake.template.hibernate.TemplateHibernateDir;
 import com.quhaodian.imake.templates.adminlte.TemplateAdminLTE;
+import com.quhaodian.quartz.data.entity.CronTaskRecord;
 import com.quhaodian.user.data.entity.UserAccount;
 
 import java.io.File;
@@ -23,12 +24,13 @@ public class App
         make.setView(view);
 
         List<Class<?>> cs=new ArrayList<Class<?>>();
-        cs.add(UserAccount.class);
+        cs.add(CronTaskRecord.class);
 
+        make.setMenus("1,24,27");
         make.setDao(false);
         make.setService(false);
         make.setView(true);
-        make.setAction(true);
+        make.setAction(false);
         make.makes(cs);
     }
 

@@ -50,7 +50,7 @@
 				<li class="header">主面板</li>
 				[@menustag id=1]
 					[#list list as item]
-						[@menu item "1,24,25"]
+						[@menu item "1,24,27"]
 						[/@menu]
 					[/#list]
 				[/@menustag]
@@ -73,12 +73,12 @@
 		<!-- Main content -->
 		<section class="content">
 			<!-- Default box -->
-			<form id="listForm" action="${siteurl}admin/crontask/view_list.htm" method="post">
+			<form id="listForm" action="${siteurl}admin/crontaskrecord/view_list.htm" method="post">
 				<div class="row">
 					<div class="col-xs-12">
 						<div class=" box box-body">
 							<div class="col-xs-2 ">
-								<a class="btn btn-primary" href="${siteurl}admin/crontask/view_add.htm">
+								<a class="hidden btn btn-primary" href="${siteurl}admin/crontaskrecord/view_add.htm">
 									<i class="fa  fa-plus"></i> 添加
 								</a>
 							</div>
@@ -97,73 +97,41 @@
 						<div class="box box-solid">
 							<div class="box-body table-responsive no-padding">
 								<table class="table table-bordered table-hover dataTable">
-									<tr>
-										<td class="hidden-sm hidden-xs"><input type="checkbox" id="selectAll"></td>
-										<td class="col-xs-3">名称</td>
-										<td class="col-xs-1 text-center">状态</td>
-										<td class="col-xs-1 text-center">运行次数</td>
-										<td class="col-xs-2 text-center">创建时间</td>
-										<td class="col-xs-2 text-center">最后一次运行时间</td>
-										<td class="col-xs-3 text-center  hidden-sm hidden-xs">操作</td>
+									<thead>
+									<tr role="row">
+										<td class="col-xs-5">任务名称</td>
+										<td class="col-xs-1 text-center">运行时长</td>
+										<td class="col-xs-2 text-center">任务cron</td>
+										<td class="col-xs-2 text-center">更新时间</td>
+										<td class="col-xs-2 text-center">操作</td>
 									</tr>
-									[#if list??]
+									</thead>
+									<tbody>
 									[#list list as item]
-									<tr id="trr${item.id!''}">
-										<td class="hidden-sm hidden-xs"><input type="checkbox" value="${item.id}" name="ids"></td>
-										<td>
-											${item.name!""}
-										</td>
+									<tr id="trr${item.id}">
+										<td>${(item.task.name)!""}</td>
+										<td class="text-center">${item.expensesTime!""}ms</td>
+										<td class="text-center">${(item.task.cron)!""}</td>
+										<td class="text-center">${(item.lastDate?string('yyyy-MM-dd HH:mm:ss'))!''}</td>
 										<td class="text-center">
-											[#if !item.state??]
-											未运行
-											[#else]
-											[#if item.state=0]
-											未运行
-											[#else]
-											运行中
-											[/#if]
-											[/#if]
-										</td>
-										<td class="text-center">
-											${item.nums!'0'}
-										</td>
-										<td class="text-center">
-											${item.addDate!""}
-										</td>
-										<td class="text-center">
-											${item.lastDate!""}
-										</td>
-
-										<td class="text-center  hidden-sm hidden-xs">
 											<div style="display: inline-block;">
-												<a class="menubutton btn btn-sm btn-warning"
-												   href="${siteurl}admin/crontask/demo.htm?id=${item.id!''}&pageNumber=${page.pageNumber}">
-													<i class="fa  fa-tasks" style="margin-right: 5px;">测试</i>
-												</a>
-												[#if item.state?? && item.state=1]
-												<a class="menubutton btn btn-sm btn-primary"
-												   href="${siteurl}admin/crontask/pause.htm?id=${item.id!''}&pageNumber=${page.pageNumber}">
-													<i class="fa  fa-pause">暂停</i>
-												</a>
-												[#else]
-												<a class="menubutton btn btn-sm btn-primary"
-												   href="${siteurl}admin/crontask/resume.htm?id=${item.id!''}&pageNumber=${page.pageNumber}">
-													<i class="fa  fa-play">恢复</i>
-												</a>
-												[/#if]
-												<a class="menubutton btn btn-sm btn-info"
-												   href="${siteurl}admin/crontask/view_edit.htm?id=${item.id!''}&pageNumber=${page.pageNumber}">
+												[@shiro.hasPermission name="crontaskrecord:update"]
+												<a  class="hidden menubutton btn btn-sm btn-success"
+													href="${siteurl}admin/crontaskrecord/view_edit.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
 													<i class="fa fa-edit">更新</i>
 												</a>
-												<a class="menubutton btn btn-sm btn-danger" onclick="return confirm('删除后无法恢复,确定要删除吗')"
-												   href="${siteurl}admin/crontask/model_delete.htm?id=${item.id!''}&pageNumber=${page.pageNumber}">
+												[/@shiro.hasPermission]
+												[@shiro.hasPermission name="crontaskrecord:delete"]
+												<a  class="menubutton btn btn-sm btn-danger"  onclick="return confirm('删除后无法恢复,确定要删除吗')"
+													href="${siteurl}admin/crontaskrecord/model_delete.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
 													<i class="fa fa-trash">删除</i>
 												</a>
+												[/@shiro.hasPermission]
 											</div>
 										</td>
 									</tr>
 									[/#list]
-									[/#if]
+									</tbody>
 								</table>
 							</div>
 							[@pager page=page   /]
@@ -200,7 +168,6 @@
 <!-- AdminLTE App -->
 <script src="${siteurl}dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="${siteurl}dist/js/demo.js"></script>
 <script src="${siteurl}dist/js/list.js"></script>
 
 

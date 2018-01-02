@@ -17,6 +17,7 @@
 	<context:component-scan base-package="com.quhaodian.area" />
 	<context:component-scan base-package="com.quhaodian.web" />
 	<context:component-scan base-package="com.quhaodian.plug" />
+	<context:component-scan base-package="com.quhaodian.quartz" />
 
 
 	<!-- 对包中的所有类进行扫描，以完成Bean创建和自动依赖注入的功能 需要更改 -->
@@ -61,6 +62,7 @@
 				<value>com.quhaodian.web</value>
 				<value>com.quhaodian.area</value>
 				<value>com.quhaodian.plug</value>
+				<value>com.quhaodian.quartz</value>
 				<value>com.tongna.adminstore.data.entity</value>
 			</list>
 		</property>
