@@ -3,6 +3,9 @@ package com.tongna.adminstore;
 import com.quhaodian.imake.ChainMake;
 import com.quhaodian.imake.template.hibernate.TemplateHibernateDir;
 import com.quhaodian.imake.templates.adminlte.TemplateAdminLTE;
+import com.quhaodian.notice.data.entity.UserNotification;
+import com.quhaodian.notice.data.entity.UserNotificationCatalog;
+import com.quhaodian.notice.data.entity.UserNotificationMember;
 import com.quhaodian.quartz.data.entity.CronTaskRecord;
 import com.quhaodian.user.data.entity.UserAccount;
 
@@ -24,9 +27,9 @@ public class App
         make.setView(view);
 
         List<Class<?>> cs=new ArrayList<Class<?>>();
-        cs.add(CronTaskRecord.class);
+        cs.add(UserNotificationMember.class);
 
-        make.setMenus("1,24,27");
+        make.setMenus("1,28,29");
         make.setDao(false);
         make.setService(false);
         make.setView(true);
