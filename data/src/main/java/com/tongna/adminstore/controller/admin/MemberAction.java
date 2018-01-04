@@ -1,8 +1,10 @@
 package com.tongna.adminstore.controller.admin;
 
 import com.quhaodian.data.utils.FilterUtils;
+import com.quhaodian.user.data.entity.UserAccount;
 import com.quhaodian.user.data.service.UserInfoService;
 import com.quhaodian.user.data.service.UserRoleService;
+import com.quhaodian.user.data.vo.UserAccountVo;
 import com.tongna.adminstore.data.entity.Member;
 import com.tongna.adminstore.data.service.MemberService;
 import com.tongna.adminstore.data.so.MemberSo;
@@ -78,7 +80,8 @@ public class MemberAction {
 
     @RequiresPermissions("member")
     @RequestMapping("/admin/member/view_add")
-    public String add() {
+    public String add(ModelMap model) {
+        model.addAttribute("roles", roleService.list(0, 1000, null, null));
         return "/admin/member/add";
     }
 
@@ -101,11 +104,20 @@ public class MemberAction {
 
     @RequiresPermissions("member")
     @RequestMapping("/admin/member/model_save")
-    public String save(Member bean, ModelMap model) {
+    public String save(UserAccount account,Member bean, Long[] roles,ModelMap model,RedirectAttributes attributes) {
 
         String view = "redirect:view_list.htm";
         try {
-            manager.save(bean);
+
+            UserAccountVo vo= manager.reg(account,bean);
+            if (vo!=null){
+                attributes.addFlashAttribute("msg",vo.getMsg());
+                if (roles != null) {
+                    for (Long role : roles) {
+                        userInfoService.addRole(vo.getUser(), role);
+                    }
+                }
+            }
             log.info("save object id={}", bean.getId());
         } catch (Exception e) {
             log.error("保存失败", e);

@@ -1,5 +1,7 @@
 package com.tongna.adminstore.data.service;
 
+import com.quhaodian.user.data.entity.UserAccount;
+import com.quhaodian.user.data.vo.UserAccountVo;
 import com.tongna.adminstore.data.entity.Member;
 import com.quhaodian.data.page.Filter;
 import com.quhaodian.data.page.Order;
@@ -13,6 +15,10 @@ public interface MemberService {
 	public Member findById(Long id);
 
 	public Member save(Member bean);
+
+
+	public UserAccountVo reg(UserAccount account, Member member);
+
 
 	public Member update(Member bean);
 
