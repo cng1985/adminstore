@@ -15,6 +15,8 @@
 * 安全权限 Shiro
 * 缓存 Ehcache
 * 视图模板 freemarker 
+* 工作流引擎  activiti(7.x系列目前最新版本) 
+* 定时任务  quartz
 * [discover](https://gitee.com/quhaodian/disconver)
 * AdminLTE
 * bootstrap
