@@ -80,49 +80,33 @@
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
-		<section class="content-header">
-			<h1>
-				用户管理
-				<small>管理你的用户</small>
-			</h1>
-		</section>
 		<!-- Main content -->
 		<section class="content">
-				<div class="col-xs-12">
-
+			<div class="col-xs-12">
+				<div class="box box-default box-solid">
 					<form role="form" method="post" class="form-horizontal" enctype="multipart/form-data"
 						  action="${siteurl}admin/flow/deploy.htm">
+					<div class="box-body">
 						[@showErrors separator="," /]
 						<div class="form-group">
-							<label for="form-field-1"
-								   class="col-sm-3 control-label no-padding-right"> 流程文件</label>
+							<label for="file" class="col-sm-2 control-label">流程名称</label>
 
-							<div class="col-sm-9">
-								<input required="required"  type="file" name="file" class="col-xs-10 col-sm-10"
-									   placeholder="工程流文件" id="form-field-1">
+							<div class="col-sm-10">
+								<input required="required"  type="file" id="file" name="file" class=""
+									   placeholder="工程流文件" >
 							</div>
 						</div>
-						<div class="clearfix form-actions">
-							<div class="col-md-offset-3 col-md-9">
-								<button type="submit" class="btn btn-info">
-									<i class="ace-icon fa fa-check bigger-110"></i> 保存
-								</button>
-
-								&nbsp; &nbsp; &nbsp;
-								<button type="reset" class="btn">
-									<i class="ace-icon fa fa-undo bigger-110"></i> 重置
-								</button>
-							</div>
+						<div class="box-footer">
+							<a href="${siteurl}admin/flow/view_list.htm" class="btn btn-default">取消</a>
+							<button type="submit" class="btn btn-primary pull-right">保存</button>
 						</div>
 
 						<div class="hr hr-24"></div>
-
-
-
+					</div>
 
 					</form>
 
-
+					</div>
 				</div>
 			<!-- Default box -->
 			<!-- /.box -->

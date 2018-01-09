@@ -28,17 +28,17 @@
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
-<div class="wrapper">
+	<div class="wrapper">
 
-	<header class="main-header">
-		<!-- Header Navbar: style can be found in header.less -->
-		[#include "/admin/common/nav.html"]
-	</header>
+		<header class="main-header">
+			<!-- Header Navbar: style can be found in header.less -->
+			[#include "/admin/common/nav.html"]
+		</header>
 
 	<!-- =============================================== -->
 
 	<!-- Left side column. contains the sidebar -->
-	<aside class="main-sidebar">
+		<aside class="main-sidebar">
 		<!-- sidebar: style can be found in sidebar.less -->
 		<section class="sidebar">
 			[@user_panel /]
@@ -49,10 +49,10 @@
 			<ul class="sidebar-menu">
 				<li class="header">主面板</li>
 				[@menustag id=1]
-				[#list list as item]
-				[@menu item "1,12,26"]
-				[/@menu]
-				[/#list]
+					[#list list as item]
+						[@menu item "1,12,14"]
+						[/@menu]
+					[/#list]
 				[/@menustag]
 			</ul>
 		</section>
@@ -62,7 +62,7 @@
 	<!-- =============================================== -->
 
 	<!-- Content Wrapper. Contains page content -->
-	<div class="content-wrapper">
+		<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 			<h1>
@@ -78,7 +78,7 @@
 					<div class="col-xs-12">
 						<div class=" box box-body">
 							<div class="col-xs-2 ">
-								<a class="btn btn-primary hidden" href="${siteurl}admin/flowdefine/view_add.htm">
+								<a class="btn btn-primary" href="${siteurl}admin/flowdefine/view_add.htm">
 									<i class="fa  fa-plus"></i> 添加
 								</a>
 							</div>
@@ -96,38 +96,50 @@
 					<div class="col-xs-12">
 						<div class="box box-solid">
 							<div class="box-body table-responsive no-padding">
-								<table id="listTable" class="table table-striped table-bordered table-hover">
-									<tr>
-										<td class="col-xs-2">流程id</td>
-										<td class="col-xs-5">流程名称</td>
-										<td class="col-xs-1 text-center">创建时间</td>
-										<td class="col-xs-2 text-center">当前节点</td>
+								<table class="table table-bordered table-hover dataTable">
+									<thead>
+									<tr role="row">
+										<td class="col-xs-2">流程名称</td>
+										<td class="col-xs-6">流程描述</td>
+										<td class="col-xs-2 text-center">更新时间</td>
 										<td class="col-xs-2 text-center">操作</td>
 									</tr>
-									[#if list??]
+									</thead>
+									<tbody>
 									[#list list as item]
-									<tr id="trr${item.id!''}">
-										<td>${item.id!""}</td>
-										<td>${item.flowName!""}</td>
-										<td class="text-center">
-											${item.addDate!""}
-										</td>
-										<td class="text-center">
-											${item.name!""}
-										</td>
+									<tr id="trr${item.id}">
+										<td class="text-center">${item.name!""}</td>
+										<td class="text-center">${item.note!""}</td>
+										<td class="text-center">${(item.lastDate?string('yyyy-MM-dd HH:mm:ss'))!''}</td>
 										<td class="text-center">
 											<div style="display: inline-block;">
-												<a href="${siteurl}admin/flow/image.htm?taskid=${item.id}">查看流程图</a>
+												<a  class="menubutton btn btn-sm btn-success"
+													href="${siteurl}admin/flowdefine/deploy.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
+													<i class="fa fa-edit">部署</i>
+												</a>
+												[@shiro.hasPermission name="flowdefine:update"]
+												<a  class="menubutton btn btn-sm btn-success"
+													href="${siteurl}admin/flowdefine/view_edit.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
+													<i class="fa fa-edit">更新</i>
+												</a>
+												[/@shiro.hasPermission]
+												[@shiro.hasPermission name="flowdefine:delete"]
+												<a  class="menubutton btn btn-sm btn-danger"  onclick="return confirm('删除后无法恢复,确定要删除吗')"
+													href="${siteurl}admin/flowdefine/model_delete.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
+													<i class="fa fa-trash">删除</i>
+												</a>
+												[/@shiro.hasPermission]
 											</div>
 										</td>
 									</tr>
 									[/#list]
-									[/#if]
+									</tbody>
 								</table>
 							</div>
+							[@pager page=page   /]
 						</div>
-					</div>
-				</div>
+				    </div>
+			    </div>
 			</form>
 			<!-- /.box -->
 		</section>
@@ -143,7 +155,7 @@
 	<!-- /.control-sidebar -->
 	<!-- Add the sidebar's background. This div must be placed
          immediately after the control sidebar -->
-	<div class="control-sidebar-bg"></div>
+		<div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
 
