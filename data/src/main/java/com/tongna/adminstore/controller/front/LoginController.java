@@ -13,6 +13,7 @@ import com.quhaodian.shiro.utils.UserUtil;
 import com.quhaodian.user.data.entity.UserAccount;
 import com.quhaodian.user.data.entity.UserInfo;
 import com.quhaodian.user.data.entity.UserLoginLog;
+import com.quhaodian.user.data.enums.LoginState;
 import com.quhaodian.user.data.service.UserAccountService;
 import com.quhaodian.user.data.service.UserInfoService;
 import com.quhaodian.user.data.service.UserLoginLogService;
@@ -80,7 +81,7 @@ public class LoginController extends BaseController {
                 log.info("登陆失败",e);
             }
             bean.setUser(user);
-            bean.setState(1);
+            bean.setState(LoginState.success);
             loginLogService.save(bean);
         }
         if (SecurityUtils.getSubject().isAuthenticated()) {
