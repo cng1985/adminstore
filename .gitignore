@@ -13,3 +13,4 @@ dependency-reduced-pom.xml
 *tags
 **.swp
 /docxs
+*.project
