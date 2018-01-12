@@ -1,0 +1,13 @@
+{
+  "name": "移动端接口",
+  "version": "0.0.1",
+  "description": "移动端接口",
+  "title": "移动端接口",
+  "url" : "http://localhost:8080/web/rest",
+  "sampleUrl": "http://localhost:8080/web/rest",
+  "template": {
+  	"withCompare": true,
+  	"withGenerator": true,
+    "forceLanguage":"zh_cn"
+  }
+}
