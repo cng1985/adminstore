@@ -52,7 +52,7 @@
 				<li class="header">主面板</li>
 				[@menustag id=1]
 				[#list list as item]
-				[@menu item "1,10,13"]
+				[@menu item "1,2,7"]
 				[/@menu]
 				[/#list]
 				[/@menustag]
@@ -103,13 +103,13 @@
 								<label for="linkType" class="col-sm-2 control-label">链接类型</label>
 								<div class="col-sm-10">
 									<select class="form-control" id="linkType" name="linkType.id" >
-										[@linkType id=1 size=100]
+										[@linktype id=1 size=100]
 										[#if list??]
 										[#list list as item]
 										<option  [#if model.linkType?? && model.linkType.id=item.id]selected="selected"[/#if]  value="${item.id}">${item.name!''}</option>
 										[/#list]
 										[/#if]
-										[/@linkType]
+										[/@linktype]
 									</select>
 								</div>
 							</div>

@@ -53,15 +53,7 @@ public class LoginController extends BaseController {
     @Autowired
     UserAccountService userAccountService;
 
-    /**
-     * 跳转登录页
-     *
-     * @return
-     */
-    @GetMapping(value = "/index")
-    public String index() {
-        return getView(Views.LOGIN);
-    }
+
 
 
     @PostMapping(value = "/login")

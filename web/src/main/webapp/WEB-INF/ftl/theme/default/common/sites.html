@@ -1,0 +1,313 @@
+[#macro header]
+
+<!-- Tell the browser to be responsive to screen width -->
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<!-- Bootstrap 3.3.7 -->
+<link rel="stylesheet" href="${siteurl}bootstrap/css/bootstrap.min.css">
+<!-- Font Awesome -->
+<!-- Theme style -->
+<link rel="stylesheet" href="${siteurl}dist/css/AdminLTE.min.css">
+<!-- AdminLTE Skins. Choose a skin from the css/skins
+     folder instead of downloading all of them to reduce the load. -->
+<link rel="stylesheet" href="${siteurl}dist/css/skins/_all-skins.min.css">
+<link rel="stylesheet" href="${siteurl}assets/font-awesome/4.5.0/css/font-awesome.min.css">
+[/#macro]
+
+
+[#macro css src]
+<link rel="stylesheet" href="${siteurl}${src}">
+[/#macro]
+
+[#macro style src]
+<link rel="stylesheet" href="${siteurl}assets/css/${src}">
+[/#macro]
+
+[#macro script src]
+<script src="${siteurl}${src}"></script>
+[/#macro]
+
+[#macro js src]
+<script src="${siteurl}assets/js/${src}"></script>
+[/#macro]
+
+[#macro nav index]
+<nav class="navbar navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="${siteurl}index.htm" class="navbar-brand"><b>adminstore</b></a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+        </div>
+
+        [@shiro.guest]
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="${siteurl}login.htm">登陆</a>
+            </li>
+            <li>
+                <a href="${siteurl}register.htm">注册</a>
+            </li>
+        </ul>
+        [/@shiro.guest]
+        <!-- /.navbar-collapse -->
+        <!-- Navbar Right Menu -->
+        [@shiro.authenticated]
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                <!-- Messages: style can be found in dropdown.less-->
+                <li class="dropdown messages-menu">
+                    <!-- Menu toggle button -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-envelope-o"></i>
+                        <span class="label label-success">4</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header">You have 4 messages</li>
+                        <li>
+                            <!-- inner menu: contains the messages -->
+                            <ul class="menu">
+                                <li><!-- start message -->
+                                    <a href="#">
+                                        <div class="pull-left">
+                                            <!-- User Image -->
+                                            <img src="${siteurl}dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                        </div>
+                                        <!-- Message title and timestamp -->
+                                        <h4>
+                                            Support Team
+                                            <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                        </h4>
+                                        <!-- The message -->
+                                        <p>Why not buy a new awesome theme?</p>
+                                    </a>
+                                </li>
+                                <!-- end message -->
+                            </ul>
+                            <!-- /.menu -->
+                        </li>
+                        <li class="footer"><a href="#">See All Messages</a></li>
+                    </ul>
+                </li>
+                <!-- /.messages-menu -->
+
+                <!-- User Account Menu -->
+                <li class="dropdown user user-menu">
+                    <!-- Menu Toggle Button -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <!-- The user image in the navbar-->
+                        <img src="${user.avatar!''}" class="user-image" alt="">
+                        <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                        <span class="hidden-xs">${user.name!""}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <!-- The user image in the menu -->
+                        <li class="user-header">
+                            <img src="${siteurl}dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+
+                            <p>
+                                代码人 - 软件工程师
+                                <small>2017年6月13日</small>
+                            </p>
+                        </li>
+                        <!-- Menu Body -->
+                        <li class="user-body">
+                            <div class="row">
+                                <div class="col-xs-4 text-center">
+                                    <a href="#">Followers</a>
+                                </div>
+                                <div class="col-xs-4 text-center">
+                                    <a href="#">Sales</a>
+                                </div>
+                                <div class="col-xs-4 text-center">
+                                    <a href="#">Friends</a>
+                                </div>
+                            </div>
+                            <!-- /.row -->
+                        </li>
+                        <!-- Menu Footer-->
+                        <li class="user-footer">
+                            <div class="pull-left">
+                                <a href="${siteurl}member/index.htm" class="btn btn-default btn-flat">个人资料</a>
+                            </div>
+                            <div class="pull-right">
+                                <a href="${siteurl}signout.htm" class="btn btn-default btn-flat">退出</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        [/@shiro.authenticated]
+        <!-- /.navbar-custom-menu -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+[/#macro]
+
+[#macro footer]
+<footer class="main-footer">
+    <div class="container">
+        <div >
+            <strong>Copyright &copy; 1985-${.now?string("yyyy")} <a href="https://adminlte.io">ada.young</a></strong> 版权所有
+        </div>
+        <div>
+            陕ICP备16002477号-1
+        </div>
+
+        <div class="row bring-up">
+            <div class="col-sm-3">
+                <ul class="list-unstyled">
+                    <li><h4>友情链接</h4></li>
+
+                    [@link  id=2 size=20]
+                    [#if list??]
+                        [#list list as item]
+                            <li><a href="${item.url!''}" target="_blank">${item.name!''}</a></li>
+                        [/#list]
+                    [/#if]
+                    [/@link]
+                </ul>
+            </div><!-- /.col -->
+            <div class="col-sm-3">
+                <ul class="list-unstyled">
+                    <li><h4>第三方库</h4></li>
+                    <li><a href="https://github.com/seiyria/bootstrap-slider/">Bootstrap Slider</a></li>
+                    <li><a href="http://ionden.com/a/plugins/ion.rangeSlider/en.html" target="_blank">Ion Slider</a></li>
+                    <li><a href="http://bootstrap-datepicker.readthedocs.org/" target="_blank">Date Picker</a></li>
+                    <li><a href="http://www.daterangepicker.com/" target="_blank">Date Range Picker</a></li>
+                    <li><a href="http://mjolnic.com/bootstrap-colorpicker/" target="_blank">Color Picker</a></li>
+                    <li><a href="https://github.com/jdewit/bootstrap-timepicker/" target="_blank">Time Picker</a></li>
+                    <li><a href="http://fronteed.com/iCheck/" target="_blank">iCheck</a></li>
+                    <li><a href="https://github.com/RobinHerbots/jquery.inputmask/" target="_blank">Input Mask</a></li>
+                </ul>
+            </div><!-- /.col -->
+            <div class="col-sm-3">
+                <ul class="list-unstyled">
+                    <li><h4>Editors</h4></li>
+                    <li><a href="https://github.com/bootstrap-wysiwyg/bootstrap3-wysiwyg/" target="_blank">Bootstrap WYSIHTML5</a></li>
+                    <li><a href="http://ckeditor.com/" target="_blank">CK Editor</a></li>
+                </ul>
+            </div><!-- /. col -->
+            <div class="col-sm-3">
+                <ul class="list-unstyled">
+                    <li><h4>其他</h4></li>
+                    <li><a href="https://datatables.net/examples/styling/bootstrap.html" target="_blank">DataTables</a></li>
+                    <li><a href="http://fullcalendar.io/" target="_blank">Full Calendar</a></li>
+                    <li><a href="http://jqueryui.com/" target="_blank">jQuery UI</a></li>
+                    <li><a href="http://anthonyterrien.com/knob/" target="_blank">jQuery Knob</a></li>
+                    <li><a href="http://jvectormap.com/" target="_blank">jVector Map</a></li>
+                    <li><a href="http://rocha.la/jQuery-slimScroll/" target="_blank">Slim Scroll</a></li>
+                    <li><a href="http://github.hubspot.com/pace/docs/welcome/" target="_blank">Pace</a></li>
+                </ul>
+            </div><!-- /.col -->
+        </div>
+    </div>
+    <!-- /.container -->
+</footer>
+[/#macro]
+
+
+[#macro scripts]
+<!-- jQuery 3.1.1 -->
+<script src="${siteurl}plugins/jQuery/jquery-3.1.1.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="${siteurl}bootstrap/js/bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script src="${siteurl}plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="${siteurl}plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="${siteurl}dist/js/adminlte.min.js"></script>
+[/#macro]
+
+
+
+[#macro pager pageData  url]
+[#if pageData?? ]
+
+<ul class="pagination">
+    [#if pageData.pageNumber gt 1]
+        <li><a href="${url}&pageNumber=${pageData.pageNumber-1}">上一页</a></li>
+    [/#if]
+    [#if pageData.totalPages gt 1]
+        [#list pageData.firstNo..pageData.endNo as item]
+            [#if pageData.pageNumber==item]
+                <li class="active"><a href="${url}">${item}</a></li>
+            [#else]
+                <li ><a href="${url}&pageNumber=${item}">${item}</a></li>
+            [/#if]
+        [/#list]
+    [/#if]
+    [#if pageData.pageNumber lt  pageData.endNo]
+        <li><a href="${url}&pageNumber=${pageData.pageNumber+1}">下一页</a></li>
+    [/#if]
+</ul>
+[/#if]
+[/#macro]
+
+[#macro userinfo user]
+<div class="box box-primary">
+    <div class="box-body box-profile">
+        <img class="profile-user-img img-responsive img-circle" src="${user.avatar!'dist/img/user1-128x128.jpg'}" alt="头像">
+
+        <h3 class="profile-username text-center">${(user.name)!""}</h3>
+
+        <p class="text-muted text-center">${(user.job)!""}</p>
+
+        <ul class="list-group list-group-unbordered">
+            <li class="list-group-item">
+                <b>粉丝</b> <a class="pull-right">${(user.followers)!"0"}</a>
+            </li>
+            <li class="list-group-item">
+                <b>关注</b> <a class="pull-right">${(user.followers)!"0"}</a>
+            </li>
+            <li class="list-group-item">
+                <b>好友</b> <a class="pull-right">${(user.friends)!"0"}</a>
+            </li>
+        </ul>
+
+        <a href="#" class="btn btn-primary btn-block"><b>关注我</b></a>
+    </div>
+    <!-- /.box-body -->
+</div>
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">关于我</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <strong><i class="fa fa-book margin-r-5"></i> Education</strong>
+
+        <p class="text-muted">
+            B.S. in Computer Science from the University of Tennessee at Knoxville
+        </p>
+
+        <hr>
+
+        <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
+
+        <p class="text-muted">Malibu, California</p>
+
+        <hr>
+        [#if user.labels?? ]
+        <strong><i class="fa fa-pencil margin-r-5"></i> 我的标签</strong>
+
+        <p>
+            [#list  user.labels as item]
+            <span class="label label-info" style="margin-right: 3px;">${item.name!""}</span>
+            [/#list]
+        </p>
+        <hr>
+        [/#if]
+        <strong><i class="fa fa-file-text-o margin-r-5"></i> 个人介绍</strong>
+
+        <p>${user.note!""}</p>
+    </div>
+    <!-- /.box-body -->
+</div>
+[/#macro]

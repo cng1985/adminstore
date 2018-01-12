@@ -59,6 +59,8 @@
     <bean id="menuOpenDirective" class="com.quhaodian.user.freemaker.MenuOpenDirective"></bean>
     <bean id="menusDirective" class="com.quhaodian.user.freemaker.MenusDirective"></bean>
     <bean id="menuchildsDirective" class="com.quhaodian.user.freemaker.MenuChildsDirective"></bean>
+    <bean id="linkTypeDirective" class="com.quhaodian.site.freemaker.LinkTypeDirective"></bean>
+    <bean id="linkDirective" class="com.quhaodian.site.freemaker.LinkDirective"></bean>
 
     <!-- freemarker的配置 -->
     <bean id="freemarkerConfigurer"
@@ -86,6 +88,10 @@
                 <entry key="menuopentag" value-ref="menuOpenDirective"/>
                 <entry key="menustag" value-ref="menusDirective"/>
                 <entry key="menuchilds" value-ref="menuchildsDirective"/>
+                <entry key="linktype" value-ref="linkTypeDirective"/>
+                <entry key="link" value-ref="linkDirective"/>
+
+
                 <entry key="siteurl" value="#{servletContext.contextPath}/"/>
                 <entry key="sitename" value="后台管理"/>
             </map>

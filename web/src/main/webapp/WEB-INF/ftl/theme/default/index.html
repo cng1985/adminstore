@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>adminstore</title>
+    [#include "/theme/default/common/sites.html" /]
+    [@header /]
+
+</head>
+<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+<body class="hold-transition skin-blue layout-top-nav">
+<div class="wrapper">
+
+    <header class="main-header">
+        [@nav 1 /]
+    </header>
+    <!-- Full Width Column -->
+    <div class="content-wrapper">
+        <div class="container">
+            <!-- Main content -->
+            <section class="content">
+                <div class="row">
+                    <!-- Left col -->
+                    <section class="col-lg-7">
+                        <!-- Custom tabs (Charts with tabs)-->
+                        <div class="box box-widget widget-user" style="padding: 10px;">
+                            <h2>简要介绍</h2>
+                            <p>
+                                大家回想我们开发的时候搭建项目工程的时候，配置pom，各种拷贝。每次都这样是不是很麻烦。那么我们能不能整理一个基础项目基础模板出来，就这样adminstore诞生了。adminstore整合了spring,hibernate,shiro，discover等框架。不用担心每次那样麻烦的拷贝了。后台管理系统集成模板修改，菜单管理，用户管理，角色管理，友情链接，插件管理管理等功能。站在巨人的肩膀上，让我们看得更远！
+                                环境要求
+                            </p>
+                            <p>
+                                JDK6或更高版本（支持JDK7、JDK8）。建议使用JDK8，有更好的内存管理。更低版本的JDK6、JDK7可能需要设置Java内存-XX:PermSize=128M
+                                -XX:MaxPermSize=512M，否则可能出现这种类型的内存溢出：java.lang.OutOfMemoryError: PermGen space。
+                                Servlet2.5或更高版本（如Tomcat6或更高版本）。
+                                MySQL5.0或更高版本
+                                Maven3.0或更高版本。
+                            </p>
+                            <h2>技术选型：</h2>
+                            <ul>
+                                <li> SSH (Spring、SpringMVC、Hibernate）</li>
+                                <li>安全权限 Shiro</li>
+                                <li>缓存 Ehcache</li>
+                                <li>视图模板 freemarker</li>
+                                <li>discover</li>
+                                <li>AdminLTE</li>
+                                <li>bootstrap</li>
+                            </ul>
+                            <h2>搭建步骤</h2>
+                            <p>
+                            <ol>
+
+                                <li> 创建数据库。如使用MySQL，字符集选择为utf8或者utf8mb4（支持更多特殊字符，推荐）。</li>
+                                <li> 执行数据库脚本。数据库脚本在database目录下。</li>
+                                <li> 在eclipse中导入maven项目。点击eclipse菜单File - Import，选择Maven - Existing Maven
+                                    Projects。创建好maven项目后，会开始从maven服务器下载第三方jar包（如spring等），需要一定时间，请耐心等待。
+                                    创建mysql数据库，导入adminstore.sql
+                                </li>
+                                <li>
+                                    修改数据库连接。打开/web/src/main/resources/jdbc.propertis文件，根据实际情况修改jdbc.url、jdbc.username、jdbc.password的值。
+                                </li>
+                                <li>运行程序。在eclipse中，右键点击项目名，选择Run as - Maven
+                                    build...，Goals填入jetty:run或tomcat7:run，然后点击Run。
+                                </li>
+                                <li>
+                                    访问系统。前台地址：http://localhost:8080/web，手机站地址：http://127.0.0.1:8080/；后台地址：http://localhost:8080/web/login.htm，用户名：admin，密码：123456。
+                                </li>
+                            </ol>
+                            </p>
+                            <h2>交流方式</h2>
+                            <p>
+                                QQ群:141837028 discover开源QQ群
+                            </p>
+                        </div>
+                    </section>
+                    <!-- /.Left col -->
+                    <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                    <section class="col-lg-5 connectedSortable ui-sortable">
+
+                        <div class="box box-widget widget-user">
+                            <!-- Add the bg color to the header using any of the bg-* classes -->
+                            <script src='//gitee.com/cng1985/adminstore/widget_preview'></script>
+
+                            <style>
+                                .pro_name a {
+                                    color: #4183c4;
+                                }
+
+                                .osc_git_title {
+                                    background-color: #fff;
+                                }
+
+                                .osc_git_box {
+                                    background-color: #fff;
+                                }
+
+                                .osc_git_box {
+                                    border-color: #E3E9ED;
+                                }
+
+                                .osc_git_info {
+                                    color: #666;
+                                }
+
+                                .osc_git_main a {
+                                    color: #9B9B9B;
+                                }
+                            </style>
+                        </div>
+
+                    </section>
+                    <!-- right col -->
+                </div>
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    [@footer /]
+</div>
+<!-- ./wrapper -->
+
+[@scripts /]
+</body>
+</html>
