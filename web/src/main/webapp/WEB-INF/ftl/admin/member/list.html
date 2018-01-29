@@ -129,7 +129,7 @@
 									<tbody>
 									[#list list as item]
 									<tr id="trr${item.id}">
-										<td>${item.name!""}</td>
+										<td><a href="${siteurl}admin/member/profile.htm?id=${item.id}">${item.name!""}</a></td>
 										<td class="text-center">${item.sex!""}</td>
 										<td class="">${(item.memberType.name)!""}</td>
 										<td class="text-center">${item.recommendType!"未推荐"}</td>

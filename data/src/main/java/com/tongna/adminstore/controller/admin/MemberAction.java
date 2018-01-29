@@ -103,6 +103,14 @@ public class MemberAction {
     }
 
     @RequiresPermissions("member")
+    @RequestMapping("/admin/member/profile")
+    public String profile(Long id, ModelMap model) {
+        model.addAttribute(MODEL, manager.findById(id));
+        return "/admin/member/profile";
+    }
+
+
+    @RequiresPermissions("member")
     @RequestMapping("/admin/member/model_save")
     public String save(UserAccount account,Member bean, Long[] roles,ModelMap model,RedirectAttributes attributes) {
 
