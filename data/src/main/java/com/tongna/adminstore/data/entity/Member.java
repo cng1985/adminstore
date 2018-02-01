@@ -1,6 +1,9 @@
 package com.tongna.adminstore.data.entity;
 
 import com.quhaodian.area.data.entity.Area;
+import com.quhaodian.data.annotations.ColType;
+import com.quhaodian.data.annotations.FormAnnotation;
+import com.quhaodian.data.annotations.FormFieldAnnotation;
 import com.quhaodian.user.data.entity.AbstractUser;
 
 import javax.persistence.*;
@@ -9,14 +12,17 @@ import javax.persistence.*;
  * 网站用户
  */
 
+@FormAnnotation(title = "用户",add = "添加用户",list = "用户",update = "更新用户")
 @Entity
 @Table(name = "user_info")
 public class Member extends AbstractUser {
 
+    @FormFieldAnnotation(title = "个人介绍",sortNum = "2",grid =true,col = ColType.col_2)
     private String note;
 
     private String edge;
 
+    @FormFieldAnnotation(title = "性别",sortNum = "2",grid =true,col = ColType.col_1)
     @Column(length = 5)
     private String sex;
 
