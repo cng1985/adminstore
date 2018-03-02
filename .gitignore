@@ -14,3 +14,4 @@ dependency-reduced-pom.xml
 **.swp
 /docxs
 *.project
+*.db
