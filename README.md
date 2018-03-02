@@ -3,6 +3,8 @@
 [![QQ](https://img.shields.io/badge/chat-on%20QQ-ff69b4.svg?style=flat-square)](//shang.qq.com/wpa/qunwpa?idkey=d1a308945e4b2ff8aeb1711c2c7914342dae15e9ce7041e94756ab355430dc78)
 [![Apache-2.0](https://img.shields.io/hexpm/l/plug.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 [![使用IntelliJ IDEA开发维护](https://img.shields.io/badge/IntelliJ%20IDEA-提供支持-blue.svg)](https://www.jetbrains.com/idea/)
+[![GitHub forks](https://img.shields.io/github/forks/badges/shields.svg?style=social&logo=github&label=Fork)](https://github.com/cng1985/adminstore)
+
 本源码包采用maven结构
 
 ## 环境要求
