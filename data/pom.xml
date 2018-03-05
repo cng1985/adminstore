@@ -26,7 +26,7 @@
         </dependency>
         <dependency>
             <groupId>com.quhaodian</groupId>
-            <artifactId>user_hibernate</artifactId>
+            <artifactId>website</artifactId>
             <version>1.8.2</version>
         </dependency>
         <dependency>
@@ -34,16 +34,7 @@
             <artifactId>area</artifactId>
             <version>1.8.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.quhaodian</groupId>
-            <artifactId>website</artifactId>
-            <version>1.8.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.quhaodian</groupId>
-            <artifactId>site_hibernate</artifactId>
-            <version>1.8.1</version>
-        </dependency>
+
         <dependency>
             <groupId>com.quhaodian</groupId>
             <artifactId>plug_alidayu</artifactId>
@@ -51,17 +42,7 @@
         </dependency>
         <dependency>
             <groupId>com.quhaodian</groupId>
-            <artifactId>freemaker</artifactId>
-            <version>1.8.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.quhaodian</groupId>
             <artifactId>quartz</artifactId>
-            <version>1.8.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.quhaodian</groupId>
-            <artifactId>usernotice</artifactId>
             <version>1.8.1</version>
         </dependency>
         <dependency>
