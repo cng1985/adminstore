@@ -27,7 +27,7 @@
         <dependency>
             <groupId>com.quhaodian</groupId>
             <artifactId>website</artifactId>
-            <version>1.8.2</version>
+            <version>1.8.3</version>
         </dependency>
         <dependency>
             <groupId>com.quhaodian</groupId>
@@ -38,7 +38,7 @@
         <dependency>
             <groupId>com.quhaodian</groupId>
             <artifactId>plug_alidayu</artifactId>
-            <version>1.8.1</version>
+            <version>1.8.3</version>
         </dependency>
         <dependency>
             <groupId>com.quhaodian</groupId>
