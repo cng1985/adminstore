@@ -42,6 +42,7 @@
 
     <bean
             class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+
     </bean>
 
 
@@ -51,6 +52,9 @@
             <list>
                 <ref bean="jacksonMessageConverter"/>    <!-- 注册JSON Converter -->
             </list>
+        </property>
+        <property name="webBindingInitializer">
+            <bean class="com.quhaodian.web.binding.BindingInitializer"/>
         </property>
     </bean>
     <bean id="jacksonMessageConverter"
