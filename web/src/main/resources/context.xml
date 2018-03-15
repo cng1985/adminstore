@@ -12,10 +12,18 @@
             http://www.springframework.org/schema/cache/spring-cache.xsd
             ">
 
-    <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager"
-                           ignore-default-model-on-redirect="true"
-    >
-    </mvc:annotation-driven>
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+          p:defaultEncoding="utf-8" p:maxUploadSize="100000000"/>
+
+    <bean id="conversionService"
+          class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="com.quhaodian.web.converter.DateConverter"/>
+            </set>
+        </property>
+    </bean>
 
     <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
         <property name="favorPathExtension" value="false"/>
@@ -30,35 +38,24 @@
             </value>
         </property>
     </bean>
-    <!--COOKIE登录 -->
+
+
+    <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager"
+                           ignore-default-model-on-redirect="true" conversion-service="conversionService"
+    >
+    </mvc:annotation-driven>
     <context:component-scan base-package="com.tongna.adminstore.controller"/>
+
+
+
+    <!--COOKIE登录 -->
 
     <bean name="webconfig" class="com.quhaodian.web.data.common.InitConfig" init-method="initWebConfig" scope="singleton" lazy-init="false"></bean>
 
 
-    <bean id="multipartResolver"
-          class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
-          p:defaultEncoding="utf-8" p:maxUploadSize="100000000"/>
-
-    <bean
-            class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
-
-    </bean>
 
 
-    <bean
-            class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-        <property name="messageConverters">
-            <list>
-                <ref bean="jacksonMessageConverter"/>    <!-- 注册JSON Converter -->
-            </list>
-        </property>
-        <property name="webBindingInitializer">
-            <bean class="com.quhaodian.web.binding.BindingInitializer"/>
-        </property>
-    </bean>
-    <bean id="jacksonMessageConverter"
-          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+
 
 
     <bean id="shiro" class="com.jagregory.shiro.freemarker.ShiroTags"></bean>
