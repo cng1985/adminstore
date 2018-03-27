@@ -25,6 +25,8 @@
 	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 	[#include "/admin/common/commons.html"]
+	<!-- jQuery 2.2.3 -->
+
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -101,7 +103,7 @@
 
 					<div class="box  box-solid">
 
-						<form class="form-inline" role="form"
+						<form   class="form-inline" role="form"
 							  action="${siteurl}admin/menu/model_save.htm" method="post">
 							<input type="hidden" name="parent.id" value="${pid}">
 							<div class="box-body">
@@ -109,26 +111,25 @@
 									<div class="row">
 										<div class="col-xs-12 col-sm-12 ">
 											<div class="form-group">
-												<label for="control-label no-padding-right">分类</label>
-												<input required="required" type="text" name="name" placeholder="分类 "
+												<label for="name" class="control-label no-padding-right">分类</label>
+												<input id="name" required="required" type="text" name="name" placeholder="分类 "
 													   class="form-control search-query">
 
 											</div>
 
 											<div class ="form-group" >
 
-												<label for="control-label no-padding-right">url</label>
+												<label for="path" class="control-label no-padding-right">url</label>
 												<input  class="form-control"
 														type="text" placeholder="url" name="path" id="path">
 											</div>
 											<div class ="form-group" >
-
-												<label for="control-label no-padding-right">排序号</label>
+												<label for="sortNum" class="control-label no-padding-right">排序号</label>
 												<input class="form-control" style="width: 100px;"
-													   type="number" placeholder="排序号" name="sortNum" id="path">
+													   type="number" placeholder="排序号" name="sortNum" id="sortNum">
 											</div>
 											<div class="form-group">
-												<label for="control-label no-padding-right">权限</label>
+												<label for="permission" class="control-label no-padding-right">权限</label>
 												<input class="form-control" maxlength="30" placeholder="权限" name="permission" id="permission" type="text">
 											</div>
 											<select name="catalog" class="form-control">
@@ -137,10 +138,10 @@
 											</select>
 											<div class ="form-group">
 
-												<label for="control-label no-padding-right"
-													   for="form-field-11 control-label no-padding-right"
+												<label for="icon"
+													   class="form-field-11 control-label no-padding-right"
 												>图标</label>
-												<select class="form-control" name="icon">
+												<select class="form-control" name="icon" id="icon">
 													<option value="fa fa-circle-o">默认</option>
 													<option value="menu-icon fa fa-angle-right">&gt;</option>
 													<option value="menu-icon fa fa-music">music</option>
@@ -168,6 +169,8 @@
 					</div>
 				</div>
 				<div class="col-xs-12">
+					<form id="listForm" action="${siteurl}admin/menu/view_list.htm" method="get">
+						<input type="hidden" name="parent.id" value="${pid}">
 					<div class="box box-solid">
 						<div class="box-body table-responsive no-padding">
 							<table class="table table-bordered table-hover dataTable">
@@ -205,7 +208,7 @@
 												<i class="icon-trash bigger-120">更新</i>
 											</a>
 											<a  class="menubutton btn btn-xs btn-danger"  onclick="return confirm('删除后无法恢复,确定要删除吗')"
-												href="${siteurl}admin/menu/model_delete.htm?typeid=${item.id}">
+												href="${siteurl}admin/menu/model_delete.htm?id=${item.id}">
 												<i class="icon-trash bigger-120">删除</i>
 											</a>
 										</div></td>
@@ -214,7 +217,10 @@
 								</tbody>
 							</table>
 						</div>
+
+						[@pager page=page   /]
 					</div>
+					</form>
 				</div>
 			</div>
 			<!-- /.box -->
@@ -236,7 +242,6 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery 2.2.3 -->
 <script src="${siteurl}plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="${siteurl}bootstrap/js/bootstrap.min.js"></script>
@@ -246,7 +251,7 @@
 <script src="${siteurl}plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="${siteurl}dist/js/app.min.js"></script>
+<script src="${siteurl}dist/js/list.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="${siteurl}dist/js/demo.js"></script>
 </body>
 </html>
