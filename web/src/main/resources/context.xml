@@ -132,6 +132,14 @@
 
     <mvc:interceptors>
         <ref bean="openSessionInViewInterceptor"/>
+        <mvc:interceptor>
+            <mvc:mapping path="/rest/**"/>
+            <bean class="com.tongna.adminstore.web.interceptor.AppInterceptor"></bean>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/rest/**"/>
+            <bean class="com.tongna.adminstore.web.interceptor.UserTokenInterceptor"></bean>
+        </mvc:interceptor>
     </mvc:interceptors>
 
 
