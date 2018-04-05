@@ -44,7 +44,7 @@
                            ignore-default-model-on-redirect="true" conversion-service="conversionService"
     >
     </mvc:annotation-driven>
-    <context:component-scan base-package="com.tongna.adminstore.controller"/>
+    <context:component-scan base-package="com.quhaodian.adminstore.controller"/>
 
 
 
@@ -134,11 +134,11 @@
         <ref bean="openSessionInViewInterceptor"/>
         <mvc:interceptor>
             <mvc:mapping path="/rest/**"/>
-            <bean class="com.tongna.adminstore.web.interceptor.AppInterceptor"></bean>
+            <bean class="com.quhaodian.adminstore.web.interceptor.AppInterceptor"></bean>
         </mvc:interceptor>
         <mvc:interceptor>
             <mvc:mapping path="/rest/**"/>
-            <bean class="com.tongna.adminstore.web.interceptor.UserTokenInterceptor"></bean>
+            <bean class="com.quhaodian.adminstore.web.interceptor.UserTokenInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
 
