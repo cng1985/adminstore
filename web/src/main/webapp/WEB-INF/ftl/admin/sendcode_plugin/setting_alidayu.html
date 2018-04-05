@@ -102,7 +102,6 @@
                                 <input class="form-control" maxlength="50" id="signName" name="signName" value="${pluginConfig.attributes['signName']!''}" placeholder="程序签名" type="text">
                             </div>
                         </div>
-
                         <div class="form-group">
                             <label for="order" class="col-sm-2 control-label">排序号</label>
                             <div class="col-sm-10">
@@ -114,9 +113,44 @@
                             <label for="isEnabled" class="col-sm-2 control-label">是否启用</label>
                             <div class="col-sm-10">
 
-                                <input type="checkbox" id="isEnabled" name="isEnabled"  [#if pluginConfig.isEnabled] checked[/#if] />
+                                <input type="checkbox" id="isEnabled" name="enabled"  [#if pluginConfig.isEnabled] checked[/#if] />
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="register" class="col-sm-2 control-label">注册模板号</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" maxlength="50" id="register" name="register" value="${pluginConfig.attributes['register']!''}" placeholder="注册模板号" type="text">
+                            </div>
+
+                            <label for="login" class="col-sm-2 control-label">登陆模板号</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" maxlength="50" id="login" name="login" value="${pluginConfig.attributes['login']!''}" placeholder="登陆模板号" type="text">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="binding" class="col-sm-2 control-label">绑定模板号</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" maxlength="50" id="binding" name="binding" value="${pluginConfig.attributes['binding']!''}" placeholder="绑定模板号" type="text">
+                            </div>
+                            <label for="init" class="col-sm-2 control-label">初始化模板号</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" maxlength="50" id="init" name="init" value="${pluginConfig.attributes['init']!''}" placeholder="初始化模板号" type="text">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reset" class="col-sm-2 control-label">重置手机号模板号</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" maxlength="50" id="reset" name="reset" value="${pluginConfig.attributes['reset']!''}" placeholder="重置手机号模板号" type="text">
+                            </div>
+                            <label for="changePhone" class="col-sm-2 control-label">修改手机号模板号</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" maxlength="50" id="changePhone" name="changePhone" value="${pluginConfig.attributes['changePhone']!''}" placeholder="修改手机号模板号" type="text">
+                            </div>
+                        </div>
+
+
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
