@@ -11,7 +11,8 @@
     <packaging>jar</packaging>
 
     <name>data</name>
-    <url>http://maven.apache.org</url>
+    <url>https://github.com/cng1985/adminstore</url>
+    <description>一个简单的项目初始化模板</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -27,7 +28,7 @@
         <dependency>
             <groupId>com.quhaodian.discover</groupId>
             <artifactId>discover-website</artifactId>
-            <version>1.8.14</version>
+            <version>1.8.21</version>
         </dependency>
         <dependency>
             <groupId>com.quhaodian.discover</groupId>
@@ -38,7 +39,7 @@
         <dependency>
             <groupId>com.quhaodian.discover</groupId>
             <artifactId>discover-plug-alidayu</artifactId>
-            <version>1.8.5</version>
+            <version>1.8.6</version>
         </dependency>
         <dependency>
             <groupId>com.quhaodian.discover</groupId>
