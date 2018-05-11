@@ -7,7 +7,7 @@ public class TemplateController extends BaseController {
   
   
   @GetMapping(value = "/index")
-  public String index(){
-   return getView("login");
+  public String index() {
+    return getView("login");
   }
 }

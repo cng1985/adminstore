@@ -9,15 +9,15 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"classpath*:applicationContext.xml"})
+@ContextConfiguration( {"classpath*:applicationContext.xml"})
 public class SpringTest {
 
-    @Autowired
-    MemberService memberService;
+  @Autowired
+  MemberService memberService;
 
-    @Test
-    public void testObject() {
+  @Test
+  public void testObject() {
 
-        Assert.assertNotNull(memberService);
-    }
+    Assert.assertNotNull(memberService);
+  }
 }

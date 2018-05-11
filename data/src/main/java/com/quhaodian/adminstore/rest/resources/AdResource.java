@@ -10,11 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Component
 public class AdResource implements AdApi {
-
-
-
-    @Override
-    public AdList list(AdListRequest request) {
-        return null;
-    }
+  
+  
+  @Override
+  public AdList list(AdListRequest request) {
+    return null;
+  }
 }

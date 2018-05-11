@@ -7,15 +7,14 @@
 |
 +---------------------------------------------------------------------------
 */
+
 package com.quhaodian.adminstore.controller.front;
 
 /**
- * 
  * 返回页面配置
- * 
- * @author langhsu
  *
+ * @author langhsu
  */
 public interface Views {
-	String LOGIN = "login";
+  String LOGIN = "login";
 }
