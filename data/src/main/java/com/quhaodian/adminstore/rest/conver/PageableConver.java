@@ -8,8 +8,8 @@ public class PageableConver implements Conver<Pageable, RequestTokenPageObject> 
   @Override
   public Pageable conver(RequestTokenPageObject source) {
     Pageable result = new Pageable();
-    result.setSize(source.getSize());
-    result.setNo(source.getNo());
+    result.setPageSize(source.getSize());
+    result.setPageNo(source.getNo());
     return result;
   }
 }

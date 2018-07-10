@@ -22,7 +22,7 @@
         <dependency>
             <groupId>com.quhaodian.discover</groupId>
             <artifactId>discover-website</artifactId>
-            <version>1.8.23</version>
+            <version>1.8.33</version>
         </dependency>
         <dependency>
             <groupId>com.quhaodian.discover</groupId>
@@ -33,7 +33,7 @@
         <dependency>
             <groupId>com.quhaodian.discover</groupId>
             <artifactId>discover-plug-alidayu</artifactId>
-            <version>1.8.7</version>
+            <version>1.8.10</version>
         </dependency>
         <dependency>
             <groupId>com.quhaodian.discover</groupId>
@@ -44,6 +44,11 @@
             <groupId>com.quhaodian.discover</groupId>
             <artifactId>discover-workflow</artifactId>
             <version>1.8.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.quhaodian.discover</groupId>
+            <artifactId>discover_user_oauth</artifactId>
+            <version>1.8.2</version>
         </dependency>
         <dependency>
             <groupId>com.quhaodian.adminstore</groupId>
