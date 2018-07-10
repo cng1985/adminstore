@@ -6,10 +6,14 @@ import com.quhaodian.adminstore.rest.api.MemberApi;
 import com.quhaodian.adminstore.rest.conver.MemberSimpleConver;
 import com.quhaodian.adminstore.rest.conver.PageableConver;
 import com.quhaodian.adminstore.rest.domain.page.MemberPage;
+import com.quhaodian.adminstore.rest.domain.request.MemberUpdateRequest;
 import com.quhaodian.data.page.Page;
 import com.quhaodian.data.page.Pageable;
 import com.quhaodian.discover.rest.base.RequestTokenPageObject;
+import com.quhaodian.discover.rest.base.ResponseObject;
 import com.quhaodian.user.utils.ConverResourceUtils;
+import com.quhaodian.user.utils.UserUtils;
+import jodd.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +31,28 @@ public class MemberResource implements MemberApi {
     Pageable pageable = new PageableConver().conver(request);
     Page<Member> page = memberDao.page(pageable);
     ConverResourceUtils.coverPage(result, page, new MemberSimpleConver());
+    return result;
+  }
+  
+  @Override
+  public ResponseObject update(MemberUpdateRequest request) {
+    ResponseObject result = new ResponseObject();
+    Long id = UserUtils.getApp(request.getUserToken());
+    Member member = memberDao.findById(id);
+    if (member == null) {
+      result.setMsg("该用户不存在!");
+      result.setCode(-101);
+      return result;
+    }
+    if (StringUtil.isNotEmpty(request.getAvatar())) {
+      member.setAvatar(request.getAvatar());
+    }
+    if (StringUtil.isNotEmpty(request.getSex())) {
+      member.setSex(request.getSex());
+    }
+    if (StringUtil.isNotEmpty(request.getName())) {
+      member.setName(request.getName());
+    }
     return result;
   }
 }
