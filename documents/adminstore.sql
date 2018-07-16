@@ -249,7 +249,7 @@ CREATE TABLE IF NOT EXISTS `site_config` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.site_config 的数据：~0 rows (大约)
+-- 正在导出表  adminstore.site_config 的数据：~1 rows (大约)
 DELETE FROM `site_config`;
 /*!40000 ALTER TABLE `site_config` DISABLE KEYS */;
 INSERT INTO `site_config` (`id`, `addDate`, `lastDate`, `description`, `domainName`, `favicon`, `icp`, `keywords`, `logo`, `pageSize`, `shortName`, `theme`, `title`, `mobile`) VALUES
@@ -416,11 +416,11 @@ CREATE TABLE IF NOT EXISTS `user_account` (
   CONSTRAINT `FKloyhlvrn82g8811wyjaa8ehm0` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.user_account 的数据：~0 rows (大约)
+-- 正在导出表  adminstore.user_account 的数据：~1 rows (大约)
 DELETE FROM `user_account`;
 /*!40000 ALTER TABLE `user_account` DISABLE KEYS */;
 INSERT INTO `user_account` (`id`, `addDate`, `lastDate`, `accountType`, `loginSize`, `password`, `salt`, `username`, `user_id`) VALUES
-	(1, '2017-12-27 13:53:50', '2018-07-16 15:08:36', 2, 73, 'b63e05a75d3c13c53becedeb885bda5b67a6664a', 'e1e8c5fab5a28e13', 'admin', 1);
+	(1, '2017-12-27 13:53:50', '2018-07-16 15:17:44', 2, 75, 'b63e05a75d3c13c53becedeb885bda5b67a6664a', 'e1e8c5fab5a28e13', 'admin', 1);
 /*!40000 ALTER TABLE `user_account` ENABLE KEYS */;
 
 -- 导出  表 adminstore.user_code 结构
@@ -490,11 +490,11 @@ CREATE TABLE IF NOT EXISTS `user_info` (
   CONSTRAINT `FK3193uu2asgocbhkk1mus5wfd7` FOREIGN KEY (`household_id`) REFERENCES `area` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.user_info 的数据：~0 rows (大约)
+-- 正在导出表  adminstore.user_info 的数据：~1 rows (大约)
 DELETE FROM `user_info`;
 /*!40000 ALTER TABLE `user_info` DISABLE KEYS */;
 INSERT INTO `user_info` (`id`, `addDate`, `lastDate`, `avatar`, `catalog`, `loginSize`, `name`, `phone`, `registerType`, `state`, `edge`, `introduce`, `note`, `sex`, `household_id`) VALUES
-	(1, '2017-12-27 14:44:05', '2018-07-16 15:08:37', NULL, 0, 91, 'admin', NULL, '账号', NULL, NULL, NULL, NULL, NULL, NULL);
+	(1, '2017-12-27 14:44:05', '2018-07-16 15:17:44', NULL, 0, 95, 'admin', NULL, '账号', NULL, NULL, NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `user_info` ENABLE KEYS */;
 
 -- 导出  表 adminstore.user_info_attribute 结构
@@ -584,7 +584,8 @@ INSERT INTO `user_login_log` (`id`, `addDate`, `lastDate`, `ip`, `state`, `user_
 	(18, '2018-07-16 14:29:49', '2018-07-16 14:29:49', '0:0:0:0:0:0:0:1', 1, 1, NULL, NULL),
 	(19, '2018-07-16 14:44:02', '2018-07-16 14:44:02', '0:0:0:0:0:0:0:1', 1, 1, NULL, NULL),
 	(20, '2018-07-16 15:00:59', '2018-07-16 15:00:59', '0:0:0:0:0:0:0:1', 1, 1, NULL, NULL),
-	(21, '2018-07-16 15:06:31', '2018-07-16 15:06:31', '0:0:0:0:0:0:0:1', 1, 1, NULL, NULL);
+	(21, '2018-07-16 15:06:31', '2018-07-16 15:06:31', '0:0:0:0:0:0:0:1', 1, 1, NULL, NULL),
+	(22, '2018-07-16 15:17:44', '2018-07-16 15:17:44', '0:0:0:0:0:0:0:1', 1, 1, NULL, NULL);
 /*!40000 ALTER TABLE `user_login_log` ENABLE KEYS */;
 
 -- 导出  表 adminstore.user_message 结构
@@ -826,11 +827,11 @@ CREATE TABLE IF NOT EXISTS `user_role` (
   CONSTRAINT `FKrwtb6ktd4x1qi6sjjiu3134a1` FOREIGN KEY (`catalog_id`) REFERENCES `user_role_catalog` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.user_role 的数据：~0 rows (大约)
+-- 正在导出表  adminstore.user_role 的数据：~1 rows (大约)
 DELETE FROM `user_role`;
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
 INSERT INTO `user_role` (`id`, `addDate`, `lastDate`, `alias`, `description`, `name`, `roleType`, `catalog_id`) VALUES
-	(1, '2018-07-16 15:06:25', '2018-07-16 15:06:25', '', '', 'admin', 0, 2);
+	(1, '2018-07-16 15:17:37', '2018-07-16 15:17:37', '', '', 'admin', 0, 2);
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 
 -- 导出  表 adminstore.user_role_authority 结构
@@ -851,9 +852,6 @@ INSERT INTO `user_role_authority` (`role_id`, `permission`) VALUES
 	(1, 'member'),
 	(1, 'useraccount'),
 	(1, 'userloginlog'),
-	(1, '12'),
-	(1, 'flow'),
-	(1, 'act'),
 	(1, '15'),
 	(1, 'plugin_sendcode'),
 	(1, 'plugin_storage'),
@@ -919,7 +917,7 @@ CREATE TABLE IF NOT EXISTS `user_role_links` (
   CONSTRAINT `FKpm1oweb01msxxqf212qmd0984` FOREIGN KEY (`roles_id`) REFERENCES `user_role` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.user_role_links 的数据：~0 rows (大约)
+-- 正在导出表  adminstore.user_role_links 的数据：~1 rows (大约)
 DELETE FROM `user_role_links`;
 /*!40000 ALTER TABLE `user_role_links` DISABLE KEYS */;
 INSERT INTO `user_role_links` (`user_id`, `roles_id`) VALUES
