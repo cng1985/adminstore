@@ -204,11 +204,11 @@
 											[/#if]
 											[/#if]
 											<a  class="menubutton btn btn-xs btn-danger"
-												href="${siteurl}admin/menu/view_edit.htm?id=${item.id}">
+												href="${siteurl}admin/menu/view_edit.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
 												<i class="icon-trash bigger-120">更新</i>
 											</a>
 											<a  class="menubutton btn btn-xs btn-danger"  onclick="return confirm('删除后无法恢复,确定要删除吗')"
-												href="${siteurl}admin/menu/model_delete.htm?id=${item.id}">
+												href="${siteurl}admin/menu/model_delete.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
 												<i class="icon-trash bigger-120">删除</i>
 											</a>
 										</div></td>

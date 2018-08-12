@@ -106,14 +106,14 @@
 									<div class="row">
 										<div class="col-xs-12 col-sm-12 ">
 											<div class="form-group">
-												<label  for="name">分类名称</label>
-												<input required="required" type="text" maxlength="20" id="name" name="name" placeholder="分类名称 "
+												<label  for="cname">分类名称</label>
+												<input required="required" type="text" maxlength="20" id="cname" name="name" placeholder="分类名称 "
 													   class="form-control search-query">
 
 											</div>
 											<div class ="form-group" >
-												<label for="code">编码</label>
-												<input class="form-control" required="required" maxlength="50" type="text" placeholder="编码"  name="code" id="code">
+												<label for="ccode">编码</label>
+												<input class="form-control" required="required" maxlength="50" type="text" placeholder="编码"  name="code" id="ccode">
 											</div>
 											<div class ="form-group">
 														<span>
@@ -153,11 +153,11 @@
 												</a>
 												[/#if]
 												<a  class="menubutton btn btn-sm btn-success"
-													href="${siteurl}admin/userrolecatalog/view_edit.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
+												onclick="openDialog(${item.id},'${item.name}','${item.code}')" >
 													<i class="fa fa-edit">更新</i>
 												</a>
 												<a  class="menubutton btn btn-sm btn-danger"  onclick="return confirm('删除后无法恢复,确定要删除吗')"
-													href="${siteurl}admin/userrolecatalog/model_delete.htm?typeid=${item.id}">
+													href="${siteurl}admin/userrolecatalog/model_delete.htm?id=${item.id}">
 													<i class="fa fa-trash">删除</i>
 												</a>
 											</div></td>
@@ -203,6 +203,51 @@
 <!-- AdminLTE for demo purposes -->
 <script src="${siteurl}dist/js/demo.js"></script>
 <script src="${siteurl}dist/js/list.js"></script>
+
+
+<div id="showDialog" class="modal fade" tabindex="-1" role="dialog">
+	<form class="form-horizontal" action="${siteurl}admin/userrolecatalog/model_update.htm" method="post">
+		<input type="hidden" id="cid" name="id">
+		<input type="hidden" name="pageNumber" value="${(page.pageNumber)!'1'}">
+		<input type="hidden" name="parent.id" value="${pid!'1'}">
+
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">更新分类信息</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="name" class="col-sm-2 control-label">分类名称</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="name" name="name" placeholder="分类名称">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="code" class="col-sm-2 control-label">分类编码</label>
+						<div class="col-sm-10">
+							<input required="required" type="code" name="code" class="form-control" id="code" placeholder="分类编码">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="submit" class="btn btn-primary">保存</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</form>
+</div><!-- /.modal -->
+<script type="text/javascript">
+
+    function openDialog(id,name,code) {
+        $("#cid").val(id);
+        $("#name").val(name);
+        $("#code").val(code);
+        $("#showDialog").modal('show');
+    }
+</script>
 
 </body>
 </html>
