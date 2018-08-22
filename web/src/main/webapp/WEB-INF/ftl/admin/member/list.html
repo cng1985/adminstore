@@ -119,11 +119,10 @@
 									<tr role="row">
 										<td class="col-xs-2">姓名</td>
 										<td class="col-xs-1 text-center">性别</td>
-										<td class="col-xs-1 text-center">人才类型</td>
-										<td class="col-xs-1 text-center">推荐情况</td>
-										<td class="col-xs-2 text-center">个人介绍</td>
+										<td class="col-xs-1 text-center">职务</td>
+										<td class="col-xs-4 text-center">所在公司</td>
 										<td class="col-xs-2 text-center">更新时间</td>
-										<td class="col-xs-3 text-center">操作</td>
+										<td class="col-xs-2 text-center">操作</td>
 									</tr>
 									</thead>
 									<tbody>
@@ -131,16 +130,11 @@
 									<tr id="trr${item.id}">
 										<td><a href="${siteurl}admin/member/profile.htm?id=${item.id}">${item.name!""}</a></td>
 										<td class="text-center">${item.sex!""}</td>
-										<td class="">${(item.memberType.name)!""}</td>
-										<td class="text-center">${item.recommendType!"未推荐"}</td>
-										<td class="">${(item.note)!""}</td>
+										<td class="">${(item.job)!""}</td>
+										<td class="text-center">${item.companyName!""}</td>
 										<td class="text-center">${(item.lastDate?string('yyyy-MM-dd HH:mm:ss'))!''}</td>
 										<td class="text-center">
 											<div style="display: inline-block;">
-												<a  class="menubutton btn btn-sm btn-success" onclick="openDialog(${item.id},'${item.name}')"
-													href="#">
-													<i class="fa fa-edit">推荐</i>
-												</a>
 												[@shiro.hasPermission name="member:update"]
 												<a  class="menubutton btn btn-sm btn-success"
 													href="${siteurl}admin/member/view_edit.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">

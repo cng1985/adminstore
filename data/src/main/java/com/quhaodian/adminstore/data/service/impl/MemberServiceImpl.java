@@ -2,6 +2,7 @@ package com.quhaodian.adminstore.data.service.impl;
 
 import com.quhaodian.adminstore.data.dao.MemberDao;
 import com.quhaodian.adminstore.data.entity.Member;
+import com.quhaodian.adminstore.data.request.MemberUpdateRequest;
 import com.quhaodian.adminstore.data.service.MemberService;
 import com.quhaodian.data.core.Updater;
 import com.quhaodian.data.page.Filter;
@@ -9,10 +10,13 @@ import com.quhaodian.data.page.Order;
 import com.quhaodian.data.page.Page;
 import com.quhaodian.data.page.Pageable;
 import com.quhaodian.data.utils.FilterUtils;
+import com.quhaodian.discover.rest.base.ResponseObject;
 import com.quhaodian.user.data.dao.UserAccountDao;
 import com.quhaodian.user.data.entity.UserAccount;
 import com.quhaodian.user.data.vo.UserAccountVo;
+import com.quhaodian.user.utils.UserUtils;
 import java.util.List;
+import jodd.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +44,42 @@ public class MemberServiceImpl implements MemberService {
   public Member save(Member bean) {
     dao.save(bean);
     return bean;
+  }
+  
+  @Override
+  public ResponseObject update(MemberUpdateRequest request) {
+    ResponseObject result = new ResponseObject();
+    Member member = dao.findById(request.getId());
+    if (member == null) {
+      result.setMsg("该用户不存在!");
+      result.setCode(-101);
+      return result;
+    }
+    if (StringUtil.isNotEmpty(request.getAvatar())) {
+      member.setAvatar(request.getAvatar());
+    }
+    if (StringUtil.isNotEmpty(request.getSex())) {
+      member.setSex(request.getSex());
+    }
+    if (StringUtil.isNotEmpty(request.getName())) {
+      member.setName(request.getName());
+    }
+    if (StringUtil.isNotEmpty(request.getPhone())) {
+      member.setPhone(request.getPhone());
+    }
+    if (StringUtil.isNotEmpty(request.getJob())) {
+      member.setJob(request.getJob());
+    }
+    if (StringUtil.isNotEmpty(request.getCompanyName())) {
+      member.setCompanyName(request.getCompanyName());
+    }
+    if (StringUtil.isNotEmpty(request.getIntroduce())) {
+      member.setIntroduce(request.getIntroduce());
+    }
+    if (StringUtil.isNotEmpty(request.getEmail())) {
+      member.setEmail(request.getEmail());
+    }
+    return result;
   }
   
   @Override

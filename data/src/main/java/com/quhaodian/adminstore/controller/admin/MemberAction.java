@@ -1,12 +1,14 @@
 package com.quhaodian.adminstore.controller.admin;
 
 import com.quhaodian.adminstore.data.entity.Member;
+import com.quhaodian.adminstore.data.request.MemberUpdateRequest;
 import com.quhaodian.adminstore.data.service.MemberService;
 import com.quhaodian.adminstore.data.so.MemberSo;
 import com.quhaodian.data.page.Order;
 import com.quhaodian.data.page.Page;
 import com.quhaodian.data.page.Pageable;
 import com.quhaodian.data.utils.FilterUtils;
+import com.quhaodian.discover.rest.base.ResponseObject;
 import com.quhaodian.user.data.entity.UserAccount;
 import com.quhaodian.user.data.service.UserInfoService;
 import com.quhaodian.user.data.service.UserRoleService;
@@ -24,7 +26,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
@@ -107,6 +111,12 @@ public class MemberAction {
     return "/admin/member/profile";
   }
   
+  @ResponseBody
+  @RequiresPermissions("member")
+  @RequestMapping("/admin/member/model_update_json")
+  public ResponseObject updateInfo(@RequestBody MemberUpdateRequest request) {
+    return manager.update(request);
+  }
   
   @RequiresPermissions("member")
   @RequestMapping("/admin/member/model_save")

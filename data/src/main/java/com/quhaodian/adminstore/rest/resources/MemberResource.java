@@ -53,6 +53,21 @@ public class MemberResource implements MemberApi {
     if (StringUtil.isNotEmpty(request.getName())) {
       member.setName(request.getName());
     }
+    if (StringUtil.isNotEmpty(request.getPhone())) {
+      member.setPhone(request.getPhone());
+    }
+    if (StringUtil.isNotEmpty(request.getJob())) {
+      member.setJob(request.getJob());
+    }
+    if (StringUtil.isNotEmpty(request.getCompanyName())) {
+      member.setCompanyName(request.getCompanyName());
+    }
+    if (StringUtil.isNotEmpty(request.getIntroduce())) {
+      member.setIntroduce(request.getIntroduce());
+    }
+    if (StringUtil.isNotEmpty(request.getEmail())) {
+      member.setEmail(request.getEmail());
+    }
     return result;
   }
 }

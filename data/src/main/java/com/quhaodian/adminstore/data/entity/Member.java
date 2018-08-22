@@ -35,6 +35,15 @@ public class Member extends AbstractUser {
    */
   private String introduce;
   
+  @Column(length = 20)
+  private String job;
+  
+  @Column(length = 30)
+  private String companyName;
+  
+  
+  private String email;
+  
   
   /**
    * 户籍
@@ -89,5 +98,27 @@ public class Member extends AbstractUser {
     this.household = household;
   }
   
+  public String getJob() {
+    return job;
+  }
   
+  public void setJob(String job) {
+    this.job = job;
+  }
+  
+  public String getCompanyName() {
+    return companyName;
+  }
+  
+  public void setCompanyName(String companyName) {
+    this.companyName = companyName;
+  }
+  
+  public String getEmail() {
+    return email;
+  }
+  
+  public void setEmail(String email) {
+    this.email = email;
+  }
 }

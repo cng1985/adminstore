@@ -1,8 +1,10 @@
-package com.quhaodian.adminstore.rest.domain.request;
+package com.quhaodian.adminstore.data.request;
 
-import com.quhaodian.discover.rest.base.RequestUserTokenObject;
+import java.io.Serializable;
 
-public class MemberUpdateRequest extends RequestUserTokenObject {
+public class MemberUpdateRequest implements Serializable {
+  
+  private Long id;
   
   private String name;
   
@@ -82,5 +84,13 @@ public class MemberUpdateRequest extends RequestUserTokenObject {
   
   public void setIntroduce(String introduce) {
     this.introduce = introduce;
+  }
+  
+  public Long getId() {
+    return id;
+  }
+  
+  public void setId(Long id) {
+    this.id = id;
   }
 }

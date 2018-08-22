@@ -43,6 +43,9 @@
     <link rel="stylesheet" href="${siteurl}plugins/bootstrap-datepicker/css/bootstrap-datepicker3.css">
     <script src="${siteurl}plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="${siteurl}plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+    <script src="${siteurl}dist/js/knockout-3.4.2.js"></script>
+    <link rel="stylesheet" href="${siteurl}plugins/sweetalert/sweetalert.css">
+    <script src="${siteurl}plugins/sweetalert/sweetalert.min.js"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
@@ -106,17 +109,15 @@
 
                             <ul class="list-group list-group-unbordered">
                                 <li class="list-group-item">
-                                    <b>Followers</b> <a class="pull-right">1,322</a>
+                                    <b>我的粉丝</b> <a class="pull-right">1,322</a>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>Following</b> <a class="pull-right">543</a>
+                                    <b>我关注的人</b> <a class="pull-right">543</a>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>Friends</b> <a class="pull-right">13,287</a>
+                                    <b>我的好友</b> <a class="pull-right">13,287</a>
                                 </li>
                             </ul>
-
-                            <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -125,7 +126,7 @@
                     <!-- About Me Box -->
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">About Me</h3>
+                            <h3 class="box-title">关于我</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -167,9 +168,9 @@
                 <div class="col-md-9">
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a href="#activity" data-toggle="tab" aria-expanded="false">Activity</a></li>
-                            <li class=""><a href="#timeline" data-toggle="tab" aria-expanded="false">Timeline</a></li>
-                            <li class=""><a href="#settings" data-toggle="tab" aria-expanded="true">Settings</a></li>
+                            <li class="active"><a href="#activity" data-toggle="tab" aria-expanded="false">朋友圈</a></li>
+                            <li class=""><a href="#timeline" data-toggle="tab" aria-expanded="false">最近动态</a></li>
+                            <li class=""><a href="#settings" data-toggle="tab" aria-expanded="true">个人资料</a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="activity">
@@ -386,52 +387,50 @@
                             <div class="tab-pane " id="settings">
                                 <form class="form-horizontal">
                                     <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">Name</label>
+                                        <label for="name" class="col-sm-2 control-label">昵称</label>
 
                                         <div class="col-sm-10">
-                                            <input class="form-control" id="inputName" placeholder="Name" type="email">
+                                            <input class="form-control" data-bind="value:name" id="name" placeholder="昵称" type="text">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+                                        <label for="phone" class="col-sm-2 control-label">电话</label>
 
                                         <div class="col-sm-10">
-                                            <input class="form-control" id="inputEmail" placeholder="Email" type="email">
+                                            <input class="form-control"  data-bind="value:phone" id="phone" placeholder="电话" type="text">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">Name</label>
+                                        <label for="email" class="col-sm-2 control-label">电子邮箱</label>
 
                                         <div class="col-sm-10">
-                                            <input class="form-control" id="inputName" placeholder="Name" type="text">
+                                            <input class="form-control"  data-bind="value:email" id="email" placeholder="电子邮箱" type="email">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputExperience" class="col-sm-2 control-label">Experience</label>
+                                        <label for="job" class="col-sm-2 control-label">职务</label>
 
                                         <div class="col-sm-10">
-                                            <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
+                                            <input class="form-control"   data-bind="value:job" id="job" placeholder="职务" type="text">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
+                                        <label for="companyName" class="col-sm-2 control-label">所在公司</label>
 
                                         <div class="col-sm-10">
-                                            <input class="form-control" id="inputSkills" placeholder="Skills" type="text">
+                                            <input class="form-control"   data-bind="value:companyName"  id="companyName" placeholder="所在公司" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="introduce" class="col-sm-2 control-label">个人介绍</label>
+
+                                        <div class="col-sm-10">
+                                            <textarea name="introduce"  data-bind="value:introduce" class="form-control" id="introduce" placeholder="个人介绍"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="submit" class="btn btn-danger">Submit</button>
+                                            <button type="button" data-bind="click:updateProfile" class="btn btn-danger">保存</button>
                                         </div>
                                     </div>
                                 </form>
@@ -463,7 +462,44 @@
 
 
 
+<script type="text/javascript">
+    var QuestionModel = function(options) {
+        var self = this;
+        self.id=ko.observable("${(model.id)!''}");
+        self.name=ko.observable("${(model.name)!''}");
+        self.email=ko.observable("${(model.email)!''}");
+        self.companyName=ko.observable("${(model.companyName)!''}");
+        self.phone=ko.observable("${(model.phone)!''}");
+        self.job=ko.observable("${(model.job)!''}");
+        self.introduce=ko.observable("${(model.introduce)!''}");
+        self.updateProfile=function () {
+            var data=JSON.stringify(ko.toJS(self), null, 2);
+            console.log(data);
+            if(self.name()==undefined || self.name().length<=1){
+                swal("请填写昵称");
+                return;
+            }
 
+            $.ajax({
+                type: "post",
+                url: '${siteurl}admin/member/model_update_json.htm',
+                async: false, // 使用同步方式
+                data: data,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(back) {
+                    if(back.code!=0){
+                        swal("更新个人信息失败!",back.msg, "error")
+                    }else {
+                        swal("更新个人信息成功!",back.msg, "success")
+                    }
+                } // 注意不要在此行增加逗号
+            });
+
+        }
+    }
+    ko.applyBindings(new QuestionModel());
+</script>
 
 
 
