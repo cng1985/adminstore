@@ -27,7 +27,7 @@
         <dependency>
             <groupId>com.quhaodian.discover</groupId>
             <artifactId>discover-area</artifactId>
-            <version>1.8.4</version>
+            <version>1.8.5</version>
         </dependency>
 
         <dependency>
@@ -82,6 +82,11 @@
             <groupId>com.quhaodian.jsonrpc</groupId>
             <version>1.01</version>
             <artifactId>core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.haoxuer</groupId>
+            <artifactId>lbsyun</artifactId>
+            <version>1.0.1</version>
         </dependency>
     </dependencies>
 </project>
