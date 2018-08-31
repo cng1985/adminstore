@@ -53,9 +53,9 @@ public class SiteController extends BaseController {
     orders.add(Order.asc("code"));
     List<Area> areas= areaService.list(0, 90000, filers, orders);
     for (Area root : areas) {
-//      if (root.getGovCode().length()!=6){
-//        continue;
-//      }
+      if (root.getGovCode().length()!=6){
+        continue;
+      }
     
       List<AreaItem> areaItems = service.child(root.getGovCode()).getResult().get(0);
       try {
