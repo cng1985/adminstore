@@ -18,9 +18,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.quhaodian.discover</groupId>
-            <artifactId>discover-rest</artifactId>
-            <version>1.8.3</version>
+            <groupId>com.haoxuer.discover</groupId>
+            <artifactId>discover-common-rest</artifactId>
+            <version>1.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.quhaodian.jsonrpc</groupId>

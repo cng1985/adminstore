@@ -25,30 +25,25 @@
             <version>1.8.38</version>
         </dependency>
         <dependency>
-            <groupId>com.quhaodian.discover</groupId>
+            <groupId>com.haoxuer.discover</groupId>
             <artifactId>discover-area</artifactId>
-            <version>1.8.5</version>
+            <version>1.0.1</version>
         </dependency>
 
         <dependency>
-            <groupId>com.quhaodian.discover</groupId>
-            <artifactId>discover-plug-alidayu</artifactId>
-            <version>1.8.10</version>
-        </dependency>
-        <dependency>
-            <groupId>com.quhaodian.discover</groupId>
+            <groupId>com.haoxuer.discover</groupId>
             <artifactId>discover-quartz</artifactId>
-            <version>1.8.2</version>
+            <version>1.0.1</version>
         </dependency>
         <dependency>
-            <groupId>com.quhaodian.discover</groupId>
+            <groupId>com.haoxuer.discover</groupId>
             <artifactId>discover-workflow</artifactId>
-            <version>1.8.3</version>
+            <version>1.0.1</version>
         </dependency>
         <dependency>
-            <groupId>com.quhaodian.discover</groupId>
-            <artifactId>discover_user_oauth</artifactId>
-            <version>1.8.2</version>
+            <groupId>com.haoxuer.discover</groupId>
+            <artifactId>discover-user-oauth</artifactId>
+            <version>1.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.quhaodian.adminstore</groupId>
