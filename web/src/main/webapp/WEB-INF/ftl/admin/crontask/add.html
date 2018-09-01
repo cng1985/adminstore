@@ -107,18 +107,129 @@
 								<div class="col-sm-9">
 									<input required="required" type="text" name="cron" class="form-control"
 										   placeholder="名称" >
-									<ul>
-										<li>秒（0~59）</li>
-										<li>分钟（0~59）</li>
-										<li>小时（0~23）</li>
-										<li>天（月）（0~31，但是你需要考虑你月的天数）</li>
-										<li>月（0~11）</li>
-										<li>天（星期）（1~7 1=SUN 或 SUN，MON，TUE，WED，THU，FRI，SAT）</li>
-										<li>年份（1970－2099）</li>
-									</ul>
+									<table class="table table-bordered table-hover dataTable" style="margin-top: 10px;">
+										<thead>
+										<tr><th>位置</th><th>时间域</th><th>允许值</th><th>特殊值</th></tr>
+										</thead>
+										<tbody>
+										<tr>
+											<td>1</td>
+											<td>秒</td>
+											<td>0-59</td>
+											<td>, - * /</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>分钟</td>
+											<td>0-59</td>
+											<td>, - * /</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>小时</td>
+											<td>0-23</td>
+											<td>, - * /</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>日期;天（月）</td>
+											<td>1-31</td>
+											<td>, - * ? / L W C</td>
+										</tr>
+										<tr>
+											<td>5</td>
+											<td>月份</td>
+											<td>1-12</td>
+											<td>, - * /</td>
+										</tr>
+										<tr>
+											<td>6</td>
+											<td>星期</td>
+											<td>1-7</td>
+											<td>, - * ? / L C #;（1~7 1=SUN 或 SUN，MON，TUE，WED，THU，FRI，SAT）</td>
+										</tr>
+										<tr>
+											<td>7</td>
+											<td>年份（可选）</td>
+											<td>1-31</td>
+											<td>, - * /</td>
+										</tr>
+										</tbody>
+									</table>
 									<div>
 										“*”字符代表所有可能的值,“/”字符用来指定数值的增量,“？”字符仅被用于天（月）和天（星期）两个子表达式，表示不指定值, “L” 字符仅被用于天（月）和天（星期）两个子表达式，它是单词“last”的缩写
 									</div>
+									<table class="table table-bordered table-hover dataTable" style="margin-top: 10px;">
+										<thead>
+										<tr><th>表示式</th><th>说明</th></tr>
+										</thead>
+										<tbody>
+										<tr>
+											<td>0 0 12 * * ?</td>
+											<td>每天12点运行</td>
+										</tr>
+										<tr>
+											<td>0 15 10 ? * *</td>
+											<td>每天10:15运行</td>
+										</tr>
+										<tr>
+											<td>0 15 10 * * ?</td>
+											<td>每天10:15运行</td>
+										</tr>
+										<tr>
+											<td>0 15 10 * * ? *</td>
+											<td>每天10:15运行</td>
+										</tr>
+										<tr>
+											<td>0 15 10 * * ? 2008</td>
+											<td>在2008年的每天10：15运行</td>
+										</tr>
+										<tr>
+											<td>0 * 14 * * ?</td>
+											<td>每天14点到15点之间每分钟运行一次，开始于14:00，结束于14:59。</td>
+										</tr>
+										<tr>
+											<td>0 0/5 14 * * ?</td>
+											<td>每天14点到15点每5分钟运行一次，开始于14:00，结束于14:55。</td>
+										</tr>
+										<tr>
+											<td>0 0/5 14,18 * * ?</td>
+											<td>每天14点到15点每5分钟运行一次，此外每天18点到19点每5钟也运行一次。</td>
+										</tr>
+										<tr>
+											<td>0 0-5 14 * * ?</td>
+											<td>每天14:00点到14:05，每分钟运行一次。</td>
+										</tr>
+										<tr>
+											<td>0 10,44 14 ? 3 WED</td>
+											<td>3月每周三的14:10分到14:44，每分钟运行一次。</td>
+										</tr>
+										<tr>
+											<td>0 15 10 ? * MON-FRI</td>
+											<td>每周一，二，三，四，五的10:15分运行。</td>
+										</tr>
+										<tr>
+											<td>0 15 10 15 * ?</td>
+											<td>每月15日10:15分运行。</td>
+										</tr>
+										<tr>
+											<td>0 15 10 L * ?</td>
+											<td>每月最后一天10:15分运行。</td>
+										</tr>
+										<tr>
+											<td>0 15 10 ? * 6L</td>
+											<td>每月最后一个星期五10:15分运行。</td>
+										</tr>
+										<tr>
+											<td>0 15 10 ? * 6L 2007-2009</td>
+											<td>在2007,2008,2009年每个月的最后一个星期五的10:15分运行。</td>
+										</tr>
+										<tr>
+											<td>0 15 10 ? * 6#3</td>
+											<td>每月第三个星期五的10:15分运行。</td>
+										</tr>
+										</tbody>
+									</table>
 								</div>
 							</div>
 							<div class="form-group">

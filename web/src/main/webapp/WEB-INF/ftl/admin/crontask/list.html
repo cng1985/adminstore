@@ -102,7 +102,7 @@
 										<td class="col-xs-3">名称</td>
 										<td class="col-xs-1 text-center">状态</td>
 										<td class="col-xs-1 text-center">运行次数</td>
-										<td class="col-xs-2 text-center">创建时间</td>
+										<td class="col-xs-2 text-center">下次执行时间</td>
 										<td class="col-xs-2 text-center">最后一次运行时间</td>
 										<td class="col-xs-3 text-center  hidden-sm hidden-xs">操作</td>
 									</tr>
@@ -114,24 +114,16 @@
 											${item.name!""}
 										</td>
 										<td class="text-center">
-											[#if !item.state??]
-											未运行
-											[#else]
-											[#if item.state=0]
-											未运行
-											[#else]
-											运行中
-											[/#if]
-											[/#if]
+											${(item.state)!""}
 										</td>
 										<td class="text-center">
 											${item.nums!'0'}
 										</td>
 										<td class="text-center">
-											${item.addDate!""}
+											${(item.nextDate?string("yyyy-MM-dd HH:mm"))!""}
 										</td>
 										<td class="text-center">
-											${item.lastDate!""}
+											${(item.lastDate?string("yyyy-MM-dd HH:mm"))!""}
 										</td>
 
 										<td class="text-center  hidden-sm hidden-xs">
@@ -140,7 +132,7 @@
 												   href="${siteurl}admin/crontask/demo.htm?id=${item.id!''}&pageNumber=${page.pageNumber}">
 													<i class="fa  fa-tasks" style="margin-right: 5px;">测试</i>
 												</a>
-												[#if item.state?? && item.state=1]
+												[#if item.state=="正常"]
 												<a class="menubutton btn btn-sm btn-primary"
 												   href="${siteurl}admin/crontask/pause.htm?id=${item.id!''}&pageNumber=${page.pageNumber}">
 													<i class="fa  fa-pause">暂停</i>
