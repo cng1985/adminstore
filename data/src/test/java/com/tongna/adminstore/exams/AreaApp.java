@@ -1,5 +1,6 @@
 package com.tongna.adminstore.exams;
 
+import com.haoxuer.lbs.qq.v1.builder.ServicesBuilder;
 import com.haoxuer.lbs.qq.v1.domain.response.AreaItem;
 import com.haoxuer.lbs.qq.v1.service.DistrictService;
 import com.quhaodian.area.data.entity.Area;
@@ -21,7 +22,11 @@ public class AreaApp {
   private static void d() throws InterruptedException {
     BeanFactory factory = ObjectFactory.get();
     AreaService areaService = factory.getBean(AreaService.class);
-    DistrictService service = new DistrictService();
+    DistrictService service = ServicesBuilder
+            .newBuilder()
+            .key("H4DBZ-WLVCU-YLEVF-4MIDF-MGB5H-TOFDR")
+            .build()
+            .getDistrictService();
     
     List<Filter> filers = new ArrayList<>();
     filers.add(Filter.eq("areaType", AreaType.county));
@@ -56,7 +61,11 @@ public class AreaApp {
   private static void china() {
     BeanFactory factory = ObjectFactory.get();
     AreaService areaService = factory.getBean(AreaService.class);
-    DistrictService service = new DistrictService();
+    DistrictService service = ServicesBuilder
+            .newBuilder()
+            .key("H4DBZ-WLVCU-YLEVF-4MIDF-MGB5H-TOFDR")
+            .build()
+            .getDistrictService();
     List<AreaItem> areaItems = service.china();
     Area root = new Area();
     root.setId(1);
