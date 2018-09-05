@@ -141,56 +141,87 @@
 <script src="${siteurl}dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="${siteurl}dist/js/demo.js"></script>
-<script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=PYWBZ-QHE3I-L7WGT-5THCC-KOPH7-Y6FSC"></script>
-
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.8&key=26485075eb195524d2b367121951ff0c"></script>
 <script type="text/javascript">
-    var citylocation,map,marker = null;
-    var init = function() {
-        var center = new qq.maps.LatLng(${(model.lat)!'34.33422273578077'},${(model.lng)!'108.9480471611023'});
-        map = new qq.maps.Map(document.getElementById('map'),{
-            center: center,
-            zoom: 10
-        });
-        //获取城市列表接口设置中心点
-        citylocation = new qq.maps.CityService({
-            complete : function(result){
-                map.setCenter(result.detail.latLng);
-            }
-        });
-        //调用searchLocalCity();方法    根据用户IP查询城市信息。
-        //citylocation.searchLocalCity();
 
-        qq.maps.event.addListener(
-            map,
-            'click',
-            function(event) {
-                $("#lat").val(event.latLng.getLat())
-                $("#lng").val(event.latLng.getLng())
-                if(marker!=null){
-                    marker.setMap(null);
+    var center = new AMap.LngLat(${(model.lng)!'108.9480471611023'},${(model.lat)!'34.33422273578077'});//标准写法
+    var map = new AMap.Map('map', {
+        center:center,
+        zoom:11
+    });
+    var marker;
+
+    //创建标记
+    marker =  new AMap.Marker({
+        icon: "https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
+        position: center
+    });
+    marker.setMap(map);
+
+
+    AMap.plugin(['AMap.ToolBar','AMap.DistrictSearch'],function(){//异步加载插件
+        var toolbar = new AMap.ToolBar();
+        map.addControl(toolbar);
+
+        var district = new AMap.DistrictSearch({
+            // 返回行政区边界坐标等具体信息
+            extensions: 'all',
+            // 设置查询行政区级别为 区
+            level: 'city'
+        })
+
+        district.search("${model.name!''}", function(status, result) {
+            // 获取朝阳区的边界信息
+            var bounds = result.districtList[0].boundaries
+            var polygons = []
+            if (bounds) {
+                for (var i = 0, l = bounds.length; i < l; i++) {
+                    //生成行政区划polygon
+                    var polygon = new AMap.Polygon({
+                        map: map,
+                        strokeWeight: 3,
+                        path: bounds[i],
+                        fillOpacity: 0.5,
+                        fillColor: '#CCF3FF',
+                        strokeColor: '#CC66CC'
+                    })
+                   polygons.push(polygon);
+                    polygon.on('click', function(event) {
+                        $("#lat").val(event.lnglat.getLat());
+                        $("#lng").val(event.lnglat.getLng());
+                        if (marker) {
+                            marker.setMap(null);
+                            marker = null;
+                        }
+                        marker = new AMap.Marker({
+                            icon: "https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
+                            position: event.lnglat
+                        });
+                        marker.setMap(map);
+                    });
                 }
-                center= new qq.maps.LatLng(event.latLng.getLat(),event.latLng.getLng());
-                marker = new qq.maps.Marker({
-                    position: center,
-                    map: map
-                });
-
+                // 地图自适应
+                map.setFitView()
             }
-        );
-        //创建标记
-        marker = new qq.maps.Marker({
-            position: center,
-            map: map
-        });
-    }
+        })
+    });
 
-    function geolocation_ip() {
-        var clientip = document.getElementById("client_ip").value;
-        var city = document.getElementById("city");
-        //调用查询ip接口查询信息
-        citylocation.searchCityByIP(clientip);
-    }
-    window.onload=init;
+   function clicks(){
+       map.on('click', function(event) {
+           $("#lat").val(event.lnglat.getLat());
+           $("#lng").val(event.lnglat.getLng());
+           if (marker) {
+               marker.setMap(null);
+               marker = null;
+           }
+           marker = new AMap.Marker({
+               icon: "https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
+               position: event.lnglat
+           });
+           marker.setMap(map);
+
+       });
+   }
 </script>
 </body>
 </html>
