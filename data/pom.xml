@@ -21,6 +21,11 @@
     <dependencies>
         <dependency>
             <groupId>com.haoxuer.discover</groupId>
+            <artifactId>discover-common-user-hibernate</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.haoxuer.discover</groupId>
             <artifactId>discover-website</artifactId>
             <version>1.0.1</version>
         </dependency>
@@ -75,7 +80,7 @@
         </dependency>
         <dependency>
             <groupId>com.quhaodian.jsonrpc</groupId>
-            <version>1.01</version>
+            <version>1.03</version>
             <artifactId>core</artifactId>
         </dependency>
         <dependency>
