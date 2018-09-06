@@ -1,6 +1,7 @@
-package com.quhaodian.adminstore.controller.admin;
+package com.quhaodian.adminstore.controller.front;
 
 
+import com.quhaodian.web.controller.front.BaseController;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -9,14 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Scope("prototype")
 @Controller
-public class TemplateAction {
+public class TemplatePageController extends BaseController {
   
-  @RequestMapping("/admin/pages/{view}")
-  public String page(@PathVariable(value = "view") String view){
+  @RequestMapping("/pages/{view}")
+  public String page(@PathVariable(value = "view") String view) {
     if (StringUtils.isEmpty(view)) {
       view = "index";
     }
-    return "admin/pages/"+view;
+    return getView("pages/" + view);
   }
-  
 }
