@@ -5,8 +5,10 @@ import com.quhaodian.adminstore.data.entity.Member;
 import com.quhaodian.data.core.CriteriaDaoImpl;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
+@Scope("prototype")
 @Repository
 public class MemberDaoImpl extends CriteriaDaoImpl<Member, Long> implements MemberDao {
   

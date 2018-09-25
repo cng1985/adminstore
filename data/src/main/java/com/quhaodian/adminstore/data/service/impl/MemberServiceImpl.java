@@ -17,14 +17,19 @@ import com.quhaodian.user.data.vo.UserAccountVo;
 import com.quhaodian.user.utils.UserUtils;
 import java.util.List;
 import jodd.util.StringUtil;
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+
+@Scope("prototype")
 @Service
 @Transactional
-public class MemberServiceImpl implements MemberService {
+public class MemberServiceImpl implements MemberService,InitializingBean,DisposableBean {
   
   private MemberDao dao;
   
@@ -158,5 +163,13 @@ public class MemberServiceImpl implements MemberService {
       pageable.getFilters().addAll(filters);
     }
     return dao.page(pageable);
+  }
+  
+  
+  @Override
+  public void afterPropertiesSet() throws Exception {
+  }
+  @Override
+  public void destroy() throws Exception {
   }
 }

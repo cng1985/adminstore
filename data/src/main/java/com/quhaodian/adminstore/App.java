@@ -1,6 +1,7 @@
 package com.quhaodian.adminstore;
 
 import com.quhaodian.adminstore.controller.admin.Controllers;
+import com.quhaodian.adminstore.data.entity.ExceptionLog;
 import com.quhaodian.imake.ChainMake;
 import com.quhaodian.imake.template.hibernate.TemplateHibernateDir;
 import com.quhaodian.imake.templates.adminlte.TemplateAdminLTE;
@@ -24,12 +25,12 @@ public class App {
     make.setView(view);
 
     List<Class<?>> cs = new ArrayList<Class<?>>();
-    cs.add(UserRoleCatalog.class);
+    cs.add(ExceptionLog.class);
 
     make.setMenus("1,2,8");
-    make.setDao(false);
-    make.setService(false);
-    make.setView(true);
+    make.setDao(true);
+    make.setService(true);
+    make.setView(false);
     make.setAction(false);
     make.makes(cs);
   }

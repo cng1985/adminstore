@@ -134,10 +134,12 @@
         <ref bean="openSessionInViewInterceptor"/>
         <mvc:interceptor>
             <mvc:mapping path="/rest/**"/>
+            <mvc:exclude-mapping path="/rest/member/**"/>
             <bean class="com.quhaodian.adminstore.web.interceptor.AppInterceptor"></bean>
         </mvc:interceptor>
         <mvc:interceptor>
             <mvc:mapping path="/rest/**"/>
+            <mvc:exclude-mapping path="/rest/member/**"/>
             <bean class="com.quhaodian.adminstore.web.interceptor.UserTokenInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>

@@ -35,7 +35,7 @@
     <!-- FastClick -->
     <script src="${siteurl}plugins/fastclick/fastclick.js"></script>
     <!-- AdminLTE App -->
-    <script src="${siteurl}dist/js/app.min.js"></script>
+    <script src="${siteurl}dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="${siteurl}dist/js/demo.js"></script>
     <script src="${siteurl}dist/js/list.js"></script>
@@ -150,6 +150,40 @@
                 [@fileinput name="url" /]
                 </form>
             </div>
+            <div class="row">
+                <div class="box box-solid col-lg-2">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Folders</h3>
+
+                        <div class="box-tools">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body no-padding">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li class="active"><a href="#"><i class="fa fa-inbox"></i> Inbox
+                                <span class="label label-primary pull-right">12</span></a></li>
+                            <li><a href="#"><i class="fa fa-envelope-o"></i> Sent</a></li>
+                            <li><a href="#"><i class="fa fa-file-text-o"></i> Drafts</a></li>
+                            <li><a href="#"><i class="fa fa-filter"></i> Junk <span class="label label-warning pull-right">65</span></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-trash-o"></i> Trash</a></li>
+                        </ul>
+                        <ul  class="nav nav-pills nav-stacked" data-widget="tree" id="treediv">
+                            <li  class="active"><a href="#">One Level</a></li>
+                            <li class="treeview">
+                                <a href="#">Multilevel</a>
+                                <ul class="treeview-menu">
+                                    <li><a href="#">Level 2</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <div class="col-lg-10"> f</div>
+            </div>
         </section>
         <!-- /.content -->
     </div>
@@ -167,7 +201,11 @@
 </div>
 <!-- ./wrapper -->
 
+<script type="application/javascript">
+    $(document).ready(function () {
+    });
 
+</script>
 
 </body>
 </html>
