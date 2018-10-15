@@ -40,6 +40,18 @@
     <script src="${siteurl}dist/js/demo.js"></script>
     <script src="${siteurl}dist/js/list.js"></script>
     [#include "/admin/common/fileuploads.html"]
+    <style type="text/css">
+       #treediv .tree{
+            background-color: white;
+            color: #00a0e9;
+        }
+        .tree >li{
+            list-style: none;
+        }
+        .tree active{
+            color: white;
+        }
+    </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
@@ -161,7 +173,7 @@
                         </div>
                     </div>
                     <div class="box-body no-padding">
-                        <ul class="nav nav-pills nav-stacked">
+                        <ul class="nav nav-pills nav-stacked" data-widget="tree" >
                             <li class="active"><a href="#"><i class="fa fa-inbox"></i> Inbox
                                 <span class="label label-primary pull-right">12</span></a></li>
                             <li><a href="#"><i class="fa fa-envelope-o"></i> Sent</a></li>
@@ -170,19 +182,26 @@
                             </li>
                             <li><a href="#"><i class="fa fa-trash-o"></i> Trash</a></li>
                         </ul>
-                        <ul  class="nav nav-pills nav-stacked" data-widget="tree" id="treediv">
-                            <li  class="active"><a href="#">One Level</a></li>
-                            <li class="treeview">
-                                <a href="#">Multilevel</a>
-                                <ul class="treeview-menu">
-                                    <li><a href="#">Level 2</a></li>
-                                </ul>
-                            </li>
-                        </ul>
+
                     </div>
                     <!-- /.box-body -->
                 </div>
-                <div class="col-lg-10"> f</div>
+                <div class="col-lg-10"> f
+                    <ul    data-widget="tree" id="treediv" data-animation-speed="200">
+                        <li  class="active"><a href="#">One Level</a></li>
+                        <li class="treeview">
+                            <a href="#">Multilevel</a>
+                            <ul class="treeview-menu">
+                                <li><a href="#">Level 2.1</a></li>
+                                <li><a href="#">Level 2.2</a></li>
+                                <li><a href="#">Level 2.3</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <a href="#" data-toggle="control-sidebar">Toggle Control Sidebar</a>
+                    <button class="btn btn-primary" data-toggle="push-menu">Toggle Sidebar</button>
+
+                </div>
             </div>
         </section>
         <!-- /.content -->
@@ -192,12 +211,26 @@
     [#include "/admin/common/footer.html"]
 
     <!-- Control Sidebar -->
-    [#include "/admin/common/aside.html"]
 
     <!-- /.control-sidebar -->
     <!-- Add the sidebar's background. This div must be placed
          immediately after the control sidebar -->
-    <div class="control-sidebar-bg"></div>
+    <div class="control-sidebar-bg">dd</div>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        ww
+        df
+        dsf
+        <!-- Content of control sidebar goes here -->
+    </aside>
+
+
+
+
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+      immediately after the control sidebar -->
 </div>
 <!-- ./wrapper -->
 
