@@ -6,8 +6,8 @@ import com.quhaodian.adminstore.data.service.ExceptionLogService;
 import com.quhaodian.adminstore.exception.NoDataException;
 import com.quhaodian.adminstore.exception.NoUserTokenException;
 import com.quhaodian.adminstore.exception.UnAuthorizationException;
-import com.quhaodian.discover.rest.base.ResponseObject;
-import com.quhaodian.user.utils.UserUtils;
+import com.haoxuer.discover.rest.base.ResponseObject;
+import com.haoxuer.discover.user.utils.UserUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

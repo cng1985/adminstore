@@ -2,7 +2,7 @@ package com.quhaodian.adminstore.rest.conver;
 
 import com.quhaodian.adminstore.data.entity.Member;
 import com.quhaodian.adminstore.rest.domain.simple.MemberSimple;
-import com.quhaodian.data.rest.core.Conver;
+import com.haoxuer.discover.data.rest.core.Conver;
 
 public class MemberSimpleConver implements Conver<MemberSimple, Member> {
   @Override

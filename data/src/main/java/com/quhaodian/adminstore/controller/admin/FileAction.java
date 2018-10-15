@@ -6,12 +6,13 @@
 
 package com.quhaodian.adminstore.controller.admin;
 
-import com.quhaodian.plug.data.service.StorageService;
-import com.quhaodian.plug.data.vo.FileInfo;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
+
+import com.haoxuer.discover.plug.data.service.StorageService;
+import com.haoxuer.discover.plug.data.vo.FileInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

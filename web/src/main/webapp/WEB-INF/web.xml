@@ -31,7 +31,7 @@
 
     <filter>
         <filter-name>SimpleCORSFilter</filter-name>
-        <filter-class>com.quhaodian.user.web.filter.SimpleCORSFilter</filter-class>
+        <filter-class>com.haoxuer.discover.user.web.filter.SimpleCORSFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>SimpleCORSFilter</filter-name>
@@ -56,7 +56,7 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
     <listener>
-        <listener-class>com.quhaodian.quartz.web.InitListener</listener-class>
+        <listener-class>com.haoxuer.discover.quartz.web.InitListener</listener-class>
     </listener>
 
     <servlet>

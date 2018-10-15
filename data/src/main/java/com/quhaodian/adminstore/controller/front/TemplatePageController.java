@@ -1,7 +1,7 @@
 package com.quhaodian.adminstore.controller.front;
 
 
-import com.quhaodian.web.controller.front.BaseController;
+import com.haoxuer.discover.web.controller.front.BaseController;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;

@@ -2,8 +2,8 @@ package com.quhaodian.adminstore.rest.api;
 
 import com.quhaodian.adminstore.rest.domain.page.MemberPage;
 import com.quhaodian.adminstore.rest.domain.request.MemberUpdateRequest;
-import com.quhaodian.discover.rest.base.RequestTokenPageObject;
-import com.quhaodian.discover.rest.base.ResponseObject;
+import com.haoxuer.discover.rest.base.RequestTokenPageObject;
+import com.haoxuer.discover.rest.base.ResponseObject;
 import com.quhaodian.jsonrpc.annotation.RestFul;
 
 /**

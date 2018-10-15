@@ -1,8 +1,8 @@
 package com.quhaodian.adminstore.rest.conver;
 
-import com.quhaodian.data.page.Pageable;
-import com.quhaodian.data.rest.core.Conver;
-import com.quhaodian.discover.rest.base.RequestTokenPageObject;
+import com.haoxuer.discover.data.page.Pageable;
+import com.haoxuer.discover.data.rest.core.Conver;
+import com.haoxuer.discover.rest.base.RequestTokenPageObject;
 
 public class PageableConver implements Conver<Pageable, RequestTokenPageObject> {
   @Override

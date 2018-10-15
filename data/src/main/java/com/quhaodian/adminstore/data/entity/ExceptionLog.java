@@ -1,7 +1,8 @@
 package com.quhaodian.adminstore.data.entity;
 
-import com.quhaodian.data.annotations.FormAnnotation;
-import com.quhaodian.data.entity.AbstractEntity;
+
+import com.haoxuer.discover.data.annotations.FormAnnotation;
+import com.haoxuer.discover.data.entity.AbstractEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

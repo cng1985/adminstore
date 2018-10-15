@@ -20,7 +20,7 @@
           class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
         <property name="converters">
             <set>
-                <bean class="com.quhaodian.web.converter.DateConverter"/>
+                <bean class="com.haoxuer.discover.web.converter.DateConverter"/>
             </set>
         </property>
     </bean>
@@ -50,7 +50,7 @@
 
     <!--COOKIE登录 -->
 
-    <bean name="webconfig" class="com.quhaodian.web.data.common.InitConfig" init-method="initWebConfig" scope="singleton" lazy-init="false"></bean>
+    <bean name="webconfig" class="com.haoxuer.discover.web.data.common.InitConfig" init-method="initWebConfig" scope="singleton" lazy-init="false"></bean>
 
 
 
@@ -59,11 +59,11 @@
 
 
     <bean id="shiro" class="com.jagregory.shiro.freemarker.ShiroTags"></bean>
-    <bean id="menuOpenDirective" class="com.quhaodian.user.freemaker.MenuOpenDirective"></bean>
-    <bean id="menusDirective" class="com.quhaodian.user.freemaker.MenusDirective"></bean>
-    <bean id="menuchildsDirective" class="com.quhaodian.user.freemaker.MenuChildsDirective"></bean>
-    <bean id="linkTypeDirective" class="com.quhaodian.site.freemaker.LinkTypeDirective"></bean>
-    <bean id="linkDirective" class="com.quhaodian.site.freemaker.LinkDirective"></bean>
+    <bean id="menuOpenDirective" class="com.haoxuer.discover.user.freemaker.MenuOpenDirective"></bean>
+    <bean id="menusDirective" class="com.haoxuer.discover.user.freemaker.MenusDirective"></bean>
+    <bean id="menuchildsDirective" class="com.haoxuer.discover.user.freemaker.MenuChildsDirective"></bean>
+    <bean id="linkTypeDirective" class="com.haoxuer.discover.site.freemaker.LinkTypeDirective"></bean>
+    <bean id="linkDirective" class="com.haoxuer.discover.site.freemaker.LinkDirective"></bean>
 
     <!-- freemarker的配置 -->
     <bean id="freemarkerConfigurer"
@@ -147,7 +147,4 @@
 
     <import resource="context-shiro.xml"/>
     <import resource="context-activiti.xml"/>
-
-    <mvc:view-controller path="demo" view-name="/theme/default/login"/>
-
 </beans>

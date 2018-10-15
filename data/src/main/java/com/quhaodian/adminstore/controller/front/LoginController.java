@@ -10,16 +10,16 @@
 
 package com.quhaodian.adminstore.controller.front;
 
-import com.quhaodian.shiro.utils.UserUtil;
-import com.quhaodian.user.data.entity.UserAccount;
-import com.quhaodian.user.data.entity.UserInfo;
-import com.quhaodian.user.data.entity.UserLoginLog;
-import com.quhaodian.user.data.enums.LoginState;
-import com.quhaodian.user.data.service.UserAccountService;
-import com.quhaodian.user.data.service.UserInfoService;
-import com.quhaodian.user.data.service.UserLoginLogService;
-import com.quhaodian.user.data.vo.UserAccountVo;
-import com.quhaodian.web.controller.front.BaseController;
+import com.haoxuer.discover.user.shiro.utils.UserUtil;
+import com.haoxuer.discover.user.data.entity.UserAccount;
+import com.haoxuer.discover.user.data.entity.UserInfo;
+import com.haoxuer.discover.user.data.entity.UserLoginLog;
+import com.haoxuer.discover.user.data.enums.LoginState;
+import com.haoxuer.discover.user.data.service.UserAccountService;
+import com.haoxuer.discover.user.data.service.UserInfoService;
+import com.haoxuer.discover.user.data.service.UserLoginLogService;
+import com.haoxuer.discover.user.data.vo.UserAccountVo;
+import com.haoxuer.discover.web.controller.front.BaseController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.shiro.SecurityUtils;

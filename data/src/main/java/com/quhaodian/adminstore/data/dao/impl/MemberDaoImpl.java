@@ -2,7 +2,7 @@ package com.quhaodian.adminstore.data.dao.impl;
 
 import com.quhaodian.adminstore.data.dao.MemberDao;
 import com.quhaodian.adminstore.data.entity.Member;
-import com.quhaodian.data.core.CriteriaDaoImpl;
+import com.haoxuer.discover.data.core.CriteriaDaoImpl;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;

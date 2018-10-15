@@ -8,15 +8,15 @@
 
 	<description>Shiro安全配置</description>
 
-	<bean id="userRealm" class="com.quhaodian.shiro.realm.AccountRealm"></bean>
-	<bean id="userInfoRealm" class="com.quhaodian.shiro.realm.UserInfoRealm"></bean>
+	<bean id="userRealm" class="com.haoxuer.discover.user.shiro.realm.AccountRealm"/>
+	<bean id="userInfoRealm" class="com.haoxuer.discover.user.shiro.realm.UserInfoRealm"/>
 
 	<!-- Shiro的主要业务层对象基于web的应用程序 -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realms">
 			<list>
-				<ref bean="userRealm"></ref>
-				<ref bean="userInfoRealm"></ref>
+				<ref bean="userRealm"/>
+				<ref bean="userInfoRealm"/>
 			</list>
 		</property>
 		<property name="cacheManager" ref="shiroEhcacheManager" />
@@ -27,10 +27,10 @@
 	</bean>
 
 	<!-- Shiro Filter -->
-	<bean id="myCaptchaFilter" class="com.quhaodian.shiro.filter.FormAuthenticationCaptchaFilter">
+	<bean id="myCaptchaFilter" class="com.haoxuer.discover.user.shiro.filter.FormAuthenticationCaptchaFilter">
 		<property name="loginUrl" value="/login.htm" />
 	</bean>
-	<bean id="rolesAuthorizationFilter" class="com.quhaodian.shiro.filter.RolesAuthorizationFilter">
+	<bean id="rolesAuthorizationFilter" class="com.haoxuer.discover.user.shiro.filter.RolesAuthorizationFilter">
 	</bean>
 	<!-- Shiro Filter -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">

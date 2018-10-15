@@ -1,15 +1,14 @@
 package com.quhaodian.adminstore.controller.front;
 
+import com.haoxuer.discover.area.data.entity.Area;
+import com.haoxuer.discover.area.data.enums.AreaType;
+import com.haoxuer.discover.area.data.service.AreaService;
+import com.haoxuer.discover.web.controller.front.BaseController;
 import com.haoxuer.lbs.qq.v1.builder.ServicesBuilder;
 import com.haoxuer.lbs.qq.v1.domain.response.AreaItem;
 import com.haoxuer.lbs.qq.v1.service.DistrictService;
-import com.quhaodian.area.data.entity.Area;
-import com.quhaodian.area.data.enums.AreaType;
-import com.quhaodian.area.data.service.AreaService;
-import com.quhaodian.data.page.Filter;
-import com.quhaodian.data.page.Order;
-import com.quhaodian.quartz.data.factory.ObjectFactory;
-import com.quhaodian.web.controller.front.BaseController;
+import com.haoxuer.discover.data.page.Filter;
+import com.haoxuer.discover.data.page.Order;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +55,7 @@ public class SiteController extends BaseController {
                 .getDistrictService();
 
         List<Filter> filers = new ArrayList<>();
-        filers.add(Filter.eq("areaType", AreaType.county));
+        filers.add(Filter.eq("areaType", AreaType.country));
         List<Order> orders = new ArrayList<>();
         orders.add(Order.asc("code"));
         List<Area> areas = areaService.list(0, 90000, filers, orders);

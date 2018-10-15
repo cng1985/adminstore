@@ -1,10 +1,11 @@
 package com.quhaodian.adminstore.data.entity;
 
-import com.quhaodian.area.data.entity.Area;
-import com.quhaodian.data.annotations.ColType;
-import com.quhaodian.data.annotations.FormAnnotation;
-import com.quhaodian.data.annotations.FormFieldAnnotation;
-import com.quhaodian.user.data.entity.AbstractUser;
+import com.haoxuer.discover.area.data.entity.Area;
+import com.haoxuer.discover.data.annotations.ColType;
+import com.haoxuer.discover.data.annotations.FormAnnotation;
+import com.haoxuer.discover.data.annotations.FormFieldAnnotation;
+import com.haoxuer.discover.user.data.entity.AbstractUser;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

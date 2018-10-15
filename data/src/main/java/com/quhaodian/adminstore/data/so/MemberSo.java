@@ -1,7 +1,7 @@
 package com.quhaodian.adminstore.data.so;
 
-import com.quhaodian.data.page.Filter;
-import com.quhaodian.data.page.Search;
+import com.haoxuer.discover.data.page.Filter;
+import com.haoxuer.discover.data.page.Search;
 import java.io.Serializable;
 
 /**

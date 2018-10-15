@@ -4,7 +4,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.quhaodian.data.core.CriteriaDaoImpl;
+import com.haoxuer.discover.data.core.CriteriaDaoImpl;
 import com.quhaodian.adminstore.data.dao.ExceptionLogDao;
 import com.quhaodian.adminstore.data.entity.ExceptionLog;
 

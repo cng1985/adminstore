@@ -1,8 +1,8 @@
 package com.quhaodian.adminstore.data.dao;
 
 
-import  com.quhaodian.data.core.BaseDao;
-import  com.quhaodian.data.core.Updater;
+import com.haoxuer.discover.data.core.Updater;
+import  com.haoxuer.discover.data.core.BaseDao;
 import  com.quhaodian.adminstore.data.entity.ExceptionLog;
 
 /**

@@ -2,7 +2,7 @@ package com.quhaodian.adminstore.web.interceptor;
 
 import com.quhaodian.adminstore.exception.NoUserTokenException;
 import com.quhaodian.adminstore.exception.UnAuthorizationException;
-import com.quhaodian.user.utils.UserUtils;
+import com.haoxuer.discover.user.utils.UserUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
