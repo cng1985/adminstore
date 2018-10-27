@@ -1,14 +1,14 @@
 package com.tongna.adminstore.exams;
 
+import com.haoxuer.discover.area.data.entity.Area;
+import com.haoxuer.discover.area.data.enums.AreaType;
+import com.haoxuer.discover.area.data.service.AreaService;
+import com.haoxuer.discover.quartz.data.factory.ObjectFactory;
 import com.haoxuer.lbs.qq.v1.builder.ServicesBuilder;
 import com.haoxuer.lbs.qq.v1.domain.response.AreaItem;
 import com.haoxuer.lbs.qq.v1.service.DistrictService;
-import com.quhaodian.area.data.entity.Area;
-import com.quhaodian.area.data.enums.AreaType;
-import com.quhaodian.area.data.service.AreaService;
 import com.haoxuer.discover.data.page.Filter;
 import com.haoxuer.discover.data.page.Order;
-import com.quhaodian.quartz.data.factory.ObjectFactory;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.BeanFactory;
@@ -29,7 +29,7 @@ public class AreaApp {
             .getDistrictService();
     
     List<Filter> filers = new ArrayList<>();
-    filers.add(Filter.eq("areaType", AreaType.county));
+    filers.add(Filter.eq("areaType", AreaType.country));
     List<Order> orders = new ArrayList<>();
     orders.add(Order.asc("code"));
     List<Area> areas= areaService.list(0, 90000, filers, orders);

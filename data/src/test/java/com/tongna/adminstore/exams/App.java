@@ -1,7 +1,7 @@
 package com.tongna.adminstore.exams;
 
-import com.quhaodian.area.data.service.AreaService;
-import com.quhaodian.quartz.data.factory.ObjectFactory;
+import com.haoxuer.discover.area.data.service.AreaService;
+import com.haoxuer.discover.quartz.data.factory.ObjectFactory;
 import org.springframework.beans.factory.BeanFactory;
 
 public class App {

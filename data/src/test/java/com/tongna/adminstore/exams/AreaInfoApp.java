@@ -1,15 +1,15 @@
 package com.tongna.adminstore.exams;
 
+import com.haoxuer.discover.area.data.entity.Area;
+import com.haoxuer.discover.area.data.enums.AreaType;
+import com.haoxuer.discover.area.data.service.AreaService;
+import com.haoxuer.discover.quartz.data.factory.ObjectFactory;
 import com.haoxuer.lbs.amap.domain.AreaInfo;
 import com.haoxuer.lbs.amap.v3.service.DistrictService;
 import com.haoxuer.lbs.amap.v3.service.impl.DistrictServiceImpl;
 import com.haoxuer.lbs.baidu.v3.service.Config;
-import com.quhaodian.area.data.entity.Area;
-import com.quhaodian.area.data.enums.AreaType;
-import com.quhaodian.area.data.service.AreaService;
 import com.haoxuer.discover.data.page.Filter;
 import com.haoxuer.discover.data.page.Order;
-import com.quhaodian.quartz.data.factory.ObjectFactory;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.BeanFactory;
@@ -41,7 +41,7 @@ public class AreaInfoApp {
       temp.setCode(info.getCode());
       temp.setGovCode(info.getCode());
       temp.setFullName(info.getName());
-      temp.setAreaType(AreaType.county);
+      temp.setAreaType(AreaType.country);
       System.out.println(temp);
       areaService.save(temp);
     }
