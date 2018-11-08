@@ -1,5 +1,9 @@
 package com.quhaodian.adminstore.controller.admin;
 
+import com.haoxuer.discover.data.rest.domain.AbstractVo;
+import com.haoxuer.discover.user.data.service.UserAccountService;
+import com.haoxuer.discover.user.enums.AccountType;
+import com.haoxuer.discover.user.shiro.utils.UserUtil;
 import com.quhaodian.adminstore.data.entity.Member;
 import com.quhaodian.adminstore.data.request.MemberUpdateRequest;
 import com.quhaodian.adminstore.data.service.MemberService;
@@ -24,6 +28,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,6 +59,9 @@ public class MemberAction {
   
   @Autowired
   private UserInfoService userInfoService;
+
+  @Autowired
+  private UserAccountService accountService;
   
   @InitBinder
   public void initBinder(WebDataBinder binder) {
@@ -110,13 +118,38 @@ public class MemberAction {
     model.addAttribute(MODEL, manager.findById(id));
     return "/admin/member/profile";
   }
-  
+
   @ResponseBody
   @RequiresPermissions("member")
   @RequestMapping("/admin/member/model_update_json")
   public ResponseObject updateInfo(@RequestBody MemberUpdateRequest request) {
     return manager.update(request);
   }
+
+  @RequiresPermissions("member_basic")
+  @RequestMapping("/admin/member/basic")
+  public String basic(ModelMap model) {
+    model.addAttribute(MODEL, manager.findById(UserUtil.getCurrentUser().getId()));
+    return "/admin/member/basic";
+  }
+  @ResponseBody
+  @RequiresPermissions("member")
+  @RequestMapping("/admin/member/model_update_basic")
+  public ResponseObject updateBasic(@RequestBody MemberUpdateRequest request) {
+    request.setId(UserUtil.getCurrentUser().getId());
+    if (StringUtils.hasText(request.getName())){
+      UserUtil.getCurrentUser().setName(request.getName());
+    }
+    return manager.update(request);
+  }
+  @ResponseBody
+  @RequiresPermissions("member")
+  @RequestMapping("/admin/member/updatepassword")
+  public AbstractVo updatepassword(String oldPassword, String password) {
+    return accountService.updatePassword(UserUtil.getCurrentUser().getId(), AccountType.Account, oldPassword, password);
+  }
+
+
   
   @RequiresPermissions("member")
   @RequestMapping("/admin/member/model_save")
