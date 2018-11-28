@@ -10,18 +10,17 @@
 
 package com.quhaodian.adminstore.controller.front;
 
-import com.haoxuer.discover.user.shiro.utils.UserUtil;
-import com.haoxuer.discover.user.data.entity.UserAccount;
 import com.haoxuer.discover.user.data.entity.UserInfo;
 import com.haoxuer.discover.user.data.entity.UserLoginLog;
+import com.haoxuer.discover.user.data.enums.BindType;
 import com.haoxuer.discover.user.data.enums.LoginState;
+import com.haoxuer.discover.user.data.request.UserRegisterRequest;
+import com.haoxuer.discover.user.data.response.UserBasicResponse;
 import com.haoxuer.discover.user.data.service.UserAccountService;
 import com.haoxuer.discover.user.data.service.UserInfoService;
 import com.haoxuer.discover.user.data.service.UserLoginLogService;
-import com.haoxuer.discover.user.data.vo.UserAccountVo;
+import com.haoxuer.discover.user.shiro.utils.UserUtil;
 import com.haoxuer.discover.web.controller.front.BaseController;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +31,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 登录页
@@ -83,18 +84,18 @@ public class LoginController extends BaseController {
   
   @RequestMapping(value = "/register", method = RequestMethod.POST)
   public String register(String name, String username, String password,
-                         HttpServletRequest request, HttpServletResponse response,
-                         Model model) {
-    
-    UserAccount user = new UserAccount();
-    user.setUsername(username);
-    user.setPassword(password);
-    UserAccountVo userx = userAccountService.reg(user);
+                         Model model,RedirectAttributes attributes) {
+
+    UserRegisterRequest request=new UserRegisterRequest();
+    request.setBindType(BindType.account);
+    request.setNo(username);
+    request.setPassword(password);
+    UserBasicResponse userx = userInfoService.register(request);
     if (userx.getCode() == 0) {
-      model.addAttribute("msg", "注册成功");
+      attributes.addAttribute("msg", "注册成功");
       return "redirect:/login.htm";
     } else {
-      model.addAttribute("msg", "注册失败");
+      model.addAttribute("msg", userx.getMsg());
       return getView("register");
     }
     

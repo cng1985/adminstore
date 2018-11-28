@@ -34,8 +34,8 @@
             <version>2.0.1</version>
             <exclusions>
                 <exclusion>
-                    <groupId>com.quhaodian.discover</groupId>
-                    <artifactId>discover-user</artifactId>
+                    <groupId>com.haoxuer.discover</groupId>
+                    <artifactId>discover-common-user-hibernate</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

@@ -8,6 +8,7 @@
 
 	<description>Shiro安全配置</description>
 
+	<bean id="securityRealm" class="com.haoxuer.discover.user.shiro.realm.SecurityRealm"/>
 	<bean id="userRealm" class="com.haoxuer.discover.user.shiro.realm.AccountRealm"/>
 	<bean id="userInfoRealm" class="com.haoxuer.discover.user.shiro.realm.UserInfoRealm"/>
 
@@ -15,6 +16,7 @@
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realms">
 			<list>
+				<ref bean="securityRealm"/>
 				<ref bean="userRealm"/>
 				<ref bean="userInfoRealm"/>
 			</list>

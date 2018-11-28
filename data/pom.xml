@@ -21,13 +21,8 @@
     <dependencies>
         <dependency>
             <groupId>com.haoxuer.discover</groupId>
-            <artifactId>discover-common-user-hibernate</artifactId>
-            <version>2.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.haoxuer.discover</groupId>
             <artifactId>discover-website</artifactId>
-            <version>2.0.2</version>
+            <version>2.0.4</version>
         </dependency>
         <dependency>
             <groupId>com.haoxuer.discover</groupId>

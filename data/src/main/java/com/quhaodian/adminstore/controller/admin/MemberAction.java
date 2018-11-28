@@ -1,24 +1,26 @@
 package com.quhaodian.adminstore.controller.admin;
 
+import com.haoxuer.discover.data.page.Order;
+import com.haoxuer.discover.data.page.Page;
+import com.haoxuer.discover.data.page.Pageable;
 import com.haoxuer.discover.data.rest.domain.AbstractVo;
+import com.haoxuer.discover.data.utils.FilterUtils;
+import com.haoxuer.discover.rest.base.ResponseObject;
+import com.haoxuer.discover.user.data.entity.UserAccount;
+import com.haoxuer.discover.user.data.enums.AccountType;
+import com.haoxuer.discover.user.data.enums.BindType;
+import com.haoxuer.discover.user.data.enums.SecurityType;
+import com.haoxuer.discover.user.data.request.ResetPasswordRequest;
+import com.haoxuer.discover.user.data.request.UpdatePasswordRequest;
 import com.haoxuer.discover.user.data.service.UserAccountService;
-import com.haoxuer.discover.user.enums.AccountType;
+import com.haoxuer.discover.user.data.service.UserInfoService;
+import com.haoxuer.discover.user.data.service.UserRoleService;
+import com.haoxuer.discover.user.data.vo.UserAccountVo;
 import com.haoxuer.discover.user.shiro.utils.UserUtil;
 import com.quhaodian.adminstore.data.entity.Member;
 import com.quhaodian.adminstore.data.request.MemberUpdateRequest;
 import com.quhaodian.adminstore.data.service.MemberService;
 import com.quhaodian.adminstore.data.so.MemberSo;
-import com.haoxuer.discover.data.page.Order;
-import com.haoxuer.discover.data.page.Page;
-import com.haoxuer.discover.data.page.Pageable;
-import com.haoxuer.discover.data.utils.FilterUtils;
-import com.haoxuer.discover.rest.base.ResponseObject;
-import com.haoxuer.discover.user.data.entity.UserAccount;
-import com.haoxuer.discover.user.data.service.UserInfoService;
-import com.haoxuer.discover.user.data.service.UserRoleService;
-import com.haoxuer.discover.user.data.vo.UserAccountVo;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +37,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by imake on 2017年08月29日17:08:12.
@@ -145,11 +150,25 @@ public class MemberAction {
   @ResponseBody
   @RequiresPermissions("member")
   @RequestMapping("/admin/member/updatepassword")
-  public AbstractVo updatepassword(String oldPassword, String password) {
-    return accountService.updatePassword(UserUtil.getCurrentUser().getId(), AccountType.Account, oldPassword, password);
+  public ResponseObject updatepassword(String oldPassword, String password) {
+    UpdatePasswordRequest request=new UpdatePasswordRequest();
+    request.setId(UserUtil.getCurrentUser().getId());
+    request.setOldPassword(oldPassword);
+    request.setPassword(password);
+    request.setSecurityType(SecurityType.account);
+    return userInfoService.updatePassword(request);
   }
 
-
+  @ResponseBody
+  @RequiresPermissions("member")
+  @RequestMapping("/admin/member/resetpassword")
+  public ResponseObject resetPassword(Long id, String password) {
+    ResetPasswordRequest request=new ResetPasswordRequest();
+    request.setId(id);
+    request.setPassword(password);
+    request.setSecurityType(SecurityType.account);
+    return userInfoService.resetPassword(request);
+  }
   
   @RequiresPermissions("member")
   @RequestMapping("/admin/member/model_save")
