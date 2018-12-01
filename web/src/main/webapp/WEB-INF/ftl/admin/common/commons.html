@@ -27,32 +27,34 @@
 
 
 [#macro menu item ids]
-[#if item.menus??]
-[@shiro.hasPermission name=item.permission]
-<li class="treeview [@menuopentag ids=ids id=item.id][/@menuopentag]">
-    <a href="#">
-        <i class="${item.icon!'fa fa-dashboard'}"></i> <span>${item.name!""}</span>
-                                <span class="pull-right-container">
-                                  <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-    </a>
-    <ul class="treeview-menu">
-        [#list item.childrens as item]
-        [@menu item ids]
-        [/@menu]
-        [/#list]
-    </ul>
-</li>
-[/@shiro.hasPermission]
-[#else]
-[@shiro.hasPermission name=item.permission]
-<li class="[@menuopentag ids=ids id=item.id][/@menuopentag]">
-    <a href="${siteurl}${item.path!'#'}">
-        <i class="${item.icon!'fa fa-dashboard'}"></i> <span>${item.name!""}</span>
-    </a>
-</li>
-[/@shiro.hasPermission]
-[/#if]
+    [#if item.menus??]
+        [@shiro.hasPermission name=item.permission]
+            [#if item.catalog==0]
+                <li class="treeview [@menuopentag ids=ids id=item.id][/@menuopentag]">
+                    <a href="#">
+                        <i class="${item.icon!'fa fa-dashboard'}"></i> <span>${item.name!""}</span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        [#list item.childrens as item]
+                        [@menu item ids]
+                        [/@menu]
+                        [/#list]
+                    </ul>
+                </li>
+            [/#if]
+        [/@shiro.hasPermission]
+    [#else]
+        [@shiro.hasPermission name=item.permission]
+            [#if item.catalog==0]
+                <li class="[@menuopentag ids=ids id=item.id][/@menuopentag]">
+                    <a href="${siteurl}${item.path!'#'}">
+                        <i class="${item.icon!'fa fa-dashboard'}"></i> <span>${item.name!""}</span>
+                    </a>
+                </li>
+            [/#if]
+        [/@shiro.hasPermission]
+    [/#if]
 [/#macro]
 
 [#macro pagersimple page  url]

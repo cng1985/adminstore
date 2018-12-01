@@ -1,15 +1,20 @@
 -- --------------------------------------------------------
--- 主机:                           192.168.0.199
--- 服务器版本:                        5.7.10-log - MySQL Community Server (GPL)
--- 服务器操作系统:                      Win64
--- HeidiSQL 版本:                  9.5.0.5280
+-- 主机:                           127.0.0.1
+-- 服务器版本:                        5.5.47 - MySQL Community Server (GPL)
+-- 服务器操作系统:                      Win32
+-- HeidiSQL 版本:                  9.3.0.4984
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+-- 导出 adminstore 的数据库结构
+DROP DATABASE IF EXISTS `adminstore`;
+CREATE DATABASE IF NOT EXISTS `adminstore` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `adminstore`;
+
 
 -- 导出  表 adminstore.area 结构
 DROP TABLE IF EXISTS `area`;
@@ -31,6 +36,7 @@ CREATE TABLE IF NOT EXISTS `area` (
   `state` int(11) DEFAULT NULL,
   `area_type` int(11) DEFAULT NULL,
   `pid` int(11) DEFAULT NULL,
+  `fullName` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKtn7all8h9e6fi9pspra60rht5` (`pid`),
   CONSTRAINT `FKtn7all8h9e6fi9pspra60rht5` FOREIGN KEY (`pid`) REFERENCES `area` (`id`)
@@ -39,9 +45,48 @@ CREATE TABLE IF NOT EXISTS `area` (
 -- 正在导出表  adminstore.area 的数据：~1 rows (大约)
 DELETE FROM `area`;
 /*!40000 ALTER TABLE `area` DISABLE KEYS */;
-INSERT INTO `area` (`id`, `addDate`, `code`, `ids`, `lastDate`, `levelInfo`, `lft`, `name`, `rgt`, `sortNum`, `geo`, `govCode`, `lat`, `lng`, `state`, `area_type`, `pid`) VALUES
-	(1, '2018-07-16 15:06:35', '', '1', '2018-07-16 15:06:35', 1, 1, '根节点', 2, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `area` (`id`, `addDate`, `code`, `ids`, `lastDate`, `levelInfo`, `lft`, `name`, `rgt`, `sortNum`, `geo`, `govCode`, `lat`, `lng`, `state`, `area_type`, `pid`, `fullName`) VALUES
+	(1, '2018-07-16 15:06:35', '', '1', '2018-07-16 15:06:35', 1, 1, '根节点', 2, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `area` ENABLE KEYS */;
+
+
+-- 导出  表 adminstore.area_business_circle 结构
+DROP TABLE IF EXISTS `area_business_circle`;
+CREATE TABLE IF NOT EXISTS `area_business_circle` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `addDate` datetime DEFAULT NULL,
+  `lastDate` datetime DEFAULT NULL,
+  `area` tinyblob,
+  `lat` float DEFAULT NULL,
+  `lng` float DEFAULT NULL,
+  `name` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  adminstore.area_business_circle 的数据：~0 rows (大约)
+DELETE FROM `area_business_circle`;
+/*!40000 ALTER TABLE `area_business_circle` DISABLE KEYS */;
+/*!40000 ALTER TABLE `area_business_circle` ENABLE KEYS */;
+
+
+-- 导出  表 adminstore.bs_exception_log 结构
+DROP TABLE IF EXISTS `bs_exception_log`;
+CREATE TABLE IF NOT EXISTS `bs_exception_log` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `addDate` datetime DEFAULT NULL,
+  `lastDate` datetime DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `note` longtext,
+  `params` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  adminstore.bs_exception_log 的数据：~0 rows (大约)
+DELETE FROM `bs_exception_log`;
+/*!40000 ALTER TABLE `bs_exception_log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bs_exception_log` ENABLE KEYS */;
+
 
 -- 导出  表 adminstore.config_data_version 结构
 DROP TABLE IF EXISTS `config_data_version`;
@@ -61,6 +106,7 @@ DELETE FROM `config_data_version`;
 /*!40000 ALTER TABLE `config_data_version` DISABLE KEYS */;
 /*!40000 ALTER TABLE `config_data_version` ENABLE KEYS */;
 
+
 -- 导出  表 adminstore.flow_define 结构
 DROP TABLE IF EXISTS `flow_define`;
 CREATE TABLE IF NOT EXISTS `flow_define` (
@@ -76,6 +122,7 @@ CREATE TABLE IF NOT EXISTS `flow_define` (
 DELETE FROM `flow_define`;
 /*!40000 ALTER TABLE `flow_define` DISABLE KEYS */;
 /*!40000 ALTER TABLE `flow_define` ENABLE KEYS */;
+
 
 -- 导出  表 adminstore.menu 结构
 DROP TABLE IF EXISTS `menu`;
@@ -99,14 +146,14 @@ CREATE TABLE IF NOT EXISTS `menu` (
   PRIMARY KEY (`id`),
   KEY `FKqcf9gem97gqa5qjm4d3elcqt5` (`pid`),
   CONSTRAINT `FKqcf9gem97gqa5qjm4d3elcqt5` FOREIGN KEY (`pid`) REFERENCES `menu` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.menu 的数据：~42 rows (大约)
+-- 正在导出表  adminstore.menu 的数据：~43 rows (大约)
 DELETE FROM `menu`;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
 INSERT INTO `menu` (`id`, `addDate`, `code`, `ids`, `lastDate`, `levelInfo`, `lft`, `name`, `rgt`, `sortNum`, `catalog`, `icon`, `nums`, `path`, `permission`, `pid`) VALUES
-	(1, '2017-09-25 14:25:39', '', '1', '2017-09-25 14:25:39', 1, 1, '根节点', 84, 0, NULL, NULL, NULL, NULL, NULL, NULL),
-	(2, '2017-11-09 14:19:34', NULL, '1,2', '2017-11-09 14:19:34', 2, 2, '系统设置', 21, 55, 0, 'fa  fa-gear', 0, '', '2', 1),
+	(1, '2017-09-25 14:25:39', '', '1', '2017-09-25 14:25:39', 1, 1, '根节点', 86, 0, NULL, NULL, NULL, NULL, NULL, NULL),
+	(2, '2018-08-21 21:48:58', NULL, '1,2', '2018-08-21 21:48:58', 2, 2, '系统设置', 23, 55, 0, 'fa  fa-gear', 0, '', '2', 1),
 	(3, '2017-09-25 14:34:37', NULL, '1,2,3', '2017-09-25 14:34:37', 3, 3, '菜单管理', 4, 0, 0, 'fa  fa-reorder', 0, 'admin/menu/view_list.htm', 'menu', 2),
 	(4, '2017-09-25 14:36:59', NULL, '1,2,4', '2017-09-25 14:36:59', 3, 5, '角色管理', 6, 0, 0, 'fa  fa-tree', 0, 'admin/userrole/view_list.htm', 'userrole', 2),
 	(5, '2017-09-25 14:38:29', NULL, '1,2,5', '2017-09-25 14:38:29', 3, 7, '第三方登陆配置', 8, 0, 0, 'fa  fa-connectdevelop', 0, 'admin/useroauthconfig/view_list.htm', 'useroauthconfig', 2),
@@ -115,39 +162,41 @@ INSERT INTO `menu` (`id`, `addDate`, `code`, `ids`, `lastDate`, `levelInfo`, `lf
 	(8, '2017-09-25 14:48:04', NULL, '1,2,8', '2017-09-25 14:48:04', 3, 13, '角色分类配置', 14, 0, 0, 'fa  fa-user-secret', 0, 'admin/userrolecatalog/view_list.htm', 'userrolecatalog', 2),
 	(9, '2017-09-25 14:47:35', NULL, '1,2,9', '2017-09-25 14:47:35', 3, 15, '移动app配置', 16, 0, 0, 'fa  fa-life-ring', 0, 'admin/app/view_list.htm', 'app', 2),
 	(10, '2017-09-25 15:22:17', NULL, '1,2,10', '2017-09-25 15:22:17', 3, 17, '网站主题配置', 18, 0, 0, 'fa  fa-sitemap', 0, 'admin/theme.htm', '10', 2),
-	(11, '2017-09-26 10:34:40', NULL, '1,2,11', '2017-09-26 10:34:40', 3, 19, '模板管理', 20, NULL, 0, 'fa fa-circle-o', NULL, 'admin/tmpl/view_list.htm', 'tmpl', 2),
-	(12, '2018-07-16 15:09:53', NULL, '1,12', '2018-07-16 15:09:53', 2, 22, '流程管理', 27, 1, 0, 'fa  fa-archive', 0, '', '12', 1),
-	(13, '2017-10-26 14:51:49', NULL, '1,12,13', '2017-10-26 14:51:49', 3, 23, '工作流管理', 24, NULL, 0, 'fa fa-circle-o', NULL, 'admin/flow/view_list.htm', 'flow', 12),
-	(14, '2017-10-26 15:42:26', NULL, '1,12,14', '2017-10-26 15:42:26', 3, 25, '模型管理', 26, NULL, 0, 'fa fa-circle-o', NULL, 'admin/act/view_list.htm', 'act', 12),
-	(15, '2017-12-27 14:04:35', NULL, '1,15', '2017-12-27 14:04:35', 2, 28, '服务插件管理', 41, 2, 0, 'fa  fa-cloud', 0, '', '15', 1),
-	(16, '2018-07-10 21:57:50', NULL, '1,15,16', '2018-07-10 21:57:50', 3, 29, '验证码插件配置', 30, 0, 0, 'fa  fa-commenting-o', 0, 'admin/plugin_sendcode/list.htm', 'plugin_sendcode', 15),
-	(17, '2018-07-10 21:58:05', NULL, '1,15,17', '2018-07-10 21:58:05', 3, 31, '存储插件配置', 32, 0, 0, 'fa  fa-cloud-upload', 0, 'admin/plugin_storage/list.htm', 'plugin_storage', 15),
-	(18, '2018-07-10 21:57:36', NULL, '1,15,18', '2018-07-10 21:57:36', 3, 33, '推送插件配置', 34, 0, 0, 'fa fa-circle-o', 0, 'admin/plugin_push/list.htm', 'plugin_push', 15),
-	(19, '2017-12-27 14:04:52', NULL, '1,19', '2017-12-27 14:04:52', 2, 42, '控制台', 43, 0, 0, 'fa fa-home', 0, 'admin/index.htm', '19', 1),
-	(20, '2017-12-27 14:19:54', NULL, '1,20', '2017-12-27 14:19:54', 2, 44, '用户管理', 51, 0, 0, 'fa  fa-users', 0, '', '20', 1),
-	(21, '2017-12-27 14:27:31', NULL, '1,20,21', '2017-12-27 14:27:31', 3, 45, '用户管理', 46, 0, 0, 'fa fa-user', 0, 'admin/member/view_list.htm', 'member', 20),
-	(22, '2017-12-27 14:20:51', NULL, '1,20,22', '2017-12-27 14:20:51', 3, 47, '账号管理', 48, 0, 0, 'fa fa-list', 0, 'admin/useraccount/view_list.htm', 'useraccount', 20),
-	(23, '2017-12-27 15:05:28', NULL, '1,20,23', '2017-12-27 15:05:28', 3, 49, '登陆日志', 50, 0, 0, 'fa fa-support', 0, 'admin/userloginlog/view_list.htm', 'userloginlog', 20),
-	(24, '2018-07-10 21:21:57', NULL, '1,15,24', '2018-07-10 21:21:57', 3, 35, '支付插件管理', 36, NULL, 0, 'fa fa-circle-o', NULL, '', '', 15),
-	(25, '2018-07-10 21:22:16', NULL, '1,15,25', '2018-07-10 21:22:16', 3, 37, '第三方登陆插件配置', 38, NULL, 0, 'fa fa-circle-o', NULL, 'admin/plugin_oauth/list.htm', 'plugin_oauth', 15),
-	(26, '2018-07-10 21:23:22', NULL, '1,15,26', '2018-07-10 21:23:22', 3, 39, '邮件插件配置', 40, NULL, 0, 'fa fa-circle-o', NULL, '', '', 15),
-	(27, '2018-07-10 21:24:52', NULL, '1,27', '2018-07-10 21:24:52', 2, 52, '组织管理', 53, NULL, 0, 'fa fa-circle-o', NULL, '', '', 1),
-	(28, '2018-07-10 21:25:38', NULL, '1,28', '2018-07-10 21:25:38', 2, 54, '云储存', 59, NULL, 0, 'fa fa-circle-o', NULL, '', '', 1),
-	(29, '2018-07-10 21:28:12', NULL, '1,28,29', '2018-07-10 21:28:12', 3, 55, ' Bucket管理 ', 56, NULL, 0, 'fa fa-circle-o', NULL, '', '', 28),
-	(30, '2018-07-10 21:29:17', NULL, '1,28,30', '2018-07-10 21:29:17', 3, 57, '统计分析', 58, NULL, 0, 'fa fa-circle-o', NULL, '', '', 28),
-	(31, '2018-07-10 21:30:49', NULL, '1,31', '2018-07-10 21:30:49', 2, 60, '积分系统', 65, NULL, 0, 'fa fa-circle-o', NULL, '', '', 1),
-	(32, '2018-07-10 21:31:03', NULL, '1,31,32', '2018-07-10 21:31:03', 3, 61, '积分明细', 62, NULL, 0, 'fa fa-circle-o', NULL, '', '', 31),
-	(33, '2018-07-10 21:31:09', NULL, '1,31,33', '2018-07-10 21:31:09', 3, 63, '积分规则管理', 64, NULL, 0, 'fa fa-circle-o', NULL, '', '', 31),
-	(34, '2018-07-16 15:02:29', NULL, '1,34', '2018-07-16 15:02:29', 2, 66, '定时任务管理', 73, 3, 0, 'fa  fa-calendar-plus-o', 0, '', '34', 1),
-	(35, '2018-07-16 14:57:01', NULL, '1,34,35', '2018-07-16 14:57:01', 3, 67, '控制台', 68, 0, 0, 'fa fa-dashboard', 0, 'admin/crontask/index.htm', '35', 34),
-	(36, '2018-07-16 14:57:20', NULL, '1,34,36', '2018-07-16 14:57:20', 3, 69, '任务管理', 70, 0, 0, 'fa   fa-list-ol', 0, 'admin/crontask/view_list.htm', 'crontask', 34),
-	(37, '2018-07-16 14:56:48', NULL, '1,34,37', '2018-07-16 14:56:48', 3, 71, '运行记录', 72, 0, 0, 'fa fa-reorder', 0, 'admin/crontaskrecord/view_list.htm', 'crontaskrecord', 34),
-	(38, '2018-07-16 14:58:54', NULL, '1,38', '2018-07-16 14:58:54', 2, 74, '消息通知', 79, 5, 0, 'fa  fa-comments', 0, '', '38', 1),
-	(39, '2018-07-16 14:59:56', NULL, '1,38,39', '2018-07-16 14:59:56', 3, 75, '收件箱', 76, NULL, 0, 'fa fa-circle-o', NULL, 'admin/usernotification/view_list.htm', 'usernotification', 38),
-	(40, '2018-07-16 15:00:19', NULL, '1,38,40', '2018-07-16 15:00:19', 3, 77, '通知分类', 78, NULL, 0, 'fa fa-circle-o', NULL, 'admin/usernotificationcatalog/view_list.htm', 'usernotificationcatalog', 38),
-	(41, '2018-07-16 15:08:44', NULL, '1,41', '2018-07-16 15:08:44', 2, 80, '分类管理', 83, 8, 0, 'fa  fa-tree', 0, '', 'types', 1),
-	(42, '2018-07-16 15:07:53', NULL, '1,41,42', '2018-07-16 15:07:53', 3, 81, '地区管理', 82, 0, 0, 'fa  fa-building-o', 0, 'admin/area/view_list.htm', 'area', 41);
+	(11, '2018-12-01 10:25:00', NULL, '1,2,11', '2018-12-01 10:25:00', 3, 19, '模板管理', 20, 0, 0, 'fa fa-circle-o', 0, 'admin/tmpl/view_list.htm', 'tmpl', 2),
+	(12, '2018-07-16 15:09:53', NULL, '1,12', '2018-07-16 15:09:53', 2, 24, '流程管理', 29, 1, 0, 'fa  fa-archive', 0, '', '12', 1),
+	(13, '2017-10-26 14:51:49', NULL, '1,12,13', '2017-10-26 14:51:49', 3, 25, '工作流管理', 26, NULL, 0, 'fa fa-circle-o', NULL, 'admin/flow/view_list.htm', 'flow', 12),
+	(14, '2017-10-26 15:42:26', NULL, '1,12,14', '2017-10-26 15:42:26', 3, 27, '模型管理', 28, NULL, 0, 'fa fa-circle-o', NULL, 'admin/act/view_list.htm', 'act', 12),
+	(15, '2017-12-27 14:04:35', NULL, '1,15', '2017-12-27 14:04:35', 2, 30, '服务插件管理', 43, 2, 0, 'fa  fa-cloud', 0, '', '15', 1),
+	(16, '2018-07-10 21:57:50', NULL, '1,15,16', '2018-07-10 21:57:50', 3, 31, '验证码插件配置', 32, 0, 0, 'fa  fa-commenting-o', 0, 'admin/plugin_sendcode/list.htm', 'plugin_sendcode', 15),
+	(17, '2018-07-10 21:58:05', NULL, '1,15,17', '2018-07-10 21:58:05', 3, 33, '存储插件配置', 34, 0, 0, 'fa  fa-cloud-upload', 0, 'admin/plugin_storage/list.htm', 'plugin_storage', 15),
+	(18, '2018-07-10 21:57:36', NULL, '1,15,18', '2018-07-10 21:57:36', 3, 35, '推送插件配置', 36, 0, 0, 'fa fa-circle-o', 0, 'admin/plugin_push/list.htm', 'plugin_push', 15),
+	(19, '2017-12-27 14:04:52', NULL, '1,19', '2017-12-27 14:04:52', 2, 44, '控制台', 45, 0, 0, 'fa fa-home', 0, 'admin/index.htm', '19', 1),
+	(20, '2017-12-27 14:19:54', NULL, '1,20', '2017-12-27 14:19:54', 2, 46, '用户管理', 53, 0, 0, 'fa  fa-users', 0, '', '20', 1),
+	(21, '2017-12-27 14:27:31', NULL, '1,20,21', '2017-12-27 14:27:31', 3, 47, '用户管理', 48, 0, 0, 'fa fa-user', 0, 'admin/member/view_list.htm', 'member', 20),
+	(22, '2017-12-27 14:20:51', NULL, '1,20,22', '2017-12-27 14:20:51', 3, 49, '账号管理', 50, 0, 0, 'fa fa-list', 0, 'admin/useraccount/view_list.htm', 'useraccount', 20),
+	(23, '2017-12-27 15:05:28', NULL, '1,20,23', '2017-12-27 15:05:28', 3, 51, '登陆日志', 52, 0, 0, 'fa fa-support', 0, 'admin/userloginlog/view_list.htm', 'userloginlog', 20),
+	(24, '2018-07-10 21:21:57', NULL, '1,15,24', '2018-07-10 21:21:57', 3, 37, '支付插件管理', 38, NULL, 0, 'fa fa-circle-o', NULL, '', '', 15),
+	(25, '2018-07-10 21:22:16', NULL, '1,15,25', '2018-07-10 21:22:16', 3, 39, '第三方登陆插件配置', 40, NULL, 0, 'fa fa-circle-o', NULL, 'admin/plugin_oauth/list.htm', 'plugin_oauth', 15),
+	(26, '2018-07-10 21:23:22', NULL, '1,15,26', '2018-07-10 21:23:22', 3, 41, '邮件插件配置', 42, NULL, 0, 'fa fa-circle-o', NULL, '', '', 15),
+	(27, '2018-07-10 21:24:52', NULL, '1,27', '2018-07-10 21:24:52', 2, 54, '组织管理', 55, NULL, 0, 'fa fa-circle-o', NULL, '', '', 1),
+	(28, '2018-07-10 21:25:38', NULL, '1,28', '2018-07-10 21:25:38', 2, 56, '云储存', 61, NULL, 0, 'fa fa-circle-o', NULL, '', '', 1),
+	(29, '2018-07-10 21:28:12', NULL, '1,28,29', '2018-07-10 21:28:12', 3, 57, ' Bucket管理 ', 58, NULL, 0, 'fa fa-circle-o', NULL, '', '', 28),
+	(30, '2018-07-10 21:29:17', NULL, '1,28,30', '2018-07-10 21:29:17', 3, 59, '统计分析', 60, NULL, 0, 'fa fa-circle-o', NULL, '', '', 28),
+	(31, '2018-07-10 21:30:49', NULL, '1,31', '2018-07-10 21:30:49', 2, 62, '积分系统', 67, NULL, 0, 'fa fa-circle-o', NULL, '', '', 1),
+	(32, '2018-07-10 21:31:03', NULL, '1,31,32', '2018-07-10 21:31:03', 3, 63, '积分明细', 64, NULL, 0, 'fa fa-circle-o', NULL, '', '', 31),
+	(33, '2018-07-10 21:31:09', NULL, '1,31,33', '2018-07-10 21:31:09', 3, 65, '积分规则管理', 66, NULL, 0, 'fa fa-circle-o', NULL, '', '', 31),
+	(34, '2018-07-16 15:02:29', NULL, '1,34', '2018-07-16 15:02:29', 2, 68, '定时任务管理', 75, 3, 0, 'fa  fa-calendar-plus-o', 0, '', '34', 1),
+	(35, '2018-07-16 14:57:01', NULL, '1,34,35', '2018-07-16 14:57:01', 3, 69, '控制台', 70, 0, 0, 'fa fa-dashboard', 0, 'admin/crontask/index.htm', '35', 34),
+	(36, '2018-07-16 14:57:20', NULL, '1,34,36', '2018-07-16 14:57:20', 3, 71, '任务管理', 72, 0, 0, 'fa   fa-list-ol', 0, 'admin/crontask/view_list.htm', 'crontask', 34),
+	(37, '2018-07-16 14:56:48', NULL, '1,34,37', '2018-07-16 14:56:48', 3, 73, '运行记录', 74, 0, 0, 'fa fa-reorder', 0, 'admin/crontaskrecord/view_list.htm', 'crontaskrecord', 34),
+	(38, '2018-07-16 14:58:54', NULL, '1,38', '2018-07-16 14:58:54', 2, 76, '消息通知', 81, 5, 0, 'fa  fa-comments', 0, '', '38', 1),
+	(39, '2018-07-16 14:59:56', NULL, '1,38,39', '2018-07-16 14:59:56', 3, 77, '收件箱', 78, NULL, 0, 'fa fa-circle-o', NULL, 'admin/usernotification/view_list.htm', 'usernotification', 38),
+	(40, '2018-07-16 15:00:19', NULL, '1,38,40', '2018-07-16 15:00:19', 3, 79, '通知分类', 80, NULL, 0, 'fa fa-circle-o', NULL, 'admin/usernotificationcatalog/view_list.htm', 'usernotificationcatalog', 38),
+	(41, '2018-07-16 15:08:44', NULL, '1,41', '2018-07-16 15:08:44', 2, 82, '分类管理', 85, 8, 0, 'fa  fa-tree', 0, '', 'types', 1),
+	(42, '2018-07-16 15:07:53', NULL, '1,41,42', '2018-07-16 15:07:53', 3, 83, '地区管理', 84, 0, 0, 'fa  fa-building-o', 0, 'admin/area/view_list.htm', 'area', 41),
+	(43, '2018-12-01 11:07:37', NULL, '1,2,43', '2018-12-01 11:07:37', 3, 21, '个人资料管理', 22, -1, 0, 'glyphicon glyphicon-user', 0, 'admin/member/basic.htm', 'member_basic', 2);
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
+
 
 -- 导出  表 adminstore.plugin_config 结构
 DROP TABLE IF EXISTS `plugin_config`;
@@ -160,12 +209,19 @@ CREATE TABLE IF NOT EXISTS `plugin_config` (
   `pluginId` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_d80yc0eis8aaqm59fnxc5rs0l` (`pluginId`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.plugin_config 的数据：~0 rows (大约)
+-- 正在导出表  adminstore.plugin_config 的数据：~5 rows (大约)
 DELETE FROM `plugin_config`;
 /*!40000 ALTER TABLE `plugin_config` DISABLE KEYS */;
+INSERT INTO `plugin_config` (`id`, `addDate`, `lastDate`, `sortNum`, `isEnabled`, `pluginId`) VALUES
+	(1, '2018-08-21 21:43:29', '2018-08-21 21:43:29', NULL, b'0', 'diskFilePlugin'),
+	(2, '2018-08-21 21:43:43', '2018-08-21 21:43:43', NULL, b'0', 'github_plugin'),
+	(3, '2018-08-21 21:44:08', '2018-08-21 21:44:08', NULL, b'0', 'nonePushPlugin'),
+	(4, '2018-08-21 21:46:04', '2018-08-21 21:46:04', NULL, b'0', 'filePlugin'),
+	(6, '2018-08-21 21:46:30', '2018-08-21 21:46:30', NULL, b'1', 'dayuPlug');
 /*!40000 ALTER TABLE `plugin_config` ENABLE KEYS */;
+
 
 -- 导出  表 adminstore.plugin_config_attribute 结构
 DROP TABLE IF EXISTS `plugin_config_attribute`;
@@ -177,10 +233,36 @@ CREATE TABLE IF NOT EXISTS `plugin_config_attribute` (
   CONSTRAINT `FK9s4k66fykxc5x1oo58bg0ku82` FOREIGN KEY (`PluginConfig_id`) REFERENCES `plugin_config` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.plugin_config_attribute 的数据：~0 rows (大约)
+-- 正在导出表  adminstore.plugin_config_attribute 的数据：~24 rows (大约)
 DELETE FROM `plugin_config_attribute`;
 /*!40000 ALTER TABLE `plugin_config_attribute` DISABLE KEYS */;
+INSERT INTO `plugin_config_attribute` (`PluginConfig_id`, `attributes`, `name`) VALUES
+	(2, '0998d17bd1c5b93f6e41', 'apikey'),
+	(2, 'btn-github', 'bg'),
+	(2, 'https://www.haoxuer.com/plugs/github_plugin.htm', 'callback'),
+	(2, 'fa  fa-cny', 'icon'),
+	(2, '语文', 'name'),
+	(2, '', 'order'),
+	(2, 'get_user_info,add_share,add_pic_t', 'scope'),
+	(2, '51f6d015c40a58f4da538626b89d1e1b', 'secret'),
+	(3, 'on', 'enabled'),
+	(3, '', 'order'),
+	(4, '', 'order'),
+	(4, '1', 'urlPrefix'),
+	(6, '', 'appkey'),
+	(6, '', 'binding'),
+	(6, '', 'changePhone'),
+	(6, 'on', 'enabled'),
+	(6, '', 'init'),
+	(6, '', 'login'),
+	(6, '', 'order'),
+	(6, '', 'product'),
+	(6, '', 'register'),
+	(6, '', 'reset'),
+	(6, '', 'secret'),
+	(6, '', 'signName');
 /*!40000 ALTER TABLE `plugin_config_attribute` ENABLE KEYS */;
+
 
 -- 导出  表 adminstore.site_app 结构
 DROP TABLE IF EXISTS `site_app`;
@@ -208,6 +290,7 @@ DELETE FROM `site_app`;
 /*!40000 ALTER TABLE `site_app` DISABLE KEYS */;
 /*!40000 ALTER TABLE `site_app` ENABLE KEYS */;
 
+
 -- 导出  表 adminstore.site_app_version 结构
 DROP TABLE IF EXISTS `site_app_version`;
 CREATE TABLE IF NOT EXISTS `site_app_version` (
@@ -228,6 +311,7 @@ CREATE TABLE IF NOT EXISTS `site_app_version` (
 DELETE FROM `site_app_version`;
 /*!40000 ALTER TABLE `site_app_version` DISABLE KEYS */;
 /*!40000 ALTER TABLE `site_app_version` ENABLE KEYS */;
+
 
 -- 导出  表 adminstore.site_config 结构
 DROP TABLE IF EXISTS `site_config`;
@@ -256,6 +340,7 @@ INSERT INTO `site_config` (`id`, `addDate`, `lastDate`, `description`, `domainNa
 	(1, '2018-02-04 13:29:23', '2018-02-04 13:29:23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'default', NULL, b'0');
 /*!40000 ALTER TABLE `site_config` ENABLE KEYS */;
 
+
 -- 导出  表 adminstore.site_link 结构
 DROP TABLE IF EXISTS `site_link`;
 CREATE TABLE IF NOT EXISTS `site_link` (
@@ -277,6 +362,7 @@ CREATE TABLE IF NOT EXISTS `site_link` (
 DELETE FROM `site_link`;
 /*!40000 ALTER TABLE `site_link` DISABLE KEYS */;
 /*!40000 ALTER TABLE `site_link` ENABLE KEYS */;
+
 
 -- 导出  表 adminstore.site_link_type 结构
 DROP TABLE IF EXISTS `site_link_type`;
@@ -306,6 +392,7 @@ INSERT INTO `site_link_type` (`id`, `addDate`, `code`, `ids`, `lastDate`, `level
 	(3, '2017-12-29 08:53:07', '002', '1,3', '2017-12-29 08:53:07', 2, 4, '朋友网站', 5, NULL, 1);
 /*!40000 ALTER TABLE `site_link_type` ENABLE KEYS */;
 
+
 -- 导出  表 adminstore.site_template_web 结构
 DROP TABLE IF EXISTS `site_template_web`;
 CREATE TABLE IF NOT EXISTS `site_template_web` (
@@ -322,6 +409,7 @@ CREATE TABLE IF NOT EXISTS `site_template_web` (
 DELETE FROM `site_template_web`;
 /*!40000 ALTER TABLE `site_template_web` DISABLE KEYS */;
 /*!40000 ALTER TABLE `site_template_web` ENABLE KEYS */;
+
 
 -- 导出  表 adminstore.site_theme_config 结构
 DROP TABLE IF EXISTS `site_theme_config`;
@@ -341,6 +429,7 @@ INSERT INTO `site_theme_config` (`id`, `name`, `path`, `screenShot`) VALUES
 	('defaultmobile', NULL, NULL, NULL);
 /*!40000 ALTER TABLE `site_theme_config` ENABLE KEYS */;
 
+
 -- 导出  表 adminstore.task 结构
 DROP TABLE IF EXISTS `task`;
 CREATE TABLE IF NOT EXISTS `task` (
@@ -355,15 +444,19 @@ CREATE TABLE IF NOT EXISTS `task` (
   `state` int(11) DEFAULT NULL,
   `url` varchar(255) DEFAULT NULL,
   `user_id` bigint(20) DEFAULT NULL,
+  `nextDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKqpj60iiafuf9b7dh5xtxoeusw` (`user_id`),
   CONSTRAINT `FKqpj60iiafuf9b7dh5xtxoeusw` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.task 的数据：~0 rows (大约)
+-- 正在导出表  adminstore.task 的数据：~1 rows (大约)
 DELETE FROM `task`;
 /*!40000 ALTER TABLE `task` DISABLE KEYS */;
+INSERT INTO `task` (`id`, `addDate`, `lastDate`, `cron`, `name`, `note`, `nums`, `recordState`, `state`, `url`, `user_id`, `nextDate`) VALUES
+	(1, '2018-09-01 22:59:44', '2018-09-01 23:02:00', '0 /1 * * * ?', '数学', '11', 3, 4, 1, 'https://api.maotouin.com/uinfo/crawler/sync_company_new.htm', NULL, '2018-09-01 23:03:00');
 /*!40000 ALTER TABLE `task` ENABLE KEYS */;
+
 
 -- 导出  表 adminstore.task_attribute 结构
 DROP TABLE IF EXISTS `task_attribute`;
@@ -380,6 +473,7 @@ DELETE FROM `task_attribute`;
 /*!40000 ALTER TABLE `task_attribute` DISABLE KEYS */;
 /*!40000 ALTER TABLE `task_attribute` ENABLE KEYS */;
 
+
 -- 导出  表 adminstore.task_record 结构
 DROP TABLE IF EXISTS `task_record`;
 CREATE TABLE IF NOT EXISTS `task_record` (
@@ -392,12 +486,17 @@ CREATE TABLE IF NOT EXISTS `task_record` (
   PRIMARY KEY (`id`),
   KEY `FKhcsb7k9mkjpq63wpmfopg0tty` (`task_id`),
   CONSTRAINT `FKhcsb7k9mkjpq63wpmfopg0tty` FOREIGN KEY (`task_id`) REFERENCES `task` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.task_record 的数据：~0 rows (大约)
+-- 正在导出表  adminstore.task_record 的数据：~3 rows (大约)
 DELETE FROM `task_record`;
 /*!40000 ALTER TABLE `task_record` DISABLE KEYS */;
+INSERT INTO `task_record` (`id`, `addDate`, `lastDate`, `expensesTime`, `note`, `task_id`) VALUES
+	(1, '2018-09-01 23:00:02', '2018-09-01 23:00:02', 742, '', 1),
+	(2, '2018-09-01 23:01:00', '2018-09-01 23:01:00', 208, '', 1),
+	(3, '2018-09-01 23:02:00', '2018-09-01 23:02:00', 199, '', 1);
 /*!40000 ALTER TABLE `task_record` ENABLE KEYS */;
+
 
 -- 导出  表 adminstore.user_account 结构
 DROP TABLE IF EXISTS `user_account`;
@@ -419,9 +518,8 @@ CREATE TABLE IF NOT EXISTS `user_account` (
 -- 正在导出表  adminstore.user_account 的数据：~1 rows (大约)
 DELETE FROM `user_account`;
 /*!40000 ALTER TABLE `user_account` DISABLE KEYS */;
-INSERT INTO `user_account` (`id`, `addDate`, `lastDate`, `accountType`, `loginSize`, `password`, `salt`, `username`, `user_id`) VALUES
-	(1, '2017-12-27 13:53:50', '2018-07-16 15:17:44', 2, 75, 'b63e05a75d3c13c53becedeb885bda5b67a6664a', 'e1e8c5fab5a28e13', 'admin', 1);
 /*!40000 ALTER TABLE `user_account` ENABLE KEYS */;
+
 
 -- 导出  表 adminstore.user_code 结构
 DROP TABLE IF EXISTS `user_code`;
@@ -440,6 +538,7 @@ CREATE TABLE IF NOT EXISTS `user_code` (
 DELETE FROM `user_code`;
 /*!40000 ALTER TABLE `user_code` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_code` ENABLE KEYS */;
+
 
 -- 导出  表 adminstore.user_feedback 结构
 DROP TABLE IF EXISTS `user_feedback`;
@@ -467,6 +566,30 @@ DELETE FROM `user_feedback`;
 /*!40000 ALTER TABLE `user_feedback` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_feedback` ENABLE KEYS */;
 
+
+-- 导出  表 adminstore.user_identification 结构
+DROP TABLE IF EXISTS `user_identification`;
+CREATE TABLE IF NOT EXISTS `user_identification` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `addDate` datetime DEFAULT NULL,
+  `lastDate` datetime DEFAULT NULL,
+  `bindType` int(11) DEFAULT NULL,
+  `no` varchar(50) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKh4c2qe2s2jyoq5gwl4sp09efn` (`user_id`),
+  CONSTRAINT `FKh4c2qe2s2jyoq5gwl4sp09efn` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- 正在导出表  adminstore.user_identification 的数据：~2 rows (大约)
+DELETE FROM `user_identification`;
+/*!40000 ALTER TABLE `user_identification` DISABLE KEYS */;
+INSERT INTO `user_identification` (`id`, `addDate`, `lastDate`, `bindType`, `no`, `user_id`) VALUES
+	(1, '2018-12-01 10:26:11', '2018-12-01 10:26:11', 2, 'ada', 2),
+	(2, '2018-12-01 10:26:23', '2018-12-01 10:26:23', 2, 'admin', 1);
+/*!40000 ALTER TABLE `user_identification` ENABLE KEYS */;
+
+
 -- 导出  表 adminstore.user_info 结构
 DROP TABLE IF EXISTS `user_info`;
 CREATE TABLE IF NOT EXISTS `user_info` (
@@ -478,24 +601,28 @@ CREATE TABLE IF NOT EXISTS `user_info` (
   `loginSize` int(11) DEFAULT NULL,
   `name` varchar(20) DEFAULT NULL,
   `phone` varchar(15) DEFAULT NULL,
-  `registerType` varchar(20) DEFAULT NULL,
   `state` int(11) DEFAULT NULL,
   `edge` varchar(255) DEFAULT NULL,
   `introduce` varchar(255) DEFAULT NULL,
   `note` varchar(255) DEFAULT NULL,
   `sex` varchar(5) DEFAULT NULL,
   `household_id` int(11) DEFAULT NULL,
+  `companyName` varchar(30) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `job` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK3193uu2asgocbhkk1mus5wfd7` (`household_id`),
   CONSTRAINT `FK3193uu2asgocbhkk1mus5wfd7` FOREIGN KEY (`household_id`) REFERENCES `area` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.user_info 的数据：~1 rows (大约)
+-- 正在导出表  adminstore.user_info 的数据：~2 rows (大约)
 DELETE FROM `user_info`;
 /*!40000 ALTER TABLE `user_info` DISABLE KEYS */;
-INSERT INTO `user_info` (`id`, `addDate`, `lastDate`, `avatar`, `catalog`, `loginSize`, `name`, `phone`, `registerType`, `state`, `edge`, `introduce`, `note`, `sex`, `household_id`) VALUES
-	(1, '2017-12-27 14:44:05', '2018-07-16 15:17:44', NULL, 0, 95, 'admin', NULL, '账号', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `user_info` (`id`, `addDate`, `lastDate`, `avatar`, `catalog`, `loginSize`, `name`, `phone`, `state`, `edge`, `introduce`, `note`, `sex`, `household_id`, `companyName`, `email`, `job`) VALUES
+	(1, '2017-12-27 14:44:05', '2018-12-01 10:48:08', NULL, 0, 148, 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(2, '2018-12-01 10:26:11', '2018-12-01 11:06:38', NULL, NULL, 15, 'ada', 'a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `user_info` ENABLE KEYS */;
+
 
 -- 导出  表 adminstore.user_info_attribute 结构
 DROP TABLE IF EXISTS `user_info_attribute`;
@@ -511,6 +638,7 @@ CREATE TABLE IF NOT EXISTS `user_info_attribute` (
 DELETE FROM `user_info_attribute`;
 /*!40000 ALTER TABLE `user_info_attribute` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_info_attribute` ENABLE KEYS */;
+
 
 -- 导出  表 adminstore.user_label 结构
 DROP TABLE IF EXISTS `user_label`;
@@ -528,6 +656,7 @@ DELETE FROM `user_label`;
 /*!40000 ALTER TABLE `user_label` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_label` ENABLE KEYS */;
 
+
 -- 导出  表 adminstore.user_label_links 结构
 DROP TABLE IF EXISTS `user_label_links`;
 CREATE TABLE IF NOT EXISTS `user_label_links` (
@@ -544,6 +673,7 @@ DELETE FROM `user_label_links`;
 /*!40000 ALTER TABLE `user_label_links` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_label_links` ENABLE KEYS */;
 
+
 -- 导出  表 adminstore.user_login_log 结构
 DROP TABLE IF EXISTS `user_login_log`;
 CREATE TABLE IF NOT EXISTS `user_login_log` (
@@ -558,9 +688,9 @@ CREATE TABLE IF NOT EXISTS `user_login_log` (
   PRIMARY KEY (`id`),
   KEY `FKj91w0nnfocpdp796lr3ot4lxs` (`user_id`),
   CONSTRAINT `FKj91w0nnfocpdp796lr3ot4lxs` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.user_login_log 的数据：~21 rows (大约)
+-- 正在导出表  adminstore.user_login_log 的数据：~27 rows (大约)
 DELETE FROM `user_login_log`;
 /*!40000 ALTER TABLE `user_login_log` DISABLE KEYS */;
 INSERT INTO `user_login_log` (`id`, `addDate`, `lastDate`, `ip`, `state`, `user_id`, `account`, `client`) VALUES
@@ -585,8 +715,21 @@ INSERT INTO `user_login_log` (`id`, `addDate`, `lastDate`, `ip`, `state`, `user_
 	(19, '2018-07-16 14:44:02', '2018-07-16 14:44:02', '0:0:0:0:0:0:0:1', 1, 1, NULL, NULL),
 	(20, '2018-07-16 15:00:59', '2018-07-16 15:00:59', '0:0:0:0:0:0:0:1', 1, 1, NULL, NULL),
 	(21, '2018-07-16 15:06:31', '2018-07-16 15:06:31', '0:0:0:0:0:0:0:1', 1, 1, NULL, NULL),
-	(22, '2018-07-16 15:17:44', '2018-07-16 15:17:44', '0:0:0:0:0:0:0:1', 1, 1, NULL, NULL);
+	(22, '2018-07-16 15:17:44', '2018-07-16 15:17:44', '0:0:0:0:0:0:0:1', 1, 1, NULL, NULL),
+	(23, '2018-08-12 16:31:23', '2018-08-12 16:31:23', '0:0:0:0:0:0:0:1', 1, 1, NULL, NULL),
+	(24, '2018-09-01 22:59:19', '2018-09-01 22:59:19', '0:0:0:0:0:0:0:1', 1, 1, NULL, NULL),
+	(25, '2018-12-01 10:17:47', '2018-12-01 10:17:47', '0:0:0:0:0:0:0:1', 1, 1, NULL, NULL),
+	(26, '2018-12-01 10:25:20', '2018-12-01 10:25:20', '0:0:0:0:0:0:0:1', 1, 1, NULL, NULL),
+	(27, '2018-12-01 10:28:30', '2018-12-01 10:28:30', '0:0:0:0:0:0:0:1', 1, 1, NULL, NULL),
+	(28, '2018-12-01 10:37:18', '2018-12-01 10:37:18', '0:0:0:0:0:0:0:1', 1, 1, NULL, NULL),
+	(29, '2018-12-01 10:38:00', '2018-12-01 10:38:00', '0:0:0:0:0:0:0:1', 1, 2, NULL, NULL),
+	(30, '2018-12-01 10:44:21', '2018-12-01 10:44:21', '0:0:0:0:0:0:0:1', 1, 1, NULL, NULL),
+	(31, '2018-12-01 10:45:27', '2018-12-01 10:45:27', '0:0:0:0:0:0:0:1', 1, 2, NULL, NULL),
+	(32, '2018-12-01 10:45:37', '2018-12-01 10:45:37', '0:0:0:0:0:0:0:1', 1, 2, NULL, NULL),
+	(33, '2018-12-01 10:45:44', '2018-12-01 10:45:44', '0:0:0:0:0:0:0:1', 1, 1, NULL, NULL),
+	(34, '2018-12-01 10:48:18', '2018-12-01 10:48:18', '0:0:0:0:0:0:0:1', 1, 2, NULL, NULL);
 /*!40000 ALTER TABLE `user_login_log` ENABLE KEYS */;
+
 
 -- 导出  表 adminstore.user_message 结构
 DROP TABLE IF EXISTS `user_message`;
@@ -610,6 +753,7 @@ DELETE FROM `user_message`;
 /*!40000 ALTER TABLE `user_message` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_message` ENABLE KEYS */;
 
+
 -- 导出  表 adminstore.user_message_member 结构
 DROP TABLE IF EXISTS `user_message_member`;
 CREATE TABLE IF NOT EXISTS `user_message_member` (
@@ -632,6 +776,7 @@ DELETE FROM `user_message_member`;
 /*!40000 ALTER TABLE `user_message_member` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_message_member` ENABLE KEYS */;
 
+
 -- 导出  表 adminstore.user_message_subject 结构
 DROP TABLE IF EXISTS `user_message_subject`;
 CREATE TABLE IF NOT EXISTS `user_message_subject` (
@@ -652,6 +797,7 @@ CREATE TABLE IF NOT EXISTS `user_message_subject` (
 DELETE FROM `user_message_subject`;
 /*!40000 ALTER TABLE `user_message_subject` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_message_subject` ENABLE KEYS */;
+
 
 -- 导出  表 adminstore.user_notification 结构
 DROP TABLE IF EXISTS `user_notification`;
@@ -684,6 +830,7 @@ DELETE FROM `user_notification`;
 /*!40000 ALTER TABLE `user_notification` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_notification` ENABLE KEYS */;
 
+
 -- 导出  表 adminstore.user_notification_catalog 结构
 DROP TABLE IF EXISTS `user_notification_catalog`;
 CREATE TABLE IF NOT EXISTS `user_notification_catalog` (
@@ -712,6 +859,7 @@ INSERT INTO `user_notification_catalog` (`id`, `addDate`, `code`, `ids`, `lastDa
 	(1, '2018-07-16 15:01:15', '', '1', '2018-07-16 15:01:15', 1, 1, '根节点', 2, 0, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `user_notification_catalog` ENABLE KEYS */;
 
+
 -- 导出  表 adminstore.user_notification_member 结构
 DROP TABLE IF EXISTS `user_notification_member`;
 CREATE TABLE IF NOT EXISTS `user_notification_member` (
@@ -733,6 +881,7 @@ DELETE FROM `user_notification_member`;
 /*!40000 ALTER TABLE `user_notification_member` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_notification_member` ENABLE KEYS */;
 
+
 -- 导出  表 adminstore.user_notification_num 结构
 DROP TABLE IF EXISTS `user_notification_num`;
 CREATE TABLE IF NOT EXISTS `user_notification_num` (
@@ -751,6 +900,7 @@ DELETE FROM `user_notification_num`;
 /*!40000 ALTER TABLE `user_notification_num` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_notification_num` ENABLE KEYS */;
 
+
 -- 导出  表 adminstore.user_notification_time 结构
 DROP TABLE IF EXISTS `user_notification_time`;
 CREATE TABLE IF NOT EXISTS `user_notification_time` (
@@ -767,6 +917,7 @@ CREATE TABLE IF NOT EXISTS `user_notification_time` (
 DELETE FROM `user_notification_time`;
 /*!40000 ALTER TABLE `user_notification_time` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_notification_time` ENABLE KEYS */;
+
 
 -- 导出  表 adminstore.user_oauth_config 结构
 DROP TABLE IF EXISTS `user_oauth_config`;
@@ -787,6 +938,7 @@ CREATE TABLE IF NOT EXISTS `user_oauth_config` (
 DELETE FROM `user_oauth_config`;
 /*!40000 ALTER TABLE `user_oauth_config` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_oauth_config` ENABLE KEYS */;
+
 
 -- 导出  表 adminstore.user_oauth_token 结构
 DROP TABLE IF EXISTS `user_oauth_token`;
@@ -811,6 +963,7 @@ DELETE FROM `user_oauth_token`;
 /*!40000 ALTER TABLE `user_oauth_token` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_oauth_token` ENABLE KEYS */;
 
+
 -- 导出  表 adminstore.user_role 结构
 DROP TABLE IF EXISTS `user_role`;
 CREATE TABLE IF NOT EXISTS `user_role` (
@@ -831,8 +984,9 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 DELETE FROM `user_role`;
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
 INSERT INTO `user_role` (`id`, `addDate`, `lastDate`, `alias`, `description`, `name`, `roleType`, `catalog_id`) VALUES
-	(1, '2018-07-16 15:17:37', '2018-07-16 15:17:37', '', '', 'admin', 0, 2);
+	(1, '2018-12-01 10:25:09', '2018-12-01 10:25:09', '', '', 'admin', 0, 2);
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
+
 
 -- 导出  表 adminstore.user_role_authority 结构
 DROP TABLE IF EXISTS `user_role_authority`;
@@ -843,7 +997,7 @@ CREATE TABLE IF NOT EXISTS `user_role_authority` (
   CONSTRAINT `FKo6xok4ngrsuacqkyjpqbykn9l` FOREIGN KEY (`role_id`) REFERENCES `user_role` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.user_role_authority 的数据：~32 rows (大约)
+-- 正在导出表  adminstore.user_role_authority 的数据：~30 rows (大约)
 DELETE FROM `user_role_authority`;
 /*!40000 ALTER TABLE `user_role_authority` DISABLE KEYS */;
 INSERT INTO `user_role_authority` (`role_id`, `permission`) VALUES
@@ -875,8 +1029,10 @@ INSERT INTO `user_role_authority` (`role_id`, `permission`) VALUES
 	(1, 'userrolecatalog'),
 	(1, 'app'),
 	(1, '10'),
-	(1, 'tmpl');
+	(1, 'tmpl'),
+	(1, 'member_basic');
 /*!40000 ALTER TABLE `user_role_authority` ENABLE KEYS */;
+
 
 -- 导出  表 adminstore.user_role_catalog 结构
 DROP TABLE IF EXISTS `user_role_catalog`;
@@ -895,16 +1051,18 @@ CREATE TABLE IF NOT EXISTS `user_role_catalog` (
   PRIMARY KEY (`id`),
   KEY `FKkk8xoshxnvrtd39dd20k4vi85` (`pid`),
   CONSTRAINT `FKkk8xoshxnvrtd39dd20k4vi85` FOREIGN KEY (`pid`) REFERENCES `user_role_catalog` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.user_role_catalog 的数据：~3 rows (大约)
+-- 正在导出表  adminstore.user_role_catalog 的数据：~4 rows (大约)
 DELETE FROM `user_role_catalog`;
 /*!40000 ALTER TABLE `user_role_catalog` DISABLE KEYS */;
 INSERT INTO `user_role_catalog` (`id`, `addDate`, `code`, `ids`, `lastDate`, `levelInfo`, `lft`, `name`, `rgt`, `sortNum`, `pid`) VALUES
-	(1, '2017-12-27 13:59:23', '', '1', '2017-12-27 13:59:23', 1, 1, '根节点', 6, 0, NULL),
-	(2, '2017-12-27 13:59:42', '002', '1,2', '2017-12-27 13:59:42', 2, 2, '系统', 3, NULL, 1),
-	(3, '2017-12-27 13:59:49', '001', '1,3', '2017-12-27 13:59:49', 2, 4, '自定义', 5, NULL, 1);
+	(1, '2017-12-27 13:59:23', '', '1', '2017-12-27 13:59:23', 1, 1, '根节点', 8, 0, NULL),
+	(2, '2018-08-12 16:43:59', '002', '1,2', '2018-08-12 16:43:59', 2, 2, '系统', 5, NULL, 1),
+	(3, '2018-08-12 16:44:19', '001', '1,3', '2018-08-12 16:44:19', 2, 6, '自定义', 7, NULL, 1),
+	(4, '2018-08-12 17:24:34', 'gg', '1,2,4', '2018-08-12 17:24:34', 3, 3, 'gg', 4, NULL, 2);
 /*!40000 ALTER TABLE `user_role_catalog` ENABLE KEYS */;
+
 
 -- 导出  表 adminstore.user_role_links 结构
 DROP TABLE IF EXISTS `user_role_links`;
@@ -917,12 +1075,39 @@ CREATE TABLE IF NOT EXISTS `user_role_links` (
   CONSTRAINT `FKpm1oweb01msxxqf212qmd0984` FOREIGN KEY (`roles_id`) REFERENCES `user_role` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.user_role_links 的数据：~1 rows (大约)
+-- 正在导出表  adminstore.user_role_links 的数据：~2 rows (大约)
 DELETE FROM `user_role_links`;
 /*!40000 ALTER TABLE `user_role_links` DISABLE KEYS */;
 INSERT INTO `user_role_links` (`user_id`, `roles_id`) VALUES
-	(1, 1);
+	(1, 1),
+	(2, 1);
 /*!40000 ALTER TABLE `user_role_links` ENABLE KEYS */;
+
+
+-- 导出  表 adminstore.user_security 结构
+DROP TABLE IF EXISTS `user_security`;
+CREATE TABLE IF NOT EXISTS `user_security` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `addDate` datetime DEFAULT NULL,
+  `lastDate` datetime DEFAULT NULL,
+  `checkSize` int(11) DEFAULT NULL,
+  `password` varchar(50) DEFAULT NULL,
+  `salt` varchar(50) DEFAULT NULL,
+  `securityType` int(11) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK641wdw6hf3c0nflv03rt0d6h2` (`user_id`),
+  CONSTRAINT `FK641wdw6hf3c0nflv03rt0d6h2` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- 正在导出表  adminstore.user_security 的数据：~2 rows (大约)
+DELETE FROM `user_security`;
+/*!40000 ALTER TABLE `user_security` DISABLE KEYS */;
+INSERT INTO `user_security` (`id`, `addDate`, `lastDate`, `checkSize`, `password`, `salt`, `securityType`, `user_id`) VALUES
+	(1, '2018-12-01 10:26:11', '2018-12-01 10:29:19', 0, 'b63e05a75d3c13c53becedeb885bda5b67a6664a', 'e1e8c5fab5a28e13', 0, 1),
+	(2, '2018-12-01 10:26:23', '2018-12-01 10:26:23', 0, 'd9730873f22fdd9bef4793e9c28b9a5d877810a0', 'ea6990c1cbfbcbbb', 0, 2);
+/*!40000 ALTER TABLE `user_security` ENABLE KEYS */;
+
 
 -- 导出  表 adminstore.user_verification 结构
 DROP TABLE IF EXISTS `user_verification`;
@@ -940,7 +1125,6 @@ CREATE TABLE IF NOT EXISTS `user_verification` (
 DELETE FROM `user_verification`;
 /*!40000 ALTER TABLE `user_verification` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_verification` ENABLE KEYS */;
-
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
