@@ -1,200 +1,178 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta charset="utf-8" />
-<title>添加</title>
-[#include "/admin/common/commonurl.html"]
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>添加(${model.name!""})版本信息</title>
+	<!-- Tell the browser to be responsive to screen width -->
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<!-- Bootstrap 3.3.6 -->
+	<link rel="stylesheet" href="${siteurl}bootstrap/css/bootstrap.min.css">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="${siteurl}plugins/FontAwesome/css/font-awesome.min.css">
+	<!-- Ionicons -->
+	<link rel="stylesheet" href="${siteurl}plugins/ionicons201/css/ionicons.min.css">
+
+	<link rel="stylesheet" href="${siteurl}plugins/select2/select2.css">
+
+	<!-- Theme style -->
+	<link rel="stylesheet" href="${siteurl}dist/css/AdminLTE.min.css">
+	<!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+	<link rel="stylesheet" href="${siteurl}dist/css/skins/_all-skins.min.css">
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	[#include "/admin/common/commons.html"]
+
+	<!-- jQuery 2.2.3 -->
+	<script src="${siteurl}plugins/jQuery/jquery-2.2.3.min.js"></script>
+	<!-- Bootstrap 3.3.6 -->
+	<script src="${siteurl}bootstrap/js/bootstrap.min.js"></script>
+	<!-- SlimScroll -->
+	<script src="${siteurl}plugins/slimScroll/jquery.slimscroll.min.js"></script>
+	<!-- FastClick -->
+	<script src="${siteurl}plugins/fastclick/fastclick.js"></script>
+	<!-- AdminLTE App -->
+	<script src="${siteurl}dist/js/app.min.js"></script>
 
 
+	<link rel="stylesheet" href="${siteurl}plugins/autocomplete/jquery.autocomplete.css">
+	<script src="${siteurl}plugins/autocomplete/jquery.autocomplete.js"></script>
 
+
+	<link rel="stylesheet" href="${siteurl}plugins/datetimepicker/jquery.datetimepicker.min.css">
+	<script src="${siteurl}plugins/datetimepicker/jquery.datetimepicker.full.min.js"></script>
+
+	<script src="${siteurl}plugins/select2/select2.full.min.js"></script>
+	<script src="${siteurl}plugins/select2/i18n/zh-CN.js"></script>
+
+	[#include "/admin/common/fileuploads.html"]
+
+	<link rel="stylesheet" type="text/css" href="${siteurl}plugins/webuploader/demo.css">
+	<style type="text/css">
+		.label-title{
+			padding-right:2px;
+		}
+		.text-title{
+			margin-left: -2px;
+			padding-right: 42px;
+		}
+		.form-group label{
+			padding-right: 0px;
+		}
+	</style>
 </head>
+<body class="hold-transition skin-blue sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper">
 
-<body class="no-skin">
-	<div id="navbar" class="navbar navbar-default">
-		<script type="text/javascript">
-			try {
-				ace.settings.check('navbar', 'fixed')
-			} catch (e) {
-			}
-		</script>
+	<header class="main-header">
+		<!-- Header Navbar: style can be found in header.less -->
+		[#include "/admin/common/nav.html"]
+	</header>
 
-		[#include "/admin/common/navbar.html"]
+	<!-- =============================================== -->
 
-		<!-- /.navbar-container -->
-	</div>
-
-	<div class="main-container" id="main-container">
-		<script type="text/javascript">
-			try {
-				ace.settings.check('main-container', 'fixed')
-			} catch (e) {
-			}
-		</script>
-
-		<div id="sidebar" class="sidebar                  responsive">
-			<script type="text/javascript">
-				try {
-					ace.settings.check('sidebar', 'fixed')
-				} catch (e) {
-				}
-			</script>
-			[#include "/admin/common/shortcuts.html"]
-			<!-- /.sidebar-shortcuts -->
-
-			<!-- .nav-list -->
-			[#include "/admin/common/commonmenu.html"]
-			<ul class="nav nav-list">[@menustag id=1] [#list list as item]
-				[@menu item "1,12,24"] [/@menu] [/#list] [/@menustag]
+	<!-- Left side column. contains the sidebar -->
+	<aside class="main-sidebar">
+		<!-- sidebar: style can be found in sidebar.less -->
+		<section class="sidebar">
+			<!-- Sidebar user panel -->
+			[@user_panel /]
+			<!-- search form -->
+			[@sidebar_form /]
+			<!-- /.search form -->
+			<!-- sidebar menu: : style can be found in sidebar.less -->
+			<ul class="sidebar-menu">
+				<li class="header">主面板</li>
+				[@menustag id=1]
+				[#list list as item]
+				[@menu item "1,2,9"]
+				[/@menu]
+				[/#list]
+				[/@menustag]
 			</ul>
-			<!-- /.nav-list -->
+		</section>
+		<!-- /.sidebar -->
+	</aside>
 
-			<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
-				<i class="ace-icon fa fa-angle-double-left"
-					data-icon1="ace-icon fa fa-angle-double-left"
-					data-icon2="ace-icon fa fa-angle-double-right"></i>
-			</div>
+	<!-- =============================================== -->
 
-			<script type="text/javascript">
-				try {
-					ace.settings.check('sidebar', 'collapsed')
-				} catch (e) {
-				}
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<!-- Main content -->
+		<section class="content">
 
-				function updatering() {
-					$("#processinfos").slideDown();
-					$.get("${siteurl}ring/downring.htm", function() {
-						$("#processinfos").slideUp();
-					});
-				}
-			</script>
-		</div>
+			<!-- Default box -->
+			<div class="">
+				<div class="box box-default box-solid">
+					<div class="box-header with-border">
+						<h3 class="box-title">添加(${model.name!""})版本信息</h3>
+					</div>
+					<!-- /.box-header -->
+					<!-- form start -->
+					<form class="form-horizontal" action="${siteurl}admin/appversion/model_save.htm" method="post">
+						<input type="hidden" name="app.id" value="${(model.id)!}">
+						<div class="box-body">
+							<div class="form-group col-md-6">
+								<label for="versionName" class="col-sm-2 control-label">版本名称</label>
+								<div class="col-sm-10">
+									<input class="form-control" id="versionName" name="versionName" placeholder="版本名称" type="text">
+								</div>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="versionCode" class="col-sm-2 control-label">数字版本</label>
+								<div class="col-sm-10">
+									<input class="form-control" id="versionCode" name="versionCode" placeholder="数字版本" type="number">
+								</div>
+							</div>
 
-		<div class="main-content">
-			<div class="breadcrumbs" id="breadcrumbs">
-				<script type="text/javascript">
-					try {
-						ace.settings.check('breadcrumbs', 'fixed')
-					} catch (e) {
-					}
-				</script>
+							<div class="form-group col-md-12"  >
+								<label class="col-md-1 control-label label-title">程序文件</label>
+								<div class="col-md-11">
+									[@fileinput name="downUrl" /]
+								</div>
 
-				<ul class="breadcrumb">
-					<li><i class="ace-icon fa fa-home home-icon"></i> <a href="#">首页</a>
-					</li>
-
-					<li class="active">添加</li>
-				</ul>
-				<!-- /.breadcrumb -->
-
-				<div class="nav-search" id="nav-search">
-					<form class="form-search">
-						<span class="input-icon"> <input type="text"
-							placeholder="Search ..." class="nav-search-input"
-							id="nav-search-input" autocomplete="off" /> <i
-							class="ace-icon fa fa-search nav-search-icon"></i>
-						</span>
+							</div>
+							<div class="form-group col-md-12">
+								<label for="note" class="col-md-1 control-label label-title">版本介绍</label>
+								<div class="col-sm-11 text-title">
+									<textarea class="form-control" id="note" name="note" placeholder="活动详情" type="text"></textarea>
+								</div>
+							</div>
+						</div>
+						<!-- /.box-body -->
+						<div class="box-footer">
+							<a href="${siteurl}admin/activity/view_list.htm" class="btn btn-default">取消</a>
+							<button type="submit" class="btn btn-primary pull-right">保存</button>
+						</div>
+						<!-- /.box-footer -->
 					</form>
 				</div>
-				<!-- /.nav-search -->
 			</div>
+			<!-- /.box -->
 
-
-
-			<div class="page-content">
-				[#include "/admin/common/page.html"] [#include
-				"/admin/common/settings.html"]
-				<div class="row">
-					<div class="col-xs-12">
-
-						<form role="form" method="post" class="form-horizontal"
-							action="${siteurl}admin/appversion/model_save.htm">
-							<div class="form-group">
-								<label for="form-field-1"
-									class="col-sm-3 control-label no-padding-right"> 程序</label>
-
-								<div class="col-sm-9">
-                                   <select name="app.id" class="col-xs-10 col-sm-10">
-                                    [#list apps as item]
-								   <option value="${item.id}">${item.name}</option>
-								    [/#list]
-								   </select>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="form-field-1"
-									class="col-sm-3 control-label no-padding-right">版本号</label>
-
-								<div class="col-sm-9">
-									<input required="required"  type="number" name="versionCode" class="col-xs-10 col-sm-10"
-										placeholder="版本号" id="form-field-1">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="form-field-1"
-									class="col-sm-3 control-label no-padding-right"> 版本名称</label>
-
-								<div class="col-sm-9">
-									<input required="required"  type="text" name="versionName" class="col-xs-10 col-sm-10"
-										placeholder="版本名称" id="form-field-1">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="form-field-1"
-									class="col-sm-3 control-label no-padding-right"> 下载地址</label>
-
-								<div class="col-sm-9">
-									<input required="required"  type="text" name="downUrl" class="col-xs-10 col-sm-10"
-										placeholder="下载地址" id="form-field-1">
-								</div>
-							</div>			
-							<div class="form-group">
-								<label for="form-field-1"
-									class="col-sm-3 control-label no-padding-right"> 描述</label>
-
-								<div class="col-sm-9">
-									<textarea   type="text" name="note" class="col-xs-10 col-sm-10" placeholder="描述" ></textarea>
-								</div>
-							</div>												
-							
-							<div class="clearfix form-actions">
-								<div class="col-md-offset-3 col-md-9">
-									<button type="submit" class="btn btn-info">
-										<i class="ace-icon fa fa-check bigger-110"></i> 保存
-									</button>
-
-									&nbsp; &nbsp; &nbsp;
-									<button type="reset" class="btn">
-										<i class="ace-icon fa fa-undo bigger-110"></i> 重置
-									</button>
-								</div>
-							</div>
-							
-							<div class="hr hr-24"></div>
-
-
-
-
-						</form>
-
-
-					</div>
-				</div>
-
-
-			</div>
-		</div>
-		<!-- /.main-content -->
-
-		[#include "/admin/common/footer.html"]
-
+		</section>
+		<!-- /.content -->
 	</div>
-	<!-- /.main-container -->
+	<!-- /.content-wrapper -->
 
-	<!-- basic scripts -->
+	[#include "/admin/common/footer.html"]
 
-	[#include "/admin/common/scripts.html"]
+	<!-- Control Sidebar -->
+	[#include "/admin/common/aside.html"]
 
+	<!-- /.control-sidebar -->
+	<!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+	<div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
 </body>
 </html>
