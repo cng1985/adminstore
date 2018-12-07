@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>添加</title>
+	<!-- Tell the browser to be responsive to screen width -->
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<!-- Bootstrap 3.3.6 -->
+	<link rel="stylesheet" href="${siteurl}bootstrap/css/bootstrap.min.css">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="${siteurl}plugins/FontAwesome/css/font-awesome.min.css">
+	<!-- Ionicons -->
+	<link rel="stylesheet" href="${siteurl}plugins/ionicons201/css/ionicons.min.css">
+
+	<link rel="stylesheet" href="${siteurl}plugins/select2/select2.css">
+	<!-- Theme style -->
+	<link rel="stylesheet" href="${siteurl}dist/css/AdminLTE.min.css">
+	<!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+	<link rel="stylesheet" href="${siteurl}dist/css/skins/_all-skins.min.css">
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	[#include "/admin/common/commons.html"]
+
+	<!-- jQuery 2.2.3 -->
+	<script src="${siteurl}plugins/jQuery/jquery-2.2.3.min.js"></script>
+	<!-- Bootstrap 3.3.6 -->
+	<script src="${siteurl}bootstrap/js/bootstrap.min.js"></script>
+	<!-- SlimScroll -->
+	<script src="${siteurl}plugins/slimScroll/jquery.slimscroll.min.js"></script>
+	<!-- FastClick -->
+	<script src="${siteurl}plugins/fastclick/fastclick.js"></script>
+	<!-- AdminLTE App -->
+	<script src="${siteurl}dist/js/adminlte.min.js"></script>
+
+	<script src="${siteurl}plugins/select2/select2.full.min.js"></script>
+	<script src="${siteurl}plugins/select2/i18n/zh-CN.js"></script>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper">
+
+	<header class="main-header">
+		<!-- Header Navbar: style can be found in header.less -->
+		[#include "/admin/common/nav.html"]
+	</header>
+
+	<!-- =============================================== -->
+
+	<!-- Left side column. contains the sidebar -->
+	<aside class="main-sidebar">
+		<!-- sidebar: style can be found in sidebar.less -->
+		<section class="sidebar">
+			<!-- Sidebar user panel -->
+			[@user_panel /]
+			<!-- search form -->
+			[@sidebar_form /]
+			<!-- /.search form -->
+			<!-- sidebar menu: : style can be found in sidebar.less -->
+			<ul class="sidebar-menu" data-widget="tree">
+				<li class="header">主面板</li>
+				[@menustag id=1]
+				[#list list as item]
+				[@menu item "1,38,39"]
+				[/@menu]
+				[/#list]
+				[/@menustag]
+			</ul>
+		</section>
+		<!-- /.sidebar -->
+	</aside>
+
+	<!-- =============================================== -->
+
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<!-- Main content -->
+		<section class="content">
+			<div class="row">
+				<div class="col-md-3">
+					<a href="${siteurl}admin/usernotificationmember/view_list.htm" class="btn btn-primary btn-block margin-bottom">回到收件箱</a>
+
+					<div class="box box-solid">
+						<div class="box-header with-border">
+							<h3 class="box-title">Folders</h3>
+
+							<div class="box-tools">
+								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+								</button>
+							</div>
+						</div>
+						<div class="box-body no-padding">
+							<ul class="nav nav-pills nav-stacked">
+								<li><a href="mailbox.html"><i class="fa fa-inbox"></i> Inbox
+									<span class="label label-primary pull-right">12</span></a></li>
+								<li><a href="#"><i class="fa fa-envelope-o"></i> Sent</a></li>
+								<li><a href="#"><i class="fa fa-file-text-o"></i> Drafts</a></li>
+								<li><a href="#"><i class="fa fa-filter"></i> Junk <span class="label label-warning pull-right">65</span></a>
+								</li>
+								<li><a href="#"><i class="fa fa-trash-o"></i> Trash</a></li>
+							</ul>
+						</div>
+						<!-- /.box-body -->
+					</div>
+					<!-- /. box -->
+					<div class="box box-solid">
+						<div class="box-header with-border">
+							<h3 class="box-title">Labels</h3>
+
+							<div class="box-tools">
+								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+								</button>
+							</div>
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body no-padding">
+							<ul class="nav nav-pills nav-stacked">
+								<li><a href="#"><i class="fa fa-circle-o text-red"></i> Important</a></li>
+								<li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Promotions</a></li>
+								<li><a href="#"><i class="fa fa-circle-o text-light-blue"></i> Social</a></li>
+							</ul>
+						</div>
+						<!-- /.box-body -->
+					</div>
+					<!-- /.box -->
+				</div>
+				<!-- /.col -->
+				<form method="post" action="${siteurl}admin/usernotificationmember/sendmail.htm">
+				<div class="col-md-9">
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<h3 class="box-title">Compose New Message</h3>
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body">
+							<div class="form-group">
+								<select id="mailto" name="user" class="form-control" placeholder="To:">
+								</select>
+							</div>
+							<div class="form-group">
+								<input class="form-control" placeholder="标题:" name="title">
+							</div>
+							<div class="form-group">
+                             <textarea id="compose-textarea" class="form-control" style="height: 230px" name="note"></textarea>
+							</div>
+							<div class="form-group hidden">
+								<div class="btn btn-default btn-file">
+									<i class="fa fa-paperclip"></i> Attachment
+									<input type="file" name="attachment">
+								</div>
+								<p class="help-block">Max. 32MB</p>
+							</div>
+						</div>
+						<!-- /.box-body -->
+						<div class="box-footer">
+							<div class="pull-right">
+								<button type="button" class="btn btn-default"><i class="fa fa-pencil"></i> 草稿</button>
+								<button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> 发送</button>
+							</div>
+							<button type="reset" class="btn btn-default"><i class="fa fa-times"></i> 取消</button>
+						</div>
+						<!-- /.box-footer -->
+					</div>
+					<!-- /. box -->
+				</div>
+				</form>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</section>
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+
+	[#include "/admin/common/footer.html"]
+
+	<!-- Control Sidebar -->
+	[#include "/admin/common/aside.html"]
+
+	<!-- /.control-sidebar -->
+	<!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+	<div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+<script type="text/javascript">
+    function formatRepo (repo) {
+        console.log(repo);
+        if (repo.loading) {
+            return repo.text;
+        }
+
+        var markup = "<div class='select2-result-repository__title'>" + repo.name + "</div>";
+
+
+        return markup;
+    }
+    function formatRepoSelection (repo) {
+        return repo.name || repo.name;
+    }
+    $(document).ready(function () {
+        $(document).ready(function () {
+            $("#mailto").select2({
+                ajax: {
+                    url: '${siteurl}rest/member/name.htm',
+                    data: function (params) {
+                        var query = {
+                            name: params.term,
+                            type: 'public'
+                        }
+                        return query;
+                    },
+                    dataType:"json",
+                    type:"POST",
+                    processResults: function (data) {
+                        return {
+                            results: data.list
+                        };
+                    }
+                },
+                placeholder: '请输入要举行活动的场馆名称',
+                escapeMarkup: function (markup) { return markup; }
+                , templateResult: formatRepo,
+                templateSelection: formatRepoSelection
+            });
+        });
+
+    });
+</script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 package com.quhaodian.adminstore.rest.api;
 
 import com.quhaodian.adminstore.rest.domain.page.MemberPage;
+import com.quhaodian.adminstore.rest.domain.request.MemberNameRequest;
 import com.quhaodian.adminstore.rest.domain.request.MemberUpdateRequest;
 import com.haoxuer.discover.rest.base.RequestTokenPageObject;
 import com.haoxuer.discover.rest.base.ResponseObject;
@@ -26,5 +27,9 @@ public interface MemberApi {
    * @return
    */
   ResponseObject update(MemberUpdateRequest request);
-  
+
+
+  MemberPage name(MemberNameRequest request);
+
+
 }

@@ -63,7 +63,7 @@
 				<li class="header">主面板</li>
 				[@menustag id=1]
 				[#list list as item]
-				[@menu item "1,28,31"]
+				[@menu item "1,38,44"]
 				[/@menu]
 				[/#list]
 				[/@menustag]
@@ -77,12 +77,6 @@
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
-		<section class="content-header">
-			<h1>
-				管理
-				<small>添加</small>
-			</h1>
-		</section>
 		<!-- Main content -->
 		<section class="content">
 
@@ -94,19 +88,14 @@
 					</div>
 					<!-- /.box-header -->
 					<!-- form start -->
-					<form class="form-horizontal" action="${siteurl}admin/usernotification/model_save.htm" method="post">
+
+					<form action="${siteurl}admin/usernotification/model_save.htm" method="post">
 						<div class="box-body">
 							<div class="form-group">
-								<label for="title" class="col-sm-2 control-label">title</label>
-								<div class="col-sm-10">
-									<input class="form-control" id="title" name="title" placeholder="" type="text">
-								</div>
+								<input class="form-control" placeholder="标题:" name="title">
 							</div>
 							<div class="form-group">
-								<label for="note" class="col-sm-2 control-label">note</label>
-								<div class="col-sm-10">
-									<input class="form-control" id="note" name="note" placeholder="" type="text">
-								</div>
+								<textarea placeholder="内容" id="compose-textarea" class="form-control" style="height: 230px" name="note"></textarea>
 							</div>
 						</div>
 						<!-- /.box-body -->

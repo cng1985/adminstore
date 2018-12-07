@@ -4,6 +4,7 @@ package com.quhaodian.adminstore.controller.rest;
 import com.quhaodian.adminstore.data.service.MemberService;
 import com.quhaodian.adminstore.rest.api.MemberApi;
 import com.quhaodian.adminstore.rest.domain.page.MemberPage;
+import com.quhaodian.adminstore.rest.domain.request.MemberNameRequest;
 import com.quhaodian.adminstore.rest.domain.request.MemberUpdateRequest;
 import com.haoxuer.discover.rest.base.RequestTokenPageObject;
 import com.haoxuer.discover.rest.base.ResponseObject;
@@ -26,7 +27,12 @@ public class MemberRestController {
   public ResponseObject update(MemberUpdateRequest request) {
     return api.update(request);
   }
-  
+
+  @RequestMapping("/member/name")
+  public MemberPage name(MemberNameRequest request) {
+    return api.name(request);
+  }
+
   @Autowired
   private MemberApi api;
   

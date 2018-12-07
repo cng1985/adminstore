@@ -152,63 +152,51 @@
 [#macro footer]
 <footer class="main-footer">
     <div class="container">
-        <div >
-            <strong>Copyright &copy; 1985-${.now?string("yyyy")} <a href="https://adminlte.io">ada.young</a></strong> 版权所有
+        <div>
+            <strong>Copyright &copy; 1985-${.now?string("yyyy")} <a href="https://www.haoxuer.com/">ada.young</a></strong>
+            版权所有
         </div>
         <div>
-            陕ICP备16002477号-1
+            陕ICP备18011547号-1
         </div>
 
         <div class="row bring-up">
+            [@linkType id=1 size=4]
+            [#if list??]
+            [#list list as type]
             <div class="col-sm-3">
                 <ul class="list-unstyled">
-                    <li><h4>友情链接</h4></li>
+                    <li>
+                        <h4>${(type.name)!""}</h4>
+                    </li>
 
-                    [@link  id=2 size=20]
+                    [@link id=type.id size=20]
                     [#if list??]
-                        [#list list as item]
-                            <li><a href="${item.url!''}" target="_blank">${item.name!''}</a></li>
-                        [/#list]
+                    [#list list as item]
+                    <li><a href="${item.url!''}" target="_blank">${item.name!''}</a></li>
+                    [/#list]
                     [/#if]
                     [/@link]
                 </ul>
-            </div><!-- /.col -->
-            <div class="col-sm-3">
-                <ul class="list-unstyled">
-                    <li><h4>第三方库</h4></li>
-                    <li><a href="https://github.com/seiyria/bootstrap-slider/">Bootstrap Slider</a></li>
-                    <li><a href="http://ionden.com/a/plugins/ion.rangeSlider/en.html" target="_blank">Ion Slider</a></li>
-                    <li><a href="http://bootstrap-datepicker.readthedocs.org/" target="_blank">Date Picker</a></li>
-                    <li><a href="http://www.daterangepicker.com/" target="_blank">Date Range Picker</a></li>
-                    <li><a href="http://mjolnic.com/bootstrap-colorpicker/" target="_blank">Color Picker</a></li>
-                    <li><a href="https://github.com/jdewit/bootstrap-timepicker/" target="_blank">Time Picker</a></li>
-                    <li><a href="http://fronteed.com/iCheck/" target="_blank">iCheck</a></li>
-                    <li><a href="https://github.com/RobinHerbots/jquery.inputmask/" target="_blank">Input Mask</a></li>
-                </ul>
-            </div><!-- /.col -->
-            <div class="col-sm-3">
-                <ul class="list-unstyled">
-                    <li><h4>Editors</h4></li>
-                    <li><a href="https://github.com/bootstrap-wysiwyg/bootstrap3-wysiwyg/" target="_blank">Bootstrap WYSIHTML5</a></li>
-                    <li><a href="http://ckeditor.com/" target="_blank">CK Editor</a></li>
-                </ul>
-            </div><!-- /. col -->
-            <div class="col-sm-3">
-                <ul class="list-unstyled">
-                    <li><h4>其他</h4></li>
-                    <li><a href="https://datatables.net/examples/styling/bootstrap.html" target="_blank">DataTables</a></li>
-                    <li><a href="http://fullcalendar.io/" target="_blank">Full Calendar</a></li>
-                    <li><a href="http://jqueryui.com/" target="_blank">jQuery UI</a></li>
-                    <li><a href="http://anthonyterrien.com/knob/" target="_blank">jQuery Knob</a></li>
-                    <li><a href="http://jvectormap.com/" target="_blank">jVector Map</a></li>
-                    <li><a href="http://rocha.la/jQuery-slimScroll/" target="_blank">Slim Scroll</a></li>
-                    <li><a href="http://github.hubspot.com/pace/docs/welcome/" target="_blank">Pace</a></li>
-                </ul>
-            </div><!-- /.col -->
+            </div>
+            [/#list]
+            [/#if]
+            [/@linkType]
+            <!-- /.col -->
         </div>
     </div>
     <!-- /.container -->
 </footer>
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?5e2e20a7ef88cc2a6787faf846c3c44e";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 [/#macro]
 
 

@@ -50,7 +50,7 @@
 				<li class="header">主面板</li>
 				[@menustag id=1]
 					[#list list as item]
-						[@menu item "1,28,31"]
+						[@menu item "1,38,44"]
 						[/@menu]
 					[/#list]
 				[/@menustag]
@@ -100,9 +100,11 @@
 									<thead>
 									<tr role="row">
 										<td class="col-xs-6">标题</td>
-										<td class="col-xs-2 text-center">作者</td>
+										<td class="col-xs-1 text-center">作者</td>
+										<td class="col-xs-1 text-center">类型</td>
+										<td class="col-xs-1 text-center">发送量</td>
 										<td class="col-xs-2 text-center">更新时间</td>
-										<td class="col-xs-2 text-center">操作</td>
+										<td class="col-xs-1 text-center">操作</td>
 									</tr>
 									</thead>
 									<tbody>
@@ -110,15 +112,11 @@
 									<tr id="trr${item.id}">
 										<td>${item.title!""}</td>
 										<td class="text-center">${(item.author.name)!""}</td>
+										<td class="text-center">${(item.category)!""}</td>
+										<td class="text-center">${(item.nums)!"1"}</td>
 										<td class="text-center">${(item.lastDate?string('yyyy-MM-dd HH:mm:ss'))!''}</td>
 										<td class="text-center">
 											<div style="display: inline-block;">
-												[@shiro.hasPermission name="usernotification:update"]
-												<a  class="menubutton btn btn-sm btn-success"
-													href="${siteurl}admin/usernotification/view_edit.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
-													<i class="fa fa-edit">更新</i>
-												</a>
-												[/@shiro.hasPermission]
 												[@shiro.hasPermission name="usernotification:delete"]
 												<a  class="menubutton btn btn-sm btn-danger"  onclick="return confirm('删除后无法恢复,确定要删除吗')"
 													href="${siteurl}admin/usernotification/model_delete.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">

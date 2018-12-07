@@ -1,11 +1,13 @@
 package com.quhaodian.adminstore.rest.resources;
 
+import com.haoxuer.discover.data.page.Filter;
 import com.quhaodian.adminstore.data.dao.MemberDao;
 import com.quhaodian.adminstore.data.entity.Member;
 import com.quhaodian.adminstore.rest.api.MemberApi;
 import com.quhaodian.adminstore.rest.conver.MemberSimpleConver;
 import com.quhaodian.adminstore.rest.conver.PageableConver;
 import com.quhaodian.adminstore.rest.domain.page.MemberPage;
+import com.quhaodian.adminstore.rest.domain.request.MemberNameRequest;
 import com.quhaodian.adminstore.rest.domain.request.MemberUpdateRequest;
 import com.haoxuer.discover.data.page.Page;
 import com.haoxuer.discover.data.page.Pageable;
@@ -21,10 +23,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Component
 public class MemberResource implements MemberApi {
-  
+
   @Autowired
   private MemberDao memberDao;
-  
+
   @Override
   public MemberPage page(RequestTokenPageObject request) {
     MemberPage result = new MemberPage();
@@ -33,7 +35,7 @@ public class MemberResource implements MemberApi {
     ConverResourceUtils.coverPage(result, page, new MemberSimpleConver());
     return result;
   }
-  
+
   @Override
   public ResponseObject update(MemberUpdateRequest request) {
     ResponseObject result = new ResponseObject();
@@ -68,6 +70,19 @@ public class MemberResource implements MemberApi {
     if (StringUtil.isNotEmpty(request.getEmail())) {
       member.setEmail(request.getEmail());
     }
+    return result;
+  }
+
+  @Override
+  public MemberPage name(MemberNameRequest request) {
+    MemberPage result = new MemberPage();
+    if (request.getName() == null) {
+      request.setName("");
+    }
+    Pageable pageable = new PageableConver().conver(request);
+    pageable.getFilters().add(Filter.like("name", request.getName()));
+    Page<Member> page = memberDao.page(pageable);
+    ConverResourceUtils.coverPage(result, page, new MemberSimpleConver());
     return result;
   }
 }
