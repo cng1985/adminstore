@@ -42,6 +42,7 @@
 * QQ群:141837028   [discover开源QQ群](//shang.qq.com/wpa/qunwpa?idkey=d1a308945e4b2ff8aeb1711c2c7914342dae15e9ce7041e94756ab355430dc78)
 
 ## 界面效果
+[在线实例http://adminstore.haoxuer.com](http://adminstore.haoxuer.com/)账号admin密码123456
 
 ![部分er图](http://qiniu.haoxuer.com/bd042b2c2a55f57bc6dc3d3568a790ed "部分er图")
 ![菜单管理功能](http://qiniu.haoxuer.com/7075c8f053f0b2aa0f06ad08b750029d "菜单管理功能")
