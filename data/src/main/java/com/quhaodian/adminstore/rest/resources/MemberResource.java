@@ -1,7 +1,13 @@
 package com.quhaodian.adminstore.rest.resources;
 
 import com.haoxuer.discover.data.page.Filter;
+import com.haoxuer.discover.trade.data.dao.TradeAccountDao;
+import com.haoxuer.discover.trade.data.entity.TradeAccount;
+import com.haoxuer.discover.trade.data.others.ChangeType;
+import com.haoxuer.discover.trade.data.request.TradeRequest;
+import com.quhaodian.adminstore.data.dao.ConfigDao;
 import com.quhaodian.adminstore.data.dao.MemberDao;
+import com.quhaodian.adminstore.data.entity.Config;
 import com.quhaodian.adminstore.data.entity.Member;
 import com.quhaodian.adminstore.rest.api.MemberApi;
 import com.quhaodian.adminstore.rest.conver.MemberSimpleConver;
@@ -18,7 +24,11 @@ import com.haoxuer.discover.user.utils.UserUtils;
 import jodd.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.util.Random;
 
 @Transactional
 @Component
@@ -83,6 +93,39 @@ public class MemberResource implements MemberApi {
     pageable.getFilters().add(Filter.like("name", request.getName()));
     Page<Member> page = memberDao.page(pageable);
     ConverResourceUtils.coverPage(result, page, new MemberSimpleConver());
+    return result;
+  }
+
+  @Autowired
+  TradeAccountDao accountDao;
+
+  @Autowired
+  ConfigDao configDao;
+
+
+  @Transactional(isolation = Isolation.SERIALIZABLE )
+  @Override
+  public  ResponseObject demo() {
+    ResponseObject result = new ResponseObject();
+    Member member = memberDao.findById(1+(long) new Random().nextInt(6));
+    TradeAccount account = member.getAccount();
+    if (account == null) {
+      account = accountDao.initNormal();
+      member.setAccount(account);
+    }
+    Config config = configDao.config();
+    TradeAccount from = config.getAccount();
+    if (from == null) {
+      from = accountDao.initSpecial();
+      config.setAccount(from);
+    }
+    TradeRequest request = new TradeRequest();
+    request.setAmount(new BigDecimal(new Random().nextInt(100000)));
+    request.setChangeType(ChangeType.from(1, "demo"));
+    request.setTo(account.getId());
+    request.setFrom(from.getId());
+    request.setNote("测试");
+    accountDao.trade(request);
     return result;
   }
 }

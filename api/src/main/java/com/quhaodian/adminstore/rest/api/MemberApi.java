@@ -32,4 +32,6 @@ public interface MemberApi {
   MemberPage name(MemberNameRequest request);
 
 
+  ResponseObject demo();
+
 }

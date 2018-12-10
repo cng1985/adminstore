@@ -33,6 +33,11 @@ public class MemberRestController {
     return api.name(request);
   }
 
+  @RequestMapping("/member/demo")
+  public ResponseObject demo() {
+    return api.demo();
+  }
+
   @Autowired
   private MemberApi api;
   

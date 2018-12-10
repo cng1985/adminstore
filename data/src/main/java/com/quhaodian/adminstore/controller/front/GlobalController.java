@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.CannotAcquireLockException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,6 +40,17 @@ public class GlobalController extends AbstractJsonpResponseBodyAdvice {
     savaLog(ex, request);
     return result;
   }
+
+  @ResponseBody
+  @ExceptionHandler(CannotAcquireLockException.class)
+  public ResponseObject cannotacquirelock(HttpServletRequest request, Exception ex) {
+    ResponseObject result = new ResponseObject();
+    result.setMsg("事物异常!");
+    result.setCode(-1);
+    savaLog(ex, request);
+    return result;
+  }
+
 
   @ResponseBody
   @ExceptionHandler(NullPointerException.class)

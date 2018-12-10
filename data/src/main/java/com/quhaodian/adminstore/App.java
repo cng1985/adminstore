@@ -4,6 +4,7 @@ import com.haoxuer.imake.ChainMake;
 import com.haoxuer.imake.template.hibernate.TemplateHibernateDir;
 import com.haoxuer.imake.templates.adminlte.TemplateAdminLTE;
 import com.quhaodian.adminstore.controller.admin.Controllers;
+import com.quhaodian.adminstore.data.entity.Config;
 import com.quhaodian.adminstore.data.entity.ExceptionLog;
 
 import java.io.File;
@@ -23,7 +24,7 @@ public class App {
     make.setView(view);
 
     List<Class<?>> cs = new ArrayList<Class<?>>();
-    cs.add(ExceptionLog.class);
+    cs.add(Config.class);
 
     make.setMenus("1,2,8");
     make.setDao(true);

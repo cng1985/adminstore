@@ -4,6 +4,7 @@ import com.haoxuer.discover.area.data.entity.Area;
 import com.haoxuer.discover.data.annotations.ColType;
 import com.haoxuer.discover.data.annotations.FormAnnotation;
 import com.haoxuer.discover.data.annotations.FormFieldAnnotation;
+import com.haoxuer.discover.trade.data.entity.TradeAccount;
 import com.haoxuer.discover.user.data.entity.AbstractUser;
 
 import javax.persistence.Column;
@@ -29,6 +30,9 @@ public class Member extends AbstractUser {
   @FormFieldAnnotation(title = "性别", sortNum = "2", grid = true, col = ColType.col_1)
   @Column(length = 5)
   private String sex;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  private TradeAccount account;
   
   
   /**
@@ -121,5 +125,13 @@ public class Member extends AbstractUser {
   
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public TradeAccount getAccount() {
+    return account;
+  }
+
+  public void setAccount(TradeAccount account) {
+    this.account = account;
   }
 }
