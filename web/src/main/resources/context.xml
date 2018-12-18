@@ -142,4 +142,6 @@
 
 
     <import resource="context-shiro.xml"/>
+    <import resource="context-activiti.xml"/>
+
 </beans>
