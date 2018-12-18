@@ -59,7 +59,7 @@ define({ "api": [
         ]
       }
     },
-    "filename": "./1_app.js",
+    "filename": "doc/1_app.js",
     "groupTitle": "1 程序模块",
     "sampleRequest": [
       {
@@ -120,7 +120,7 @@ define({ "api": [
         ]
       }
     },
-    "filename": "./1_app.js",
+    "filename": "doc/1_app.js",
     "groupTitle": "1 程序模块",
     "sampleRequest": [
       {
@@ -174,7 +174,7 @@ define({ "api": [
         ]
       }
     },
-    "filename": "./2user.js",
+    "filename": "doc/2user.js",
     "groupTitle": "用户模块",
     "sampleRequest": [
       {
@@ -185,7 +185,7 @@ define({ "api": [
   {
     "type": "get",
     "url": "/user/loginoauth.htm",
-    "title": "1.5 通过第三方登陆",
+    "title": "2.02 通过第三方登陆",
     "version": "0.0.1",
     "name": "loginOauth",
     "group": "2user",
@@ -228,11 +228,72 @@ define({ "api": [
         ]
       }
     },
-    "filename": "./2user.js",
+    "filename": "doc/2user.js",
     "groupTitle": "用户模块",
     "sampleRequest": [
       {
         "url": "http://localhost:8080/web/rest/user/loginoauth.htm"
+      }
+    ]
+  },
+  {
+    "type": "get",
+    "url": "/user/update.htm",
+    "title": "2.03 更新用户信息",
+    "version": "0.0.1",
+    "name": "update",
+    "group": "2user",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userToken",
+            "description": "<p>令牌</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>昵称</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "avatar",
+            "description": "<p>头像</p>"
+          }
+        ]
+      }
+    },
+    "permission": [
+      {
+        "name": "none"
+      }
+    ],
+    "description": "<p>更新用户信息</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Int",
+            "optional": false,
+            "field": "code",
+            "description": "<p>状态码(默认为0)</p>"
+          }
+        ]
+      }
+    },
+    "filename": "doc/2user.js",
+    "groupTitle": "用户模块",
+    "sampleRequest": [
+      {
+        "url": "http://localhost:8080/web/rest/user/update.htm"
       }
     ]
   }

@@ -58,8 +58,8 @@
 				<value>com.haoxuer.discover.plug.data.entity</value>
 				<value>com.haoxuer.discover.quartz.data.entity</value>
 				<value>com.haoxuer.discover.notice.data.entity</value>
-				<value>com.haoxuer.discover.workflow.data.entity</value>
 				<value>com.haoxuer.discover.trade.data.entity</value>
+				<value>com.haoxuer.discover.config.data.entity</value>
 				<value>com.quhaodian.adminstore.data.entity</value>
 			</list>
 		</property>
