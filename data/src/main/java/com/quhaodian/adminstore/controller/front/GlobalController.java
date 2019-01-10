@@ -17,7 +17,6 @@ import org.springframework.dao.CannotAcquireLockException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.method.annotation.AbstractJsonpResponseBodyAdvice;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -26,7 +25,7 @@ import java.util.Set;
 
 
 @ControllerAdvice
-public class GlobalController extends AbstractJsonpResponseBodyAdvice {
+public class GlobalController  {
 
   @Autowired
   ExceptionLogService logService;
@@ -104,7 +103,7 @@ public class GlobalController extends AbstractJsonpResponseBodyAdvice {
   
   
   public GlobalController() {
-    super("callback");
+
   }
 
   private void savaLog(Exception ex, HttpServletRequest request) {

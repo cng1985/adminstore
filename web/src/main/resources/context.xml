@@ -38,32 +38,21 @@
             </value>
         </property>
     </bean>
-
-
     <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager"
                            ignore-default-model-on-redirect="true" conversion-service="conversionService"
     >
     </mvc:annotation-driven>
     <context:component-scan base-package="com.quhaodian.adminstore.controller"/>
-
-
-
     <!--COOKIE登录 -->
 
-    <bean name="webconfig" class="com.haoxuer.discover.web.data.common.InitConfig" init-method="initWebConfig" scope="singleton" lazy-init="false"></bean>
+    <bean name="webconfig" class="com.haoxuer.discover.web.data.common.InitConfig" init-method="initWebConfig" scope="singleton" lazy-init="false" />
 
-
-
-
-
-
-
-    <bean id="shiro" class="com.jagregory.shiro.freemarker.ShiroTags"></bean>
-    <bean id="menuOpenDirective" class="com.haoxuer.discover.user.freemaker.MenuOpenDirective"></bean>
-    <bean id="menusDirective" class="com.haoxuer.discover.user.freemaker.MenusDirective"></bean>
-    <bean id="menuchildsDirective" class="com.haoxuer.discover.user.freemaker.MenuChildsDirective"></bean>
-    <bean id="linkTypeDirective" class="com.haoxuer.discover.site.freemaker.LinkTypeDirective"></bean>
-    <bean id="linkDirective" class="com.haoxuer.discover.site.freemaker.LinkDirective"></bean>
+    <bean id="shiro" class="com.jagregory.shiro.freemarker.ShiroTags" />
+    <bean id="menuOpenDirective" class="com.haoxuer.discover.user.freemaker.MenuOpenDirective" />
+    <bean id="menusDirective" class="com.haoxuer.discover.user.freemaker.MenusDirective"   />
+    <bean id="menuchildsDirective" class="com.haoxuer.discover.user.freemaker.MenuChildsDirective"  />
+    <bean id="linkTypeDirective" class="com.haoxuer.discover.site.freemaker.LinkTypeDirective"  />
+    <bean id="linkDirective" class="com.haoxuer.discover.site.freemaker.LinkDirective" />
 
     <!-- freemarker的配置 -->
     <bean id="freemarkerConfigurer"
@@ -93,8 +82,6 @@
                 <entry key="menuchilds" value-ref="menuchildsDirective"/>
                 <entry key="linktype" value-ref="linkTypeDirective"/>
                 <entry key="link" value-ref="linkDirective"/>
-
-
                 <entry key="siteurl" value="#{servletContext.contextPath}/"/>
                 <entry key="sitename" value="后台管理"/>
             </map>
@@ -129,7 +116,6 @@
         </property>
     </bean>
 
-
     <mvc:interceptors>
         <ref bean="openSessionInViewInterceptor"/>
         <mvc:interceptor>
@@ -139,9 +125,6 @@
             <bean class="com.quhaodian.adminstore.web.interceptor.UserTokenInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
-
-
     <import resource="context-shiro.xml"/>
-    <import resource="context-activiti.xml"/>
 
 </beans>
