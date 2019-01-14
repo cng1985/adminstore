@@ -1,6 +1,6 @@
 package com.tongna.adminstore;
 
-import com.quhaodian.adminstore.data.service.MemberService;
+import com.haoxuer.adminstore.data.service.MemberService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

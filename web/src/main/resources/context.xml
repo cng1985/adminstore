@@ -42,7 +42,7 @@
                            ignore-default-model-on-redirect="true" conversion-service="conversionService"
     >
     </mvc:annotation-driven>
-    <context:component-scan base-package="com.quhaodian.adminstore.controller"/>
+    <context:component-scan base-package="com.haoxuer.adminstore.controller"/>
     <!--COOKIE登录 -->
 
     <bean name="webconfig" class="com.haoxuer.discover.web.data.common.InitConfig" init-method="initWebConfig" scope="singleton" lazy-init="false" />
@@ -122,7 +122,7 @@
             <mvc:mapping path="/rest/**"/>
             <mvc:exclude-mapping path="/rest/member/**"/>
             <mvc:exclude-mapping path="/rest/user/**"/>
-            <bean class="com.quhaodian.adminstore.web.interceptor.UserTokenInterceptor"/>
+            <bean class="com.haoxuer.adminstore.web.interceptor.UserTokenInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
     <import resource="context-shiro.xml"/>

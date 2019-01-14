@@ -16,7 +16,7 @@
 
 
 	<!-- 对包中的所有类进行扫描，以完成Bean创建和自动依赖注入的功能 需要更改 -->
-	<context:component-scan base-package="com.quhaodian" />
+	<context:component-scan base-package="com.haoxuer.adminstore" />
 
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -60,7 +60,7 @@
 				<value>com.haoxuer.discover.notice.data.entity</value>
 				<value>com.haoxuer.discover.trade.data.entity</value>
 				<value>com.haoxuer.discover.config.data.entity</value>
-				<value>com.quhaodian.adminstore.data.entity</value>
+				<value>com.haoxuer.adminstore.data.entity</value>
 			</list>
 		</property>
 		<property name="entityInterceptor" ref="treeInterceptor">
