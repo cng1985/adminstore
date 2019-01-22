@@ -100,7 +100,7 @@ public class MemberAction {
   @RequiresPermissions("member")
   @RequestMapping("/admin/member/view_edit")
   public String edit(Pageable pageable, Long id, ModelMap model) {
-    model.addAttribute(MODEL, manager.findById(id));
+    model.addAttribute(MODEL, userInfoService.findById(id));
     model.addAttribute("page", pageable);
     model.addAttribute("roles", roleService.list(0, 1000, null, null));
     
@@ -200,6 +200,7 @@ public class MemberAction {
     try {
       manager.update(bean);
       if (roles != null) {
+        userInfoService.clearRoles(bean.getId());
         for (Long role : roles) {
           userInfoService.addRole(bean.getId(), role);
         }
