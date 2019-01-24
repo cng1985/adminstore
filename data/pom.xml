@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>com.quhaodian.adminstore</groupId>
+        <groupId>com.haoxuer.adminstore</groupId>
         <artifactId>adminstore-root</artifactId>
         <version>1.01</version>
     </parent>
@@ -52,7 +52,7 @@
             <version>2.0.7</version>
         </dependency>
         <dependency>
-            <groupId>com.quhaodian.adminstore</groupId>
+            <groupId>com.haoxuer.adminstore</groupId>
             <artifactId>api</artifactId>
             <version>1.01</version>
         </dependency>
