@@ -21,6 +21,10 @@
         <property name="converters">
             <set>
                 <bean class="com.haoxuer.discover.web.converter.DateConverter"/>
+                <bean class="com.haoxuer.adminstore.web.conver.BytesConverter"/>
+                <bean class="com.haoxuer.adminstore.web.conver.ObjectConverter"/>
+
+
             </set>
         </property>
     </bean>
@@ -126,5 +130,6 @@
         </mvc:interceptor>
     </mvc:interceptors>
     <import resource="context-shiro.xml"/>
+    <import resource="context-session.xml"/>
 
 </beans>
