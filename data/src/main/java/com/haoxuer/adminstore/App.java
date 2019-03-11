@@ -1,5 +1,6 @@
 package com.haoxuer.adminstore;
 
+import com.haoxuer.discover.config.data.entity.Dictionary;
 import com.haoxuer.imake.ChainMake;
 import com.haoxuer.imake.template.hibernate.TemplateHibernateDir;
 import com.haoxuer.imake.templates.adminlte.TemplateAdminLTE;
@@ -19,16 +20,16 @@ public class App {
     System.out.println(Controllers.class.getResource("/").getPath());
     ChainMake make = new ChainMake(TemplateAdminLTE.class, TemplateHibernateDir.class);
     make.setAction(Controllers.class.getPackage().getName());
-    File view = new File("D:\\mvnspace\\adminstore\\web\\src\\main\\webapp\\WEB-INF\\ftl\\admin");
+    File view = new File("E:\\mvnspace\\adminstore\\web\\src\\main\\webapp\\WEB-INF\\ftl\\admin");
     make.setView(view);
 
     List<Class<?>> cs = new ArrayList<Class<?>>();
-    cs.add(Config.class);
+    cs.add(Dictionary.class);
 
-    make.setMenus("1,2,8");
-    make.setDao(true);
-    make.setService(true);
-    make.setView(false);
+    make.setMenus("1,2,47");
+    make.setDao(false);
+    make.setService(false);
+    make.setView(true);
     make.setAction(false);
     make.makes(cs);
   }

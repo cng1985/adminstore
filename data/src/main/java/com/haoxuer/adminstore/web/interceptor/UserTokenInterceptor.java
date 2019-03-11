@@ -16,10 +16,6 @@ public class UserTokenInterceptor extends HandlerInterceptorAdapter {
     if (token == null) {
       throw new NoUserTokenException();
     }
-    Long app = UserUtils.getApp(token);
-    if (app == null) {
-      throw new UnAuthorizationException();
-    }
     return true;
   }
 }
