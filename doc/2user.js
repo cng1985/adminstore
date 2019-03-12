@@ -23,10 +23,7 @@
  * @apiDescription 通过账号密码登陆
  *
  *
- *
- *
  * @apiSuccess {Int} code 状态码(默认为0)
- *
  *
  */
 
