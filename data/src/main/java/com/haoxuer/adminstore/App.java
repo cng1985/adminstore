@@ -1,5 +1,6 @@
 package com.haoxuer.adminstore;
 
+import com.haoxuer.adminstore.data.entity.Function;
 import com.haoxuer.discover.config.data.entity.Dictionary;
 import com.haoxuer.imake.ChainMake;
 import com.haoxuer.imake.template.hibernate.TemplateHibernateDir;
@@ -24,13 +25,13 @@ public class App {
     make.setView(view);
 
     List<Class<?>> cs = new ArrayList<Class<?>>();
-    cs.add(Dictionary.class);
+    cs.add(Function.class);
 
-    make.setMenus("1,2,47");
-    make.setDao(false);
-    make.setService(false);
+    make.setMenus("1,48,49");
+    make.setDao(true);
+    make.setService(true);
     make.setView(true);
-    make.setAction(false);
+    make.setAction(true);
     make.makes(cs);
   }
 
