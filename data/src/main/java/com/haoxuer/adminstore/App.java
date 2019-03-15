@@ -1,12 +1,9 @@
 package com.haoxuer.adminstore;
 
-import com.haoxuer.adminstore.data.entity.Function;
-import com.haoxuer.discover.config.data.entity.Dictionary;
 import com.haoxuer.imake.ChainMake;
 import com.haoxuer.imake.template.hibernate.TemplateHibernateDir;
 import com.haoxuer.imake.templates.adminlte.TemplateAdminLTE;
 import com.haoxuer.adminstore.controller.admin.Controllers;
-import com.haoxuer.adminstore.data.entity.Config;
 
 import java.io.File;
 import java.util.ArrayList;
