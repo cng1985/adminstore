@@ -1,5 +1,6 @@
 package com.haoxuer.adminstore;
 
+import com.haoxuer.discover.function.data.entity.Function;
 import com.haoxuer.imake.ChainMake;
 import com.haoxuer.imake.template.hibernate.TemplateHibernateDir;
 import com.haoxuer.imake.templates.adminlte.TemplateAdminLTE;
