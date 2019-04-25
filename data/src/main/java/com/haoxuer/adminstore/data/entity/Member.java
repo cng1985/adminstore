@@ -6,6 +6,7 @@ import com.haoxuer.discover.data.annotations.FormAnnotation;
 import com.haoxuer.discover.data.annotations.FormFieldAnnotation;
 import com.haoxuer.discover.trade.data.entity.TradeAccount;
 import com.haoxuer.discover.user.data.entity.AbstractUser;
+import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ import javax.persistence.Table;
  * 网站用户
  */
 
+@Data
 @FormAnnotation(title = "用户", add = "添加用户", list = "用户", update = "更新用户")
 @Entity
 @Table(name = "user_info")
@@ -56,82 +58,5 @@ public class Member extends AbstractUser {
   @ManyToOne(fetch = FetchType.LAZY)
   private Area household;
   
-  public String getNote() {
-    return note;
-  }
-  
-  public void setNote(String note) {
-    this.note = note;
-  }
-  
-  public String getEdge() {
-    return edge;
-  }
-  
-  public void setEdge(String edge) {
-    this.edge = edge;
-  }
-  
-  public static Member fromId(Long id) {
-    Member result = new Member();
-    result.setId(id);
-    return result;
-  }
-  
-  public String getSex() {
-    return sex;
-  }
-  
-  public void setSex(String sex) {
-    this.sex = sex;
-  }
-  
-  
-  public String getIntroduce() {
-    return introduce;
-  }
-  
-  public void setIntroduce(String introduce) {
-    this.introduce = introduce;
-  }
-  
-  public Area getHousehold() {
-    return household;
-  }
-  
-  public void setHousehold(Area household) {
-    this.household = household;
-  }
-  
-  public String getJob() {
-    return job;
-  }
-  
-  public void setJob(String job) {
-    this.job = job;
-  }
-  
-  public String getCompanyName() {
-    return companyName;
-  }
-  
-  public void setCompanyName(String companyName) {
-    this.companyName = companyName;
-  }
-  
-  public String getEmail() {
-    return email;
-  }
-  
-  public void setEmail(String email) {
-    this.email = email;
-  }
 
-  public TradeAccount getAccount() {
-    return account;
-  }
-
-  public void setAccount(TradeAccount account) {
-    this.account = account;
-  }
 }
