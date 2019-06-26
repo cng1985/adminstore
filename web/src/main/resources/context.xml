@@ -55,8 +55,6 @@
     <bean id="menuOpenDirective" class="com.haoxuer.discover.user.freemaker.MenuOpenDirective" />
     <bean id="menusDirective" class="com.haoxuer.discover.user.freemaker.MenusDirective"   />
     <bean id="menuchildsDirective" class="com.haoxuer.discover.user.freemaker.MenuChildsDirective"  />
-    <bean id="linkTypeDirective" class="com.haoxuer.discover.site.freemaker.LinkTypeDirective"  />
-    <bean id="linkDirective" class="com.haoxuer.discover.site.freemaker.LinkDirective" />
 
     <!-- freemarker的配置 -->
     <bean id="freemarkerConfigurer"
@@ -84,8 +82,6 @@
                 <entry key="menuopentag" value-ref="menuOpenDirective"/>
                 <entry key="menustag" value-ref="menusDirective"/>
                 <entry key="menuchilds" value-ref="menuchildsDirective"/>
-                <entry key="linktype" value-ref="linkTypeDirective"/>
-                <entry key="link" value-ref="linkDirective"/>
                 <entry key="siteurl" value="#{servletContext.contextPath}/"/>
                 <entry key="sitename" value="后台管理"/>
             </map>
