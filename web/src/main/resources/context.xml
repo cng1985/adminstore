@@ -126,6 +126,5 @@
         </mvc:interceptor>
     </mvc:interceptors>
     <import resource="context-shiro.xml"/>
-    <import resource="context-session.xml"/>
 
 </beans>

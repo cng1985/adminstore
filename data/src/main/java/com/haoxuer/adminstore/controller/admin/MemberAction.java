@@ -135,7 +135,6 @@ public class MemberAction {
     return "/admin/member/basic";
   }
   @ResponseBody
-  @RequiresPermissions("member")
   @RequestMapping("/admin/member/model_update_basic")
   public ResponseObject updateBasic(@RequestBody MemberUpdateRequest request) {
     request.setId(UserUtil.getCurrentUser().getId());
@@ -145,7 +144,6 @@ public class MemberAction {
     return manager.update(request);
   }
   @ResponseBody
-  @RequiresPermissions("member")
   @RequestMapping("/admin/member/updatepassword")
   public ResponseObject updatepassword(String oldPassword, String password) {
     UpdatePasswordRequest request=new UpdatePasswordRequest();
