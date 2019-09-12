@@ -90,10 +90,6 @@
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.do</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>dispatcher</servlet-name>
-        <url-pattern>*.json</url-pattern>
-    </servlet-mapping>
     <session-config>
         <session-timeout>3600</session-timeout>
     </session-config>
