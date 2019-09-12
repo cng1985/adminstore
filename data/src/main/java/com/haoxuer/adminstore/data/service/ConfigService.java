@@ -26,6 +26,7 @@ public interface ConfigService {
 	
 	Page<Config> page(Pageable pageable, Object search);
 
+	Config config();
 
 	List<Config> list(int first, Integer size, List<Filter> filters, List<Order> orders);
 

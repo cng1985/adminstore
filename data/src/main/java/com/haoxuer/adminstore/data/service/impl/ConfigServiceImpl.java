@@ -92,7 +92,12 @@ public class ConfigServiceImpl implements ConfigService {
 		return dao.page(pageable);
 	}
 
-    @Override
+	@Override
+	public Config config() {
+		return dao.config();
+	}
+
+	@Override
     public List<Config> list(int first, Integer size, List<Filter> filters, List<Order> orders) {
         return dao.list(first,size,filters,orders);}
 }

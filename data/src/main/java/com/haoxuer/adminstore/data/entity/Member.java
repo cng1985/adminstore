@@ -6,13 +6,11 @@ import com.haoxuer.discover.data.annotations.FormAnnotation;
 import com.haoxuer.discover.data.annotations.FormFieldAnnotation;
 import com.haoxuer.discover.trade.data.entity.TradeAccount;
 import com.haoxuer.discover.user.data.entity.AbstractUser;
+import com.haoxuer.discover.user.data.entity.UserRole;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * 网站用户
@@ -57,6 +55,7 @@ public class Member extends AbstractUser {
    */
   @ManyToOne(fetch = FetchType.LAZY)
   private Area household;
-  
+
+
 
 }

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>云函数</title>
+	<title>管理</title>
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<!-- Bootstrap 3.3.6 -->
@@ -50,7 +50,7 @@
 				<li class="header">主面板</li>
 				[@menustag id=1]
 					[#list list as item]
-						[@menu item "1,49,50"]
+						[@menu item "1,20,22"]
 						[/@menu]
 					[/#list]
 				[/@menustag]
@@ -66,22 +66,18 @@
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 			<h1>
-				云函数
+				信息列表
 				<small></small>
 			</h1>
 		</section>
 		<!-- Main content -->
 		<section class="content">
 			<!-- Default box -->
-
+			<form id="listForm" action="${siteurl}admin/useraccount/view_list.htm" method="post">
 				<div class="row">
 					<div class="col-xs-12">
-						<form id="searchForm" action="${siteurl}admin/function/view_list.htm" method="post">
-							<div class=" box box-body">
+						<div class=" box box-body">
 							<div class="col-xs-2 ">
-								<a class="btn btn-primary" href="${siteurl}admin/function/view_add.htm">
-									<i class="fa  fa-plus"></i> 添加
-								</a>
 							</div>
 							<div class="col-xs-10 " style="padding-left: 0;">
 								<button type="submit" name="search" class="btn btn-success pull-right">
@@ -93,55 +89,55 @@
 							</div>
 
 						</div>
-						</form>
 					</div>
 					<div class="col-xs-12">
-						<form id="listForm" action="${siteurl}admin/function/view_list.htm" method="post">
-							<input type="hidden" name="name" value="${(so.name)!''}" >
-							<div class="box box-solid">
+						<div class="box box-solid">
 							<div class="box-body table-responsive no-padding">
 								<table class="table table-bordered table-hover dataTable">
 									<thead>
-										<tr role="row">
-											<td class="col-xs-2 text-center">函数名</td>
-											<td class="col-xs-2 text-center">远程key</td>
-											<td class="col-xs-6 text-center">函数介绍</td>
-											<td class="col-xs-2 text-center">操作</td>
-										</tr>
+									<tr role="row">
+										<td class="col-xs-2">用户名</td>
+										<td class="col-xs-1 text-center">姓名</td>
+										<td class="col-xs-2 text-center">账号类型</td>
+										<td class="col-xs-3 text-center">登陆次数</td>
+										<td class="col-xs-2 text-center">最后登陆时间</td>
+										<td class="col-xs-2 text-center">操作</td>
+									</tr>
 									</thead>
 									<tbody>
 									[#list list as item]
-										<tr id="trr${item.id}">
-											<td class="text-center">${item.name!""}</td>
-											<td class="text-center">${item.key!""}</td>
-											<td class="text-center">${item.note!""}</td>
-											<td class="text-center">
-												<div style="display: inline-block;">
-													[@shiro.hasPermission name="function:update"]
-													<a  class="menubutton btn btn-sm btn-success"
-														href="${siteurl}admin/function/view_edit.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
-														<i class="fa fa-edit">更新</i>
-													</a>
-													[/@shiro.hasPermission]
-													[@shiro.hasPermission name="function:delete"]
-													<a  class="menubutton btn btn-sm btn-danger"  onclick="return confirm('删除后无法恢复,确定要删除吗')"
-														href="${siteurl}admin/function/model_delete.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
-														<i class="fa fa-trash">删除</i>
-													</a>
-													[/@shiro.hasPermission]
-												</div>
-											</td>
-										</tr>
+									<tr id="trr${item.id}">
+										<td>${item.username!""}</td>
+										<td class="text-center">${(item.user.name)!""}</td>
+										<td class="text-center">${item.accountType!""}</td>
+										<td class="text-center">${item.loginSize!""}</td>
+										<td class="text-center">${(item.lastDate?string('yyyy-MM-dd HH:mm:ss'))!''}</td>
+										<td class="text-center">
+											<div style="display: inline-block;">
+												[@shiro.hasPermission name="useraccount:update"]
+												<a  class="menubutton btn btn-sm btn-success"
+													href="${siteurl}admin/useraccount/view_edit.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
+													<i class="fa fa-edit">重置密码</i>
+												</a>
+												[/@shiro.hasPermission]
+												[@shiro.hasPermission name="useraccount:delete"]
+												<a  class="menubutton btn btn-sm btn-danger"  onclick="return confirm('删除后无法恢复,确定要删除吗')"
+													href="${siteurl}admin/useraccount/model_delete.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
+													<i class="fa fa-trash">删除</i>
+												</a>
+												[/@shiro.hasPermission]
+											</div>
+										</td>
+									</tr>
 									[/#list]
 									</tbody>
 								</table>
 							</div>
 							[@pager page=page   /]
 						</div>
-						</form>
 				    </div>
 			    </div>
-
+			</form>
 			<!-- /.box -->
 		</section>
 		<!-- /.content -->
@@ -171,6 +167,7 @@
 <!-- AdminLTE App -->
 <script src="${siteurl}dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
+<script src="${siteurl}dist/js/demo.js"></script>
 <script src="${siteurl}dist/js/list.js"></script>
 
 

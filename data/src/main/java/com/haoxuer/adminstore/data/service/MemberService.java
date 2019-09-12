@@ -41,7 +41,7 @@ public interface MemberService {
   Page<Member> page(Pageable pageable);
   
   Page<Member> page(Pageable pageable, Object search);
-  
+
   long count(Filter... filters);
   
   
