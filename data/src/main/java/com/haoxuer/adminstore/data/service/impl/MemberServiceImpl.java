@@ -153,7 +153,7 @@ public class MemberServiceImpl implements MemberService,InitializingBean,Disposa
   @Override
   @Transactional(readOnly = true)
   public List<Member> findList(Integer first, Integer count, List<Filter> filters, List<Order> orders) {
-    return dao.findList(first, count, filters, orders);
+    return dao.list(first, count, filters, orders);
   }
   
   @Override
