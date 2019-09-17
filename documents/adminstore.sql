@@ -189,13 +189,13 @@ CREATE TABLE IF NOT EXISTS `menu` (
   PRIMARY KEY (`id`),
   KEY `FKqcf9gem97gqa5qjm4d3elcqt5` (`pid`),
   CONSTRAINT `FKqcf9gem97gqa5qjm4d3elcqt5` FOREIGN KEY (`pid`) REFERENCES `menu` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8;
 
--- Dumping data for table adminstore.menu: ~47 rows (大约)
+-- Dumping data for table adminstore.menu: ~50 rows (大约)
 DELETE FROM `menu`;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
 INSERT INTO `menu` (`id`, `addDate`, `code`, `ids`, `lastDate`, `levelInfo`, `lft`, `name`, `rgt`, `sortNum`, `catalog`, `icon`, `nums`, `path`, `permission`, `pid`) VALUES
-	(1, '2017-09-25 14:25:39', '', '1', '2017-09-25 14:25:39', 1, 1, '根节点', 100, 0, NULL, NULL, NULL, NULL, NULL, NULL),
+	(1, '2017-09-25 14:25:39', '', '1', '2017-09-25 14:25:39', 1, 1, '根节点', 106, 0, NULL, NULL, NULL, NULL, NULL, NULL),
 	(2, '2018-08-21 21:48:58', NULL, '1,2', '2018-08-21 21:48:58', 2, 2, '系统设置', 27, 55, 0, 'fa  fa-gear', 0, '', '2', 1),
 	(3, '2017-09-25 14:34:37', NULL, '1,2,3', '2017-09-25 14:34:37', 3, 3, '菜单管理', 4, 0, 0, 'fa  fa-reorder', 0, 'admin/menu/view_list.htm', 'menu', 2),
 	(4, '2017-09-25 14:36:59', NULL, '1,2,4', '2017-09-25 14:36:59', 3, 5, '角色管理', 6, 0, 0, 'fa  fa-tree', 0, 'admin/userrole/view_list.htm', 'userrole', 2),
@@ -244,7 +244,10 @@ INSERT INTO `menu` (`id`, `addDate`, `code`, `ids`, `lastDate`, `levelInfo`, `lf
 	(47, '2019-09-11 19:15:40', NULL, '1,2,47', '2019-09-11 19:15:40', 3, 23, '数据字典管理', 24, 0, 0, 'fa  fa-square', 0, 'admin/dictionary/view_list.htm', 'dictionary', 2),
 	(48, '2019-09-11 19:14:28', NULL, '1,2,48', '2019-09-11 19:14:28', 3, 25, '系统配置', 26, -1, 0, 'fa  fa-cogs', 0, 'admin/config.htm', 'system_config', 2),
 	(49, '2019-09-12 16:43:16', NULL, '1,49', '2019-09-12 16:43:16', 2, 96, '云服务', 99, 0, 0, 'fa  fa-cloud', 0, '', '49', 1),
-	(50, '2019-09-12 16:43:04', NULL, '1,49,50', '2019-09-12 16:43:04', 3, 97, '云函数', 98, 0, 0, 'fa  fa-code', 0, 'admin/function/view_list.htm', 'function', 49);
+	(50, '2019-09-12 16:43:04', NULL, '1,49,50', '2019-09-12 16:43:04', 3, 97, '云函数', 98, 0, 0, 'fa  fa-code', 0, 'admin/function/view_list.htm', 'function', 49),
+	(51, '2019-09-17 20:47:13', NULL, '1,51', '2019-09-17 20:47:13', 2, 100, '广告中心', 105, 0, 0, 'fa fa fa-buysellads', 0, '', '51', 1),
+	(52, '2019-09-17 20:49:56', NULL, '1,51,52', '2019-09-17 20:49:56', 3, 101, '广告位管理', 102, 0, 0, 'fa  fa-minus-square', 0, 'admin/adposition/view_list.htm', 'adposition', 51),
+	(53, '2019-09-17 20:50:11', NULL, '1,51,53', '2019-09-17 20:50:11', 3, 103, '广告管理', 104, 0, 0, 'fa fa-life-buoy', 0, 'admin/ad/view_list.htm', 'ad', 51);
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 
 -- Dumping structure for table adminstore.plugin_config
@@ -923,8 +926,8 @@ CREATE TABLE IF NOT EXISTS `user_info` (
 DELETE FROM `user_info`;
 /*!40000 ALTER TABLE `user_info` DISABLE KEYS */;
 INSERT INTO `user_info` (`id`, `addDate`, `lastDate`, `avatar`, `catalog`, `loginSize`, `name`, `phone`, `state`, `edge`, `introduce`, `note`, `sex`, `household_id`, `companyName`, `email`, `job`, `account_id`, `storeState`) VALUES
-	(1, '2017-12-27 14:44:05', '2019-09-12 16:46:15', NULL, 0, 686, '管理员', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	(2, '2019-09-12 16:31:05', '2019-09-12 16:43:31', NULL, 0, 6, 'super', 'a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(1, '2017-12-27 14:44:05', '2019-09-17 20:49:51', NULL, 0, 698, '管理员', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(2, '2019-09-12 16:31:05', '2019-09-17 19:42:36', NULL, 0, 9, 'super', 'a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 	(10, '2019-09-12 16:26:22', '2019-09-12 16:29:21', NULL, 0, 6, '333', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `user_info` ENABLE KEYS */;
 
@@ -1007,9 +1010,9 @@ CREATE TABLE IF NOT EXISTS `user_login_log` (
   PRIMARY KEY (`id`),
   KEY `FKj91w0nnfocpdp796lr3ot4lxs` (`user_id`),
   CONSTRAINT `FKj91w0nnfocpdp796lr3ot4lxs` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
--- Dumping data for table adminstore.user_login_log: ~10 rows (大约)
+-- Dumping data for table adminstore.user_login_log: ~16 rows (大约)
 DELETE FROM `user_login_log`;
 /*!40000 ALTER TABLE `user_login_log` DISABLE KEYS */;
 INSERT INTO `user_login_log` (`id`, `addDate`, `lastDate`, `ip`, `state`, `user_id`, `account`, `client`) VALUES
@@ -1024,7 +1027,11 @@ INSERT INTO `user_login_log` (`id`, `addDate`, `lastDate`, `ip`, `state`, `user_
 	(10, '2019-09-12 16:31:22', '2019-09-12 16:31:22', '0:0:0:0:0:0:0:1', 1, 2, NULL, NULL),
 	(11, '2019-09-12 16:31:38', '2019-09-12 16:31:38', '0:0:0:0:0:0:0:1', 1, 1, NULL, NULL),
 	(12, '2019-09-12 16:43:31', '2019-09-12 16:43:31', '0:0:0:0:0:0:0:1', 1, 2, NULL, NULL),
-	(13, '2019-09-12 16:43:41', '2019-09-12 16:43:41', '0:0:0:0:0:0:0:1', 1, 1, NULL, NULL);
+	(13, '2019-09-12 16:43:41', '2019-09-12 16:43:41', '0:0:0:0:0:0:0:1', 1, 1, NULL, NULL),
+	(14, '2019-09-12 16:51:35', '2019-09-12 16:51:35', '0:0:0:0:0:0:0:1', 1, 1, NULL, NULL),
+	(15, '2019-09-17 19:42:36', '2019-09-17 19:42:36', '0:0:0:0:0:0:0:1', 1, 2, NULL, NULL),
+	(16, '2019-09-17 19:42:44', '2019-09-17 19:42:44', '0:0:0:0:0:0:0:1', 1, 1, NULL, NULL),
+	(17, '2019-09-17 20:46:32', '2019-09-17 20:46:32', '127.0.0.1', 1, 1, NULL, NULL);
 /*!40000 ALTER TABLE `user_login_log` ENABLE KEYS */;
 
 -- Dumping structure for table adminstore.user_notification
@@ -1221,8 +1228,8 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 DELETE FROM `user_role`;
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
 INSERT INTO `user_role` (`id`, `addDate`, `lastDate`, `alias`, `description`, `name`, `roleType`, `catalog_id`) VALUES
-	(1, '2019-09-12 16:43:24', '2019-09-12 16:43:24', '', '', 'admin', 0, 2),
-	(2, '2019-09-12 16:32:06', '2019-09-12 16:32:06', '管理员', '后台管理员', '管理员', 0, 2);
+	(1, '2019-09-17 20:50:30', '2019-09-17 20:50:30', '', '', 'admin', 0, 2),
+	(2, '2019-09-17 20:50:47', '2019-09-17 20:50:47', '管理员', '后台管理员', '管理员', 0, 2);
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 
 -- Dumping structure for table adminstore.user_role_authority
@@ -1234,15 +1241,10 @@ CREATE TABLE IF NOT EXISTS `user_role_authority` (
   CONSTRAINT `FKo6xok4ngrsuacqkyjpqbykn9l` FOREIGN KEY (`role_id`) REFERENCES `user_role` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table adminstore.user_role_authority: ~39 rows (大约)
+-- Dumping data for table adminstore.user_role_authority: ~44 rows (大约)
 DELETE FROM `user_role_authority`;
 /*!40000 ALTER TABLE `user_role_authority` DISABLE KEYS */;
 INSERT INTO `user_role_authority` (`role_id`, `permission`) VALUES
-	(2, '19'),
-	(2, '2'),
-	(2, 'member_basic'),
-	(2, 'dictionary'),
-	(2, 'system_config'),
 	(1, '19'),
 	(1, '20'),
 	(1, 'member'),
@@ -1250,6 +1252,9 @@ INSERT INTO `user_role_authority` (`role_id`, `permission`) VALUES
 	(1, 'userloginlog'),
 	(1, '49'),
 	(1, 'function'),
+	(1, '51'),
+	(1, 'adposition'),
+	(1, 'ad'),
 	(1, '15'),
 	(1, 'plugin_sendcode'),
 	(1, 'plugin_storage'),
@@ -1278,7 +1283,12 @@ INSERT INTO `user_role_authority` (`role_id`, `permission`) VALUES
 	(1, 'tmpl'),
 	(1, 'member_basic'),
 	(1, 'dictionary'),
-	(1, 'system_config');
+	(1, 'system_config'),
+	(2, '19'),
+	(2, '2'),
+	(2, 'member_basic'),
+	(2, 'dictionary'),
+	(2, 'system_config');
 /*!40000 ALTER TABLE `user_role_authority` ENABLE KEYS */;
 
 -- Dumping structure for table adminstore.user_role_catalog
