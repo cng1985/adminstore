@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>分类管理</title>
+	<title>更新</title>
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<!-- Bootstrap 3.3.6 -->
@@ -25,6 +25,20 @@
 	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 	[#include "/admin/common/commons.html"]
+
+	<!-- jQuery 2.2.3 -->
+	<script src="${siteurl}plugins/jQuery/jquery-2.2.3.min.js"></script>
+	<!-- Bootstrap 3.3.6 -->
+	<script src="${siteurl}bootstrap/js/bootstrap.min.js"></script>
+	<!-- SlimScroll -->
+	<script src="${siteurl}plugins/slimScroll/jquery.slimscroll.min.js"></script>
+	<!-- FastClick -->
+	<script src="${siteurl}plugins/fastclick/fastclick.js"></script>
+	<!-- AdminLTE App -->
+	<script src="${siteurl}dist/js/adminlte.min.js"></script>
+	<!-- AdminLTE for demo purposes -->
+	[#include "/admin/common/fileuploads.html"]
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
@@ -52,7 +66,7 @@
 				<li class="header">主面板</li>
 				[@menustag id=1]
 				[#list list as item]
-				[@menu item "1,51,52"]
+				[@menu item "1,51,53"]
 				[/@menu]
 				[/#list]
 				[/@menustag]
@@ -68,35 +82,73 @@
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 			<h1>
-				分类管理
-				<small>管理你的分类</small>
+				管理
+				<small>更新</small>
 			</h1>
 		</section>
 		<!-- Main content -->
 		<section class="content">
 
 			<!-- Default box -->
-			<div class="col-xs-12">
+			<div class="">
 				<div class="box box-default box-solid">
 					<div class="box-header with-border">
-						<h3 class="box-title">更新分类</h3>
+						<h3 class="box-title">更新</h3>
 					</div>
 					<!-- /.box-header -->
 					<!-- form start -->
-					<form class="form-horizontal" action="${siteurl}admin/adposition/model_update.htm" method="post">
+					<form class="form-horizontal" action="${siteurl}admin/ad/model_update.htm" method="post">
 						<input type="hidden" name="id" value="${model.id}">
-						<input type="hidden" name="pageNumber" value="${pageNumber!'1'}">
+						<input type="hidden" name="pageNumber" value="${(page.pageNumber)!'1'}">
 						<div class="box-body">
 							<div class="form-group">
-								<label for="name" class="col-sm-2 control-label">分类名称</label>
+								<label for="title" class="col-sm-2 control-label">标题</label>
 								<div class="col-sm-10">
-									<input class="form-control" id="name" maxlength="20" name="name" placeholder="分类名称" value="${model.name!''}"   type="text">
+									<input value="${model.title!''}" class="form-control" id="title" name="title" placeholder="标题" type="text">
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="code" class="col-sm-2 control-label">分类编码</label>
+								<label for="adPosition" class="col-sm-2 control-label">广告位</label>
+								<div class="col-sm-10" id="adPosition">
+									<select class="form-control"  name="adPosition.id">
+										[@adpositions id=1]
+										[#if list??]
+										[#list list as item]
+										<option value="${item.id}" [#if model.adPosition?? && model.adPosition.id==item.id]selected="selected" [/#if]>${item.name!""}</option>
+										[/#list]
+										[/#if]
+										[/@adpositions]
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="sortNum" class="col-sm-2 control-label">排序号</label>
 								<div class="col-sm-10">
-									<input class="form-control" id="code" maxlength="50" name="code" placeholder="分类编码" value="${model.code!''}"   type="text">
+									<input class="form-control" value="${model.sortNum!''}" id="sortNum" name="sortNum" placeholder="排序号" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="bussId" class="col-sm-2 control-label">业务id</label>
+								<div class="col-sm-10">
+									<input class="form-control"  value="${model.bussId!''}" id="bussId" name="bussId" placeholder="业务id" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="path" class="col-sm-2 control-label">广告图</label>
+								<div class="col-sm-10" id="path">
+									[@imageinput name="path" image=model.path /]
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="url" class="col-sm-2 control-label">广告地址</label>
+								<div class="col-sm-10">
+									<input class="form-control" id="url" name="url" value="${model.url!''}"  placeholder="广告地址" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="note" class="col-sm-2 control-label">内容</label>
+								<div class="col-sm-10">
+									<input value="${model.note!''}" class="form-control" id="note" name="note" placeholder="内容" type="text">
 								</div>
 							</div>
 						</div>
@@ -127,17 +179,10 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery 2.2.3 -->
-<script src="${siteurl}plugins/jQuery/jquery-2.2.3.min.js"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="${siteurl}bootstrap/js/bootstrap.min.js"></script>
-<!-- SlimScroll -->
-<script src="${siteurl}plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="${siteurl}plugins/fastclick/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="${siteurl}dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="${siteurl}dist/js/demo.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    });
+</script>
 </body>
 </html>

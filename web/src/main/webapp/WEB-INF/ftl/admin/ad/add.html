@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>用户管理</title>
+	<title>添加</title>
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<!-- Bootstrap 3.3.6 -->
@@ -25,6 +25,19 @@
 	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 	[#include "/admin/common/commons.html"]
+
+	<!-- jQuery 2.2.3 -->
+	<script src="${siteurl}plugins/jQuery/jquery-2.2.3.min.js"></script>
+	<!-- Bootstrap 3.3.6 -->
+	<script src="${siteurl}bootstrap/js/bootstrap.min.js"></script>
+	<!-- SlimScroll -->
+	<script src="${siteurl}plugins/slimScroll/jquery.slimscroll.min.js"></script>
+	<!-- FastClick -->
+	<script src="${siteurl}plugins/fastclick/fastclick.js"></script>
+	<!-- AdminLTE App -->
+	<script src="${siteurl}dist/js/adminlte.min.js"></script>
+	[#include "/admin/common/fileuploads.html"]
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
@@ -51,7 +64,7 @@
 				<li class="header">主面板</li>
 				[@menustag id=1]
 				[#list list as item]
-				[@menu item "1,51,52"]
+				[@menu item "1,51,53"]
 				[/@menu]
 				[/#list]
 				[/@menustag]
@@ -67,27 +80,85 @@
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 			<h1>
-				用户管理
-				<small>管理你的用户</small>
+				管理
+				<small>添加</small>
 			</h1>
 		</section>
 		<!-- Main content -->
 		<section class="content">
 
 			<!-- Default box -->
-			<div class="col-xs-12">
+			<div class="">
 				<div class="box box-default box-solid">
 					<div class="box-header with-border">
-						<h3 class="box-title">更新</h3>
+						<h3 class="box-title">添加</h3>
 					</div>
 					<!-- /.box-header -->
 					<!-- form start -->
+					<form class="form-horizontal" action="${siteurl}admin/ad/model_save.htm" method="post">
 						<div class="box-body">
+							<div class="form-group">
+								<label for="title" class="col-sm-2 control-label">标题</label>
+								<div class="col-sm-10">
+									<input class="form-control" id="title" name="title" placeholder="标题" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="adPosition" class="col-sm-2 control-label">广告位</label>
+								<div class="col-sm-10" id="adPosition">
+									<select class="form-control"  name="adPosition.id">
+										[@adpositions id=1]
+										[#if list??]
+										[#list list as item]
+										<option value="${item.id}">${item.name!""}</option>
+										[/#list]
+										[/#if]
+										[/@adpositions]
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="sortNum" class="col-sm-2 control-label">排序号</label>
+								<div class="col-sm-10">
+									<input class="form-control" id="sortNum" name="sortNum" placeholder="排序号" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="bussId" class="col-sm-2 control-label">业务id</label>
+								<div class="col-sm-10">
+									<input class="form-control" id="bussId" name="bussId" placeholder="业务id" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="path" class="col-sm-2 control-label">广告图</label>
+								<div class="col-sm-10" id="path">
+									[@imageinput name="path" /]
+								</div>
+							</div>
+
+
+							<div class="form-group">
+								<label for="url" class="col-sm-2 control-label">广告地址</label>
+								<div class="col-sm-10">
+									<input class="form-control" id="url" name="url" placeholder="广告地址" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="note" class="col-sm-2 control-label">内容</label>
+								<div class="col-sm-10">
+									<input class="form-control" id="note" name="note" placeholder="内容" type="text">
+								</div>
+							</div>
 						</div>
 						<!-- /.box-body -->
+						<div class="box-footer">
+							<a href="${siteurl}admin/ad/view_list.htm" class="btn btn-default">取消</a>
+							<button type="submit" class="btn btn-primary pull-right">保存</button>
+						</div>
+						<!-- /.box-footer -->
+					</form>
 				</div>
 			</div>
-
 			<!-- /.box -->
 
 		</section>
@@ -107,17 +178,10 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery 2.2.3 -->
-<script src="${siteurl}plugins/jQuery/jquery-2.2.3.min.js"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="${siteurl}bootstrap/js/bootstrap.min.js"></script>
-<!-- SlimScroll -->
-<script src="${siteurl}plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="${siteurl}plugins/fastclick/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="${siteurl}dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="${siteurl}dist/js/demo.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    });
+</script>
 </body>
 </html>

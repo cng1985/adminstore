@@ -51,7 +51,7 @@
 				<li class="header">主面板</li>
 				[@menustag id=1]
 				[#list list as item]
-				[@menu item "1,51,52"]
+				[@menu item "1,51,53"]
 				[/@menu]
 				[/#list]
 				[/@menustag]
@@ -83,6 +83,36 @@
 					<!-- /.box-header -->
 					<!-- form start -->
 						<div class="box-body">
+								<div class="form-group">
+									<label for="title" class="col-sm-2 control-label">标题</label>
+									<div class="col-sm-10">
+										<input readonly="readonly" value="${model.title!''}" class="form-control" id="title" type="text">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="type" class="col-sm-2 control-label">广告类型</label>
+									<div class="col-sm-10">
+										<input readonly="readonly" value="${model.type!''}" class="form-control" id="type" type="text">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="beginDate" class="col-sm-2 control-label">广告开始时间</label>
+									<div class="col-sm-10">
+										<input readonly="readonly" value="${model.beginDate!''}" class="form-control" id="beginDate" type="text">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="endDate" class="col-sm-2 control-label">广告结束时间</label>
+									<div class="col-sm-10">
+										<input readonly="readonly" value="${model.endDate!''}" class="form-control" id="endDate" type="text">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="note" class="col-sm-2 control-label">内容</label>
+									<div class="col-sm-10">
+										<input readonly="readonly" value="${model.note!''}" class="form-control" id="note" type="text">
+									</div>
+								</div>
 						</div>
 						<!-- /.box-body -->
 				</div>
