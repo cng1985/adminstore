@@ -124,6 +124,10 @@
             <mvc:exclude-mapping path="/rest/user/**"/>
             <bean class="com.haoxuer.adminstore.web.interceptor.UserTokenInterceptor"/>
         </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.haoxuer.adminstore.web.interceptor.RateLimitInterceptor"/>
+        </mvc:interceptor>
     </mvc:interceptors>
     <import resource="context-shiro.xml"/>
 
