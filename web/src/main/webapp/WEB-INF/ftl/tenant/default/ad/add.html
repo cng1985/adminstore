@@ -66,11 +66,6 @@
 						</el-form-item>
 					</el-col>
 					<el-col :span="12">
-						<el-form-item label="广告类型" size="mini">
-							<el-input v-model="form.type" name="type"></el-input>
-						</el-form-item>
-					</el-col>
-					<el-col :span="12">
 						<el-form-item label="广告开始时间" size="mini">
 							<el-input v-model="form.beginDate" name="beginDate"></el-input>
 						</el-form-item>
@@ -78,6 +73,23 @@
 					<el-col :span="12">
 						<el-form-item label="广告结束时间" size="mini">
 							<el-input v-model="form.endDate" name="endDate"></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="12">
+						<el-form-item label="链接地址" size="mini">
+							<el-input v-model="form.url" name="url"></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="12">
+						<el-form-item label="广告位" size="mini">
+							<el-select v-model="form.adPosition" filterable clearable  placeholder="请选择">
+								<el-option
+										v-for="item in options"
+										:key="item.id"
+										:label="item.label"
+										:value="item.id">
+								</el-option>
+							</el-select>
 						</el-form-item>
 					</el-col>
 					<el-col :span="12">
@@ -118,9 +130,10 @@
 				return {
 					form: {
 						title: '',
-						type: '',
 						beginDate: '',
 						endDate: '',
+						url: '',
+						adPosition: '',
 						note: ''					}
 				}
 			},

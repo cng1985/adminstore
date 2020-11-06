@@ -69,12 +69,6 @@
 						</el-form-item>
 					</el-col>
 					<el-col :span="12">
-						<el-form-item label="广告类型" size="mini" prop="type">
-							<el-input v-model="form.type" name="type">
-							</el-input>
-						</el-form-item>
-					</el-col>
-					<el-col :span="12">
 						<el-form-item label="广告开始时间" size="mini" prop="beginDate">
 							<el-input v-model="form.beginDate" name="beginDate">
 							</el-input>
@@ -84,6 +78,22 @@
 						<el-form-item label="广告结束时间" size="mini" prop="endDate">
 							<el-input v-model="form.endDate" name="endDate">
 							</el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="12">
+						<el-form-item label="链接地址" size="mini" prop="url">
+							<el-input v-model="form.url" name="url">
+							</el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="12">
+						<el-form-item label="广告位" size="mini" prop="adPosition">
+							<el-select style="width: 100%;"  v-model="form.adPosition" filterable clearable
+									   placeholder="请选择">
+								<el-option v-for="item in adPositionOptions" :key="item.id"
+										   :label="item.name" :value="item.id">
+								</el-option>
+							</el-select>
 						</el-form-item>
 					</el-col>
 					<el-col :span="12">
@@ -128,11 +138,15 @@
 					form: {
 					     id:"${model.id!}",
 						title: '${model.title!}',
-						type: '${model.type!}',
 						beginDate: '${model.beginDate!}',
 						endDate: '${model.endDate!}',
+						url: '${model.url!}',
+						adPosition: '${model.adPosition!}',
 						note: '${model.note!}'					},
 					rules: {
+                        title: [
+							{ required: true, message: '请输入标题', trigger: 'blur' }
+						  ],
 					}
 				}
 			},

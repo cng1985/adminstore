@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import com.haoxuer.discover.user.rest.conver.PageableConver;
 import com.haoxuer.discover.data.utils.BeanDataUtils;
+import com.haoxuer.adminstore.ad.data.dao.AdPositionDao;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,8 @@ public class AdResource implements AdApi {
     @Autowired
     private AdDao dataDao;
 
+    @Autowired
+    private AdPositionDao adPositionDao;
 
     @Override
     public AdResponse create(AdDataRequest request) {
@@ -64,6 +67,9 @@ public class AdResource implements AdApi {
 
     private void handleData(AdDataRequest request, Ad bean) {
         BeanDataUtils.copyProperties(request,bean);
+            if(request.getAdPosition()!=null){
+               bean.setAdPosition(adPositionDao.findById(request.getAdPosition()));
+            }
 
     }
 

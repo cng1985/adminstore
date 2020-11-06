@@ -7,7 +7,7 @@ import java.util.Date;
 
 /**
 *
-* Created by imake on 2020年11月06日23:15:57.
+* Created by imake on 2020年11月06日23:22:43.
 */
 
 @Data
@@ -15,9 +15,9 @@ public class AdPositionDataRequest extends BaseRequest {
 
     private Long id;
 
-     private String template;
+     private String note;
 
-     private long serialVersionUID;
+     private String template;
 
      private Integer sortNum;
 
@@ -26,8 +26,6 @@ public class AdPositionDataRequest extends BaseRequest {
      private Integer width;
 
      private Integer height;
-
-     private String description;
 
 
 }

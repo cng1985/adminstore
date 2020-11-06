@@ -6,7 +6,7 @@ import  com.haoxuer.discover.data.core.Updater;
 import  com.haoxuer.adminstore.ad.data.entity.Ad;
 
 /**
-* Created by imake on 2020年11月06日23:14:57.
+* Created by imake on 2020年11月06日23:28:28.
 */
 public interface AdDao extends BaseDao<Ad,Long>{
 

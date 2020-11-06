@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>列表</title>
+	<title>广告位管理</title>
 	[#include "/admin/common/commons.html"]
 	[#include "/tenant/common/site.html"]
 	[@baseHead /]
@@ -51,7 +51,7 @@
 			<section class="content-header">
 				<!-- 导航 -->
 				<div class="navigation">
-					<i>首页</i> <span>列表</span>
+					<i>首页</i> <span>广告位管理</span>
 				</div>
 			</section>
 			<!-- Main content -->
@@ -62,8 +62,14 @@
 					<div class="search">
 						<el-form label-width="80px">
 							<el-row>
+										<el-col :span="6" style="padding: 0 8px;">
+											<el-form-item label="广告位">
+												<el-input v-model="searchObject.name" size="small" placeholder="广告位" name="name">
+												</el-input>
+											</el-form-item>
+										</el-col>
 
-								<el-col :span="24" style="padding: 0 10px;margin-top: 5px;">
+								<el-col :span="18" style="padding: 0 10px;margin-top: 5px;">
 									<el-row type="flex" justify="end">
 										<el-button size="small" type="primary" @click="search">搜索</el-button>
 										<el-button size="small" plain @click="clearData">清除条件</el-button>
@@ -78,6 +84,34 @@
 					</div>
 
 					<el-table v-loading="loading" :data="tableData.list"  @cell-click="showView" @sort-change="changeTableSort" style="width: 100%;font-size: 12px;">
+								<el-table-column label="广告位"
+
+												 prop="name"
+						            
+					                 width="100"  
+					              >
+								</el-table-column>
+								<el-table-column label="宽度"
+
+												 prop="width"
+						            
+					                 width="100"  
+					              >
+								</el-table-column>
+								<el-table-column label="高度"
+
+												 prop="height"
+						            
+					                 width="100"  
+					              >
+								</el-table-column>
+								<el-table-column label="备注"
+
+												 prop="note"
+						            
+					                 width="100"  
+					              >
+								</el-table-column>
 						<el-table-column width="160" align="center" fixed="right" label="操作">
 							<template slot-scope="scope">
 								<el-button type="primary" size="mini" @click="editView(scope.row.id)">编辑
@@ -98,11 +132,32 @@
 				</div>
 				<!-- 增加页面 -->
 				<div v-if="modelType == 'add'">
-					<el-page-header @back="goBack" content="增加">
+					<el-page-header @back="goBack" content="增加广告位管理">
 					</el-page-header>
 					<div style="margin-top: 20px;">
 					<el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px" >
 						<el-row :gutter="10">
+								<el-col :span="12">
+									<el-form-item label="广告位" size="mini" prop="name">
+											<el-input v-model="form.name" name="name">
+											</el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="宽度" size="mini" prop="width">
+										   <el-input-number v-model="form.width" name="width" type="textarea" :min="0" :max="100"></el-input-number>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="高度" size="mini" prop="height">
+										   <el-input-number v-model="form.height" name="height" type="textarea" :min="0" :max="100"></el-input-number>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="备注" size="mini" prop="note">
+											<el-input v-model="form.note" name="note" type="textarea"></el-input>
+									</el-form-item>
+								</el-col>
 						</el-row>
 						<el-row style="text-align: right;">
 							<el-button @click="resetForm('ruleForm')">重置</el-button>
@@ -113,11 +168,32 @@
 				</div>
 				<!-- 更新页面 -->
 				<div v-if="modelType == 'edit'">
-					<el-page-header @back="goBack" content="更新">
+					<el-page-header @back="goBack" content="更新广告位管理">
 					</el-page-header>
 					<div style="margin-top: 20px;">
 					<el-form ref="form_edit" :rules="rules" :model="form_edit" label-width="160px" >
 						<el-row :gutter="10">
+								<el-col :span="12">
+									<el-form-item label="广告位" size="mini" prop="name">
+										<el-input v-model="form_edit.name" name="name">
+										</el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="宽度" size="mini" prop="width">
+										<el-input-number v-model="form_edit.width" name="width" type="textarea" :min="0" :max="100"></el-input-number>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="高度" size="mini" prop="height">
+										<el-input-number v-model="form_edit.height" name="height" type="textarea" :min="0" :max="100"></el-input-number>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="备注" size="mini" prop="note">
+										<el-input v-model="form_edit.note" name="note" type="textarea"></el-input>
+									</el-form-item>
+								</el-col>
 						</el-row>
 						<el-row style="text-align: right;">
 							<el-button @click="cancelEdit">取消</el-button>
@@ -131,6 +207,18 @@
 					</el-page-header>
 					<div class="form-title">详细信息</div>
 					<el-form class="viewForm" label-width="80px">
+								<el-form-item label="广告位">
+									{{viewModel.name}}
+								</el-form-item>
+								<el-form-item label="宽度">
+									{{viewModel.width}}
+								</el-form-item>
+								<el-form-item label="高度">
+									{{viewModel.height}}
+								</el-form-item>
+								<el-form-item label="备注">
+									{{viewModel.note}}
+								</el-form-item>
 					</el-form>
 				</div>
 
@@ -169,7 +257,7 @@
 					searchObject: {
 						no: 1,
 						size: 10,
-					},
+						name:''					},
 					modelType:"list",
 					dialogVisible: false,
 					defaultProps: {
@@ -177,27 +265,28 @@
 						label: 'name'
 					},
 					form: {
+						note: '',
 						template: '',
-						serialVersionUID: '',
 						sortNum: '',
 						name: '',
 						width: '',
 						addDate: '',
-						height: '',
-						description: ''					},
+						height: ''					},
 					form_edit: {
+						note: '',
 						template: '',
-						serialVersionUID: '',
 						sortNum: '',
 						name: '',
 						width: '',
 						addDate: '',
-						height: '',
-						description: ''					},
+						height: ''					},
 					viewModel:{},
 					loading: false,
 					tableData: {},
 					rules: {
+                        name: [
+							{ required: true, message: '请输入广告位', trigger: 'blur' }
+						  ],
 					},
 		        }
 		    },
@@ -254,7 +343,10 @@
             addView(){
 				this.modelType="add";
 				this.form = {
-				};
+					name: '',
+					width: '',
+					height: '',
+					note: ''				};
 			},
 			add(){
 				var self=this;
@@ -377,6 +469,7 @@
 				this.dialogVisible = true;
 			},
 			clearData() {
+						this.searchObject.name = "";
 			},
 			resetForm(formName) {
 				this.$refs[formName].resetFields();

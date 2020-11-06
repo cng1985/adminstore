@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
 *
-* Created by imake on 2020年11月06日23:15:57.
+* Created by imake on 2020年11月06日23:22:43.
 */
 
 @Data
@@ -16,9 +16,9 @@ public class AdPositionResponse extends ResponseObject {
 
     private Long id;
 
-     private String template;
+     private String note;
 
-     private long serialVersionUID;
+     private String template;
 
      private Integer sortNum;
 
@@ -30,8 +30,6 @@ public class AdPositionResponse extends ResponseObject {
      private Date addDate;
 
      private Integer height;
-
-     private String description;
 
 
 }

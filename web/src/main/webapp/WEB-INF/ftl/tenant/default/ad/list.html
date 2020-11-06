@@ -62,8 +62,24 @@
 					<div class="search">
 						<el-form label-width="80px">
 							<el-row>
+										<el-col :span="6" style="padding: 0 8px;">
+											<el-form-item label="广告位">
+												<el-input v-model="searchObject.title" size="small" placeholder="广告位" name="title">
+												</el-input>
+											</el-form-item>
+										</el-col>
+										<el-col :span="6" style="padding: 0 8px;">
+											<el-form-item label="广告位">
+												<el-select size="small" style="width: 100%;"  v-model="searchObject.adPosition" filterable clearable
+														   placeholder="请选择">
+													<el-option v-for="item in adPositionOptions" :key="item.id"
+															   :label="item.name" :value="item.id">
+													</el-option>
+												</el-select>
+											</el-form-item>
+										</el-col>
 
-								<el-col :span="24" style="padding: 0 10px;margin-top: 5px;">
+								<el-col :span="12" style="padding: 0 10px;margin-top: 5px;">
 									<el-row type="flex" justify="end">
 										<el-button size="small" type="primary" @click="search">搜索</el-button>
 										<el-button size="small" plain @click="clearData">清除条件</el-button>
@@ -85,13 +101,6 @@
 					                 width="100"  
 					              >
 								</el-table-column>
-								<el-table-column label="广告类型"
-
-												 prop="typeName"
-						            
-					                 width="100"  
-					              >
-								</el-table-column>
 								<el-table-column label="广告开始时间"
 
 												 prop="beginDate"
@@ -102,6 +111,20 @@
 								<el-table-column label="广告结束时间"
 
 												 prop="endDate"
+						            
+					                 width="100"  
+					              >
+								</el-table-column>
+								<el-table-column label="链接地址"
+
+												 prop="url"
+						            
+					                 width="100"  
+					              >
+								</el-table-column>
+								<el-table-column label="广告位"
+
+												 prop="adPositionName"
 						            
 					                 width="100"  
 					              >
@@ -145,21 +168,31 @@
 									</el-form-item>
 								</el-col>
 								<el-col :span="12">
-									<el-form-item label="广告类型" size="mini" prop="type">
-											<el-input v-model="form.type" name="type">
-											</el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="12">
 									<el-form-item label="广告开始时间" size="mini" prop="beginDate">
-											<el-input v-model="form.beginDate" name="beginDate">
-											</el-input>
+										<el-date-picker v-model="form.beginDate" type="datetime" value-format="yyyy-MM-dd HH:mm" placeholder="选择日期">
+										</el-date-picker>
 									</el-form-item>
 								</el-col>
 								<el-col :span="12">
 									<el-form-item label="广告结束时间" size="mini" prop="endDate">
-											<el-input v-model="form.endDate" name="endDate">
+										<el-date-picker v-model="form.endDate" type="datetime" value-format="yyyy-MM-dd HH:mm" placeholder="选择日期">
+										</el-date-picker>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="链接地址" size="mini" prop="url">
+											<el-input v-model="form.url" name="url">
 											</el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="广告位" size="mini" prop="adPosition">
+											<el-select style="width: 100%;"  v-model="form.adPosition" filterable clearable
+													   placeholder="请选择">
+												<el-option v-for="item in adPositionOptions" :key="item.id"
+														   :label="item.name" :value="item.id">
+												</el-option>
+											</el-select>
 									</el-form-item>
 								</el-col>
 								<el-col :span="12">
@@ -190,21 +223,31 @@
 									</el-form-item>
 								</el-col>
 								<el-col :span="12">
-									<el-form-item label="广告类型" size="mini" prop="type">
-										<el-input v-model="form_edit.type" name="type">
-										</el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="12">
 									<el-form-item label="广告开始时间" size="mini" prop="beginDate">
-										<el-input v-model="form_edit.beginDate" name="beginDate">
-										</el-input>
+										<el-date-picker v-model="form_edit.beginDate" type="datetime" value-format="yyyy-MM-dd HH:mm" placeholder="选择日期">
+										</el-date-picker>
 									</el-form-item>
 								</el-col>
 								<el-col :span="12">
 									<el-form-item label="广告结束时间" size="mini" prop="endDate">
-										<el-input v-model="form_edit.endDate" name="endDate">
+										<el-date-picker v-model="form_edit.endDate" type="datetime" value-format="yyyy-MM-dd HH:mm" placeholder="选择日期">
+										</el-date-picker>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="链接地址" size="mini" prop="url">
+										<el-input v-model="form_edit.url" name="url">
 										</el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="广告位" size="mini" prop="adPosition">
+										<el-select style="width: 100%;"  v-model="form_edit.adPosition" filterable clearable
+												   placeholder="请选择">
+											<el-option v-for="item in adPositionOptions" :key="item.id"
+													   :label="item.name" :value="item.id">
+											</el-option>
+										</el-select>
 									</el-form-item>
 								</el-col>
 								<el-col :span="12">
@@ -229,14 +272,17 @@
 								<el-form-item label="标题">
 									{{viewModel.title}}
 								</el-form-item>
-								<el-form-item label="广告类型">
-									{{viewModel.type}}
-								</el-form-item>
 								<el-form-item label="广告开始时间">
 									{{viewModel.beginDate}}
 								</el-form-item>
 								<el-form-item label="广告结束时间">
 									{{viewModel.endDate}}
+								</el-form-item>
+								<el-form-item label="链接地址">
+									{{viewModel.url}}
+								</el-form-item>
+								<el-form-item label="广告位">
+									{{viewModel.adPosition}}
 								</el-form-item>
 								<el-form-item label="内容">
 									{{viewModel.note}}
@@ -279,7 +325,8 @@
 					searchObject: {
 						no: 1,
 						size: 10,
-					},
+						title:'',
+						adPosition:''					},
 					modelType:"list",
 					dialogVisible: false,
 					defaultProps: {
@@ -287,40 +334,60 @@
 						label: 'name'
 					},
 					form: {
-						path: '',
-						beginDate: '',
 						note: '',
 						title: '',
 						endDate: '',
-						sortNum: '',
 						catalog: '',
 						bussId: '',
 						addDate: '',
 						type: '',
-						url: ''					},
+						url: '',
+						path: '',
+						beginDate: '',
+						sortNum: '',
+						adPosition: '',
+						adPositionName: ''					},
 					form_edit: {
-						path: '',
-						beginDate: '',
 						note: '',
 						title: '',
 						endDate: '',
-						sortNum: '',
 						catalog: '',
 						bussId: '',
 						addDate: '',
 						type: '',
-						url: ''					},
+						url: '',
+						path: '',
+						beginDate: '',
+						sortNum: '',
+						adPosition: '',
+						adPositionName: ''					},
 					viewModel:{},
 					loading: false,
 					tableData: {},
 					rules: {
+                        title: [
+							{ required: true, message: '请输入标题', trigger: 'blur' }
+						  ],
 					},
+                     adPositionOptions: [],
 		        }
 		    },
 		mounted: function () {
 			this.getSearchList();
+             this.loadAdPositionOptions();
 		},
 		methods: {
+              loadAdPositionOptions(){
+                    var param = {};
+					param.sortMethod = "asc";
+					param.sortField = "id";
+					$.post("${siteurl}tenantRest/adposition/search.htm", param, function (result) {
+						if (result.code == 0) {
+							Vue.set(vm.$data, 'adPositionOptions', result.list);
+						}
+					});
+              }
+              ,
 		    changeTableSort(column) {
 				this.searchObject.sortField = column.prop;
                 if ("descending" == column.order) {
@@ -371,9 +438,10 @@
 				this.modelType="add";
 				this.form = {
 					title: '',
-					type: '',
 					beginDate: '',
 					endDate: '',
+					url: '',
+					adPosition: '',
 					note: ''				};
 			},
 			add(){
@@ -497,6 +565,8 @@
 				this.dialogVisible = true;
 			},
 			clearData() {
+						this.searchObject.title = "";
+						this.searchObject.adPosition = "";
 			},
 			resetForm(formName) {
 				this.$refs[formName].resetFields();

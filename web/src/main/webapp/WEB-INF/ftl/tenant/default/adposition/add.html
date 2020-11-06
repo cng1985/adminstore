@@ -60,6 +60,26 @@
 
 			<el-form ref="form" :model="form" label-width="160px" ref="ruleForm" action="${siteurl}tenant/adposition/model_save.htm" method="post" >
 				<el-row :gutter="10">
+					<el-col :span="12">
+						<el-form-item label="广告位" size="mini">
+							<el-input v-model="form.name" name="name"></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="12">
+						<el-form-item label="宽度" size="mini">
+							<el-input v-model="form.width" name="width"></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="12">
+						<el-form-item label="高度" size="mini">
+							<el-input v-model="form.height" name="height"></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="12">
+						<el-form-item label="备注" size="mini">
+							<el-input v-model="form.note" name="note" type="textarea"></el-input>
+						</el-form-item>
+					</el-col>
 				</el-row>
 				<el-row style="text-align: right;">
 					<el-button @click="resetForm('ruleForm')">重置</el-button>
@@ -92,7 +112,10 @@
 			data: function () {
 				return {
 					form: {
-					}
+						name: '',
+						width: '',
+						height: '',
+						note: ''					}
 				}
 			},
 			mounted: function () {

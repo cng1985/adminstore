@@ -9,7 +9,7 @@ import com.haoxuer.adminstore.ad.data.dao.AdPositionDao;
 import com.haoxuer.adminstore.ad.data.entity.AdPosition;
 
 /**
-* Created by imake on 2020年11月06日23:15:57.
+* Created by imake on 2020年11月06日23:22:43.
 */
 @Repository
 

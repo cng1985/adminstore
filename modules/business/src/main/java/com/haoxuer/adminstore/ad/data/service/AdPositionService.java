@@ -8,7 +8,7 @@ import com.haoxuer.discover.data.page.Pageable;
 import java.util.List;
 
 /**
-* Created by imake on 2020年11月06日23:15:57.
+* Created by imake on 2020年11月06日23:22:43.
 */
 public interface AdPositionService {
 

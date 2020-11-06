@@ -8,7 +8,7 @@ import java.util.Date;
 
 /**
 *
-* Created by imake on 2020年11月06日23:14:57.
+* Created by imake on 2020年11月06日23:28:28.
 */
 
 @Data
@@ -29,6 +29,8 @@ public class AdDataRequest extends BaseRequest {
      private Integer sortNum;
 
      private Integer catalog;
+
+     private Long adPosition;
 
      private Long bussId;
 

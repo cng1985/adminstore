@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>更新</title>
+	<title></title>
 	[#include "/admin/common/commons.html"]
 	[#include "/tenant/common/site.html"]
 	[@baseHead /]
@@ -51,7 +51,7 @@
 		<section class="content-header">
 			<!-- 导航 -->
 			<div class="navigation">
-				<i>首页</i> <span>更新</span>
+				<i>首页</i> <span></span>
 			</div>
 		</section>
 		<!-- Main content -->
@@ -62,6 +62,27 @@
 				<input type="hidden" name="id" value="${model.id}">
 				<input type="hidden" name="pageNumber" value="${(page.pageNumber)!'1'}">
 				<el-row :gutter="10">
+					<el-col :span="12">
+						<el-form-item label="广告位" size="mini" prop="name">
+							<el-input v-model="form.name" name="name">
+							</el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="12">
+						<el-form-item label="宽度" size="mini" prop="width">
+							<el-input-number v-model="form.width" name="width" type="textarea" :min="0" :max="100"></el-input-number>
+						</el-form-item>
+					</el-col>
+					<el-col :span="12">
+						<el-form-item label="高度" size="mini" prop="height">
+							<el-input-number v-model="form.height" name="height" type="textarea" :min="0" :max="100"></el-input-number>
+						</el-form-item>
+					</el-col>
+					<el-col :span="12">
+						<el-form-item label="备注" size="mini" prop="note">
+							<el-input v-model="form.note" name="note" type="textarea"></el-input>
+						</el-form-item>
+					</el-col>
 				</el-row>
 				<el-row style="text-align: right;">
 					<el-row style="text-align: right;">
@@ -97,8 +118,14 @@
 				return {
 					form: {
 					     id:"${model.id!}",
-					},
+						name: '${model.name!}',
+						width: '${model.width!}',
+						height: '${model.height!}',
+						note: '${model.note!}'					},
 					rules: {
+                        name: [
+							{ required: true, message: '请输入广告位', trigger: 'blur' }
+						  ],
 					}
 				}
 			},

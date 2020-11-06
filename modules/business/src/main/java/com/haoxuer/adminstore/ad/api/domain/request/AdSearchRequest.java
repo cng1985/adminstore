@@ -8,11 +8,19 @@ import java.util.Date;
 
 /**
 *
-* Created by imake on 2020年11月06日23:14:57.
+* Created by imake on 2020年11月06日23:28:28.
 */
 
 @Data
 public class AdSearchRequest extends BasePageRequest {
+
+    //广告位
+     @Search(name = "title",operator = Filter.Operator.like)
+     private String title;
+
+    //广告位
+     @Search(name = "adPosition",operator = Filter.Operator.eq)
+     private Long adPosition;
 
 
     private String sortField;

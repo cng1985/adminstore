@@ -24,9 +24,9 @@ public class App {
         make.setView(view);
 
         List<Class<?>> cs = new ArrayList<Class<?>>();
-        cs.add(AdPosition.class);
+        cs.add(Ad.class);
 
-        make.setMenus("1,51,52");
+        make.setMenus("1,51,53");
         make.setDao(true);
         make.setService(true);
         make.setView(true);

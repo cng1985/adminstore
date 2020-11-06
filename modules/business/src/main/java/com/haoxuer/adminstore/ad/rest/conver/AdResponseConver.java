@@ -11,6 +11,12 @@ public class AdResponseConver implements Conver<AdResponse, Ad> {
         AdResponse result = new AdResponse();
         BeanDataUtils.copyProperties(source,result);
 
+        if(source.getAdPosition()!=null){
+           result.setAdPosition(source.getAdPosition().getId());
+        }
+         if(source.getAdPosition()!=null){
+            result.setAdPositionName(source.getAdPosition().getName());
+         }
 
          result.setTypeName(source.getType()+"");
 

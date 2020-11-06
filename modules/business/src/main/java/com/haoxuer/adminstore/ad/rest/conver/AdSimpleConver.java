@@ -10,17 +10,23 @@ public class AdSimpleConver implements Conver<AdSimple, Ad> {
     public AdSimple conver(Ad source) {
         AdSimple result = new AdSimple();
         result.setId(source.getId());
-         result.setPath(source.getPath());
-         result.setBeginDate(source.getBeginDate());
          result.setNote(source.getNote());
          result.setTitle(source.getTitle());
          result.setEndDate(source.getEndDate());
-         result.setSortNum(source.getSortNum());
          result.setCatalog(source.getCatalog());
          result.setBussId(source.getBussId());
          result.setAddDate(source.getAddDate());
          result.setType(source.getType());
          result.setUrl(source.getUrl());
+         result.setPath(source.getPath());
+         result.setBeginDate(source.getBeginDate());
+         result.setSortNum(source.getSortNum());
+        if(source.getAdPosition()!=null){
+           result.setAdPosition(source.getAdPosition().getId());
+        }
+         if(source.getAdPosition()!=null){
+            result.setAdPositionName(source.getAdPosition().getName());
+         }
 
          result.setTypeName(source.getType()+"");
 
