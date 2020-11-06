@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>员工</title>
+	[#include "/admin/common/commons.html"]
+	[#include "/tenant/common/site.html"]
+	[@baseHead /]
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<div class="wrapper">
+
+		<header class="main-header">
+			<!-- Header Navbar: style can be found in header.less -->
+			[#include "/admin/common/nav.html"]
+		</header>
+
+		<!-- =============================================== -->
+
+		<!-- Left side column. contains the sidebar -->
+		<aside class="main-sidebar">
+			<!-- sidebar: style can be found in sidebar.less -->
+			<section class="sidebar">
+				[@user_panel /]
+				<!-- search form -->
+				[@sidebar_form /]
+				<!-- /.search form -->
+				<!-- sidebar menu: : style can be found in sidebar.less -->
+				<ul class="sidebar-menu" data-widget="tree">
+					<li class="header">主面板</li>
+					[@menustag id=1]
+					[#list list as item]
+					[@menu item "1,27,51"]
+					[/@menu]
+					[/#list]
+					[/@menustag]
+				</ul>
+			</section>
+			<!-- /.sidebar -->
+		</aside>
+
+		<!-- =============================================== -->
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper" id="app">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<!-- 导航 -->
+				<div class="navigation">
+					<i>首页</i> <span>员工</span>
+				</div>
+			</section>
+			<!-- Main content -->
+			<section class="content">
+
+				<!-- Default box -->
+				<div v-if="modelType == 'list'">
+					<div class="search">
+						<el-form label-width="80px">
+							<el-row>
+								<el-col :span="6" style="padding: 0 8px;">
+									<el-form-item label="姓名">
+										<el-input title="姓名" label="姓名" v-model="searchObject.name" size="small"
+											placeholder="姓名"></el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="6" style="padding: 0 8px;">
+									<el-form-item label="电话">
+										<el-input title="电话" label="电话" v-model="searchObject.phone" size="small"
+											placeholder="电话"></el-input>
+									</el-form-item>
+								</el-col>
+
+								<el-col :span="12" style="padding: 0 10px;margin-top: 5px;">
+									<el-row type="flex" justify="end">
+										<el-button size="small" type="primary" @click="search">搜索</el-button>
+										<el-button size="small" plain @click="clearData">清除条件</el-button>
+									</el-row>
+								</el-col>
+							</el-row>
+						</el-form>
+					</div>
+
+					<div style="padding: 10px 2px;">
+						<el-button type="primary" size="small" @click="addView">新增</el-button>
+					</div>
+
+					<el-table v-loading="loading" :data="tableData.list" @cell-click="showView"
+						@sort-change="changeTableSort" style="width: 100%;font-size: 12px;">
+						<el-table-column label="账号" width="100" prop="no">
+						</el-table-column>
+						<el-table-column label="姓名" width="100" prop="name">
+						</el-table-column>
+						<el-table-column label="电话" width="100" prop="phone">
+						</el-table-column>
+						
+						<el-table-column label="职位" width="100" prop="job">
+						</el-table-column>
+						<el-table-column label="主要部门" prop="orgName">
+						</el-table-column>
+						<el-table-column label="个人介绍" prop="note">
+						</el-table-column>
+						<el-table-column width="160" align="center" fixed="right" label="操作">
+							<template slot-scope="scope">
+								<el-button type="primary" size="mini" @click="editView(scope.row.id)">编辑
+								</el-button>
+								<el-button type="danger" size="mini" style="cursor: pointer;"
+									@click="deleteData(scope.row)">删除</el-button>
+							</template>
+						</el-table-column>
+					</el-table>
+
+					<div class="page">
+						<el-pagination background :current-page="searchObject.no" :page-sizes="[10, 20, 50, 100]"
+							:page-size="tableData.size" :pager-count="5"
+							layout="total, sizes, prev, pager, next, jumper" :page-count="tableData.totalPage"
+							:total="tableData.total" @size-change="sizeChange" @current-change="pageChange">
+						</el-pagination>
+					</div>
+				</div>
+				<!-- 增加页面 -->
+				<div v-if="modelType == 'add'">
+					<el-page-header @back="goBack" content="增加员工">
+					</el-page-header>
+					<div style="margin-top: 20px;">
+						<el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px">
+							<el-row :gutter="10">
+								<el-col :span="12">
+									<el-form-item label="姓名" size="mini" prop="name">
+										<el-input v-model="form.name" name="name">
+										</el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="电话" size="mini" prop="phone">
+										<el-input v-model="form.phone" name="phone">
+										</el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="账号" size="mini" prop="no">
+										<el-input v-model="form.no" name="no">
+										</el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="密码" size="mini" prop="no">
+										<el-input v-model="form.password" name="password">
+										</el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="email" size="mini" prop="email">
+										<el-input v-model="form.email" name="email">
+										</el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="职位" size="mini" prop="job">
+										<el-input v-model="form.job" name="job">
+										</el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="主要部门" size="mini" prop="org">
+										<el-cascader style="width: 100%;" size="small" clearable :show-all-levels="true"
+											v-model="form_edit.org" :options="departmentOptions" :props="defaultProps">
+										</el-cascader>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="辅助部门" size="mini" prop="departments">
+										<el-input v-model="form.departments" name="departments">
+										</el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="权限类型" size="mini" prop="permissionType">
+										<el-input v-model="form.permissionType" name="permissionType">
+										</el-input>
+									</el-form-item>
+								</el-col>
+							</el-row>
+							<el-row style="text-align: right;">
+								<el-button @click="resetForm('ruleForm')">重置</el-button>
+								<el-button type="primary" @click="add">确定</el-button>
+							</el-row>
+						</el-form>
+					</div>
+				</div>
+				<!-- 更新页面 -->
+				<div v-if="modelType == 'edit'">
+					<el-page-header @back="goBack" content="更新员工">
+					</el-page-header>
+					<div style="margin-top: 20px;">
+						<el-form ref="form_edit" :rules="rules" :model="form_edit" label-width="160px">
+							<el-row :gutter="10">
+								<el-col :span="12">
+									<el-form-item label="姓名" size="mini" prop="name">
+										<el-input v-model="form_edit.name" name="name">
+										</el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="主要部门" size="mini" prop="org">
+										<el-cascader style="width: 100%;" size="small" clearable :show-all-levels="true"
+											v-model="form_edit.org" :options="departmentOptions" :props="defaultProps">
+										</el-cascader>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="电话" size="mini" prop="phone">
+										<el-input v-model="form_edit.phone" name="phone">
+										</el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="email" size="mini" prop="email">
+										<el-input v-model="form_edit.email" name="email">
+										</el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="重置密码" size="mini" prop="newPassword">
+										<el-input placeholder="不填写不重置密码" v-model="form_edit.newPassword"
+											name="newPassword">
+										</el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="职位" size="mini" prop="job">
+										<el-input v-model="form_edit.job" name="job">
+										</el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="角色" size="mini">
+										<el-checkbox-group v-model="form_edit.selectRoles">
+											<el-checkbox v-for="item in roleOptions"
+												:label="item.id" :key="item.id">
+												{{item.name}}</el-checkbox>
+										</el-checkbox-group>
+									</el-form-item>
+								</el-col>
+
+
+							</el-row>
+							<el-row style="text-align: right;">
+								<el-button @click="cancelEdit">取消</el-button>
+								<el-button type="primary" @click="updateData">确定</el-button>
+							</el-row>
+						</el-form>
+					</div>
+				</div>
+				<div v-if="modelType == 'view'">
+					<el-page-header @back="goBack" content="详情">
+					</el-page-header>
+					<div class="form-title">详细信息</div>
+					<el-form class="viewForm" label-width="80px">
+						<el-form-item label="姓名">
+							{{viewModel.name}}
+						</el-form-item>
+						<el-form-item label="电话">
+							{{viewModel.phone}}
+						</el-form-item>
+						<el-form-item label="账号">
+							{{viewModel.no}}
+						</el-form-item>
+						<el-form-item label="email">
+							{{viewModel.email}}
+						</el-form-item>
+						<el-form-item label="职位">
+							{{viewModel.job}}
+						</el-form-item>
+						<el-form-item label="主要部门">
+							{{viewModel.orgName}}
+						</el-form-item>
+					</el-form>
+				</div>
+
+
+				<!-- /.box -->
+			</section>
+
+			<el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
+				<span>确认要删除该条数据吗?</span>
+				<span slot="footer" class="dialog-footer">
+					<el-button @click="dialogVisible = false">取 消</el-button>
+					<el-button type="primary" @click="handleClose">确 定</el-button>
+				</span>
+			</el-dialog>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+
+		[#include "/admin/common/footer.html"]
+
+		<!-- Control Sidebar -->
+		[#include "/admin/common/aside.html"]
+
+		<!-- /.control-sidebar -->
+		<!-- Add the sidebar's background. This div must be placed
+     immediately after the control sidebar -->
+		<div class="control-sidebar-bg"></div>
+	</div>
+	<!-- ./wrapper -->
+	[@baseScript /]
+	<script>
+
+		var departments = [@departmentJson /];
+		var roles = [@userRoleJson /];
+
+		var vm = new Vue({
+			el: '#app',
+			data: function () {
+				return {
+					searchObject: {
+						no: 1,
+						size: 10,
+						name: '',
+						phone: ''
+					},
+					modelType: "list",
+					roleOptions: roles,
+					dialogVisible: false,
+					defaultProps: {
+						children: 'children',
+						label: 'name'
+					},
+					departmentOptions: departments,
+					form: {
+						name: '',
+						phone: '',
+						no: '',
+						email: '',
+						job: '',
+						org: '',
+						departments: '',
+						permissionType: '',
+						password: ''
+					},
+					form_edit: {
+						name: '',
+						phone: '',
+						no: '',
+						email: '',
+						job: '',
+						org: '',
+						departments: '',
+						permissionType: '',
+						newPassword: '',
+						selectRoles: []
+					},
+					defaultProps: {
+						emitPath: false,
+						checkStrictly: true,
+						children: 'child',
+						label: 'name',
+						value: 'id'
+					},
+					rules: {
+						name: [
+							{ required: true, message: '请输入姓名', trigger: 'blur' },
+							{ min: 2, max: 5, message: '长度在 2 到 5 个字符', trigger: 'blur' }
+						],
+						no: [
+							{ required: true, message: '请输入账号', trigger: 'blur' },
+							{ min: 3, max: 5, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+						],
+						password: [
+							{ required: true, message: '请输入密码', trigger: 'blur' },
+							{ min: 3, max: 12, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+						],
+
+					},
+					viewModel: {},
+					loading: false,
+					tableData: {},
+				}
+			},
+			mounted: function () {
+				this.getSearchList();
+			},
+			methods: {
+
+				changeTableSort(column) {
+					this.searchObject.sortField = column.prop;
+					this.searchObject.sortMethod = column.order;
+					this.getSearchList();
+				},
+				showView(row, column, cell, event) {
+					if (cell.cellIndex > 2) {
+						return;
+					}
+					var param = {};
+					param.id = row.id;
+					this.modelType = "view";
+					const loading = this.$loading({
+						lock: true,
+						text: '数据加载中...',
+						spinner: 'el-icon-loading',
+						background: 'rgba(0, 0, 0, 0.7)'
+					});
+					var that = this;
+					$.post("${siteurl}tenantRest/employee/view.htm", param, function (res) {
+						if (res.code == 0) {
+							Vue.set(vm.$data, 'viewModel', res);
+						}
+
+						setTimeout(() => {
+							loading.close();
+							$(document).scrollTop(0);
+						}, 300);
+					});
+
+
+				},
+				goBack() {
+					this.modelType = "list";
+				},
+				link(url) {
+					this.modelType = url;
+				},
+				addView() {
+					this.modelType = "add";
+					this.form = {
+						name: '',
+						phone: '',
+						no: '',
+						email: '',
+						job: '',
+						org: '',
+						departments: '',
+						permissionType: ''
+					};
+				},
+				add() {
+					var self = this;
+					this.$refs["ruleForm"].validate((valid) => {
+						if (valid) {
+							self.addData();
+						} else {
+							console.log('error submit!!');
+							return false;
+						}
+					});
+				},
+				addData() {
+					var that = this, data = this.form;
+					const loading = this.$loading({
+						lock: true,
+						text: '数据修改中',
+						spinner: 'el-icon-loading',
+						background: 'rgba(0, 0, 0, 0.7)'
+					});
+
+					$.post("${siteurl}tenantRest/employee/create.htm", data, function (res) {
+						setTimeout(() => {
+							loading.close();
+						}, 300);
+						if (res.code == 0) {
+							that.modelType = 'list';
+							that.$message({
+								message: '添加数据成功',
+								type: 'success'
+							});
+							that.searchObject.no = 1;
+							that.getSearchList();
+						} else {
+							that.$message.error(res.msg);
+						}
+					});
+				},
+				sizeChange(event) {
+					this.searchObject.size = event;
+					this.getSearchList();
+				},
+				updateData() {
+					var self = this;
+					this.$refs["form_edit"].validate((valid) => {
+						if (valid) {
+							self.updateDataPost();
+						} else {
+							console.log('error submit!!');
+							return false;
+						}
+					});
+				},
+				updateDataPost() {
+					var that = this, data = this.form_edit;
+					const loading = this.$loading({
+						lock: true,
+						text: '数据修改中',
+						spinner: 'el-icon-loading',
+						background: 'rgba(0, 0, 0, 0.7)'
+					});
+
+					var data = JSON.stringify(that.form_edit, null, 2);
+					$.ajax({
+						type: "post",
+						url: '${siteurl}tenantRest/employee/update.htm',
+						async: false, // 使用同步方式
+						data: data,
+						contentType: "application/json; charset=utf-8",
+						dataType: "json",
+						success: function (back) {
+
+							setTimeout(() => {
+								loading.close();
+							}, 300);
+
+							if (back.code != 0) {
+								that.$message.error('' + res.msg);
+							} else {
+								that.$message({
+									message: '修改成功',
+									type: 'success'
+								});
+								that.modelType = 'list';
+								that.getSearchList();
+							}
+						} // 注意不要在此行增加逗号
+					});
+
+				},
+				// 获取发票详情
+				editView(id) {
+					var that = this;
+					var data = {};
+					data.id = id;
+					this.modelType = "edit";
+					$.post("${siteurl}tenantRest/employee/view.htm", data, function (res) {
+						if (res.code == 0) {
+							console.log(res)
+							that.form_edit = res;
+						}
+					});
+				},
+				// 搜索商品
+				search() {
+					this.searchObject.no = 1;
+					this.getSearchList();
+				},
+				cancelEdit() {
+					this.modelType = 'list';
+				},
+				// 获取商品列表
+				getSearchList() {
+					this.loading = true;
+					var data = this.searchObject, that = this;
+					$.post("${siteurl}tenantRest/employee/search.htm", data, function (result) {
+						if (result.code == 0) {
+							Vue.set(vm.$data, 'tableData', result);
+						}
+						setTimeout(() => {
+							that.loading = false;
+						}, 300)
+					});
+				},
+				// 商品分页
+				pageChange(index) {
+					this.searchObject.no = index;
+					this.getSearchList();
+				},
+				deleteData(event) {
+					this.selectId = event.id;
+					this.dialogVisible = true;
+				},
+				clearData() {
+					this.searchObject.name = "";
+					this.searchObject.phone = "";
+				},
+				resetForm(formName) {
+					this.$refs[formName].resetFields();
+				},
+				handleClose(done) {
+					this.dialogVisible = false;
+					var self = this;
+					if (self.selectId) {
+						var params = {};
+						params.id = self.selectId;
+						$.post("${siteurl}tenantRest/employee/delete.htm", params, function (res) {
+							if (res.code == 0) {
+								self.$message({
+									message: '删除数据成功',
+									type: 'success'
+								});
+								self.getSearchList();
+							} else {
+								self.$message.error(res.msg);
+							}
+						});
+					}
+					done();
+				}
+			}
+		})
+	</script>
+
+</body>
+
+</html>

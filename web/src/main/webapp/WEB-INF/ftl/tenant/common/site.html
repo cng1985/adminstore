@@ -1,0 +1,166 @@
+[#macro baseScript]
+<!-- jQuery 2.2.3 -->
+<script src="${siteurl}plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="${siteurl}bootstrap/js/bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<!-- AdminLTE App -->
+<script src="${siteurl}dist/js/adminlte.min.js"></script>
+
+<script src="${siteurl}plugins/vue-element/vue.js"></script>
+<!-- import JavaScript -->
+<script src="${siteurl}plugins/vue-element/element.js"></script>
+[/#macro]
+
+[#macro baseCdnScript]
+<!-- jQuery 2.2.3 -->
+<script src="https://cdn.haoxuer.com/js/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="https://cdn.haoxuer.com/js/bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<!-- AdminLTE App -->
+<script src="https://cdn.haoxuer.com/js/adminlte.min.js"></script>
+
+<script src="https://cdn.haoxuer.com/js/vue.min.js"></script>
+<!-- import JavaScript -->
+<script src="https://cdn.haoxuer.com/js/element.js"></script>
+[/#macro]
+
+
+[#macro baseHead]
+<!-- Tell the browser to be responsive to screen width -->
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<!-- Bootstrap 3.3.6 -->
+<link rel="stylesheet" href="${siteurl}bootstrap/css/bootstrap.min.css">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="${siteurl}plugins/FontAwesome/css/font-awesome.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet" href="${siteurl}plugins/ionicons201/css/ionicons.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="${siteurl}dist/css/AdminLTE.min.css">
+<!-- AdminLTE Skins. Choose a skin from the css/skins
+     folder instead of downloading all of them to reduce the load. -->
+<link rel="stylesheet" href="${siteurl}dist/css/skins/_all-skins.min.css">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="stylesheet" href="${siteurl}plugins/vue-element/element.css">
+
+<style>
+		.content-wrapper {
+			overflow: hidden;
+		}
+		.content-header {
+			padding: 0;
+		}
+
+		/* 导航 */
+		.navigation {
+			height: 60px;
+			line-height: 60px;
+			background-color: #f9f9f9;
+			padding-left: 10px;
+		}
+
+		.navigation i {
+			color: #d9dee5;
+			display: inline-block;
+			font-size: 14px;
+			color: #666666;
+			font-style: normal;
+		}
+
+		.navigation i::after {
+			content: '/';
+			display: inline-block;
+			margin: 0 5px;
+		}
+
+		.navigation span {
+			font-weight: 700;
+			font-size: 14px;
+			color: #666666;
+		}
+
+		.content {
+			background-color: #fff;
+			padding: 10px 15px;
+			overflow: auto;
+			margin: 10px 10px;
+		}
+
+		/* 商品资料 */
+		.goods {
+			background-color: #fff;
+			padding: 10px 15px;
+			overflow: auto;
+		}
+
+		/* 搜索 */
+		.search {
+			background-color: #f9f9f9;
+			padding: 16px 0px 3px;
+			box-sizing: border-box;
+		}
+
+		/* 分页 */
+		.page {
+			text-align: right;
+			margin-top: 10px;
+		}
+
+
+		.form-title {
+			font-size: 14px;
+			color: #666;
+			margin-top: 10px;
+			line-height: 35px;
+			font-weight: 700;
+		}
+		.viewForm .el-form-item{
+			margin-bottom: 0px;
+		}
+		.viewForm .el-form-item .el-form-item__label{
+			color: #999999;
+			font-size: 14px;
+			line-height: 25px;
+		}
+		.viewForm .el-form-item .el-form-item__content{
+			font-size: 14px;
+			color: #666;
+			line-height: 25px;
+		}
+		.el-page-header__content{
+			font-size: 14px;
+		}
+	</style>
+[/#macro]
+
+
+[#macro baseCss]
+<!-- Bootstrap 3.3.6 -->
+<link rel="stylesheet" href="${siteurl}bootstrap/css/bootstrap.min.css">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="${siteurl}plugins/FontAwesome/css/font-awesome.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet" href="${siteurl}plugins/ionicons201/css/ionicons.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="${siteurl}dist/css/AdminLTE.min.css">
+<!-- AdminLTE Skins. Choose a skin from the css/skins
+     folder instead of downloading all of them to reduce the load. -->
+<link rel="stylesheet" href="${siteurl}dist/css/skins/_all-skins.min.css">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+[#include "/admin/common/commons.html"]
+<link rel="stylesheet" href="${siteurl}plugins/vue-element/element.css">
+[/#macro]

@@ -218,7 +218,7 @@
 
         ${name}filepickerobj.on('uploadAccept', function(file, response) {
 
-            if (response.code == 0) {
+            if (response.message.type == "success") {
                 // 通过return false来告诉组件，此文件上传有错。
                 $("#${name}id").val(response.url);
                 //alert(response.url);
@@ -336,7 +336,7 @@
 
         ${name}filepickerobj.on('uploadAccept', function(file, response) {
 
-            if (response.code == 0) {
+            if (response.message.type == "success") {
                 // 通过return false来告诉组件，此文件上传有错。
                 $("#${name}id").val(response.url);
                 //alert(response.url);

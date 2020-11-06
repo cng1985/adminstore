@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>组织管理</title>
+	[#include "/admin/common/commons.html"]
+	[#include "/tenant/common/site.html"]
+	[@baseHead /]
+	<link rel="stylesheet" href="${siteurl}plugins/vue-org-tree/style.css">
+	<style>
+		.content-header {
+			padding: 0;
+		}
+	
+		.content {
+			padding: 0 10px 10px;
+			background-color: #f9f9f9;
+		}
+	
+		ul {
+			padding: 0;
+			margin: 0;
+			list-style: none;
+		}
+	
+		[v-cloak] {
+			display: none;
+		}
+	
+		/* 导航 */
+		.navigation {
+			height: 60px;
+			line-height: 60px;
+			background-color: #f9f9f9;
+			padding-left: 10px;
+		}
+	
+		.navigation i {
+			color: #d9dee5;
+			display: inline-block;
+			font-size: 14px;
+			color: #666666;
+			font-style: normal;
+		}
+	
+		.navigation i::after {
+			content: '/';
+			display: inline-block;
+			margin: 0 5px;
+		}
+	
+		.navigation span {
+			font-weight: 700;
+			font-size: 14px;
+			color: #666666;
+		}
+	
+		/* 商品资料 */
+		.goods {
+			background-color: #fff;
+			padding: 10px 15px;
+			overflow: auto;
+		}
+	
+		/* 搜索 */
+		.search {
+			height: 58px;
+			background-color: #f9f9f9;
+			padding: 16px 0px 3px;
+			box-sizing: border-box;
+		}
+	
+		.goodsChoose input {
+			border-right: 0 !important;
+		}
+	
+		/* tab切换 */
+		.tab .el-menu--horizontal>.el-menu-item {
+			height: 36px;
+			line-height: 36px;
+		}
+	
+		/* 商品内容 */
+		.goods_content {
+			height: 100%;
+		}
+	
+		.goods_content_l .tree {
+			background-color: #f9f9f9;
+			height: 100%;
+			padding: 10px 0;
+		}
+	
+		.goods_content_l .title {
+			line-height: 40px;
+			cursor: pointer;
+			display: block;
+			background-color: #f9f9f9;
+			margin-bottom: 10px;
+			padding-left: 20px;
+		}
+	
+		.goods_content_l .title i {
+			float: right;
+			margin: 14px;
+		}
+	
+		.goods_content_l .el-tree {
+			background-color: transparent;
+		}
+	
+		.goods_content_l .el-tree .el-tree-node__label {
+			font-size: 13px;
+			font-weight: bold;
+		}
+	
+		.goods_content_l .el-tree-node {
+			margin: 5px 0;
+		}
+	
+		.goods_content_l .el-tree-node__content:hover {
+			background-color: #f9f9f9;
+		}
+	
+		.add_goods {
+			padding: 10px 0 5px 0;
+		}
+	
+		.goodsInfo {
+			overflow: hidden;
+			display: flex;
+			align-items: center;
+		}
+	
+		.goodsInfo img {
+			width: 50px;
+			height: 50px;
+			margin-right: 5px;
+			background-color: red;
+		}
+	
+		.goodsInfo div {
+			flex: 1;
+			font-size: 12px;
+			line-height: 16px;
+		}
+	
+		.goodsTitle {
+			background: #5491de;
+			color: #fff;
+			font-style: normal;
+			border-radius: 2px;
+			height: 14px;
+			width: 14px;
+			line-height: 14px;
+			padding: 0;
+			font-size: 12px;
+			display: inline-block;
+			text-align: center;
+			margin-right: 4px;
+		}
+	
+		.chlidrenGoodsList li {
+			min-height: 64px;
+			padding: 10px 0;
+			display: flex;
+			padding-left: 80px;
+			border-bottom: 1px solid #f9f9f9;
+		}
+	
+		.chlidrenGoodsList li div {
+			align-items: center;
+			display: flex;
+		}
+	
+		.el-table--enable-row-transition .el-table__body td {
+			padding: 10px 0 !important;
+		}
+	
+		.more {
+			margin-left: 10px;
+		}
+	
+		.el-popover .item {
+			font-size: 12px;
+			color: #000;
+			line-height: 20px;
+			cursor: pointer;
+		}
+	
+		.department {
+			line-height: 40px;
+		}
+	
+		.el-dialog__header {
+			padding: 14px 16px;
+			border-radius: 2px 2px 0 0;
+			background: #fff;
+			color: #666;
+			border-bottom: 1px solid #e9e9e9;
+		}
+	
+		.el-dialog__header .el-dialog__title {
+			margin: 0;
+			font-size: 14px;
+			line-height: 21px;
+			font-weight: bold;
+		}
+	
+		.el-dialog__header .el-dialog__headerbtn {
+			top: 14px;
+		}
+	
+		.personnelUpload {
+			width: 100%;
+		}
+	
+		.personnelUpload .el-upload {
+			width: 100%;
+		}
+	
+		.personnelUpload .el-upload .el-upload-dragger {
+			width: 100%;
+		}
+	
+		.personnelUpload .el-upload .el-upload__input {
+			display: none;
+		}
+	
+		.el-tree-node__content {
+			padding: 0 10px !important;
+		}
+	
+		.el-tree-node__content>label.el-checkbox {
+			position: absolute;
+			right: 15px;
+		}
+	
+		.departmentDialog .el-row {
+			height: 300px;
+		}
+	
+		.departmentDialog .title {
+			line-height: 18px;
+			font-size: 13px;
+			color: #9B9B9B;
+			margin-bottom: 18px;
+		}
+	
+		.departmentDialog li {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			font-size: 13px;
+			color: #3C3C3C;
+			line-height: 28px;
+			padding: 0 2px;
+			cursor: pointer;
+		}
+	
+		.is-current>.el-tree-node__content {
+			background-color: #2984EF !important;
+			color: #fff;
+		}
+	
+		.custom-tree-node i {
+			position: absolute;
+			right: 14px;
+			display: none;
+			overflow: hidden;
+		}
+	
+		.el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content i {
+			display: inline-block;
+		}
+	
+		.page {
+			text-align: right;
+			margin: 10px 0;
+		}
+	
+		.s-bg2 {
+			background: #000;
+		}
+	
+		.s-c {
+			color: bule;
+		}
+	
+		label {
+			margin: 0;
+		}
+	
+		.text-center {
+			text-align: left;
+		}
+	
+		.org-tree-container {
+			display: block;
+		}
+	
+		.bg-white {
+			cursor: pointer;
+		}
+	
+		.bg-white-curren {
+			background-color: #409EFF;
+			color: #fff;
+		}
+	</style>
+</head>
+
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<div class="wrapper">
+
+		<header class="main-header">
+			<!-- Header Navbar: style can be found in header.less -->
+			[#include "/admin/common/nav.html"]
+		</header>
+
+		<!-- =============================================== -->
+
+		<!-- Left side column. contains the sidebar -->
+		<aside class="main-sidebar">
+			<!-- sidebar: style can be found in sidebar.less -->
+			<section class="sidebar">
+				[@user_panel /]
+				<!-- search form -->
+				[@sidebar_form /]
+				<!-- /.search form -->
+				<!-- sidebar menu: : style can be found in sidebar.less -->
+				<ul class="sidebar-menu" data-widget="tree">
+					<li class="header">主面板</li>
+					[@menustag id=1]
+					[#list list as item]
+					[@menu item "1,27,50"]
+					[/@menu]
+					[/#list]
+					[/@menustag]
+				</ul>
+			</section>
+			<!-- /.sidebar -->
+		</aside>
+
+		<!-- =============================================== -->
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper" id="app" v-cloak>
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<!-- 导航 -->
+				<div class="navigation">
+					<i>组织</i> <span>组织管理</span>
+				</div>
+			</section>
+			<!-- Main content -->
+			<section class="content">
+				<!-- Default box -->
+				<div class="operation" style="margin-bottom: 20px;margin-top: 20px;">
+					<el-button type="primary" size="small" @click="addDepartmentName">增加部门</el-button>
+					<el-button type="primary" size="small" @click="modifyDepartmentName">修改部门</el-button>
+					<el-button type="primary" size="small" @click="delectDepartment">删除部门</el-button>
+				</div>
+				<div class="text-center">
+					<vue2-org-tree :data="departments" :collapsable="collapsable" :expandAll="expandAll" :props="props" :horizontal="horizontal" 
+						 :label-class-name="labelClassName" :render-content="renderContent"
+						@on-expand="onExpand" @on-node-click="onNodeClick" />
+				</div>
+
+				<!-- 修改部门名称 -->
+				<el-dialog :title="modifydepartmentTitle" :visible.sync="modifydepartment" width="30%"
+					:before-close="handleClose(modifydepartment)">
+					<el-row :gutter="20">
+						<el-col :span="18" :offset="2">
+							<el-row>
+								<el-col :span="6">
+									<span style="line-height: 32px;float: right;font-size: 12px;"
+										class="el-form-item__label">部门名称：</span>
+								</el-col>
+								<el-col :span="18">
+									<el-input size="small" v-model="departmentName"></el-input>
+								</el-col>
+							</el-row>
+						</el-col>
+					</el-row>
+					<span slot="footer" class="dialog-footer">
+						<el-button size="small" @click="modifydepartment = false">取 消</el-button>
+						<el-button size="small" type="primary" @click="addDepartment">确 定</el-button>
+					</span>
+				</el-dialog>
+
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+
+		[#include "/admin/common/footer.html"]
+
+		<!-- Control Sidebar -->
+		[#include "/admin/common/aside.html"]
+
+		<!-- /.control-sidebar -->
+		<!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+		<div class="control-sidebar-bg"></div>
+	</div>
+	<!-- ./wrapper -->
+
+	<!-- jQuery 2.2.3 -->
+	[@baseScript /]
+
+
+	<script type="text/javascript">
+		window.onload = function () {
+			var contentWrapperHeight = $(".content-wrapper").height();
+			var contentWrapperWidth = $(".content-wrapper").width();
+			var navigationHeight = $(".navigation").height();
+			var mainHeaderHeight = $(".main-header").height();
+			var mainFooterHeight = $(".main-footer").height();
+			var mainFooterPaddingTop = $(".main-footer").css("padding-top");
+			var mainFooterPaddingBottom = $(".main-footer").css("padding-bottom");
+			var height = contentWrapperHeight - navigationHeight - mainHeaderHeight - mainFooterHeight - parseInt(mainFooterPaddingTop) - parseInt(mainFooterPaddingBottom) - 31;
+			console.log(contentWrapperHeight, navigationHeight, mainHeaderHeight, mainFooterHeight, mainFooterPaddingTop, mainFooterPaddingBottom);
+			// $(".goods").height(height);
+		}
+	</script>
+
+	<script src="${siteurl}plugins/vue-org-tree/index.js"></script>
+
+	<script>
+		var labels = [{
+			value: '选项1',
+			label: '高管'
+		}];
+		var departments = [@departmentJson /];
+		// departments = departments ? departments : [];
+		var vm = new Vue({
+			el: '#app',
+			data: function () {
+				return {
+					loading: false,
+					treeTitle: '部门管理',
+					visible: false,
+					filterText: '',
+					departmentOptions: departments,
+					labelOptions: labels,
+					department: {
+						state: false,
+						filterText: '',
+						selectedDepartment: []
+					},
+					searchObject: {
+						no: 1,
+						size: 10,
+						department: ''
+					},
+					batchImport: false,
+					modifydepartment: false,
+					modifydepartmentTitle: '',
+					departmentName: '',
+					parentId: '',
+					departments: {
+						id: -1, 
+						name: '组织架构', 
+						child: departments
+					},
+					props: {label: 'name', children: 'child', expand: 'expand'},
+					horizontal: true,
+					collapsable: false,
+					expandAll: true,
+					labelClassName: 'bg-white',
+					defaultProps: {
+						emitPath: false,
+						checkStrictly: true,
+						children: 'child',
+						label: 'name',
+						value: 'id'
+					},
+					tableData: {},
+					multipleSelection: []
+				}
+			},
+			mounted: function () {
+				this.expandChange();
+				this.loading = true;
+
+				let that = this;
+				that.$nextTick(function () {
+					//先获取节点
+					let array = document.querySelectorAll('.is-current');
+					if (array && array.length > 0) {
+						for (let i = 0; i < array.length; i++) {
+							const element = array[i];
+							//将原来的颜色置为无
+							const content = element.querySelectorAll('.el-tree-node__content');
+							content[0].style.background = "none";
+							// 加类，变更
+							if (element.className.indexOf('s-bg2') === -1) {
+								element.className += " s-bg2 s-c";
+							}
+						}
+					}
+				})
+			},
+			methods: {
+				// 修改部门名称
+				modifyDepartmentName() {
+					if (this.parentId != -1 && this.parentId != '') {
+						this.modifydepartment = true;
+						this.modifydepartmentTitle = '编辑部门';
+					} else {
+						this.$message.error('请选中部门');
+					}
+				},
+				// 新增部门
+				addDepartmentName() {
+					if (this.parentId) {
+						this.modifydepartment = true;
+						this.modifydepartmentTitle = '新建部门';
+						this.departmentName="";
+					} else {
+						this.$message.error('请选中所属部门');
+					}
+				},
+				clearPersonnelInfo() {
+					this.addMember.name = '';
+					this.addMember.email = '';
+					this.addMember.phone = '';
+					this.addMember.no = '';
+					this.addMember.password = '';
+					this.addMember.gender = '1';
+					this.addMember.job = '';
+					this.addMember.identity = '1';
+					this.addMember.label = '';
+					this.addMember.departments = '';
+				},
+
+
+				findPnodeId(data, nodeId) {
+					//设置结果
+					let result;
+					if (!data) {
+						return;//如果data传空，直接返回
+					}
+					for (var i = 0; i < data.child.length; i++) {
+						let item = data.child[i];
+						if (item.id == nodeId) {
+							result = item.name;
+							//找到id相等的则返回父id
+							return result;
+						} else if (item.child && item.child.length > 0) {
+							//如果有子集，则把子集作为参数重新执行本方法
+							result = this.findPnodeId(item, nodeId);
+							//关键，千万不要直接return本方法，不然即使没有返回值也会将返回return，导致最外层循环中断，直接返回undefined,要有返回值才return才对
+							if (result) {
+								return result;
+							}
+						}
+					}
+					//如果执行循环中都没有return，则在此return
+					return result;
+				},
+				handleChange(value) {
+					console.log(value);
+					// let id = value[value.length - 1];
+					// console.log(id);
+					// let obj = {
+					// 	child: this.departmentOptions
+					// };
+					// let values = this.findPnodeId(obj, id);
+					// console.log(values);
+					// this.addMember.departments = values;
+				},
+				// 获取人员名单
+				
+
+				// 删除部门
+				delectDepartment() {
+					var that = this;
+					if(this.parentId==-1){
+						that.$message.error('根节点不能删除');
+					}else if (this.parentId != "") {
+						$.ajax({
+							url: "${siteurl}tenantRest/organization/delete.htm", data: { id: that.parentId }, success: function (result) {
+								console.log(result);
+								if (result.code == 0) {
+									that.$message({
+										message: '恭喜你，删除部门成功',
+										type: 'success'
+									});
+									that.refreshDepartment();
+									that.parentId = '';
+									$(".bg-white").removeClass('bg-white-curren');
+								} else {
+									that.$message.error('删除部门失败');
+								}
+							}
+						});
+					} else {
+						that.$message.error('请选择部门');
+					}
+				},
+				// 记录选中部门ID
+				chooseDepartment(data) {
+					if (data == undefined) {
+						return;
+					}
+					console.log(data);
+					if (!data.id) {
+						this.treeTitle = '部门管理';
+						//this.parentId="";
+						//this.$refs.tree.setChecked([]);
+						$(".is-focusable").removeClass("is-current");
+						this.chooseDepartment();
+					} else {
+						this.treeTitle = data.name;
+					}
+					this.parentId = data.id;
+					this.searchObject.department = data.id;
+					this.searchObject.no = 1;
+					this.loading = true;
+					var that = this;
+				},
+				// 添加部门和修改部门名称
+				addDepartment() {
+					var that = this;
+					if (this.modifydepartmentTitle == "编辑部门" && this.parentId != "") {
+						$.ajax({
+							url: "${siteurl}tenantRest/organization/update.htm", data: { name: this.departmentName, id: this.parentId }, success: function (result) {
+								console.log(result);
+								if (result.code == 0) {
+									that.$message({
+										message: '恭喜你，修改部门名称成功',
+										type: 'success'
+									});
+									that.refreshDepartment();
+								} else {
+									that.$message.error('修改部门名称失败');
+								}
+								that.modifydepartment = false;
+							}
+						});
+					} else if (this.modifydepartmentTitle == "编辑部门" && this.parentId == "") {
+						this.$message({
+							message: '请选择修改的部门',
+							type: 'warning'
+						});
+					} else if (this.modifydepartmentTitle == "新建部门" && this.departmentName != "") {
+						var tempParent=this.parentId;
+						if(tempParent==-1){
+							tempParent="";
+						}
+						$.ajax({
+							url: "${siteurl}tenantRest/organization/create.htm", data: { name: this.departmentName, parent: tempParent }, success: function (result) {
+								console.log(result);
+								if (result.code == 0) {
+									that.$message({
+										message: '恭喜你，新建部门成功',
+										type: 'success'
+									});
+									that.refreshDepartment();
+								} else {
+									that.$message.error('新建部门失败');
+								}
+								that.modifydepartment = false;
+							}
+						});
+					} else if (this.departmentName == "") {
+						this.$message({
+							message: '请输入部门名称',
+							type: 'warning'
+						});
+					}
+					this.departmentName = "";
+				},
+				// 刷新部门列表
+				refreshDepartment() {
+					var that = this;
+					$.ajax({
+						url: "${siteurl}tenantRest/organization/list.htm", success: function (result) {
+							console.log(result);
+							if (result.code == 0) {
+								// that.data = result.list;
+								that.departments = {
+									id: -1, 
+									name: '组织架构', 
+									child: result.list
+								};
+							}
+						}
+					});
+				},
+				// 关闭弹出框
+				handleClose(event) {
+					this[event] = false;
+				},
+				// 搜索部门
+				filterNode(value, data) {
+					if (!value) return true;
+					return data.name.indexOf(value) !== -1;
+				},
+				handleSelect(key, keyPath) {
+					console.log(key, keyPath);
+				},
+				// 选中部门
+				handleNodeClick(data) {
+					console.log(data);
+					var selectedDepartment = this.department.selectedDepartment, flag = false;
+					selectedDepartment.forEach((item, index) => {
+						console.log(item.id == data.id || flag)
+						if (item.id == data.id) {
+							flag = true;
+							this.department.selectedDepartment.splice(index, 1);
+						} else if (!flag) {
+							flag = false
+						}
+					})
+					if (!flag) {
+						this.department.selectedDepartment.push({ id: data.id, name: data.name });
+					}
+				},
+				renderContent: function (h, data) {
+					return data.name
+				},
+				onExpand: function (e, data) {
+					if ('expand' in data) {
+						data.expand = !data.expand
+						if (!data.expand && data.children) {
+							this.collapse(data.children)
+						}
+					} else {
+						this.$set(data, 'expand', true)
+					}
+				},
+				onNodeClick: function (e, data) {
+					$(".bg-white").removeClass('bg-white-curren');
+					$(e.target).addClass('bg-white-curren');
+					this.parentId = data.id;
+					this.departmentName=data.name;
+				},
+				collapse: function (list) {
+					var _this = this
+					list.forEach(function (child) {
+						if (child.expand) {
+							child.expand = false
+						}
+						child.children && _this.collapse(child.children)
+					})
+				},
+				expandChange: function () {
+					this.toggleExpand(this.departments, true)
+				},
+				toggleExpand: function (data, val) {
+					var _this = this;
+					if (Array.isArray(data)) {
+						data.forEach(function(item) {
+						_this.$set(item, "expand", val);
+						if (item.child) {
+							_this.toggleExpand(item.child, val);
+						}
+						});
+					} else {
+						this.$set(data, "expand", val);
+						if (data.child) {
+						_this.toggleExpand(data.child, val);
+						}
+					}
+				}
+			}
+		})
+	</script>
+</body>
+
+</html>
