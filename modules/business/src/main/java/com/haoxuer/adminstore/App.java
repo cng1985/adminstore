@@ -1,5 +1,7 @@
 package com.haoxuer.adminstore;
 
+import com.haoxuer.adminstore.ad.data.entity.Ad;
+import com.haoxuer.adminstore.ad.data.entity.AdPosition;
 import com.haoxuer.adminstore.article.data.entity.Article;
 import com.haoxuer.adminstore.member.controller.admin.Controllers;
 import com.haoxuer.imake.ChainMake;
@@ -18,13 +20,13 @@ public class App {
 
         System.out.println(Controllers.class.getResource("/").getPath());
         ChainMake make = new ChainMake(ElementUIDir.class, TemplateHibernateDir.class);
-        File view = new File("E:\\codes\\maven\\adminsimple\\web\\src\\main\\webapp\\WEB-INF\\ftl\\tenant\\default");
+        File view = new File("E:\\codes\\maven\\adminstore\\web\\src\\main\\webapp\\WEB-INF\\ftl\\tenant\\default");
         make.setView(view);
 
         List<Class<?>> cs = new ArrayList<Class<?>>();
-        cs.add(Article.class);
+        cs.add(AdPosition.class);
 
-        make.setMenus("1,52,54");
+        make.setMenus("1,51,52");
         make.setDao(true);
         make.setService(true);
         make.setView(true);

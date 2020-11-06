@@ -59,6 +59,7 @@
 				<value>com.haoxuer.adminstore.member.data.entity</value>
 				<value>com.haoxuer.adminstore.structure.data.entity</value>
 				<value>com.haoxuer.adminstore.article.data.entity</value>
+				<value>com.haoxuer.adminstore.ad.data.entity</value>
 
 			</list>
 		</property>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	[#include "/admin/common/commons.html"]
+	[#include "/tenant/common/site.html"]
+	[@baseHead /]
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper">
+
+	<header class="main-header">
+		<!-- Header Navbar: style can be found in header.less -->
+		[#include "/admin/common/nav.html"]
+	</header>
+
+	<!-- =============================================== -->
+
+	<!-- Left side column. contains the sidebar -->
+	<aside class="main-sidebar">
+		<!-- sidebar: style can be found in sidebar.less -->
+		<section class="sidebar">
+			[@user_panel /]
+			<!-- search form -->
+			[@sidebar_form /]
+			<!-- /.search form -->
+			<!-- sidebar menu: : style can be found in sidebar.less -->
+			<ul class="sidebar-menu" data-widget="tree">
+				<li class="header">主面板</li>
+				[@menustag id=1]
+				[#list list as item]
+				[@menu item "1,51,53"]
+				[/@menu]
+				[/#list]
+				[/@menustag]
+			</ul>
+		</section>
+		<!-- /.sidebar -->
+	</aside>
+
+	<!-- =============================================== -->
+
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper" id="app">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<!-- 导航 -->
+			<div class="navigation">
+				<i>首页</i> <span></span>
+			</div>
+		</section>
+		<!-- Main content -->
+		<section class="content">
+			<!-- Default box -->
+
+			<el-form ref="form" :model="form" label-width="160px" ref="ruleForm" action="${siteurl}tenant/ad/model_save.htm" method="post" >
+				<el-row :gutter="10">
+					<el-col :span="12">
+						<el-form-item label="标题" size="mini">
+							<el-input v-model="form.title" name="title"></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="12">
+						<el-form-item label="广告类型" size="mini">
+							<el-input v-model="form.type" name="type"></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="12">
+						<el-form-item label="广告开始时间" size="mini">
+							<el-input v-model="form.beginDate" name="beginDate"></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="12">
+						<el-form-item label="广告结束时间" size="mini">
+							<el-input v-model="form.endDate" name="endDate"></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="12">
+						<el-form-item label="内容" size="mini">
+							<el-input v-model="form.note" name="note"></el-input>
+						</el-form-item>
+					</el-col>
+				</el-row>
+				<el-row style="text-align: right;">
+					<el-button @click="resetForm('ruleForm')">重置</el-button>
+					<el-button type="primary" native-type="submit">确定</el-button>
+				</el-row>
+			</el-form>
+
+			<!-- /.box -->
+		</section>
+
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+
+	[#include "/admin/common/footer.html"]
+
+	<!-- Control Sidebar -->
+	[#include "/admin/common/aside.html"]
+
+	<!-- /.control-sidebar -->
+	<!-- Add the sidebar's background. This div must be placed
+     immediately after the control sidebar -->
+	<div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+[@baseScript /]
+<script>
+		var vm = new Vue({
+			el: '#app',
+			data: function () {
+				return {
+					form: {
+						title: '',
+						type: '',
+						beginDate: '',
+						endDate: '',
+						note: ''					}
+				}
+			},
+			mounted: function () {
+			},
+			methods: {
+
+			}
+		})
+	</script>
+
+</body>
+
+</html>
