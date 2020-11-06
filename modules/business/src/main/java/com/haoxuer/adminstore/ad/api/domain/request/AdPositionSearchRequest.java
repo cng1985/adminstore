@@ -18,6 +18,8 @@ public class AdPositionSearchRequest extends BasePageRequest {
      @Search(name = "name",operator = Filter.Operator.like)
      private String name;
 
+    @Search(name = "adPosition.id",operator = Filter.Operator.eq)
+    private Long adPosition;
 
     private String sortField;
 

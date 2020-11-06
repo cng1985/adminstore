@@ -86,6 +86,7 @@
                 <entry key="sitename" value="后台管理"/>
                 <entry key="departmentJson" value-ref="departmentJsonDirective"/>
                 <entry key="userRoleJson" value-ref="userRoleJsonDirective"/>
+                <entry key="uploadUrl" value="https://cloud.demomall.cn/b2b/storage/upload.htm"/>
 
             </map>
         </property>

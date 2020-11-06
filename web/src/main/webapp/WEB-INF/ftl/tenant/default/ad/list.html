@@ -46,12 +46,12 @@
 		<!-- =============================================== -->
 
 		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper" id="app"   v-cloak  >
+		<div class="content-wrapper" id="app" v-cloak>
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<!-- 导航 -->
 				<div class="navigation">
-					<i>首页</i> <span>列表</span>
+					<i>首页</i> <span>广告管理</span>
 				</div>
 			</section>
 			<!-- Main content -->
@@ -62,22 +62,23 @@
 					<div class="search">
 						<el-form label-width="80px">
 							<el-row>
-										<el-col :span="6" style="padding: 0 8px;">
-											<el-form-item label="广告位">
-												<el-input v-model="searchObject.title" size="small" placeholder="广告位" name="title">
-												</el-input>
-											</el-form-item>
-										</el-col>
-										<el-col :span="6" style="padding: 0 8px;">
-											<el-form-item label="广告位">
-												<el-select size="small" style="width: 100%;"  v-model="searchObject.adPosition" filterable clearable
-														   placeholder="请选择">
-													<el-option v-for="item in adPositionOptions" :key="item.id"
-															   :label="item.name" :value="item.id">
-													</el-option>
-												</el-select>
-											</el-form-item>
-										</el-col>
+								<el-col :span="6" style="padding: 0 8px;">
+									<el-form-item label="标题">
+										<el-input v-model="searchObject.title" size="small" placeholder="标题"
+												  name="title">
+										</el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="6" style="padding: 0 8px;">
+									<el-form-item label="广告位">
+										<el-select size="small" style="width: 100%;" v-model="searchObject.adPosition"
+												   filterable clearable placeholder="请选择">
+											<el-option v-for="item in adPositionOptions" :key="item.id"
+													   :label="item.name" :value="item.id">
+											</el-option>
+										</el-select>
+									</el-form-item>
+								</el-col>
 
 								<el-col :span="12" style="padding: 0 10px;margin-top: 5px;">
 									<el-row type="flex" justify="end">
@@ -93,64 +94,33 @@
 						<el-button type="primary" size="small" @click="addView">新增</el-button>
 					</div>
 
-					<el-table v-loading="loading" :data="tableData.list"  @cell-click="showView" @sort-change="changeTableSort" style="width: 100%;font-size: 12px;">
-								<el-table-column label="标题"
+					<el-row :gutter="20">
+						<el-col :span="6" v-for="item in tableData.list" :key="item.id">
+							<el-card :body-style="{ padding: '0px' }">
+								<div class="card">
+									<el-image style="width: 100%; height: 150px" :src="item.path" >
+									</el-image>
+									<div style="padding:3px 14px;">
+										<span>标题:{{item.title}}</span>
+									</div>
+									<div style="padding:3px 14px;">
+										<span>广告位:{{item.adPositionName}}</span>
+									</div>
+									<div class="state">
+										<el-button type="primary" size="small" @click="editView(item.id)">编辑</el-button>
+										<el-button type="danger" size="small" @click="deleteData(item)">删除</el-button>
+									</div>
+								</div>
 
-												 prop="title"
-						            
-					                 width="100"  
-					              >
-								</el-table-column>
-								<el-table-column label="广告开始时间"
-
-												 prop="beginDate"
-						            
-					                 width="100"  
-					              >
-								</el-table-column>
-								<el-table-column label="广告结束时间"
-
-												 prop="endDate"
-						            
-					                 width="100"  
-					              >
-								</el-table-column>
-								<el-table-column label="链接地址"
-
-												 prop="url"
-						            
-					                 width="100"  
-					              >
-								</el-table-column>
-								<el-table-column label="广告位"
-
-												 prop="adPositionName"
-						            
-					                 width="100"  
-					              >
-								</el-table-column>
-								<el-table-column label="内容"
-
-												 prop="note"
-						            
-					                 width="100"  
-					              >
-								</el-table-column>
-						<el-table-column width="160" align="center" fixed="right" label="操作">
-							<template slot-scope="scope">
-								<el-button type="primary" size="mini" @click="editView(scope.row.id)">编辑
-								</el-button>
-								<el-button type="danger" size="mini"  style="cursor: pointer;"
-									@click="deleteData(scope.row)">删除</el-button>
-							</template>
-						</el-table-column>
-					</el-table>
+							</el-card>
+						</el-col>
+					</el-row>
 
 					<div class="page">
-						<el-pagination background :current-page="searchObject.no" :page-sizes="[10, 20, 50, 100]"
-							:page-size="tableData.size" :pager-count="5"
-							layout="total, sizes, prev, pager, next, jumper" :page-count="tableData.totalPage"
-							:total="tableData.total" @size-change="sizeChange" @current-change="pageChange">
+						<el-pagination background :current-page="searchObject.no" :page-sizes="[8, 16, 40, 80]"
+									   :page-size="tableData.size" :pager-count="5"
+									   layout="total, sizes, prev, pager, next, jumper" :page-count="tableData.totalPage"
+									   :total="tableData.total" @size-change="sizeChange" @current-change="pageChange">
 						</el-pagination>
 					</div>
 				</div>
@@ -159,90 +129,17 @@
 					<el-page-header @back="goBack" content="增加">
 					</el-page-header>
 					<div style="margin-top: 20px;">
-					<el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px" >
-						<el-row :gutter="10">
-								<el-col :span="12">
+						<el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px">
+							<el-row :gutter="10">
+								<el-col :span="18">
 									<el-form-item label="标题" size="mini" prop="title">
-											<el-input v-model="form.title" name="title">
-											</el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="12">
-									<el-form-item label="广告开始时间" size="mini" prop="beginDate">
-										<el-date-picker v-model="form.beginDate" type="datetime" value-format="yyyy-MM-dd HH:mm" placeholder="选择日期">
-										</el-date-picker>
-									</el-form-item>
-								</el-col>
-								<el-col :span="12">
-									<el-form-item label="广告结束时间" size="mini" prop="endDate">
-										<el-date-picker v-model="form.endDate" type="datetime" value-format="yyyy-MM-dd HH:mm" placeholder="选择日期">
-										</el-date-picker>
-									</el-form-item>
-								</el-col>
-								<el-col :span="12">
-									<el-form-item label="链接地址" size="mini" prop="url">
-											<el-input v-model="form.url" name="url">
-											</el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="12">
-									<el-form-item label="广告位" size="mini" prop="adPosition">
-											<el-select style="width: 100%;"  v-model="form.adPosition" filterable clearable
-													   placeholder="请选择">
-												<el-option v-for="item in adPositionOptions" :key="item.id"
-														   :label="item.name" :value="item.id">
-												</el-option>
-											</el-select>
-									</el-form-item>
-								</el-col>
-								<el-col :span="12">
-									<el-form-item label="内容" size="mini" prop="note">
-											<el-input v-model="form.note" name="note">
-											</el-input>
-									</el-form-item>
-								</el-col>
-						</el-row>
-						<el-row style="text-align: right;">
-							<el-button @click="resetForm('ruleForm')">重置</el-button>
-							<el-button type="primary" @click="add">确定</el-button>
-						</el-row>
-					</el-form>
-					</div>
-				</div>
-				<!-- 更新页面 -->
-				<div v-if="modelType == 'edit'">
-					<el-page-header @back="goBack" content="更新">
-					</el-page-header>
-					<div style="margin-top: 20px;">
-					<el-form ref="form_edit" :rules="rules" :model="form_edit" label-width="160px" >
-						<el-row :gutter="10">
-								<el-col :span="12">
-									<el-form-item label="标题" size="mini" prop="title">
-										<el-input v-model="form_edit.title" name="title">
+										<el-input v-model="form.title" name="title">
 										</el-input>
 									</el-form-item>
 								</el-col>
-								<el-col :span="12">
-									<el-form-item label="广告开始时间" size="mini" prop="beginDate">
-										<el-date-picker v-model="form_edit.beginDate" type="datetime" value-format="yyyy-MM-dd HH:mm" placeholder="选择日期">
-										</el-date-picker>
-									</el-form-item>
-								</el-col>
-								<el-col :span="12">
-									<el-form-item label="广告结束时间" size="mini" prop="endDate">
-										<el-date-picker v-model="form_edit.endDate" type="datetime" value-format="yyyy-MM-dd HH:mm" placeholder="选择日期">
-										</el-date-picker>
-									</el-form-item>
-								</el-col>
-								<el-col :span="12">
-									<el-form-item label="链接地址" size="mini" prop="url">
-										<el-input v-model="form_edit.url" name="url">
-										</el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="12">
+								<el-col :span="18">
 									<el-form-item label="广告位" size="mini" prop="adPosition">
-										<el-select style="width: 100%;"  v-model="form_edit.adPosition" filterable clearable
+										<el-select style="width: 100%;" v-model="form.adPosition" filterable clearable
 												   placeholder="请选择">
 											<el-option v-for="item in adPositionOptions" :key="item.id"
 													   :label="item.name" :value="item.id">
@@ -250,18 +147,104 @@
 										</el-select>
 									</el-form-item>
 								</el-col>
-								<el-col :span="12">
-									<el-form-item label="内容" size="mini" prop="note">
-										<el-input v-model="form_edit.note" name="note">
+								<el-col :span="18">
+									<el-form-item label="广告图片" size="mini" prop="path">
+										<avatar v-model="form.path"></avatar>
+									</el-form-item>
+								</el-col>
+								<el-col :span="18">
+									<el-form-item label="广告开始时间" size="mini" prop="beginDate">
+										<el-date-picker v-model="form.beginDate" type="datetime" :picker-options="beginPickerOptions"
+														format="yyyy-MM-dd HH:mm" value-format="yyyy-MM-dd HH:mm"
+														placeholder="选择日期">
+										</el-date-picker>
+									</el-form-item>
+								</el-col>
+								<el-col :span="18">
+									<el-form-item label="广告结束时间" size="mini" prop="endDate">
+										<el-date-picker v-model="form.endDate" type="datetime" format="yyyy-MM-dd HH:mm" :picker-options="endPickerOptions"
+														value-format="yyyy-MM-dd HH:mm" placeholder="选择日期">
+										</el-date-picker>
+									</el-form-item>
+								</el-col>
+								<el-col :span="18">
+									<el-form-item label="链接地址" size="mini" prop="url">
+										<el-input v-model="form.url" name="url">
 										</el-input>
 									</el-form-item>
 								</el-col>
-						</el-row>
-						<el-row style="text-align: right;">
-							<el-button @click="cancelEdit">取消</el-button>
-							<el-button type="primary" @click="updateData">确定</el-button>
-						</el-row>
-					</el-form>
+								<el-col :span="18">
+									<el-form-item label="内容" size="mini" prop="note">
+										<el-input v-model="form.note" name="note" type="textarea"></el-input>
+									</el-form-item>
+								</el-col>
+							</el-row>
+							<el-row style="text-align: right;">
+								<el-button @click="resetForm('ruleForm')">重置</el-button>
+								<el-button type="primary" @click="add">确定</el-button>
+							</el-row>
+						</el-form>
+					</div>
+				</div>
+				<!-- 更新页面 -->
+				<div v-if="modelType == 'edit'">
+					<el-page-header @back="goBack" content="更新">
+					</el-page-header>
+					<div style="margin-top: 20px;">
+						<el-form ref="form_edit" :rules="rules" :model="form_edit" label-width="160px">
+							<el-row :gutter="10">
+								<el-col :span="18">
+									<el-form-item label="标题" size="mini" prop="title">
+										<el-input v-model="form_edit.title" name="title">
+										</el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="18">
+									<el-form-item label="广告位" size="mini" prop="adPosition">
+										<el-select style="width: 100%;" v-model="form_edit.adPosition" filterable
+												   clearable placeholder="请选择">
+											<el-option v-for="item in adPositionOptions" :key="item.id"
+													   :label="item.name" :value="item.id">
+											</el-option>
+										</el-select>
+									</el-form-item>
+								</el-col>
+								<el-col :span="18">
+									<el-form-item label="广告图片" size="mini" prop="path">
+										<avatar v-model="form_edit.path"></avatar>
+									</el-form-item>
+								</el-col>
+								<el-col :span="18">
+									<el-form-item label="广告开始时间" size="mini" prop="beginDate">
+										<el-date-picker v-model="form_edit.beginDate" type="datetime" placeholder="选择日期"
+														format="yyyy-MM-dd HH:mm" value-format="yyyy-MM-dd HH:mm" :picker-options="beginPickerOptions" >
+										</el-date-picker>
+									</el-form-item>
+								</el-col>
+								<el-col :span="18">
+									<el-form-item label="广告结束时间" size="mini" prop="endDate">
+										<el-date-picker v-model="form_edit.endDate" type="datetime" placeholder="选择日期" :picker-options="endPickerOptions"
+														format="yyyy-MM-dd HH:mm" value-format="yyyy-MM-dd HH:mm">
+										</el-date-picker>
+									</el-form-item>
+								</el-col>
+								<el-col :span="18">
+									<el-form-item label="链接地址" size="mini" prop="url">
+										<el-input v-model="form_edit.url" name="url">
+										</el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="18">
+									<el-form-item label="内容" size="mini" prop="note">
+										<el-input v-model="form_edit.note" name="note" type="textarea"></el-input>
+									</el-form-item>
+								</el-col>
+							</el-row>
+							<el-row style="text-align: right;">
+								<el-button @click="cancelEdit">取消</el-button>
+								<el-button type="primary" @click="updateData">确定</el-button>
+							</el-row>
+						</el-form>
 					</div>
 				</div>
 				<div v-if="modelType == 'view'">
@@ -269,24 +252,27 @@
 					</el-page-header>
 					<div class="form-title">详细信息</div>
 					<el-form class="viewForm" label-width="80px">
-								<el-form-item label="标题">
-									{{viewModel.title}}
-								</el-form-item>
-								<el-form-item label="广告开始时间">
-									{{viewModel.beginDate}}
-								</el-form-item>
-								<el-form-item label="广告结束时间">
-									{{viewModel.endDate}}
-								</el-form-item>
-								<el-form-item label="链接地址">
-									{{viewModel.url}}
-								</el-form-item>
-								<el-form-item label="广告位">
-									{{viewModel.adPosition}}
-								</el-form-item>
-								<el-form-item label="内容">
-									{{viewModel.note}}
-								</el-form-item>
+						<el-form-item label="标题">
+							{{viewModel.title}}
+						</el-form-item>
+						<el-form-item label="广告位">
+							{{viewModel.adPositionName}}
+						</el-form-item>
+						<el-form-item label="广告类型">
+							{{viewModel.typeName}}
+						</el-form-item>
+						<el-form-item label="广告开始时间">
+							{{viewModel.beginDate}}
+						</el-form-item>
+						<el-form-item label="广告结束时间">
+							{{viewModel.endDate}}
+						</el-form-item>
+						<el-form-item label="链接地址">
+							{{viewModel.url}}
+						</el-form-item>
+						<el-form-item label="内容">
+							{{viewModel.note}}
+						</el-form-item>
 					</el-form>
 				</div>
 
@@ -317,6 +303,8 @@
 	</div>
 	<!-- ./wrapper -->
 	[@baseScript /]
+	[#include "/tenant/default/common/component.html" /]
+	[@avatar /]
 	<script>
 		var vm = new Vue({
 			el: '#app',
@@ -370,6 +358,34 @@
 						  ],
 					},
                      adPositionOptions: [],
+                     beginPickerOptions: {
+						disabledDate: (time) => {
+							let nowDate = new Date();
+							return time.getTime() < nowDate;//注意是||不是&&
+						}
+					},
+					endPickerOptions: {
+						disabledDate: (time) => {
+							let nowDate = new Date();
+							if (time.getTime() < nowDate) {
+								return true;
+							}
+							if (this.form.beginDate) {
+								console.info(this.form.beginDate);
+								var arr1 = this.form.beginDate.split(" ");
+								var sdate = arr1[0].split('-');
+								var date = new Date(sdate[0], sdate[1] - 1, sdate[2]);
+								return time.getTime() < date;
+							}
+							if (this.form_edit.beginDate) {
+								var arr1 = this.form_edit.beginDate.split(" ");
+								var sdate = arr1[0].split('-');
+								var date = new Date(sdate[0], sdate[1] - 1, sdate[2]);
+								return time.getTime() < date;
+							}
+							return time.getTime() < nowDate;//注意是||不是&&
+						}
+					}
 		        }
 		    },
 		mounted: function () {
