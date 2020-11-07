@@ -25,7 +25,8 @@
 * [discover](https://gitee.com/cng1985/discover)
 * AdminLTE
 * bootstrap
-
+* [VUE](https://cn.vuejs.org/)
+* [element-ui](https://element.eleme.cn/)
 ## 搭建步骤
 
 1. 创建数据库。如使用MySQL，字符集选择为`utf8`或者`utf8mb4`（支持更多特殊字符，推荐）。
