@@ -1,0 +1,92 @@
+.top-parts-gray {
+    position: relative;
+    height: 100%;
+    line-height: 80px
+}
+
+.top-parts-gray_item {
+    width: 68px;
+    height: 68px;
+    border-radius: 10px;
+    margin-top: 6px;
+    margin-right: 35px;
+    overflow: hidden;
+    display: inline-block;
+    line-height: 100%
+}
+
+.top-parts-gray_item-wrapper {
+    position: absolute;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    top: 0;
+    left: 310px;
+    height: 80px;
+    line-height: 100%
+}
+
+.o2_mini .top-parts-gray_item-wrapper {
+    left: 220px
+}
+
+.top-parts-gray_item img {
+    display: inline-block;
+    width: 100%;
+    height: 100%
+}
+
+.activity-top {
+    height: 80px;
+    display: block;
+    cursor: pointer
+}
+
+.activity-top__inner {
+    background-repeat: no-repeat;
+    background-position: 50% 0;
+    position: relative;
+    height: 100%
+}
+
+.activity-top__inner .JD_close-button--square {
+    position: absolute;
+    top: 5px;
+    right: 0
+}
+
+.activity-top__inner .promotional-tag__618 {
+    position: absolute;
+    left: 0;
+    top: 0
+}
+
+.activity-top__inner .top-parts {
+    text-align: right;
+    height: 100%;
+    line-height: 80px;
+    padding-right: 20px
+}
+
+.activity-top__inner .top-parts__item {
+    width: 116px;
+    height: 46px;
+    margin-right: 10px;
+    display: inline-block;
+    line-height: 100%
+}
+
+.activity-top__inner .icon-close {
+    cursor: pointer;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #fff;
+    background: #2d2d2d;
+    width: 20px;
+    text-align: center;
+    line-height: 20px;
+    opacity: .3;
+    filter: alpha(opacity=30)
+}

@@ -1,4 +1,4 @@
-package com.haoxuer.adminstore.member.controller.front;
+package com.haoxuer.adminstore.web.controller;
 
 import com.haoxuer.discover.web.controller.front.BaseController;
 import org.springframework.stereotype.Controller;
@@ -17,5 +17,6 @@ public class SiteController extends BaseController {
     public String index() {
         return getView("index");
     }
+
 
 }

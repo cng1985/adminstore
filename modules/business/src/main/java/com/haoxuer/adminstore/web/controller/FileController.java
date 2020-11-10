@@ -4,7 +4,7 @@
  * 
  */
 
-package com.haoxuer.adminstore.member.controller.front;
+package com.haoxuer.adminstore.web.controller;
 
 import com.haoxuer.discover.plug.data.service.StorageService;
 import com.haoxuer.discover.plug.data.vo.FileInfo;

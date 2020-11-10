@@ -8,7 +8,7 @@
 +---------------------------------------------------------------------------
  */
 
-package com.haoxuer.adminstore.member.controller.front;
+package com.haoxuer.adminstore.web.controller;
 
 import com.haoxuer.discover.user.data.entity.UserInfo;
 import com.haoxuer.discover.user.data.entity.UserLoginLog;

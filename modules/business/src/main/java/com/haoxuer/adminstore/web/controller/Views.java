@@ -8,7 +8,7 @@
 +---------------------------------------------------------------------------
 */
 
-package com.haoxuer.adminstore.member.controller.front;
+package com.haoxuer.adminstore.web.controller;
 
 /**
  * 返回页面配置

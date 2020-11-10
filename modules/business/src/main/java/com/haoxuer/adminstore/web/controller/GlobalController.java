@@ -1,13 +1,13 @@
-package com.haoxuer.adminstore.member.controller.front;
+package com.haoxuer.adminstore.web.controller;
 
 
 import com.haoxuer.adminstore.exception.NoDataException;
 import com.haoxuer.adminstore.exception.NoUserTokenException;
 import com.haoxuer.adminstore.exception.UnAuthorizationException;
-import com.haoxuer.discover.rest.base.ResponseObject;
-import com.haoxuer.discover.user.utils.UserUtils;
 import com.haoxuer.adminstore.member.data.entity.ExceptionLog;
 import com.haoxuer.adminstore.member.data.service.ExceptionLogService;
+import com.haoxuer.discover.rest.base.ResponseObject;
+import com.haoxuer.discover.user.utils.UserUtils;
 import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -30,9 +30,9 @@ import java.util.Set;
 public class GlobalController   {
 
 
-
   @Autowired
-  ExceptionLogService logService;
+  private ExceptionLogService logService;
+
 
   @ExceptionHandler(ServletException.class)
   public ModelAndView expx(HttpServletRequest request, Exception ex) {
