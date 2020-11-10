@@ -1,0 +1,118 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.haoxuer.adminstore</groupId>
+        <artifactId>adminstore-root</artifactId>
+        <version>1.01</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>data</artifactId>
+    <packaging>jar</packaging>
+
+    <name>data</name>
+    <url>https://github.com/cng1985/adminstore</url>
+    <description>一个简单的项目初始化模板</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <mybatis.version>3.5.1</mybatis.version>
+        <discover.version>3.1.4-20201031</discover.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.haoxuer.discover</groupId>
+            <artifactId>discover-website</artifactId>
+            <version>${discover.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.haoxuer.discover</groupId>
+            <artifactId>discover-area</artifactId>
+            <version>${discover.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.haoxuer.discover</groupId>
+            <artifactId>discover-quartz</artifactId>
+            <version>2.0.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.haoxuer.discover</groupId>
+            <artifactId>discover-trade</artifactId>
+            <version>2.0.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.haoxuer.discover</groupId>
+            <artifactId>discover-user-oauth</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.haoxuer.discover</groupId>
+            <artifactId>discover-user-notice</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.haoxuer.adminstore</groupId>
+            <artifactId>api</artifactId>
+            <version>1.01</version>
+        </dependency>
+        <dependency>
+            <groupId>com.haoxuer.discover</groupId>
+            <artifactId>discover-qrcode-view</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.haoxuer.discover</groupId>
+            <artifactId>discover-storage</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.haoxuer.discover</groupId>
+            <artifactId>discover-function</artifactId>
+            <version>2.0.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.196</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20180130</version>
+        </dependency>
+        <dependency>
+            <groupId>com.quhaodian.jsonrpc</groupId>
+            <version>1.03</version>
+            <artifactId>core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.haoxuer</groupId>
+            <artifactId>lbsyun</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+    </dependencies>
+</project>
