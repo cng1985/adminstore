@@ -29,11 +29,6 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-
-
-
-
-
     <filter>
         <filter-name>SimpleCORSFilter</filter-name>
         <filter-class>com.haoxuer.discover.user.web.filter.SimpleCORSFilter</filter-class>
@@ -60,9 +55,6 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-    <listener>
-        <listener-class>com.haoxuer.discover.quartz.web.InitListener</listener-class>
-    </listener>
 
     <servlet>
         <servlet-name>dispatcher</servlet-name>
@@ -73,15 +65,6 @@
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
-    <servlet>
-        <servlet-name>rpc</servlet-name>
-        <servlet-class>com.quhaodian.servlet.RpcServlet</servlet-class>
-        <load-on-startup>2</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>rpc</servlet-name>
-        <url-pattern>/rpc</url-pattern>
-    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -89,6 +72,10 @@
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>*.json</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>3600</session-timeout>

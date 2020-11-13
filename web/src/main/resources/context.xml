@@ -84,6 +84,10 @@
                 <entry key="menuchilds" value-ref="menuchildsDirective"/>
                 <entry key="siteurl" value="#{servletContext.contextPath}/"/>
                 <entry key="sitename" value="后台管理"/>
+                <entry key="departmentJson" value-ref="departmentJsonDirective"/>
+                <entry key="userRoleJson" value-ref="userRoleJsonDirective"/>
+                <entry key="uploadUrl" value="https://cloud.demomall.cn/b2b/storage/upload.htm"/>
+
             </map>
         </property>
     </bean>
@@ -126,5 +130,4 @@
         </mvc:interceptor>
     </mvc:interceptors>
     <import resource="context-shiro.xml"/>
-
 </beans>

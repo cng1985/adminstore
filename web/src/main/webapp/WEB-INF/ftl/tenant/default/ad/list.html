@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>列表</title>
+	[#include "/admin/common/commons.html"]
+	[#include "/tenant/common/site.html"]
+	[@baseHead /]
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<div class="wrapper">
+
+		<header class="main-header">
+			<!-- Header Navbar: style can be found in header.less -->
+			[#include "/admin/common/nav.html"]
+		</header>
+
+		<!-- =============================================== -->
+
+		<!-- Left side column. contains the sidebar -->
+		<aside class="main-sidebar">
+			<!-- sidebar: style can be found in sidebar.less -->
+			<section class="sidebar">
+				[@user_panel /]
+				<!-- search form -->
+				[@sidebar_form /]
+				<!-- /.search form -->
+				<!-- sidebar menu: : style can be found in sidebar.less -->
+				<ul class="sidebar-menu" data-widget="tree">
+					<li class="header">主面板</li>
+					[@menustag id=1]
+					[#list list as item]
+					[@menu item "1,51,53"]
+					[/@menu]
+					[/#list]
+					[/@menustag]
+				</ul>
+			</section>
+			<!-- /.sidebar -->
+		</aside>
+
+		<!-- =============================================== -->
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper" id="app" v-cloak>
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<!-- 导航 -->
+				<div class="navigation">
+					<i>首页</i> <span>广告管理</span>
+				</div>
+			</section>
+			<!-- Main content -->
+			<section class="content">
+
+				<!-- Default box -->
+				<div v-if="modelType == 'list'">
+					<div class="search">
+						<el-form label-width="80px">
+							<el-row>
+								<el-col :span="6" style="padding: 0 8px;">
+									<el-form-item label="标题">
+										<el-input v-model="searchObject.title" size="small" placeholder="标题"
+												  name="title">
+										</el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="6" style="padding: 0 8px;">
+									<el-form-item label="广告位">
+										<el-select size="small" style="width: 100%;" v-model="searchObject.adPosition"
+												   filterable clearable placeholder="请选择">
+											<el-option v-for="item in adPositionOptions" :key="item.id"
+													   :label="item.name" :value="item.id">
+											</el-option>
+										</el-select>
+									</el-form-item>
+								</el-col>
+
+								<el-col :span="12" style="padding: 0 10px;margin-top: 5px;">
+									<el-row type="flex" justify="end">
+										<el-button size="small" type="primary" @click="search">搜索</el-button>
+										<el-button size="small" plain @click="clearData">清除条件</el-button>
+									</el-row>
+								</el-col>
+							</el-row>
+						</el-form>
+					</div>
+
+					<div style="padding: 10px 2px;">
+						<el-button type="primary" size="small" @click="addView">新增</el-button>
+					</div>
+
+					<el-row :gutter="20">
+						<el-col :span="6" v-for="item in tableData.list" :key="item.id">
+							<el-card :body-style="{ padding: '0px' }">
+								<div class="card">
+									<el-image style="width: 100%; height: 150px" :src="item.path" >
+									</el-image>
+									<div style="padding:3px 14px;">
+										<span>标题:{{item.title}}</span>
+									</div>
+									<div style="padding:3px 14px;">
+										<span>广告位:{{item.adPositionName}}</span>
+									</div>
+									<div class="state">
+										<el-button type="primary" size="small" @click="editView(item.id)">编辑</el-button>
+										<el-button type="danger" size="small" @click="deleteData(item)">删除</el-button>
+									</div>
+								</div>
+
+							</el-card>
+						</el-col>
+					</el-row>
+
+					<div class="page">
+						<el-pagination background :current-page="searchObject.no" :page-sizes="[8, 16, 40, 80]"
+									   :page-size="tableData.size" :pager-count="5"
+									   layout="total, sizes, prev, pager, next, jumper" :page-count="tableData.totalPage"
+									   :total="tableData.total" @size-change="sizeChange" @current-change="pageChange">
+						</el-pagination>
+					</div>
+				</div>
+				<!-- 增加页面 -->
+				<div v-if="modelType == 'add'">
+					<el-page-header @back="goBack" content="增加">
+					</el-page-header>
+					<div style="margin-top: 20px;">
+						<el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px">
+							<el-row :gutter="10">
+								<el-col :span="18">
+									<el-form-item label="标题" size="mini" prop="title">
+										<el-input v-model="form.title" name="title">
+										</el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="18">
+									<el-form-item label="广告位" size="mini" prop="adPosition">
+										<el-select style="width: 100%;" v-model="form.adPosition" filterable clearable
+												   placeholder="请选择">
+											<el-option v-for="item in adPositionOptions" :key="item.id"
+													   :label="item.name" :value="item.id">
+											</el-option>
+										</el-select>
+									</el-form-item>
+								</el-col>
+								<el-col :span="18">
+									<el-form-item label="广告图片" size="mini" prop="path">
+										<avatar v-model="form.path"></avatar>
+									</el-form-item>
+								</el-col>
+								<el-col :span="18">
+									<el-form-item label="广告开始时间" size="mini" prop="beginDate">
+										<el-date-picker v-model="form.beginDate" type="datetime" :picker-options="beginPickerOptions"
+														format="yyyy-MM-dd HH:mm" value-format="yyyy-MM-dd HH:mm"
+														placeholder="选择日期">
+										</el-date-picker>
+									</el-form-item>
+								</el-col>
+								<el-col :span="18">
+									<el-form-item label="广告结束时间" size="mini" prop="endDate">
+										<el-date-picker v-model="form.endDate" type="datetime" format="yyyy-MM-dd HH:mm" :picker-options="endPickerOptions"
+														value-format="yyyy-MM-dd HH:mm" placeholder="选择日期">
+										</el-date-picker>
+									</el-form-item>
+								</el-col>
+								<el-col :span="18">
+									<el-form-item label="链接地址" size="mini" prop="url">
+										<el-input v-model="form.url" name="url">
+										</el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="18">
+									<el-form-item label="内容" size="mini" prop="note">
+										<el-input v-model="form.note" name="note" type="textarea"></el-input>
+									</el-form-item>
+								</el-col>
+							</el-row>
+							<el-row style="text-align: right;">
+								<el-button @click="resetForm('ruleForm')">重置</el-button>
+								<el-button type="primary" @click="add">确定</el-button>
+							</el-row>
+						</el-form>
+					</div>
+				</div>
+				<!-- 更新页面 -->
+				<div v-if="modelType == 'edit'">
+					<el-page-header @back="goBack" content="更新">
+					</el-page-header>
+					<div style="margin-top: 20px;">
+						<el-form ref="form_edit" :rules="rules" :model="form_edit" label-width="160px">
+							<el-row :gutter="10">
+								<el-col :span="18">
+									<el-form-item label="标题" size="mini" prop="title">
+										<el-input v-model="form_edit.title" name="title">
+										</el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="18">
+									<el-form-item label="广告位" size="mini" prop="adPosition">
+										<el-select style="width: 100%;" v-model="form_edit.adPosition" filterable
+												   clearable placeholder="请选择">
+											<el-option v-for="item in adPositionOptions" :key="item.id"
+													   :label="item.name" :value="item.id">
+											</el-option>
+										</el-select>
+									</el-form-item>
+								</el-col>
+								<el-col :span="18">
+									<el-form-item label="广告图片" size="mini" prop="path">
+										<avatar v-model="form_edit.path"></avatar>
+									</el-form-item>
+								</el-col>
+								<el-col :span="18">
+									<el-form-item label="广告开始时间" size="mini" prop="beginDate">
+										<el-date-picker v-model="form_edit.beginDate" type="datetime" placeholder="选择日期"
+														format="yyyy-MM-dd HH:mm" value-format="yyyy-MM-dd HH:mm" :picker-options="beginPickerOptions" >
+										</el-date-picker>
+									</el-form-item>
+								</el-col>
+								<el-col :span="18">
+									<el-form-item label="广告结束时间" size="mini" prop="endDate">
+										<el-date-picker v-model="form_edit.endDate" type="datetime" placeholder="选择日期" :picker-options="endPickerOptions"
+														format="yyyy-MM-dd HH:mm" value-format="yyyy-MM-dd HH:mm">
+										</el-date-picker>
+									</el-form-item>
+								</el-col>
+								<el-col :span="18">
+									<el-form-item label="链接地址" size="mini" prop="url">
+										<el-input v-model="form_edit.url" name="url">
+										</el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="18">
+									<el-form-item label="内容" size="mini" prop="note">
+										<el-input v-model="form_edit.note" name="note" type="textarea"></el-input>
+									</el-form-item>
+								</el-col>
+							</el-row>
+							<el-row style="text-align: right;">
+								<el-button @click="cancelEdit">取消</el-button>
+								<el-button type="primary" @click="updateData">确定</el-button>
+							</el-row>
+						</el-form>
+					</div>
+				</div>
+				<div v-if="modelType == 'view'">
+					<el-page-header @back="goBack" content="详情">
+					</el-page-header>
+					<div class="form-title">详细信息</div>
+					<el-form class="viewForm" label-width="80px">
+						<el-form-item label="标题">
+							{{viewModel.title}}
+						</el-form-item>
+						<el-form-item label="广告位">
+							{{viewModel.adPositionName}}
+						</el-form-item>
+						<el-form-item label="广告类型">
+							{{viewModel.typeName}}
+						</el-form-item>
+						<el-form-item label="广告开始时间">
+							{{viewModel.beginDate}}
+						</el-form-item>
+						<el-form-item label="广告结束时间">
+							{{viewModel.endDate}}
+						</el-form-item>
+						<el-form-item label="链接地址">
+							{{viewModel.url}}
+						</el-form-item>
+						<el-form-item label="内容">
+							{{viewModel.note}}
+						</el-form-item>
+					</el-form>
+				</div>
+
+
+				<!-- /.box -->
+			</section>
+
+			<el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
+				<span>确认要删除该条数据吗?</span>
+				<span slot="footer" class="dialog-footer">
+					<el-button @click="dialogVisible = false">取 消</el-button>
+					<el-button type="primary" @click="handleClose">确 定</el-button>
+				</span>
+			</el-dialog>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+
+		[#include "/admin/common/footer.html"]
+
+		<!-- Control Sidebar -->
+		[#include "/admin/common/aside.html"]
+
+		<!-- /.control-sidebar -->
+		<!-- Add the sidebar's background. This div must be placed
+     immediately after the control sidebar -->
+		<div class="control-sidebar-bg"></div>
+	</div>
+	<!-- ./wrapper -->
+	[@baseScript /]
+	[#include "/tenant/default/common/component.html" /]
+	[@avatar /]
+	<script>
+		var vm = new Vue({
+			el: '#app',
+			data: function () {
+				return {
+					searchObject: {
+						no: 1,
+						size: 10,
+						title:'',
+						adPosition:''					},
+					modelType:"list",
+					dialogVisible: false,
+					defaultProps: {
+						children: 'children',
+						label: 'name'
+					},
+					form: {
+						note: '',
+						title: '',
+						endDate: '',
+						catalog: '',
+						bussId: '',
+						addDate: '',
+						type: '',
+						url: '',
+						path: '',
+						beginDate: '',
+						sortNum: '',
+						adPosition: '',
+						adPositionName: ''					},
+					form_edit: {
+						note: '',
+						title: '',
+						endDate: '',
+						catalog: '',
+						bussId: '',
+						addDate: '',
+						type: '',
+						url: '',
+						path: '',
+						beginDate: '',
+						sortNum: '',
+						adPosition: '',
+						adPositionName: ''					},
+					viewModel:{},
+					loading: false,
+					tableData: {},
+					rules: {
+                        title: [
+							{ required: true, message: '请输入标题', trigger: 'blur' }
+						  ],
+					},
+                     adPositionOptions: [],
+                     beginPickerOptions: {
+						disabledDate: (time) => {
+							let nowDate = new Date();
+							return time.getTime() < nowDate;//注意是||不是&&
+						}
+					},
+					endPickerOptions: {
+						disabledDate: (time) => {
+							let nowDate = new Date();
+							if (time.getTime() < nowDate) {
+								return true;
+							}
+							if (this.form.beginDate) {
+								console.info(this.form.beginDate);
+								var arr1 = this.form.beginDate.split(" ");
+								var sdate = arr1[0].split('-');
+								var date = new Date(sdate[0], sdate[1] - 1, sdate[2]);
+								return time.getTime() < date;
+							}
+							if (this.form_edit.beginDate) {
+								var arr1 = this.form_edit.beginDate.split(" ");
+								var sdate = arr1[0].split('-');
+								var date = new Date(sdate[0], sdate[1] - 1, sdate[2]);
+								return time.getTime() < date;
+							}
+							return time.getTime() < nowDate;//注意是||不是&&
+						}
+					}
+		        }
+		    },
+		mounted: function () {
+			this.getSearchList();
+             this.loadAdPositionOptions();
+		},
+		methods: {
+              loadAdPositionOptions(){
+                    var param = {};
+					param.sortMethod = "asc";
+					param.sortField = "id";
+					$.post("${siteurl}tenantRest/adposition/search.htm", param, function (result) {
+						if (result.code == 0) {
+							Vue.set(vm.$data, 'adPositionOptions', result.list);
+						}
+					});
+              }
+              ,
+		    changeTableSort(column) {
+				this.searchObject.sortField = column.prop;
+                if ("descending" == column.order) {
+					this.searchObject.sortMethod = "desc";
+				}
+				else if("ascending" == column.order){
+					this.searchObject.sortMethod = "asc";
+				}
+				else {
+					this.searchObject.sortMethod = "";
+				}
+				this.getSearchList();
+			},
+			showView(row, column, cell, event){
+			       if(cell.cellIndex>0){
+			         return;
+			       }
+				   var param={};
+				   param.id=row.id;
+				   this.modelType="view";
+				   const loading = this.$loading({
+				   lock: true,
+				   text: '数据加载中...',
+				   spinner: 'el-icon-loading',
+				   background: 'rgba(0, 0, 0, 0.7)'
+				   });
+				   var that=this;
+                   $.post("${siteurl}tenantRest/ad/view.htm",param,function(res){
+                       if(res.code==0){
+						Vue.set(vm.$data, 'viewModel', res);
+					   }
+
+					   setTimeout(() => {
+							loading.close();
+							$(document).scrollTop(0);
+					   }, 300);
+				   });
+				  
+
+			},
+			goBack(){
+				this.modelType="list";
+			},
+			link(url) {
+				this.modelType = url;
+			},
+            addView(){
+				this.modelType="add";
+				this.form = {
+					title: '',
+					beginDate: '',
+					endDate: '',
+					url: '',
+					adPosition: '',
+					note: ''				};
+			},
+			add(){
+				var self=this;
+				this.$refs["ruleForm"].validate((valid) => {
+					if (valid) {
+						self.addData();
+					} else {
+						console.log('error submit!!');
+						return false;
+					}
+				});
+			},
+			addData() {
+				var that = this, data = this.form;
+				const loading = this.$loading({
+					lock: true,
+					text: '数据修改中',
+					spinner: 'el-icon-loading',
+					background: 'rgba(0, 0, 0, 0.7)'
+				});
+
+				$.post("${siteurl}tenantRest/ad/create.htm", data, function (res) {
+					setTimeout(() => {
+						loading.close();
+					}, 300);
+					if (res.code == 0) {
+						that.modelType = 'list';
+						that.$message({
+							message: '添加数据成功',
+							type: 'success'
+						});
+						that.searchObject.no = 1;
+						that.getSearchList();
+					} else {
+						that.$message.error(res.msg);
+					}
+				});
+			},
+			sizeChange(event) {
+				this.searchObject.size = event;
+				this.getSearchList();
+			},
+			updateData(){
+				var self=this;
+				this.$refs["form_edit"].validate((valid) => {
+					if (valid) {
+						self.updateDataPost();
+					} else {
+						console.log('error submit!!');
+						return false;
+					}
+				});
+			},
+			updateDataPost() {
+				var that = this, data = this.form_edit;
+				const loading = this.$loading({
+					lock: true,
+					text: '数据修改中',
+					spinner: 'el-icon-loading',
+					background: 'rgba(0, 0, 0, 0.7)'
+				});
+
+				$.post("${siteurl}tenantRest/ad/update.htm", data, function (res) {
+					setTimeout(() => {
+						loading.close();
+					}, 300);
+					if (res.code == 0) {
+						that.modelType = 'list';
+						that.$message({
+							message: '修改数据成功',
+							type: 'success'
+						});
+						that.getSearchList();
+					} else {
+						that.$message.error(res.msg);
+					}
+				});
+			},
+			// 获取发票详情
+			editView(id) {
+				var that = this;
+				var data ={};
+				data.id=id;
+				this.modelType="edit";
+				$.post("${siteurl}tenantRest/ad/view.htm", data, function (res) {
+					if (res.code == 0) {
+						console.log(res)
+						that.form_edit = res;
+					}
+				});
+			},
+			// 搜索商品
+			search() {
+				this.searchObject.no = 1;
+				this.getSearchList();
+			},
+			cancelEdit(){
+				this.modelType = 'list';
+			},
+			// 获取商品列表
+			getSearchList() {
+				this.loading = true;
+				var data = this.searchObject, that = this;
+				$.post("${siteurl}tenantRest/ad/search.htm", data, function (result) {
+					if (result.code == 0) {
+						Vue.set(vm.$data, 'tableData', result);
+					}
+					setTimeout(() => {
+						that.loading = false;
+					}, 300)
+				});
+			},
+			// 商品分页
+			pageChange(index) {
+				this.searchObject.no = index;
+				this.getSearchList();
+			},
+			deleteData(event) {
+				this.selectId = event.id;
+				this.dialogVisible = true;
+			},
+			clearData() {
+						this.searchObject.title = "";
+						this.searchObject.adPosition = "";
+			},
+			resetForm(formName) {
+				this.$refs[formName].resetFields();
+			},
+			handleClose(done) {
+				this.dialogVisible = false;
+				var self = this;
+				if (self.selectId) {
+					var params = {};
+					params.id = self.selectId;
+					$.post("${siteurl}tenantRest/ad/delete.htm", params, function (res) {
+						if (res.code == 0) {
+							self.$message({
+								message: '删除数据成功',
+								type: 'success'
+							});
+							self.getSearchList();
+						} else {
+							self.$message.error(res.msg);
+						}
+					});
+				}
+				done();
+			}
+		  }
+		})
+	</script>
+
+</body>
+
+</html>

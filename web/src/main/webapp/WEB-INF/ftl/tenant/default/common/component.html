@@ -1,0 +1,326 @@
+[#macro avatar]
+<style>
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        width: 64px;
+        height: 64px;
+    }
+
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+
+    .avatar-uploader input[type="file"] {
+        display: none;
+    }
+
+    .el-upload--picture-card {
+        background-color: #fbfdff;
+        border: 1px dashed #c0ccda;
+        border-radius: 6px;
+        box-sizing: border-box;
+        width: 64px;
+        height: 64px;
+        line-height: 64px;
+        vertical-align: top;
+    }
+
+    .el-upload--picture-card i {
+        font-size: 18px;
+    }
+
+    .el-upload--picture-card input {
+        display: none;
+    }
+
+    .el-upload-list--picture-card .el-upload-list__item {
+        overflow: hidden;
+        background-color: #fff;
+        border: 1px solid #c0ccda;
+        border-radius: 6px;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        width: 64px;
+        height: 64px;
+        margin: 0 8px 8px 0;
+        display: inline-block;
+    }
+
+    .el-upload-list--picture-card .el-upload-list__item-actions span+span {
+        margin-left: 10px;
+    }
+
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+
+    .avatar-uploader-icon {
+        font-size: 20px;
+        color: #8c939d;
+        width: 100%;
+        height: 100%;
+        line-height: 62px;
+        text-align: center;
+    }
+
+    .avatar {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    .el-card__body img {
+        width: 100%;
+    }
+
+    .el-card {
+        margin: 10px 0px;
+    }
+
+    .card {
+        position: relative;
+    }
+
+    .card:hover .state {
+        display: flex;
+
+    }
+
+    .card .state {
+        display: none;
+        flex-direction: row;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, .5);
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        justify-content: center;
+        align-items: flex-end;
+        padding-bottom: 10px;
+    }
+</style>
+<script type="text/x-template" id="my-avatar">
+    <el-upload action="${uploadUrl!}" :show-file-list="false"
+    :on-success="uploadSuccess" list-type="picture-card">
+    <img v-if="src" :src="src" class="avatar">
+    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+    </el-upload>
+</script>
+
+
+<script>
+    Vue.component('avatar', {
+        template: '#my-avatar',
+        props: ['value'],
+        data: function () {
+            return {
+                src: "",
+                loading: false
+            }
+        },
+        mounted: function () {
+            console.info(this.value);
+            console.info("init");
+            this.src = this.value;
+        },
+        watch: {
+            value: function (val) {
+                this.src = val;
+            }
+        },
+        methods: {
+            uploadSuccess(res, fileData) {
+                this.src = res.url;
+                this.$emit('input', res.url);
+            }
+        }
+    });
+</script>
+[/#macro]
+
+
+
+
+[#macro products]
+<style>
+    .goodsInfo {
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+    }
+
+    .goodsInfo img {
+        width: 50px;
+        height: 50px;
+        margin-right: 5px;
+    }
+
+    .goodsInfo div {
+        flex: 1;
+        font-size: 12px;
+        line-height: 16px;
+    }
+</style>
+<script type="text/x-template" id="my-products">
+    <div>
+        <el-input  readonly placeholder="请选择商品" v-model="productName">
+            <template slot="append">
+                <el-button @click="selectProduct" type="primary">选择</el-button>
+            </template>
+          </el-input>
+
+          
+          <el-dialog title="选择商品" :visible.sync="productVisible" width="50%">
+            <div class="search">
+                <el-form label-width="80px">
+                    <el-row>
+                        <el-col :span="18" style="padding: 0 8px;">
+                            <el-form-item label="商品名称">
+                                <el-input  v-model="searchObject.name" size="small"
+                                    placeholder="商品名称"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="6" style="padding: 0px 10px;">
+                            <el-row type="flex" justify="end">
+                                <el-button size="small" type="primary" @click="search">搜索</el-button>
+                                <el-button size="small" plain @click="clearData">清除条件</el-button>
+                            </el-row>
+                        </el-col>
+                    </el-row>
+                </el-form>
+            </div>
+            <el-table height="300" :data="tableData.list" style="width: 100%">
+                <el-table-column label="商品名称/规格" width="200" prop="date">
+                    <template slot-scope="scope">
+                        <div class="goodsInfo">
+                            <img :src="scope.row.logo" alt="">
+                            <div class="goodsName">{{scope.row.name}}</div>
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column width="80" label="商品分类" prop="catalog">
+                </el-table-column>
+                <el-table-column width="120" sortable label="市场价" prop="marketPrice">
+                </el-table-column>
+                <el-table-column width="120" sortable label="销售价" prop="salePrice">
+                </el-table-column>
+                <el-table-column align="right">
+                    <template slot-scope="scope">
+                        <el-button size="mini" @click="handleSelect(scope.row)">选择商品</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <div class="page">
+                <el-pagination background :current-page="searchObject.no"  :page-sizes="[10, 20, 50, 100]" :page-size="searchObject.size"
+                    :pager-count="5" layout="total,prev, pager, next" :page-count="tableData.totalPage"
+                    :total="tableData.total"  @size-change="sizeChange"  @current-change="pageChange">
+                </el-pagination>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button type="primary" @click="confirmSelect">确 定</el-button>
+            </span>
+        </el-dialog>
+    </div>
+</script>
+
+
+<script>
+    Vue.component('products', {
+        template: '#my-products',
+        props: ['value',"name"],
+        data: function () {
+            return {
+                productId: "",
+                productName: "",
+                loading: false,
+                productVisible: false,
+                searchObject: {
+                    name: "",
+                    no: 1,
+                    size: 10
+                },
+                tableData: {},
+            }
+        },
+        mounted: function () {
+            console.info("products init");
+            this.productId = this.value;
+        },
+        watch: {
+            value: function (val) {
+                this.productId = val;
+                if (val == null || val == "") {
+                    this.productName = "";
+                }
+            },
+            name: function (val) {
+                this.productName = val;
+                if (val == null || val == "") {
+                    this.productName = "";
+                }
+            }
+        },
+        methods: {
+            selectProduct() {
+                console.info("products");
+                this.productVisible = true;
+                this.search();
+            },
+            confirmSelect() {
+                this.productVisible = false;
+            },
+            uploadSuccess(res, fileData) {
+                this.productId = res.url;
+                this.$emit('input', res.url);
+            },
+            pageChange(index) {
+                this.searchObject.no = index;
+                this.getSearchList();
+            },
+            sizeChange(event) {
+                this.searchObject.size = event;
+                this.getSearchList();
+            },
+            clearData() {
+                this.searchObject.name = "";
+            },
+            search() {
+                this.searchObject.no = 1;
+                this.getSearchList();
+            },
+            getSearchList() {
+                this.loading = true;
+                var data = this.searchObject, that = this;
+                data.state="onSale";
+                $.post("${siteurl}tenantRest/product/search.htm", data, function (result) {
+                    if (result.code == 0) {
+                        that.tableData = result;
+                    }
+                    setTimeout(() => {
+                        that.loading = false;
+                    }, 300)
+                });
+            },
+            handleSelect(row) {
+                this.productId = row.id;
+                this.productName = row.name;
+                this.$emit('input', row.id);
+                this.productVisible = false;
+            }
+        }
+    });
+</script>
+[/#macro]
