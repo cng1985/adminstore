@@ -4,11 +4,296 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>员工</title>
+	<title>组织管理</title>
 	[#include "/admin/common/commons.html"]
 	[#include "/tenant/common/site.html"]
 	[@baseHead /]
+	<!--tree -->
+	<link href="${siteurl}plugins/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet">
 </head>
+<style>
+	.content-header {
+		padding: 0;
+	}
+
+	.content {
+		padding: 10px 10px;
+	}
+
+	ul {
+		padding: 0;
+		margin: 0;
+		list-style: none;
+	}
+
+	[v-cloak] {
+		display: none;
+	}
+
+	/* 导航 */
+	.navigation {
+		height: 60px;
+		line-height: 60px;
+		background-color: #f9f9f9;
+		padding-left: 10px;
+	}
+
+	.navigation i {
+		color: #d9dee5;
+		display: inline-block;
+		font-size: 14px;
+		color: #666666;
+		font-style: normal;
+	}
+
+	.navigation i::after {
+		content: '/';
+		display: inline-block;
+		margin: 0 5px;
+	}
+
+	.navigation span {
+		font-weight: 700;
+		font-size: 14px;
+		color: #666666;
+	}
+
+	/* 商品资料 */
+	.goods {
+		background-color: #fff;
+		padding: 0px 0px;
+		overflow: auto;
+	}
+
+	/* 搜索 */
+	.search {
+		height: 58px;
+		background-color: #f9f9f9;
+		padding: 16px 0px 3px;
+		box-sizing: border-box;
+	}
+
+	.goodsChoose input {
+		border-right: 0 !important;
+	}
+
+	/* tab切换 */
+	.tab .el-menu--horizontal>.el-menu-item {
+		height: 36px;
+		line-height: 36px;
+	}
+
+	/* 商品内容 */
+	.goods_content {
+		height: 100%;
+	}
+
+	.goods_content_l .tree {
+		background-color: #f9f9f9;
+		height: 100%;
+		padding: 10px 0;
+	}
+
+	.goods_content_l .title {
+		line-height: 40px;
+		cursor: pointer;
+		display: block;
+		background-color: #f9f9f9;
+		margin-bottom: 10px;
+		padding-left: 20px;
+	}
+
+	.goods_content_l .title i {
+		float: right;
+		margin: 14px;
+	}
+
+	.goods_content_l .el-tree {
+		background-color: transparent;
+	}
+
+	.goods_content_l .el-tree .el-tree-node__label {
+		font-size: 13px;
+		font-weight: bold;
+	}
+
+	.goods_content_l .el-tree-node {
+		margin: 5px 0;
+	}
+
+	.goods_content_l .el-tree-node__content:hover {
+		background-color: #f9f9f9;
+	}
+
+	.add_goods {
+		padding: 10px 0 5px 0;
+	}
+
+	.goodsInfo {
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+	}
+
+	.goodsInfo img {
+		width: 50px;
+		height: 50px;
+		margin-right: 5px;
+		background-color: red;
+	}
+
+	.goodsInfo div {
+		flex: 1;
+		font-size: 12px;
+		line-height: 16px;
+	}
+
+	.goodsTitle {
+		background: #5491de;
+		color: #fff;
+		font-style: normal;
+		border-radius: 2px;
+		height: 14px;
+		width: 14px;
+		line-height: 14px;
+		padding: 0;
+		font-size: 12px;
+		display: inline-block;
+		text-align: center;
+		margin-right: 4px;
+	}
+
+	.chlidrenGoodsList li {
+		min-height: 64px;
+		padding: 10px 0;
+		display: flex;
+		padding-left: 80px;
+		border-bottom: 1px solid #f9f9f9;
+	}
+
+	.chlidrenGoodsList li div {
+		align-items: center;
+		display: flex;
+	}
+
+	.el-table--enable-row-transition .el-table__body td {
+		padding: 10px 0 !important;
+	}
+
+	.more {
+		margin-left: 10px;
+	}
+
+	.el-popover .item {
+		font-size: 12px;
+		color: #000;
+		line-height: 20px;
+		cursor: pointer;
+	}
+
+	.department {
+		line-height: 40px;
+	}
+
+	.el-dialog__header {
+		padding: 14px 16px;
+		border-radius: 2px 2px 0 0;
+		background: #fff;
+		color: #666;
+		border-bottom: 1px solid #e9e9e9;
+	}
+
+	.el-dialog__header .el-dialog__title {
+		margin: 0;
+		font-size: 14px;
+		line-height: 21px;
+		font-weight: bold;
+	}
+
+	.el-dialog__header .el-dialog__headerbtn {
+		top: 14px;
+	}
+
+	.personnelUpload {
+		width: 100%;
+	}
+
+	.personnelUpload .el-upload {
+		width: 100%;
+	}
+
+	.personnelUpload .el-upload .el-upload-dragger {
+		width: 100%;
+	}
+
+	.personnelUpload .el-upload .el-upload__input {
+		display: none;
+	}
+
+	.el-tree-node__content {
+		padding: 0 10px !important;
+	}
+
+	.el-tree-node__content>label.el-checkbox {
+		position: absolute;
+		right: 15px;
+	}
+
+	.departmentDialog .el-row {
+		height: 300px;
+	}
+
+	.departmentDialog .title {
+		line-height: 18px;
+		font-size: 13px;
+		color: #9B9B9B;
+		margin-bottom: 18px;
+	}
+
+	.departmentDialog li {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		font-size: 13px;
+		color: #3C3C3C;
+		line-height: 28px;
+		padding: 0 2px;
+		cursor: pointer;
+	}
+
+	.is-current>.el-tree-node__content {
+		background-color: #2984EF !important;
+		color: #fff;
+	}
+
+	.custom-tree-node i {
+		position: absolute;
+		right: 14px;
+		display: none;
+		overflow: hidden;
+	}
+
+	.el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content i {
+		display: inline-block;
+	}
+
+	.page {
+		text-align: right;
+		margin: 10px 0;
+	}
+
+	.s-bg2 {
+		background: #000;
+	}
+
+	.s-c {
+		color: bule;
+	}
+
+	label {
+		margin: 0;
+	}
+</style>
 
 <body class="hold-transition skin-blue sidebar-mini">
 	<!-- Site wrapper -->
@@ -34,7 +319,7 @@
 					<li class="header">主面板</li>
 					[@menustag id=1]
 					[#list list as item]
-					[@menu item "1,27,51"]
+					[@menu item "1,27,55"]
 					[/@menu]
 					[/#list]
 					[/@menustag]
@@ -46,89 +331,110 @@
 		<!-- =============================================== -->
 
 		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper" id="app">
+		<div class="content-wrapper" id="app" v-cloak>
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<!-- 导航 -->
 				<div class="navigation">
-					<i>首页</i> <span>员工</span>
+					<i>组织</i> <span>组织管理</span>
 				</div>
 			</section>
 			<!-- Main content -->
 			<section class="content">
-
 				<!-- Default box -->
-				<div v-if="modelType == 'list'">
-					<div class="search">
-						<el-form label-width="80px">
-							<el-row>
-								<el-col :span="6" style="padding: 0 8px;">
-									<el-form-item label="姓名">
-										<el-input title="姓名" label="姓名" v-model="searchObject.name" size="small"
-											placeholder="姓名"></el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="6" style="padding: 0 8px;">
-									<el-form-item label="电话">
-										<el-input title="电话" label="电话" v-model="searchObject.phone" size="small"
-											placeholder="电话"></el-input>
-									</el-form-item>
-								</el-col>
-
-								<el-col :span="12" style="padding: 0 10px;margin-top: 5px;">
-									<el-row type="flex" justify="end">
-										<el-button size="small" type="primary" @click="search">搜索</el-button>
-										<el-button size="small" plain @click="clearData">清除条件</el-button>
+				<div class="goods" v-show="modelType == 'list'">
+					<!-- 商品 -->
+					<div class="goods_content">
+						<el-row style="height: 100%;">
+							<el-col :span="4" class="goods_content_l">
+								<span class="title">{{treeTitle}}
+									<i v-if="treeTitle != '部门管理'" class="el-icon-close" @click="chooseDepartment"></i>
+								</span>
+								<div class="tree">
+									<el-tree :highlight-current="true" :expand-on-click-node="false" :data="data"
+										:props="defaultProps" @node-click="chooseDepartment">
+										<span class="custom-tree-node jk" slot-scope="{ node, data }">
+											<span>{{data.name}}</span>
+										</span>
+									</el-tree>
+								</div>
+							</el-col>
+							<el-col :span="20" style="padding-left: 15px;">
+								<div class="department">
+									<el-row>
+										<el-col :span="20">
+											{{treeTitle}} {{tableData.total}}人
+										</el-col>
 									</el-row>
-								</el-col>
-							</el-row>
-						</el-form>
-					</div>
-
-					<div style="padding: 10px 2px;">
-						<el-button type="primary" size="small" @click="addView">新增</el-button>
-					</div>
-
-					<el-table v-loading="loading" :data="tableData.list" @cell-click="showView"
-						@sort-change="changeTableSort" style="width: 100%;font-size: 12px;">
-						<el-table-column label="账号" width="100" prop="no">
-						</el-table-column>
-						<el-table-column label="姓名" width="100" prop="name">
-						</el-table-column>
-						<el-table-column label="电话" width="100" prop="phone">
-						</el-table-column>
-						
-						<el-table-column label="职位" width="100" prop="job">
-						</el-table-column>
-						<el-table-column label="主要部门" prop="orgName">
-						</el-table-column>
-						<el-table-column label="个人介绍" prop="note">
-						</el-table-column>
-						<el-table-column width="160" align="center" fixed="right" label="操作">
-							<template slot-scope="scope">
-								<el-button type="primary" size="mini" @click="editView(scope.row.id)">编辑
-								</el-button>
-								<el-button type="danger" size="mini" style="cursor: pointer;"
-									@click="deleteData(scope.row)">删除</el-button>
-							</template>
-						</el-table-column>
-					</el-table>
-
-					<div class="page">
-						<el-pagination background :current-page="searchObject.no" :page-sizes="[10, 20, 50, 100]"
-							:page-size="tableData.size" :pager-count="5"
-							layout="total, sizes, prev, pager, next, jumper" :page-count="tableData.totalPage"
-							:total="tableData.total" @size-change="sizeChange" @current-change="pageChange">
-						</el-pagination>
+								</div>
+								<div class="add_goods">
+									<el-button size="mini" @click="modelType = 'add'">
+										新增成员</el-button>
+								</div>
+								<el-table v-loading="loading" :data="tableData.list"
+									@selection-change="handleSelectionChange" style="width: 100%;font-size: 12px;">
+									<el-table-column type="selection" align="center" header-align="center" width="40">
+									</el-table-column>
+									<el-table-column label="登录名" width="100" :show-overflow-tooltip="true" prop="no">
+									</el-table-column>
+									<el-table-column width="100" label="姓名" :show-overflow-tooltip="true" prop="name">
+									</el-table-column>
+									<el-table-column width="100" label="电话" :show-overflow-tooltip="true" prop="phone">
+									</el-table-column>
+									<el-table-column width="100" label="手机" :show-overflow-tooltip="true" prop="tel">
+									</el-table-column>
+									<el-table-column width="100" label="归属公司" :show-overflow-tooltip="true"
+										prop="orgName">
+										<template slot-scope="scope">
+											总公司
+										</template>
+									</el-table-column>
+									<el-table-column width="150" label="部门" :show-overflow-tooltip="true"
+										prop="organizationName">
+									</el-table-column>
+									<el-table-column label="所属区域" :show-overflow-tooltip="true" prop="areaName">
+									</el-table-column>
+									<el-table-column width="220" align="center" fixed="right" label="操作">
+										<template slot-scope="scope">
+											<el-button size="mini" @click="editView(scope.row.id)">查看
+											</el-button>
+											<el-button type="primary" size="mini" @click="editView(scope.row.id)">编辑
+											</el-button>
+											<el-button type="danger" size="mini" style="cursor: pointer;"
+												@click="deleteData(scope.row)">删除</el-button>
+										</template>
+									</el-table-column>
+								</el-table>
+								<div class="page">
+									<el-pagination background layout="prev, pager, next" :page-size="tableData.size"
+										:page-count="tableData.totalPage" :current-page="searchObject.no"
+										:total="tableData.total" @current-change="tableDataChange">
+									</el-pagination>
+								</div>
+							</el-col>
+						</el-row>
 					</div>
 				</div>
+
 				<!-- 增加页面 -->
 				<div v-if="modelType == 'add'">
-					<el-page-header @back="goBack" content="增加员工">
+					<el-page-header @back="goBack" content="增加操作员">
 					</el-page-header>
 					<div style="margin-top: 20px;">
 						<el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px">
 							<el-row :gutter="10">
+								<el-col :span="12">
+									<el-form-item label="登录账号" size="mini" prop="username">
+										<el-input v-model="form.username" name="username">
+										</el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="登录密码" size="mini" prop="password">
+										<el-input v-model="form.password" name="password">
+										</el-input>
+									</el-form-item>
+								</el-col>
 								<el-col :span="12">
 									<el-form-item label="姓名" size="mini" prop="name">
 										<el-input v-model="form.name" name="name">
@@ -136,51 +442,37 @@
 									</el-form-item>
 								</el-col>
 								<el-col :span="12">
-									<el-form-item label="电话" size="mini" prop="phone">
+									<el-form-item label="部门" size="mini" prop="organization">
+										<el-cascader size="small" style="width: 100%;" clearable :show-all-levels="true"
+											v-model="form.organization" :options="departmentOptions"
+											:props="defaultProps">
+										</el-cascader>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="管辖区域" size="mini" prop="area">
+										<el-cascader size="small" style="width: 100%;" clearable :show-all-levels="true"
+											v-model="form.area" :options="areaOptions" :props="areaProps"  >
+										</el-cascader>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="角色" size="mini" prop="selectRoles">
+										<el-checkbox-group style="width: 100%;" v-model="form.selectRoles">
+											<el-checkbox v-for="item in roleOptions" :label="item.id" :key="item.id">
+												{{item.name}}</el-checkbox>
+										</el-checkbox-group>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="手机" size="mini" prop="phone">
 										<el-input v-model="form.phone" name="phone">
 										</el-input>
 									</el-form-item>
 								</el-col>
 								<el-col :span="12">
-									<el-form-item label="账号" size="mini" prop="no">
-										<el-input v-model="form.no" name="no">
-										</el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="12">
-									<el-form-item label="密码" size="mini" prop="no">
-										<el-input v-model="form.password" name="password">
-										</el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="12">
-									<el-form-item label="email" size="mini" prop="email">
-										<el-input v-model="form.email" name="email">
-										</el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="12">
-									<el-form-item label="职位" size="mini" prop="job">
-										<el-input v-model="form.job" name="job">
-										</el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="12">
-									<el-form-item label="主要部门" size="mini" prop="org">
-										<el-cascader style="width: 100%;" size="small" clearable :show-all-levels="true"
-											v-model="form_edit.org" :options="departmentOptions" :props="defaultProps">
-										</el-cascader>
-									</el-form-item>
-								</el-col>
-								<el-col :span="12">
-									<el-form-item label="辅助部门" size="mini" prop="departments">
-										<el-input v-model="form.departments" name="departments">
-										</el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="12">
-									<el-form-item label="权限类型" size="mini" prop="permissionType">
-										<el-input v-model="form.permissionType" name="permissionType">
+									<el-form-item label="电话" size="mini" prop="tel">
+										<el-input v-model="form.tel" name="tel">
 										</el-input>
 									</el-form-item>
 								</el-col>
@@ -192,13 +484,26 @@
 						</el-form>
 					</div>
 				</div>
+
 				<!-- 更新页面 -->
 				<div v-if="modelType == 'edit'">
-					<el-page-header @back="goBack" content="更新员工">
+					<el-page-header @back="goBack" content="编辑操作员">
 					</el-page-header>
 					<div style="margin-top: 20px;">
-						<el-form ref="form_edit" :rules="rules" :model="form_edit" label-width="160px">
+						<el-form ref="form_edit" :rules="rules_edit" :model="form_edit" label-width="160px">
 							<el-row :gutter="10">
+								<el-col :span="12">
+									<el-form-item label="登录账号" size="mini" prop="no">
+										<el-input disabled v-model="form_edit.no" name="no">
+										</el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="登录密码"size="mini" prop="password">
+										<el-input v-model="form_edit.password" name="password"  placeholder="为空不修改密码，修改密码请填写密码" >
+										</el-input>
+									</el-form-item>
+								</el-col>
 								<el-col :span="12">
 									<el-form-item label="姓名" size="mini" prop="name">
 										<el-input v-model="form_edit.name" name="name">
@@ -206,48 +511,40 @@
 									</el-form-item>
 								</el-col>
 								<el-col :span="12">
-									<el-form-item label="主要部门" size="mini" prop="org">
-										<el-cascader style="width: 100%;" size="small" clearable :show-all-levels="true"
-											v-model="form_edit.org" :options="departmentOptions" :props="defaultProps">
+									<el-form-item label="部门" size="mini" prop="organization">
+										<el-cascader size="small" style="width: 100%;" clearable :show-all-levels="true"
+											v-model="form_edit.organization" :options="departmentOptions"
+											:props="defaultProps">
 										</el-cascader>
 									</el-form-item>
 								</el-col>
 								<el-col :span="12">
-									<el-form-item label="电话" size="mini" prop="phone">
+									<el-form-item label="管辖区域" size="mini" prop="area">
+										<el-cascader size="small" style="width: 100%;" clearable :show-all-levels="true"
+											v-model="form_edit.area" :options="areaOptions"  :props="areaProps" >
+										</el-cascader>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="角色" size="mini" prop="selectRoles">
+										<el-checkbox-group style="width: 100%;" v-model="form_edit.selectRoles">
+											<el-checkbox v-for="item in roleOptions" :label="item.id" :key="item.id">
+												{{item.name}}</el-checkbox>
+										</el-checkbox-group>
+									</el-form-item>
+								</el-col>
+								<el-col :span="12">
+									<el-form-item label="手机" size="mini" prop="phone">
 										<el-input v-model="form_edit.phone" name="phone">
 										</el-input>
 									</el-form-item>
 								</el-col>
 								<el-col :span="12">
-									<el-form-item label="email" size="mini" prop="email">
-										<el-input v-model="form_edit.email" name="email">
+									<el-form-item label="电话" size="mini" prop="tel">
+										<el-input v-model="form_edit.tel" name="tel">
 										</el-input>
 									</el-form-item>
 								</el-col>
-								<el-col :span="12">
-									<el-form-item label="重置密码" size="mini" prop="newPassword">
-										<el-input placeholder="不填写不重置密码" v-model="form_edit.newPassword"
-											name="newPassword">
-										</el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="12">
-									<el-form-item label="职位" size="mini" prop="job">
-										<el-input v-model="form_edit.job" name="job">
-										</el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="12">
-									<el-form-item label="角色" size="mini">
-										<el-checkbox-group v-model="form_edit.selectRoles">
-											<el-checkbox v-for="item in roleOptions"
-												:label="item.id" :key="item.id">
-												{{item.name}}</el-checkbox>
-										</el-checkbox-group>
-									</el-form-item>
-								</el-col>
-
-
 							</el-row>
 							<el-row style="text-align: right;">
 								<el-button @click="cancelEdit">取消</el-button>
@@ -256,35 +553,10 @@
 						</el-form>
 					</div>
 				</div>
-				<div v-if="modelType == 'view'">
-					<el-page-header @back="goBack" content="详情">
-					</el-page-header>
-					<div class="form-title">详细信息</div>
-					<el-form class="viewForm" label-width="80px">
-						<el-form-item label="姓名">
-							{{viewModel.name}}
-						</el-form-item>
-						<el-form-item label="电话">
-							{{viewModel.phone}}
-						</el-form-item>
-						<el-form-item label="账号">
-							{{viewModel.no}}
-						</el-form-item>
-						<el-form-item label="email">
-							{{viewModel.email}}
-						</el-form-item>
-						<el-form-item label="职位">
-							{{viewModel.job}}
-						</el-form-item>
-						<el-form-item label="主要部门">
-							{{viewModel.orgName}}
-						</el-form-item>
-					</el-form>
-				</div>
-
 
 				<!-- /.box -->
 			</section>
+			<!-- /.content -->
 
 			<el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
 				<span>确认要删除该条数据吗?</span>
@@ -293,7 +565,6 @@
 					<el-button type="primary" @click="handleClose">确 定</el-button>
 				</span>
 			</el-dialog>
-			<!-- /.content -->
 		</div>
 		<!-- /.content-wrapper -->
 
@@ -308,53 +579,69 @@
 		<div class="control-sidebar-bg"></div>
 	</div>
 	<!-- ./wrapper -->
-	[@baseScript /]
-	<script>
 
+	[@baseScript /]
+
+
+	<script>
+		var labels = [{
+			value: '选项1',
+			label: '高管'
+		}];
 		var departments = [@departmentJson /];
 		var roles = [@userRoleJson /];
-
+		var areas = [];
 		var vm = new Vue({
 			el: '#app',
 			data: function () {
 				return {
+					modelType: "list",
+					loading: false,
+					treeTitle: '部门管理',
+					visible: false,
+					filterText: '',
+					departmentOptions: departments,
+					labelOptions: labels,
+					roleOptions: roles,
+					areaOptions:areas,
+					department: {
+						state: false,
+						filterText: '',
+						selectedDepartment: []
+					},
+					form: {
+						selectRoles: []
+					},
+					form_edit: {
+						selectRoles: []
+					},
+					addMember: {
+						title: '新增成员',
+						state: false,
+						gender: '1',
+						identity: '1',
+						org: '',
+						departments: '',
+						name: '',
+						no: '',
+						password: '',
+						email: '',
+						job: '',
+						phone: '',
+						label: '',
+						selectRoles: []
+					},
 					searchObject: {
 						no: 1,
 						size: 10,
-						name: '',
-						phone: ''
+						department: ''
 					},
-					modelType: "list",
-					roleOptions: roles,
-					dialogVisible: false,
-					defaultProps: {
-						children: 'children',
-						label: 'name'
-					},
-					departmentOptions: departments,
-					form: {
-						name: '',
-						phone: '',
-						no: '',
-						email: '',
-						job: '',
-						org: '',
-						departments: '',
-						permissionType: '',
-						password: ''
-					},
-					form_edit: {
-						name: '',
-						phone: '',
-						no: '',
-						email: '',
-						job: '',
-						org: '',
-						departments: '',
-						permissionType: '',
-						newPassword: '',
-						selectRoles: []
-					},
+					batchImport: false,
+					modifydepartment: false,
+					modifydepartmentTitle: '',
+					departmentName: '',
+					parentId: '',
+					data: departments,
 					defaultProps: {
 						emitPath: false,
 						checkStrictly: true,
@@ -362,43 +649,140 @@
 						label: 'name',
 						value: 'id'
 					},
+					areaProps: {
+						emitPath: false,
+						checkStrictly: true,
+						children: 'children',
+						label: 'label',
+						value: 'value'
+					},
+					tableData: {},
+					multipleSelection: [],
+					updateMemberState: false,
+					form_edit: {},
 					rules: {
-						name: [
-							{ required: true, message: '请输入姓名', trigger: 'blur' },
-							{ min: 2, max: 5, message: '长度在 2 到 5 个字符', trigger: 'blur' }
+						username: [
+							{ required: true, message: '请输入用户名', trigger: 'blur' }
 						],
-						no: [
-							{ required: true, message: '请输入账号', trigger: 'blur' },
-							{ min: 3, max: 5, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+						name: [
+							{ required: true, message: '请输入姓名', trigger: 'blur' }
 						],
 						password: [
-							{ required: true, message: '请输入密码', trigger: 'blur' },
-							{ min: 3, max: 12, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+							{ required: true, message: '密码不能为空', trigger: 'blur' }
 						],
-
 					},
-					viewModel: {},
-					loading: false,
-					tableData: {},
+					rules_edit: {
+						name: [
+							{ required: true, message: '请输入名称', trigger: 'blur' }
+						]
+					},
+					dialogVisible: false
 				}
 			},
+			created() { },
 			mounted: function () {
-				this.getSearchList();
+				this.loading = true;
+				this.getPersonnel(1);
+
+				let that = this;
+				that.$nextTick(function () {
+					//先获取节点
+					let array = document.querySelectorAll('.is-current');
+					if (array && array.length > 0) {
+						for (let i = 0; i < array.length; i++) {
+							const element = array[i];
+							//将原来的颜色置为无
+							const content = element.querySelectorAll('.el-tree-node__content');
+							content[0].style.background = "none";
+							// 加类，变更
+							if (element.className.indexOf('s-bg2') === -1) {
+								element.className += " s-bg2 s-c";
+							}
+						}
+					}
+				})
+			},
+			watch: {
+				filterText(val) {
+					console.log(val);
+					this.$refs.tree.filter(val);
+				}
 			},
 			methods: {
-
-				changeTableSort(column) {
-					this.searchObject.sortField = column.prop;
-					this.searchObject.sortMethod = column.order;
-					this.getSearchList();
+				goBack() {
+					this.modelType = "list";
 				},
-				showView(row, column, cell, event) {
-					if (cell.cellIndex > 2) {
-						return;
+				link(url) {
+					this.modelType = url;
+				},
+				// 修改部门名称
+				modifyDepartmentName() {
+					if (this.parentId) {
+						this.modifydepartment = true;
+						this.modifydepartmentTitle = '编辑部门';
+					} else {
+						this.$message.error('请选中部门');
 					}
+				},
+				clearPersonnelInfo() {
+					this.addMember.name = '';
+					this.addMember.email = '';
+					this.addMember.phone = '';
+					this.addMember.no = '';
+					this.addMember.password = '';
+					this.addMember.gender = '1';
+					this.addMember.job = '';
+					this.addMember.identity = '1';
+					this.addMember.label = '';
+					this.addMember.departments = '';
+				},
+				// 修改人员信息
+				modifyPersonnelInfo() {
+					var that = this;
+					var data = JSON.stringify(that.form_edit, null, 2);
+					$.ajax({
+						type: "post",
+						url: '${siteurl}tenantRest/member/updateJson.htm',
+						async: false, // 使用同步方式
+						data: data,
+						contentType: "application/json; charset=utf-8",
+						dataType: "json",
+						success: function (back) {
+							if (back.code != 0) {
+								that.$message.error('' + res.msg);
+							} else {
+								that.$message({
+									message: '修改成功',
+									type: 'success'
+								});
+								that.updateMemberState = false;
+								that.getPersonnel();
+							}
+						} // 注意不要在此行增加逗号
+					});
+					return;
+					$.post("${siteurl}tenantRest/member/update.htm", data, function (res) {
+						if (res.code == 0) {
+							that.getPersonnel(that.tableData.no);
+							that.$message({
+								message: '修改成功',
+								type: 'success'
+							});
+							that.addMember.state = false;
+							that.clearPersonnelInfo();
+						} else {
+							that.$message.error('' + res.msg);
+						}
+					});
+				},
+				// 修改人员信息
+				modifyPersonnel(event) {
+					console.log(event);
+					var that = this;
+					this.addMember.title = '修改成员';
+
 					var param = {};
-					param.id = row.id;
-					this.modelType = "view";
+					param.id = event.id;
 					const loading = this.$loading({
 						lock: true,
 						text: '数据加载中...',
@@ -406,37 +790,213 @@
 						background: 'rgba(0, 0, 0, 0.7)'
 					});
 					var that = this;
-					$.post("${siteurl}tenantRest/employee/view.htm", param, function (res) {
+					$.post("${siteurl}tenantRest/member/view.htm", param, function (res) {
 						if (res.code == 0) {
-							Vue.set(vm.$data, 'viewModel', res);
+							Vue.set(vm.$data, 'form_edit', res);
+							that.modelType = "edit";
 						}
 
 						setTimeout(() => {
 							loading.close();
 							$(document).scrollTop(0);
+							that.updateMemberState = true;
 						}, 300);
 					});
+				},
+				// 人员分页
+				tableDataChange(index) {
+					this.searchObject.no = index;
+					this.getPersonnel()
+				},
+				findPnodeId(data, nodeId) {
+					//设置结果
+					let result;
+					if (!data) {
+						return;//如果data传空，直接返回
+					}
+					for (var i = 0; i < data.child.length; i++) {
+						let item = data.child[i];
+						if (item.id == nodeId) {
+							result = item.name;
+							//找到id相等的则返回父id
+							return result;
+						} else if (item.child && item.child.length > 0) {
+							//如果有子集，则把子集作为参数重新执行本方法
+							result = this.findPnodeId(item, nodeId);
+							//关键，千万不要直接return本方法，不然即使没有返回值也会将返回return，导致最外层循环中断，直接返回undefined,要有返回值才return才对
+							if (result) {
+								return result;
+							}
+						}
+					}
+					//如果执行循环中都没有return，则在此return
+					return result;
+				},
+				handleChange(value) {
+					console.log(value);
+					// let id = value[value.length - 1];
+					// console.log(id);
+					// let obj = {
+					// 	child: this.departmentOptions
+					// };
+					// let values = this.findPnodeId(obj, id);
+					// console.log(values);
+					// this.addMember.departments = values;
+				},
+				// 获取人员名单
+				getPersonnel(index) {
+					var that = this;
+					$.ajax({
+						url: "${siteurl}tenantRest/employee/search.htm", data: that.searchObject, success: function (result) {
+							console.log(result);
+							setTimeout(() => {
+								that.loading = false;
+							}, 300)
+							if (result.code == 0) {
+								that.tableData = result;
+								that.searchObject.no = result.no;
+							}
+						}
+					});
+				},
+				// 人员名单上传成功
+				personnelListUploadSuccess(file, fileList) {
+					console.log(file, fileList);
+				},
+				// 删除人员
+				delectPersonnel() {
+					if (this.multipleSelection.length > 0) {
+						console.log('删除人员');
+					} else {
+						this.$message({
+							message: '请选择人员',
+							type: 'warning'
+						});
+					}
+				},
+				// 启用安全登录
+				enableSecurityLogin() {
+					if (this.multipleSelection.length > 0) {
+						console.log('启用安全登录');
+					} else {
+						this.$message({
+							message: '请选择人员',
+							type: 'warning'
+						});
+					}
+				},
+				// 启用人员
+				enablePersonnel() {
+					if (this.multipleSelection.length > 0) {
+						console.log('启用人员');
+					} else {
+						this.$message({
+							message: '请选择人员',
+							type: 'warning'
+						});
+					}
+				},
+				// 禁用人员
+				disablePersonnel() {
+					if (this.multipleSelection.length > 0) {
+						console.log('禁用人员');
+					} else {
+						this.$message({
+							message: '请选择人员',
+							type: 'warning'
+						});
+					}
+				},
+				// 设置所在部门
+				setUpDepartment() {
+					if (this.multipleSelection.length > 0) {
+						this.department.state = true;
+					} else {
+						this.$message({
+							message: '请选择人员',
+							type: 'warning'
+						});
+					}
+				},
+				// 获取选中人员
+				handleSelectionChange(val) {
+					console.log(val);
+					this.multipleSelection = val;
+				},
+				// 记录选中部门ID
+				chooseDepartment(data) {
+					if (data == undefined) {
+						this.getPersonnel();
+						return;
+					}
+					if (!data.id) {
+						this.treeTitle = '部门管理';
+						//this.parentId="";
+						//this.$refs.tree.setChecked([]);
+						$(".is-focusable").removeClass("is-current");
+						this.chooseDepartment();
+					} else {
+						this.treeTitle = data.name;
+					}
+					this.parentId = data.id;
+					this.searchObject.organization = data.id;
+					this.searchObject.no = 1;
+					this.loading = true;
+					var that = this;
+					this.getPersonnel();
+				},
+				// 刷新部门列表
+				refreshDepartment() {
+					var that = this;
+					$.ajax({
+						url: "${siteurl}tenantRest/department/company.htm", success: function (result) {
+							console.log(result);
+							if (result.code == 0) {
+								that.data = result.list;
+								that.departmentOptions = result.list;
+							}
+						}
+					});
+				},
+				// 搜索部门
+				filterNode(value, data) {
+					if (!value) return true;
+					return data.name.indexOf(value) !== -1;
+				},
+				handleSelect(key, keyPath) {
+					console.log(key, keyPath);
+				},
+				createEmployee(state) {
+					var self = this;
+					var params = JSON.stringify(this.addMember);
 
+					var data = JSON.stringify(this.addMember, null, 2);
+					$.ajax({
+						type: "post",
+						url: '${siteurl}tenantRest/member/createJson.htm',
+						async: false, // 使用同步方式
+						data: data,
+						contentType: "application/json; charset=utf-8",
+						dataType: "json",
+						success: function (res) {
+							if (res.code == 0) {
+								if (state) {
+									self.$message.success('添加员工成功');
+								} else {
+									self.addMember.state = false;
+									self.clearPersonnelInfo();
+								}
+							} else {
+								self.$message.error('' + res.msg);
+							}
+							self.loading = true;
+							self.getPersonnel(self.tableData.no);
+						} // 注意不要在此行增加逗号
+					});
 
 				},
-				goBack() {
-					this.modelType = "list";
-				},
-				link(url) {
-					this.modelType = url;
-				},
-				addView() {
-					this.modelType = "add";
-					this.form = {
-						name: '',
-						phone: '',
-						no: '',
-						email: '',
-						job: '',
-						org: '',
-						departments: '',
-						permissionType: ''
-					};
+				resetForm(formName) {
+					this.$refs[formName].resetFields();
 				},
 				add() {
 					var self = this;
@@ -450,34 +1010,52 @@
 					});
 				},
 				addData() {
-					var that = this, data = this.form;
+					var self = this, data = this.form;
 					const loading = this.$loading({
 						lock: true,
-						text: '数据修改中',
+						text: '数据处理中',
 						spinner: 'el-icon-loading',
 						background: 'rgba(0, 0, 0, 0.7)'
 					});
 
-					$.post("${siteurl}tenantRest/employee/create.htm", data, function (res) {
-						setTimeout(() => {
-							loading.close();
-						}, 300);
+					var data = JSON.stringify(this.form, null, 2);
+					$.ajax({
+						type: "post",
+						url: '${siteurl}tenantRest/member/create.htm',
+						async: false, // 使用同步方式
+						data: data,
+						contentType: "application/json; charset=utf-8",
+						dataType: "json",
+						success: function (res) {
+							if (res.code == 0) {
+								self.$message.success('添加操作员成功');
+								self.loading = true;
+								self.getPersonnel(self.tableData.no);
+							} else {
+								self.$message.error('' + res.msg);
+							}
+							setTimeout(() => {
+								loading.close();
+							}, 300);
+						} // 注意不要在此行增加逗号
+					});
+
+
+				},
+				cancelEdit() {
+					this.modelType = 'list';
+				},
+				// 选中部门
+				editView(id) {
+					var self = this;
+					var data = {};
+					data.id = id;
+					this.modelType = "edit";
+					$.post("${siteurl}tenantRest/employee/view.htm", data, function (res) {
 						if (res.code == 0) {
-							that.modelType = 'list';
-							that.$message({
-								message: '添加数据成功',
-								type: 'success'
-							});
-							that.searchObject.no = 1;
-							that.getSearchList();
-						} else {
-							that.$message.error(res.msg);
+							self.form_edit = res;
 						}
 					});
-				},
-				sizeChange(event) {
-					this.searchObject.size = event;
-					this.getSearchList();
 				},
 				updateData() {
 					var self = this;
@@ -491,91 +1069,41 @@
 					});
 				},
 				updateDataPost() {
-					var that = this, data = this.form_edit;
+					var self = this;
+					var data = this.form_edit;
 					const loading = this.$loading({
 						lock: true,
-						text: '数据修改中',
+						text: '数据处理中',
 						spinner: 'el-icon-loading',
 						background: 'rgba(0, 0, 0, 0.7)'
 					});
 
-					var data = JSON.stringify(that.form_edit, null, 2);
+					var data = JSON.stringify(this.form_edit, null, 2);
 					$.ajax({
 						type: "post",
-						url: '${siteurl}tenantRest/employee/update.htm',
+						url: '${siteurl}tenantRest/member/update.htm',
 						async: false, // 使用同步方式
 						data: data,
 						contentType: "application/json; charset=utf-8",
 						dataType: "json",
-						success: function (back) {
-
+						success: function (res) {
+							if (res.code == 0) {
+								self.$message.success('更新操作员成功');
+								self.loading = true;
+								self.getPersonnel(self.tableData.no);
+								self.modelType = 'list';
+							} else {
+								self.$message.error('' + res.msg);
+							}
 							setTimeout(() => {
 								loading.close();
 							}, 300);
-
-							if (back.code != 0) {
-								that.$message.error('' + res.msg);
-							} else {
-								that.$message({
-									message: '修改成功',
-									type: 'success'
-								});
-								that.modelType = 'list';
-								that.getSearchList();
-							}
 						} // 注意不要在此行增加逗号
 					});
-
-				},
-				// 获取发票详情
-				editView(id) {
-					var that = this;
-					var data = {};
-					data.id = id;
-					this.modelType = "edit";
-					$.post("${siteurl}tenantRest/employee/view.htm", data, function (res) {
-						if (res.code == 0) {
-							console.log(res)
-							that.form_edit = res;
-						}
-					});
-				},
-				// 搜索商品
-				search() {
-					this.searchObject.no = 1;
-					this.getSearchList();
-				},
-				cancelEdit() {
-					this.modelType = 'list';
-				},
-				// 获取商品列表
-				getSearchList() {
-					this.loading = true;
-					var data = this.searchObject, that = this;
-					$.post("${siteurl}tenantRest/employee/search.htm", data, function (result) {
-						if (result.code == 0) {
-							Vue.set(vm.$data, 'tableData', result);
-						}
-						setTimeout(() => {
-							that.loading = false;
-						}, 300)
-					});
-				},
-				// 商品分页
-				pageChange(index) {
-					this.searchObject.no = index;
-					this.getSearchList();
 				},
 				deleteData(event) {
 					this.selectId = event.id;
 					this.dialogVisible = true;
-				},
-				clearData() {
-					this.searchObject.name = "";
-					this.searchObject.phone = "";
-				},
-				resetForm(formName) {
-					this.$refs[formName].resetFields();
 				},
 				handleClose(done) {
 					this.dialogVisible = false;
@@ -583,7 +1111,7 @@
 					if (self.selectId) {
 						var params = {};
 						params.id = self.selectId;
-						$.post("${siteurl}tenantRest/employee/delete.htm", params, function (res) {
+						$.post("${siteurl}tenantRest/member/delete.htm", params, function (res) {
 							if (res.code == 0) {
 								self.$message({
 									message: '删除数据成功',
@@ -596,11 +1124,26 @@
 						});
 					}
 					done();
+				},
+				handleNodeClick(data) {
+					console.log(data);
+					var selectedDepartment = this.department.selectedDepartment, flag = false;
+					selectedDepartment.forEach((item, index) => {
+						console.log(item.id == data.id || flag)
+						if (item.id == data.id) {
+							flag = true;
+							this.department.selectedDepartment.splice(index, 1);
+						} else if (!flag) {
+							flag = false
+						}
+					})
+					if (!flag) {
+						this.department.selectedDepartment.push({ id: data.id, name: data.name });
+					}
 				}
 			}
 		})
 	</script>
-
 </body>
 
 </html>
