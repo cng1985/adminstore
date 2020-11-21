@@ -43,7 +43,8 @@ public class Article extends AbstractEntity {
     /**
      * 文章内容
      */
-    private String contents;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private ArticleDocument  document;
 
     /**
      * 文章扩展信息
