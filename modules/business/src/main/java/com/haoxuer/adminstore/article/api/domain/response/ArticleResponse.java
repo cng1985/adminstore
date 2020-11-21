@@ -42,6 +42,8 @@ public class ArticleResponse extends ResponseObject {
 
      private Integer views;
 
+     private String note;
+
 
      private String storeStateName;
 }

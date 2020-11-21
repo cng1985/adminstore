@@ -14,7 +14,6 @@ public class ArticleSimpleConver implements Conver<ArticleSimple, Article> {
          result.setTitle(source.getTitle());
          result.setComments(source.getComments());
          result.setStoreState(source.getStoreState());
-         result.setContents(source.getContents());
          result.setUps(source.getUps());
          result.setExtData(source.getExtData());
          result.setLikes(source.getLikes());

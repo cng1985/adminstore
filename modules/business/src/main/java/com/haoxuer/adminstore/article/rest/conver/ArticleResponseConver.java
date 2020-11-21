@@ -9,11 +9,12 @@ public class ArticleResponseConver implements Conver<ArticleResponse, Article> {
     @Override
     public ArticleResponse conver(Article source) {
         ArticleResponse result = new ArticleResponse();
-        BeanDataUtils.copyProperties(source,result);
+        BeanDataUtils.copyProperties(source, result);
 
-
-         result.setStoreStateName(source.getStoreState()+"");
-
+        result.setStoreStateName(source.getStoreState() + "");
+        if (source.getDocument() != null) {
+            result.setNote(source.getDocument().getNote());
+        }
         return result;
     }
 }
