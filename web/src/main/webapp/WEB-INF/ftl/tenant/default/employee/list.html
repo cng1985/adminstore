@@ -9,7 +9,6 @@
 	[#include "/tenant/common/site.html"]
 	[@baseHead /]
 	<!--tree -->
-	<link href="${siteurl}plugins/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet">
 </head>
 <style>
 	.content-header {
@@ -1081,7 +1080,7 @@
 					var data = JSON.stringify(this.form_edit, null, 2);
 					$.ajax({
 						type: "post",
-						url: '${siteurl}tenantRest/member/update.htm',
+						url: '${siteurl}tenantRest/employee/update.htm',
 						async: false, // 使用同步方式
 						data: data,
 						contentType: "application/json; charset=utf-8",

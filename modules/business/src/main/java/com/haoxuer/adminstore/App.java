@@ -26,7 +26,6 @@ public class App {
         List<Class<?>> cs = new ArrayList<Class<?>>();
         cs.add(Ad.class);
 
-        make.setMenus("1,51,53");
         make.setDao(true);
         make.setService(true);
         make.setView(true);
