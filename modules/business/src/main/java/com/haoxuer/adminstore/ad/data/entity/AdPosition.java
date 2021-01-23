@@ -36,6 +36,10 @@ public class AdPosition extends SortEntity {
 	}
 	/** 名称 */
 
+	@SearchItem(label = "标识",name = "key")
+	@FormFieldAnnotation(title = "标识", sortNum = "10", grid = true,required = true)
+	@Column(length = 30,name = "data_key")
+	private String key;
 
 	@SearchItem(label = "广告位",name = "name")
 	@FormFieldAnnotation(title = "广告位",sortNum = "10",grid = true,required = true)
