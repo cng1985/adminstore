@@ -1,0 +1,203 @@
+[#macro adpositionListView]
+<div>
+    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
+        <span>确认要删除该条数据吗?</span>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="handleClose">确 定</el-button>
+        </span>
+    </el-dialog>
+    <div class="search">
+        <el-form label-width="100px">
+            <el-row>
+                <el-col :span="6" style="padding: 0 8px;">
+                    <el-form-item label="标识">
+                        <el-input v-model="searchObject.key" size="small" placeholder="标识" name="key">
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6" style="padding: 0 8px;">
+                    <el-form-item label="广告位名称">
+                        <el-input v-model="searchObject.name" size="small" placeholder="广告位名称" name="name">
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+
+                <el-col :span="12" style="padding: 0 10px;margin-top: 5px;">
+                    <el-row type="flex" justify="end">
+                        <el-button size="small" type="primary" @click="search">搜索</el-button>
+                        <el-button size="small" plain @click="clearData">清除条件</el-button>
+                    </el-row>
+                </el-col>
+            </el-row>
+        </el-form>
+    </div>
+    <div class="data-content">
+        <div class="tool-add">
+            <el-button type="primary" size="small" @click="addView">新增</el-button>
+        </div>
+
+        <el-table v-loading="loading" :data="tableData.list" @cell-click="showView" @sort-change="changeTableSort"
+            style="width: 100%;font-size: 12px;">
+            <el-table-column label="标识" prop="key" width="100">
+            </el-table-column>
+            <el-table-column label="广告位名称" prop="name" width="100">
+            </el-table-column>
+            <el-table-column label="宽度" prop="width" width="100">
+            </el-table-column>
+            <el-table-column label="高度" prop="height" width="100">
+            </el-table-column>
+            <el-table-column label="备注" prop="note" >
+            </el-table-column>
+            <el-table-column width="160" align="center" fixed="right" label="操作">
+                <template slot-scope="scope">
+                    <el-button type="primary" size="mini" @click="editView(scope.row.id)">编辑
+                    </el-button>
+                    <el-button type="danger" size="mini" style="cursor: pointer;" @click="deleteData(scope.row)">删除
+                    </el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+
+        <div class="page">
+            <el-pagination background :current-page="searchObject.no" :page-sizes="[10, 20, 50, 100]"
+                :page-size="tableData.size" :pager-count="5" layout="total, sizes, prev, pager, next, jumper"
+                :page-count="tableData.totalPage" :total="tableData.total" @size-change="sizeChange"
+                @current-change="pageChange">
+            </el-pagination>
+        </div>
+    </div>
+</div>
+[/#macro]
+
+
+[#macro adpositionAddView]
+<div class="model-form">
+    <el-page-header @back="goBack" content="增加广告位管理">
+    </el-page-header>
+    <div class="model-content">
+        <el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px">
+            <el-row :gutter="10">
+                <el-col :span="20">
+                    <el-form-item label="标识" size="mini" prop="key">
+                        <el-input v-model="form.key" name="key">
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="20">
+                    <el-form-item label="广告位名称" size="mini" prop="name">
+                        <el-input v-model="form.name" name="name">
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="20">
+                    <el-form-item label="宽度" size="mini" prop="width">
+                        <el-input-number v-model="form.width" name="width" type="textarea" :min="0" :max="10000">
+                        </el-input-number>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="20">
+                    <el-form-item label="高度" size="mini" prop="height">
+                        <el-input-number v-model="form.height" name="height" type="textarea" :min="0" :max="10000">
+                        </el-input-number>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="20">
+                    <el-form-item label="备注" size="mini" prop="note">
+                        <el-input v-model="form.note" name="note" type="textarea"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row style="text-align: right;">
+                <el-col :span="20">
+                    <el-button @click="goBack">取消</el-button>
+                    <el-button type="primary" @click="add">确定</el-button>
+                </el-col>
+            </el-row>
+        </el-form>
+    </div>
+</div>
+[/#macro]
+
+[#macro adpositionUpdateView]
+<div class="model-form">
+    <el-page-header @back="goBack" content="更新广告位管理">
+    </el-page-header>
+    <div class="model-content">
+        <el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px">
+            <el-row :gutter="10">
+                <el-col :span="20">
+                    <el-form-item label="标识" size="mini" prop="key">
+                        <el-input v-model="form.key" name="key">
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="20">
+                    <el-form-item label="广告位名称" size="mini" prop="name">
+                        <el-input v-model="form.name" name="name">
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="20">
+                    <el-form-item label="宽度" size="mini" prop="width">
+                        <el-input-number v-model="form.width" name="width" type="textarea" :min="0" :max="10000">
+                        </el-input-number>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="20">
+                    <el-form-item label="高度" size="mini" prop="height">
+                        <el-input-number v-model="form.height" name="height" type="textarea" :min="0" :max="10000">
+                        </el-input-number>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="20">
+                    <el-form-item label="备注" size="mini" prop="note">
+                        <el-input v-model="form.note" name="note" type="textarea"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row style="text-align: right;">
+                <el-col :span="20">
+                    <el-button @click="goBack">取消</el-button>
+                    <el-button type="primary" @click="updateData">确定</el-button>
+                </el-col>
+            </el-row>
+        </el-form>
+    </div>
+</div>
+[/#macro]
+
+[#macro adpositionShowView]
+<div class="model-form">
+    <el-page-header @back="goBack" content="详情">
+    </el-page-header>
+    <div class="form-title">详细信息</div>
+    <el-form class="viewForm" label-width="100px">
+        <el-col :span="12">
+            <el-form-item label="标识">
+                <div v-html="viewModel.key">></div>
+            </el-form-item>
+        </el-col>
+        <el-col :span="12">
+            <el-form-item label="广告位名称">
+                <div v-html="viewModel.name">></div>
+            </el-form-item>
+        </el-col>
+        <el-col :span="12">
+            <el-form-item label="宽度">
+                <div v-html="viewModel.width">></div>
+            </el-form-item>
+        </el-col>
+        <el-col :span="12">
+            <el-form-item label="高度">
+                <div v-html="viewModel.height">></div>
+            </el-form-item>
+        </el-col>
+        <el-col :span="12">
+            <el-form-item label="备注">
+                <div v-html="viewModel.note">></div>
+            </el-form-item>
+        </el-col>
+    </el-form>
+</div>
+[/#macro]

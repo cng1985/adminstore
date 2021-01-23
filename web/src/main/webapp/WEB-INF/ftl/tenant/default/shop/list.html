@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>用户</title>
+	[#include "/admin/common/commons.html"]
+	[#include "/tenant/common/site.html"]
+	[#include "/tenant/default/shop/component.html"]
+	[@baseHead /]
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<div class="wrapper">
+
+		<header class="main-header">
+			<!-- Header Navbar: style can be found in header.less -->
+			[#include "/admin/common/nav.html"]
+		</header>
+
+		<!-- =============================================== -->
+
+		<!-- Left side column. contains the sidebar -->
+		<aside class="main-sidebar">
+			<!-- sidebar: style can be found in sidebar.less -->
+			<section class="sidebar">
+				[@user_panel /]
+				<!-- search form -->
+				[@sidebar_form /]
+				<!-- /.search form -->
+				<!-- sidebar menu: : style can be found in sidebar.less -->
+				<ul class="sidebar-menu" data-widget="tree">
+					<li class="header">主面板</li>
+					[@menustag id=1]
+					[#list list as item]
+					[@menu item "更新用户"]
+					[/@menu]
+					[/#list]
+					[/@menustag]
+				</ul>
+			</section>
+			<!-- /.sidebar -->
+		</aside>
+
+		<!-- =============================================== -->
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper" id="app"   v-cloak  >
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<!-- 导航 -->
+				<div class="navigation">
+					<i>首页</i> <span>用户</span>
+				</div>
+			</section>
+			<!-- Main content -->
+			<section class="content">
+				<keep-alive>
+					<router-view v-if="$route.meta.keepAlive">
+					</router-view>
+				</keep-alive>
+				<router-view v-if="!$route.meta.keepAlive">
+				</router-view>
+				<script type="text/x-template" id="my-shop-list">
+					[@shopListView /]
+				</script>
+				<!-- Default box -->
+
+				<!-- 增加页面 -->
+				<script type="text/x-template" id="my-shop-add">
+					[@shopAddView /]
+				</script>
+				<!-- 更新页面 -->
+				<script type="text/x-template" id="my-shop-update">
+					[@shopUpdateView /]
+				</script>
+				<script type="text/x-template" id="my-shop-show">
+					[@shopShowView /]
+				</script>
+
+
+				<!-- /.box -->
+			</section>
+
+
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+
+		[#include "/admin/common/footer.html"]
+
+		<!-- Control Sidebar -->
+		[#include "/admin/common/aside.html"]
+
+		<!-- /.control-sidebar -->
+		<!-- Add the sidebar's background. This div must be placed
+     immediately after the control sidebar -->
+		<div class="control-sidebar-bg"></div>
+	</div>
+	<!-- ./wrapper -->
+	[@baseScript /]
+	<script type="text/javascript">
+		var config = {};
+
+		config.methods = {};
+
+		[@configBasicVue /]
+
+		config.methods.goBack = function () {
+			this.$router.go(-1);
+		}
+		config.basicMethod=function(){
+		   var result={};
+		   result.postData=config.methods.postData;
+           result.postJsonData=config.methods.postJsonData;
+           result.goBack=config.methods.goBack;
+           return result;
+		}
+
+
+	</script>
+
+	<script type="text/javascript">
+		//显示组件开始
+		var shopShowConfig = {};
+		shopShowConfig.template = "#my-shop-show";
+		shopShowConfig.methods =config.basicMethod();
+		shopShowConfig.data = function () {
+			return {
+				viewModel: {
+				},
+				activeIndex: "1"
+			}
+		};
+
+		roomShowConfig.methods.handleSelect = function (index) {
+			console.log(index)
+			var selectId = this.selectId;
+			if (index == "1") {
+				this.$router.replace({ path: '/view/index', query: { id: selectId, activeIndex: 1, time: Math.random() } })
+			}
+			else if (index == "2") {
+				this.$router.replace({ path: '/view/members', query: { id: selectId, activeIndex: 2, time: Math.random() } })
+			} else {
+
+			}
+		};
+
+		shopShowConfig.mounted = function () {
+		   	var id = this.$route.query.id;
+			var activeIndex = this.$route.query.activeIndex;
+
+			var self = this;
+			var data = {};
+			data.id = id;
+			this.selectId = data.id;
+			if (activeIndex) {
+				this.activeIndex = activeIndex;
+			}
+		}
+		var shopShowView = Vue.component('my-shop-view', shopShowConfig);
+		//显示组件结束		
+	</script>
+	<script type="text/javascript">
+		//添加组件开始
+		var shopAddConfig = {};
+		shopAddConfig.template = "#my-shop-add";
+		shopAddConfig.methods = config.basicMethod();
+		shopAddConfig.data = function () {
+			return {
+				form: {
+				},
+				rules: {
+				}
+			}
+		};
+		shopAddConfig.mounted = function () {
+		}
+		shopAddConfig.computed = {};
+
+
+		shopAddConfig.methods.add = function () {
+			var self = this;
+			this.$refs["ruleForm"].validate(function(valid){
+				if (valid) {
+					self.addData();
+				} else {
+					console.log('error submit!!');
+					return false;
+				}
+			});
+		}
+
+		shopAddConfig.methods.addData = function () {
+			var self = this, data = this.form;
+			if (this.deforeAddData) {
+				this.deforeAddData();
+			}
+			this.postData("${siteurl}tenantRest/shop/create.htm", data, function (res) {
+				if (res.code == 0) {
+					self.$message({
+						message: '添加数据成功',
+						type: 'success'
+					});
+					self.$router.go(-1);
+				} else {
+					self.$message.error(res.msg);
+				}
+			});
+		}
+		var  shopAddView = Vue.component('add-view', shopAddConfig);
+
+
+	</script>
+	<script type="text/javascript">
+		//更新组件开始
+		var shopUpdateConfig = {};
+		shopUpdateConfig.template = "#my-shop-update";
+		shopUpdateConfig.methods = config.basicMethod();
+		shopUpdateConfig.methods.updateData = function () {
+			var self = this;
+			this.$refs["ruleForm"].validate(function(valid){
+				if (valid) {
+					self.updateDataPost();
+				} else {
+					console.log('error submit!!');
+					return false;
+				}
+			});
+		}
+
+		shopUpdateConfig.methods.updateDataPost = function () {
+			var self = this, data = this.form;
+			//delete data.shopCatalog;
+			if (this.deforeUpdateData) {
+				this.deforeUpdateData();
+			}
+			this.postData("${siteurl}tenantRest/shop/update.htm", data, function (res) {
+				if (res.code == 0) {
+					self.$message({
+						message: '修改数据成功',
+						type: 'success'
+					});
+					//window.history.go(-1)
+					self.$router.go(-1);
+				} else {
+					self.$message.error(res.msg);
+				}
+			});
+		}
+		shopUpdateConfig.data = function () {
+			return {
+				form: {
+				},
+				rules: {
+				}
+			}
+		};
+
+		shopUpdateConfig.mounted = function () {
+			var id = this.$route.query.id;
+			var self = this;
+			var data = {};
+			data.id = id;
+			this.postData("${siteurl}tenantRest/shop/view.htm", data, function (res) {
+				if (res.code == 0) {
+					self.form = res;
+				}
+			});
+		}
+		shopUpdateConfig.computed = {};
+
+		var shopUpdateView = Vue.component('update-view', shopUpdateConfig);
+		//更新组件结束
+	</script>
+	<script type="text/javascript">
+		var shopListConfig = {};
+		shopListConfig.template = "#my-shop-list";
+		shopListConfig.methods = config.basicMethod();
+
+
+		shopListConfig.methods.addView = function () {
+			this.$router.push({ path: 'add'});
+		}
+		shopListConfig.methods.editView = function (row) {
+			var self = this;
+			var data = {};
+			data.id = row.id;
+			this.$router.push({ path: 'update', query: data });
+
+		}
+
+		shopListConfig.methods.changeTableSort = function (column) {
+			this.searchObject.sortField = column.prop;
+			if ("descending" == column.order) {
+				this.searchObject.sortMethod = "desc";
+			}
+			else if ("ascending" == column.order) {
+				this.searchObject.sortMethod = "asc";
+			}
+			else {
+				this.searchObject.sortMethod = "";
+			}
+			this.getSearchList();
+		}
+		shopListConfig.methods.showView = function (row, column, cell, event) {
+			if (cell.cellIndex > 0) {
+				return;
+			}
+			var param = {};
+			param.id = row.id;
+			var self = this;
+			this.$router.push({ path: 'view', query: param });
+
+		}
+
+		shopListConfig.methods.sizeChange = function (event) {
+			this.searchObject.size = event;
+			this.getSearchList();
+		}
+		shopListConfig.methods.pageChange = function (index) {
+			this.searchObject.no = index;
+			this.getSearchList();
+		}
+		shopListConfig.methods.getSearchList = function () {
+			this.loading = true;
+			var data = this.searchObject, that = this;
+			$.post("${siteurl}tenantRest/shop/search.htm", data, function (result) {
+				if (result.code == 0) {
+					that.tableData = result;
+				}
+				setTimeout(function(){
+					that.loading = false;
+				}, 300)
+			});
+		}
+		shopListConfig.methods.search = function () {
+			this.searchObject.no = 1;
+			this.getSearchList();
+		}
+		shopListConfig.methods.clearData = function () {
+		}
+		shopListConfig.methods.deleteData = function (event) {
+			this.selectId = event.id;
+			this.dialogVisible = true;
+		}
+
+		shopListConfig.methods.handleClose = function (done) {
+			this.dialogVisible = false;
+			var self = this;
+			if (self.selectId) {
+				var params = {};
+				params.id = self.selectId;
+				this.postData("${siteurl}tenantRest/shop/delete.htm", params, function (res) {
+					if (res.code == 0) {
+						self.$message({
+							message: '删除数据成功',
+							type: 'success'
+						});
+						self.getSearchList();
+					} else {
+						self.$message.error(res.msg);
+					}
+				});
+			}
+
+		}
+
+		shopListConfig.computed = {};
+
+		shopListConfig.data = function () {
+			return {
+				searchObject: {
+					no: 1,
+					size: 10,
+				},
+				dialogVisible: false,
+				defaultProps: {
+					children: 'children',
+					label: 'name'
+				},
+				loading: false,
+				tableData: {},
+			}
+		};
+		shopListConfig.methods.showAddView = function () {
+			this.$router.push({ path: 'add'});
+		};
+		shopListConfig.mounted = function () {
+
+		}
+        shopListConfig.activated = function () {
+			this.getSearchList();
+		}
+		var shopListView = Vue.component('list-shop-view', shopListConfig);
+	</script>
+
+	[@childShopConfig /]
+
+	<script type="text/javascript">
+	
+		// 3. 创建 router 实例，然后传 `routes` 配置
+		// 你还可以传别的配置参数, 不过先这么简单着吧。
+		var appConfig = {};
+		appConfig.el = "#app";
+
+
+		   const routes = [
+				{ path: '/view',name: "shopShowView", component: shopShowView, props: true, children: [
+                    { path: "/view/index", name: "childShopShowView", component: childShopShowView },
+					{ path: "/", component: childShopShowView }
+				]
+				 },
+				{ path: '/add',name: "shopAddView", component: shopAddView , props: true },
+				{ path: '/update', name: "shopUpdateView", component: shopUpdateView, props: true },
+				{ path: '/',name: "shopListView", component: shopListView , props: true , meta: {
+						keepAlive: true, //此组件不需要被缓存
+					}
+				}
+			]
+
+
+
+		const router = new VueRouter({
+			routes:routes // (缩写) 相当于 routes: routes
+		})
+
+		var store = new Vuex.Store({
+			state: {
+				count: 0,
+			},
+			mutations: {
+				increment:function(state) {
+					state.count++
+				},
+
+			}
+		})
+
+		appConfig.router = router;
+
+		appConfig.store = store;
+		appConfig.methods = config.methods;
+		appConfig.mounted = function () {
+		}
+		var vm = new Vue(appConfig);
+
+	</script>
+
+</body>
+
+</html>

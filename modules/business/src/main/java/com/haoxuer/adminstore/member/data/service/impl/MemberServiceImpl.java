@@ -113,7 +113,7 @@ public class MemberServiceImpl implements MemberService, InitializingBean, Dispo
     @Override
     @Transactional(readOnly = true)
     public Page<Member> findPage(Pageable pageable) {
-        return dao.findPage(pageable);
+        return dao.page(pageable);
     }
 
     @Override
@@ -124,13 +124,13 @@ public class MemberServiceImpl implements MemberService, InitializingBean, Dispo
     @Override
     @Transactional(readOnly = true)
     public long count(Filter... filters) {
-        return dao.count(filters);
+        return dao.countQuery(filters);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Member> findList(Integer first, Integer count, List<Filter> filters, List<Order> orders) {
-        return dao.findList(first, count, filters, orders);
+        return dao.list(first, count, filters, orders);
     }
 
     @Override

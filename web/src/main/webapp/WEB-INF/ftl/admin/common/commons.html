@@ -27,7 +27,7 @@
 
 
 [#macro menu item ids]
-    [#if item.menus??]
+    [#if item.children?? && item.children?size>0 ]
         [@shiro.hasPermission name=item.permission]
             [#if item.catalog==0]
                 <li class="treeview [@menuopentag ids=ids id=item.id][/@menuopentag]">
@@ -36,7 +36,7 @@
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
-                        [#list item.childrens as item]
+                        [#list item.children as item]
                         [@menu item ids]
                         [/@menu]
                         [/#list]

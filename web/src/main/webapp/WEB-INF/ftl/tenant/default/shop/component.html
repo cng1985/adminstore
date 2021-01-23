@@ -1,0 +1,141 @@
+[#macro shopListView]
+    <div>
+        <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
+            <span>确认要删除该条数据吗?</span>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="handleClose">确 定</el-button>
+            </span>
+        </el-dialog>
+        <div class="search">
+            <el-form label-width="80px">
+                <el-row>
+
+            <el-col :span="24" style="padding: 0 10px;margin-top: 5px;">
+                <el-row type="flex" justify="end">
+                    <el-button size="small" type="primary" @click="search">搜索</el-button>
+                    <el-button size="small" plain @click="clearData">清除条件</el-button>
+                </el-row>
+            </el-col>
+            </el-row>
+            </el-form>
+        </div>
+        <div class="data-content">
+            <div  class="tool-add">
+                <el-button type="primary" size="small" @click="addView">新增</el-button>
+            </div>
+
+            <el-table v-loading="loading" :data="tableData.list"  @cell-click="showView" @sort-change="changeTableSort" style="width: 100%;font-size: 12px;">
+                <el-table-column width="160" align="center" fixed="right" label="操作">
+                    <template slot-scope="scope">
+                        <el-button type="primary" size="mini" @click="editView(scope.row)">编辑
+                        </el-button>
+                        <el-button type="danger" size="mini"  style="cursor: pointer;"
+                                @click="deleteData(scope.row)">删除</el-button>
+                    </template>
+                </el-table-column>
+                </el-table>
+
+            <div class="page">
+                <el-pagination background :current-page="searchObject.no" :page-sizes="[10, 20, 50, 100]"
+                            :page-size="tableData.size" :pager-count="5"
+                            layout="total, sizes, prev, pager, next, jumper" :page-count="tableData.totalPage"
+                            :total="tableData.total" @size-change="sizeChange" @current-change="pageChange">
+                </el-pagination>
+            </div>
+        </div>
+    </div>
+[/#macro]
+
+
+[#macro shopAddView]
+    <div  class="model-form">
+        <el-page-header @back="goBack" content="增加">
+        </el-page-header>
+        <div class="model-content">
+            <el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px" >
+                <el-row :gutter="10">
+                </el-row>
+                <el-row style="text-align: right;">
+                    <el-button @click="goBack">取消</el-button>
+                    <el-button type="primary" @click="add">确定</el-button>
+                </el-row>
+            </el-form>
+        </div>
+    </div>
+[/#macro]
+
+[#macro shopUpdateView]
+    <div class="model-form">
+        <el-page-header @back="goBack" content="更新">
+        </el-page-header>
+        <div class="model-content">
+            <el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px" >
+                <el-row :gutter="10">
+                </el-row>
+                <el-row style="text-align: right;">
+                    <el-button @click="goBack">取消</el-button>
+                    <el-button type="primary" @click="updateData">确定</el-button>
+                </el-row>
+            </el-form>
+        </div>
+    </div>
+[/#macro]
+
+[#macro shopShowView]
+<div  class="model-form">
+    <el-page-header @back="goBack" content="详情">
+    </el-page-header>
+
+        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+            <el-menu-item index="1">
+                详情
+            </el-menu-item>
+        </el-menu>
+        <div>
+            <router-view></router-view>
+        </div>
+
+</div>
+[/#macro]
+
+
+
+[#macro childShopView]
+    <div >
+        <el-form class="viewForm" label-width="80px">
+        </el-form>
+    </div>
+    [/#macro]
+
+    [#macro childShopConfig]
+    <script type="text/x-template" id="child-shop-show">
+        [@childShopView /]
+    </script>
+    <script type="text/javascript">
+
+        var childShopShowConfig = {};
+        childShopShowConfig.template = "#child-shop-show";
+        childShopShowConfig.methods = config.basicMethod();
+        childShopShowConfig.data = function () {
+            return {
+                viewModel: {
+                }
+            }
+        };
+        childShopShowConfig.mounted = function () {
+            var id = this.$route.query.id;
+            var self = this;
+            var data = {};
+            data.id = id;
+            this.postData("${siteurl}tenantRest/shop/view.htm", data, function (res) {
+                if (res.code == 0) {
+                    self.viewModel = res;
+
+                }
+            });
+        }
+        var childShopShowView = Vue.component('child-shop-show', childShopShowConfig);
+    </script>
+    [/#macro]
+

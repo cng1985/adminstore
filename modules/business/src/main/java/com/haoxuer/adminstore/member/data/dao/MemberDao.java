@@ -1,17 +1,20 @@
 package com.haoxuer.adminstore.member.data.dao;
 
 
-import com.haoxuer.adminstore.member.data.entity.Member;
-import com.haoxuer.discover.data.core.CriteriaDao;
-import com.haoxuer.discover.data.core.Updater;
+import  com.haoxuer.discover.data.core.BaseDao;
+import  com.haoxuer.discover.data.core.Updater;
+import  com.haoxuer.adminstore.member.data.entity.Member;
 
-public interface MemberDao extends CriteriaDao<Member, Long> {
-  
-  public Member findById(Long id);
-  
-  public Member save(Member bean);
-  
-  public Member updateByUpdater(Updater<Member> updater);
-  
-  public Member deleteById(Long id);
+/**
+* Created by imake on 2021年01月23日16:23:08.
+*/
+public interface MemberDao extends BaseDao<Member,Long>{
+
+	 Member findById(Long id);
+
+	 Member save(Member bean);
+
+	 Member updateByUpdater(Updater<Member> updater);
+
+	 Member deleteById(Long id);
 }

@@ -4,6 +4,7 @@ import com.haoxuer.discover.data.annotations.ColType;
 import com.haoxuer.discover.data.annotations.FormAnnotation;
 import com.haoxuer.discover.data.annotations.FormFieldAnnotation;
 import com.haoxuer.discover.user.data.entity.AbstractUser;
+import com.haoxuer.imake.annotation.ComposeView;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -13,9 +14,9 @@ import javax.persistence.Table;
 /**
  * 网站用户
  */
-
+@ComposeView
 @Data
-@FormAnnotation(title = "用户", add = "添加用户", list = "用户", update = "更新用户")
+@FormAnnotation(title = "用户管理", model= "用户", menu = "1,20,21")
 @Entity
 @Table(name = "user_info")
 public class Member extends AbstractUser {

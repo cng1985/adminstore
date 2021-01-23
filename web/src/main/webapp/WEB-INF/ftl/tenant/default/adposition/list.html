@@ -7,6 +7,7 @@
 	<title>广告位管理</title>
 	[#include "/admin/common/commons.html"]
 	[#include "/tenant/common/site.html"]
+	[#include "/tenant/default/adposition/component.html"]
 	[@baseHead /]
 </head>
 
@@ -56,183 +57,29 @@
 			</section>
 			<!-- Main content -->
 			<section class="content">
-
+				<router-view></router-view>
+				<script type="text/x-template" id="my-adposition-list">
+					[@adpositionListView /]
+				</script>
 				<!-- Default box -->
-				<div v-if="modelType == 'list'">
-					<div class="search">
-						<el-form label-width="80px">
-							<el-row>
-										<el-col :span="6" style="padding: 0 8px;">
-											<el-form-item label="广告位">
-												<el-input v-model="searchObject.name" size="small" placeholder="广告位" name="name">
-												</el-input>
-											</el-form-item>
-										</el-col>
 
-								<el-col :span="18" style="padding: 0 10px;margin-top: 5px;">
-									<el-row type="flex" justify="end">
-										<el-button size="small" type="primary" @click="search">搜索</el-button>
-										<el-button size="small" plain @click="clearData">清除条件</el-button>
-									</el-row>
-								</el-col>
-							</el-row>
-						</el-form>
-					</div>
-
-					<div style="padding: 10px 2px;">
-						<el-button type="primary" size="small" @click="addView">新增</el-button>
-					</div>
-
-					<el-table v-loading="loading" :data="tableData.list"  @cell-click="showView" @sort-change="changeTableSort" style="width: 100%;font-size: 12px;">
-								<el-table-column label="广告位"
-
-												 prop="name"
-						            
-					                 width="100"  
-					              >
-								</el-table-column>
-								<el-table-column label="宽度"
-
-												 prop="width"
-						            
-					                 width="100"  
-					              >
-								</el-table-column>
-								<el-table-column label="高度"
-
-												 prop="height"
-						            
-					                 width="100"  
-					              >
-								</el-table-column>
-								<el-table-column label="备注"
-
-												 prop="note"
-						            
-					                 width="100"  
-					              >
-								</el-table-column>
-						<el-table-column width="160" align="center" fixed="right" label="操作">
-							<template slot-scope="scope">
-								<el-button type="primary" size="mini" @click="editView(scope.row.id)">编辑
-								</el-button>
-								<el-button type="danger" size="mini"  style="cursor: pointer;"
-									@click="deleteData(scope.row)">删除</el-button>
-							</template>
-						</el-table-column>
-					</el-table>
-
-					<div class="page">
-						<el-pagination background :current-page="searchObject.no" :page-sizes="[10, 20, 50, 100]"
-							:page-size="tableData.size" :pager-count="5"
-							layout="total, sizes, prev, pager, next, jumper" :page-count="tableData.totalPage"
-							:total="tableData.total" @size-change="sizeChange" @current-change="pageChange">
-						</el-pagination>
-					</div>
-				</div>
 				<!-- 增加页面 -->
-				<div v-if="modelType == 'add'">
-					<el-page-header @back="goBack" content="增加广告位管理">
-					</el-page-header>
-					<div style="margin-top: 20px;">
-					<el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px" >
-						<el-row :gutter="10">
-								<el-col :span="12">
-									<el-form-item label="广告位" size="mini" prop="name">
-											<el-input v-model="form.name" name="name">
-											</el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="12">
-									<el-form-item label="宽度" size="mini" prop="width">
-										   <el-input-number v-model="form.width" name="width" type="textarea" :min="0" :max="100"></el-input-number>
-									</el-form-item>
-								</el-col>
-								<el-col :span="12">
-									<el-form-item label="高度" size="mini" prop="height">
-										   <el-input-number v-model="form.height" name="height" type="textarea" :min="0" :max="100"></el-input-number>
-									</el-form-item>
-								</el-col>
-								<el-col :span="12">
-									<el-form-item label="备注" size="mini" prop="note">
-											<el-input v-model="form.note" name="note" type="textarea"></el-input>
-									</el-form-item>
-								</el-col>
-						</el-row>
-						<el-row style="text-align: right;">
-							<el-button @click="resetForm('ruleForm')">重置</el-button>
-							<el-button type="primary" @click="add">确定</el-button>
-						</el-row>
-					</el-form>
-					</div>
-				</div>
+				<script type="text/x-template" id="my-adposition-add">
+					[@adpositionAddView /]
+				</script>
 				<!-- 更新页面 -->
-				<div v-if="modelType == 'edit'">
-					<el-page-header @back="goBack" content="更新广告位管理">
-					</el-page-header>
-					<div style="margin-top: 20px;">
-					<el-form ref="form_edit" :rules="rules" :model="form_edit" label-width="160px" >
-						<el-row :gutter="10">
-								<el-col :span="12">
-									<el-form-item label="广告位" size="mini" prop="name">
-										<el-input v-model="form_edit.name" name="name">
-										</el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="12">
-									<el-form-item label="宽度" size="mini" prop="width">
-										<el-input-number v-model="form_edit.width" name="width" type="textarea" :min="0" :max="100"></el-input-number>
-									</el-form-item>
-								</el-col>
-								<el-col :span="12">
-									<el-form-item label="高度" size="mini" prop="height">
-										<el-input-number v-model="form_edit.height" name="height" type="textarea" :min="0" :max="100"></el-input-number>
-									</el-form-item>
-								</el-col>
-								<el-col :span="12">
-									<el-form-item label="备注" size="mini" prop="note">
-										<el-input v-model="form_edit.note" name="note" type="textarea"></el-input>
-									</el-form-item>
-								</el-col>
-						</el-row>
-						<el-row style="text-align: right;">
-							<el-button @click="cancelEdit">取消</el-button>
-							<el-button type="primary" @click="updateData">确定</el-button>
-						</el-row>
-					</el-form>
-					</div>
-				</div>
-				<div v-if="modelType == 'view'">
-					<el-page-header @back="goBack" content="详情">
-					</el-page-header>
-					<div class="form-title">详细信息</div>
-					<el-form class="viewForm" label-width="80px">
-								<el-form-item label="广告位">
-									{{viewModel.name}}
-								</el-form-item>
-								<el-form-item label="宽度">
-									{{viewModel.width}}
-								</el-form-item>
-								<el-form-item label="高度">
-									{{viewModel.height}}
-								</el-form-item>
-								<el-form-item label="备注">
-									{{viewModel.note}}
-								</el-form-item>
-					</el-form>
-				</div>
+				<script type="text/x-template" id="my-adposition-update">
+					[@adpositionUpdateView /]
+				</script>
+				<script type="text/x-template" id="my-adposition-show">
+					[@adpositionShowView /]
+				</script>
 
 
 				<!-- /.box -->
 			</section>
 
-			<el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
-				<span>确认要删除该条数据吗?</span>
-				<span slot="footer" class="dialog-footer">
-					<el-button @click="dialogVisible = false">取 消</el-button>
-					<el-button type="primary" @click="handleClose">确 定</el-button>
-				</span>
-			</el-dialog>
+
 			<!-- /.content -->
 		</div>
 		<!-- /.content-wrapper -->
@@ -249,253 +96,394 @@
 	</div>
 	<!-- ./wrapper -->
 	[@baseScript /]
-	<script>
-		var vm = new Vue({
-			el: '#app',
-			data: function () {
-				return {
-					searchObject: {
-						no: 1,
-						size: 10,
-						name:''					},
-					modelType:"list",
-					dialogVisible: false,
-					defaultProps: {
-						children: 'children',
-						label: 'name'
-					},
-					form: {
-						note: '',
-						template: '',
-						sortNum: '',
-						name: '',
-						width: '',
-						addDate: '',
-						height: ''					},
-					form_edit: {
-						note: '',
-						template: '',
-						sortNum: '',
-						name: '',
-						width: '',
-						addDate: '',
-						height: ''					},
-					viewModel:{},
-					loading: false,
-					tableData: {},
-					rules: {
-                        name: [
-							{ required: true, message: '请输入广告位', trigger: 'blur' }
-						  ],
-					},
-		        }
-		    },
-		mounted: function () {
-			this.getSearchList();
-		},
-		methods: {
-		    changeTableSort(column) {
-				this.searchObject.sortField = column.prop;
-                if ("descending" == column.order) {
-					this.searchObject.sortMethod = "desc";
-				}
-				else if("ascending" == column.order){
-					this.searchObject.sortMethod = "asc";
-				}
-				else {
-					this.searchObject.sortMethod = "";
-				}
-				this.getSearchList();
-			},
-			showView(row, column, cell, event){
-			       if(cell.cellIndex>0){
-			         return;
-			       }
-				   var param={};
-				   param.id=row.id;
-				   this.modelType="view";
-				   const loading = this.$loading({
-				   lock: true,
-				   text: '数据加载中...',
-				   spinner: 'el-icon-loading',
-				   background: 'rgba(0, 0, 0, 0.7)'
-				   });
-				   var that=this;
-                   $.post("${siteurl}tenantRest/adposition/view.htm",param,function(res){
-                       if(res.code==0){
-						Vue.set(vm.$data, 'viewModel', res);
-					   }
+	<script type="text/javascript">
+		var config = {};
 
-					   setTimeout(() => {
-							loading.close();
-							$(document).scrollTop(0);
-					   }, 300);
-				   });
-				  
+		config.methods = {};
 
-			},
-			goBack(){
-				this.modelType="list";
-			},
-			link(url) {
-				this.modelType = url;
-			},
-            addView(){
-				this.modelType="add";
-				this.form = {
+		config.methods.postData = function (url, param, callback) {
+
+			const loading = this.$loading({
+				lock: true,
+				text: '数据加载中...',
+				spinner: 'el-icon-loading',
+				background: 'rgba(0, 0, 0, 0.7)'
+			});
+
+			setTimeout(() => {
+				if (loading) {
+					loading.close();
+				}
+			}, 5000);
+
+			$.post(url, param, res => {
+				if (callback) {
+					callback(res);
+				}
+				setTimeout(() => {
+					loading.close();
+				}, 300);
+			});
+		}
+		config.methods.postJsonData = function (url, param, callback) {
+			const loading = this.$loading({
+				lock: true,
+				text: '数据加载中...',
+				spinner: 'el-icon-loading',
+				background: 'rgba(0, 0, 0, 0.7)'
+			});
+
+			setTimeout(() => {
+				if (loading) {
+					loading.close();
+				}
+			}, 5000);
+
+			$.ajax({
+				type: "post",
+				url: url,
+				async: false, // 使用同步方式
+				data: JSON.stringify(param),
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (back) {
+					if (callback) {
+						callback(back);
+					}
+					setTimeout(() => {
+						loading.close();
+					}, 300);
+				} // 注意不要在此行增加逗号
+			});
+		}
+
+
+		config.methods.goBack = function () {
+			this.$router.go(-1);
+		}
+
+
+
+	</script>
+
+	<script type="text/javascript">
+		//显示组件开始
+		var adpositionShowConfig = {};
+		adpositionShowConfig.template = "#my-adposition-show";
+		adpositionShowConfig.methods = config.methods;
+		adpositionShowConfig.data = function () {
+			return {
+				viewModel: {
+				}
+			}
+		};
+		adpositionShowConfig.mounted = function () {
+			var id = this.$route.query.id;
+			var self = this;
+			var data = {};
+			data.id = id;
+			this.postData("${siteurl}tenantRest/adposition/view.htm", data, function (res) {
+				if (res.code == 0) {
+					self.viewModel = res;
+
+				}
+			});
+		}
+		var adpositionShowView = Vue.component('my-adposition-view', adpositionShowConfig);
+		//显示组件结束		
+	</script>
+	<script type="text/javascript">
+		//添加组件开始
+		var adpositionAddConfig = {};
+		adpositionAddConfig.template = "#my-adposition-add";
+		adpositionAddConfig.methods = config.methods;
+		adpositionAddConfig.data = function () {
+			return {
+				form: {
+					key: '',
 					name: '',
 					width: '',
 					height: '',
-					note: ''				};
-			},
-			add(){
-				var self=this;
-				this.$refs["ruleForm"].validate((valid) => {
-					if (valid) {
-						self.addData();
-					} else {
-						console.log('error submit!!');
-						return false;
-					}
-				});
-			},
-			addData() {
-				var that = this, data = this.form;
-				const loading = this.$loading({
-					lock: true,
-					text: '数据修改中',
-					spinner: 'el-icon-loading',
-					background: 'rgba(0, 0, 0, 0.7)'
-				});
-
-				$.post("${siteurl}tenantRest/adposition/create.htm", data, function (res) {
-					setTimeout(() => {
-						loading.close();
-					}, 300);
-					if (res.code == 0) {
-						that.modelType = 'list';
-						that.$message({
-							message: '添加数据成功',
-							type: 'success'
-						});
-						that.searchObject.no = 1;
-						that.getSearchList();
-					} else {
-						that.$message.error(res.msg);
-					}
-				});
-			},
-			sizeChange(event) {
-				this.searchObject.size = event;
-				this.getSearchList();
-			},
-			updateData(){
-				var self=this;
-				this.$refs["form_edit"].validate((valid) => {
-					if (valid) {
-						self.updateDataPost();
-					} else {
-						console.log('error submit!!');
-						return false;
-					}
-				});
-			},
-			updateDataPost() {
-				var that = this, data = this.form_edit;
-				const loading = this.$loading({
-					lock: true,
-					text: '数据修改中',
-					spinner: 'el-icon-loading',
-					background: 'rgba(0, 0, 0, 0.7)'
-				});
-
-				$.post("${siteurl}tenantRest/adposition/update.htm", data, function (res) {
-					setTimeout(() => {
-						loading.close();
-					}, 300);
-					if (res.code == 0) {
-						that.modelType = 'list';
-						that.$message({
-							message: '修改数据成功',
-							type: 'success'
-						});
-						that.getSearchList();
-					} else {
-						that.$message.error(res.msg);
-					}
-				});
-			},
-			// 获取发票详情
-			editView(id) {
-				var that = this;
-				var data ={};
-				data.id=id;
-				this.modelType="edit";
-				$.post("${siteurl}tenantRest/adposition/view.htm", data, function (res) {
-					if (res.code == 0) {
-						console.log(res)
-						that.form_edit = res;
-					}
-				});
-			},
-			// 搜索商品
-			search() {
-				this.searchObject.no = 1;
-				this.getSearchList();
-			},
-			cancelEdit(){
-				this.modelType = 'list';
-			},
-			// 获取商品列表
-			getSearchList() {
-				this.loading = true;
-				var data = this.searchObject, that = this;
-				$.post("${siteurl}tenantRest/adposition/search.htm", data, function (result) {
-					if (result.code == 0) {
-						Vue.set(vm.$data, 'tableData', result);
-					}
-					setTimeout(() => {
-						that.loading = false;
-					}, 300)
-				});
-			},
-			// 商品分页
-			pageChange(index) {
-				this.searchObject.no = index;
-				this.getSearchList();
-			},
-			deleteData(event) {
-				this.selectId = event.id;
-				this.dialogVisible = true;
-			},
-			clearData() {
-						this.searchObject.name = "";
-			},
-			resetForm(formName) {
-				this.$refs[formName].resetFields();
-			},
-			handleClose(done) {
-				this.dialogVisible = false;
-				var self = this;
-				if (self.selectId) {
-					var params = {};
-					params.id = self.selectId;
-					$.post("${siteurl}tenantRest/adposition/delete.htm", params, function (res) {
-						if (res.code == 0) {
-							self.$message({
-								message: '删除数据成功',
-								type: 'success'
-							});
-							self.getSearchList();
-						} else {
-							self.$message.error(res.msg);
-						}
-					});
+					note: ''				},
+				rules: {
+                        key: [
+							{ required: true, message: '请输入标识', trigger: 'blur' }
+						],
+                        name: [
+							{ required: true, message: '请输入广告位名称', trigger: 'blur' }
+						],
 				}
-				done();
 			}
-		  }
+		};
+		adpositionAddConfig.mounted = function () {
+		}
+		adpositionAddConfig.computed = {};
+
+
+		adpositionAddConfig.methods.add = function () {
+			var self = this;
+			this.$refs["ruleForm"].validate((valid) => {
+				if (valid) {
+					self.addData();
+				} else {
+					console.log('error submit!!');
+					return false;
+				}
+			});
+		}
+
+		adpositionAddConfig.methods.addData = function () {
+			var self = this, data = this.form;
+			if (this.deforeAddData) {
+				this.deforeAddData();
+			}
+			this.postData("${siteurl}tenantRest/adposition/create.htm", data, function (res) {
+				if (res.code == 0) {
+					self.$message({
+						message: '添加数据成功',
+						type: 'success'
+					});
+					self.$router.go(-1);
+				} else {
+					self.$message.error(res.msg);
+				}
+			});
+		}
+		var  adpositionAddView = Vue.component('add-view', adpositionAddConfig);
+
+
+	</script>
+	<script type="text/javascript">
+		//更新组件开始
+		var adpositionUpdateConfig = {};
+		adpositionUpdateConfig.template = "#my-adposition-update";
+		adpositionUpdateConfig.methods = config.methods;
+		adpositionUpdateConfig.methods.updateData = function () {
+			var self = this;
+			this.$refs["ruleForm"].validate((valid) => {
+				if (valid) {
+					self.updateDataPost();
+				} else {
+					console.log('error submit!!');
+					return false;
+				}
+			});
+		}
+
+		adpositionUpdateConfig.methods.updateDataPost = function () {
+			var self = this, data = this.form;
+			//delete data.adpositionCatalog;
+			if (this.deforeUpdateData) {
+				this.deforeUpdateData();
+			}
+			this.postData("${siteurl}tenantRest/adposition/update.htm", data, function (res) {
+				if (res.code == 0) {
+					self.$message({
+						message: '修改数据成功',
+						type: 'success'
+					});
+					//window.history.go(-1)
+					self.$router.go(-1);
+				} else {
+					self.$message.error(res.msg);
+				}
+			});
+		}
+		adpositionUpdateConfig.data = function () {
+			return {
+				form: {
+					key: '',
+					name: '',
+					width: '',
+					height: '',
+					note: ''				},
+				rules: {
+                        key: [
+							{ required: true, message: '请输入标识', trigger: 'blur' }
+						],
+                        name: [
+							{ required: true, message: '请输入广告位名称', trigger: 'blur' }
+						],
+				}
+			}
+		};
+
+		adpositionUpdateConfig.mounted = function () {
+			var id = this.$route.query.id;
+			var self = this;
+			var data = {};
+			data.id = id;
+			this.postData("${siteurl}tenantRest/adposition/view.htm", data, function (res) {
+				if (res.code == 0) {
+					self.form = res;
+				}
+			});
+		}
+		adpositionUpdateConfig.computed = {};
+
+		var adpositionUpdateView = Vue.component('update-view', adpositionUpdateConfig);
+		//更新组件结束
+	</script>
+	<script type="text/javascript">
+		var adpositionListConfig = {};
+		adpositionListConfig.template = "#my-adposition-list";
+		adpositionListConfig.methods = config.methods;
+
+
+		adpositionListConfig.methods.addView = function () {
+			this.$router.push({ path: 'add'});
+		}
+		adpositionListConfig.methods.editView = function (id) {
+			var self = this;
+			var data = {};
+			data.id = id;
+			console.log(data);
+			this.$router.push({ path: 'update', query: data });
+
+		}
+
+		adpositionListConfig.methods.changeTableSort = function (column) {
+			this.searchObject.sortField = column.prop;
+			if ("descending" == column.order) {
+				this.searchObject.sortMethod = "desc";
+			}
+			else if ("ascending" == column.order) {
+				this.searchObject.sortMethod = "asc";
+			}
+			else {
+				this.searchObject.sortMethod = "";
+			}
+			this.getSearchList();
+		}
+		adpositionListConfig.methods.showView = function (row, column, cell, event) {
+			if (cell.cellIndex > 0) {
+				return;
+			}
+			var param = {};
+			param.id = row.id;
+			var self = this;
+			this.$router.push({ path: 'view', query: param });
+
+		}
+
+		adpositionListConfig.methods.sizeChange = function (event) {
+			this.searchObject.size = event;
+			this.getSearchList();
+		}
+		adpositionListConfig.methods.pageChange = function (index) {
+			this.searchObject.no = index;
+			this.getSearchList();
+		}
+		adpositionListConfig.methods.getSearchList = function () {
+			this.loading = true;
+			var data = this.searchObject, that = this;
+			$.post("${siteurl}tenantRest/adposition/search.htm", data, function (result) {
+				if (result.code == 0) {
+					that.tableData = result;
+				}
+				setTimeout(() => {
+					that.loading = false;
+				}, 300)
+			});
+		}
+		adpositionListConfig.methods.search = function () {
+			this.searchObject.no = 1;
+			this.getSearchList();
+		}
+		adpositionListConfig.methods.clearData = function () {
+					this.searchObject.key = "";
+					this.searchObject.name = "";
+		}
+		adpositionListConfig.methods.deleteData = function (event) {
+			this.selectId = event.id;
+			this.dialogVisible = true;
+		}
+
+		adpositionListConfig.methods.handleClose = function (done) {
+			this.dialogVisible = false;
+			var self = this;
+			if (self.selectId) {
+				var params = {};
+				params.id = self.selectId;
+				this.postData("${siteurl}tenantRest/adposition/delete.htm", params, function (res) {
+					if (res.code == 0) {
+						self.$message({
+							message: '删除数据成功',
+							type: 'success'
+						});
+						self.getSearchList();
+					} else {
+						self.$message.error(res.msg);
+					}
+				});
+			}
+
+		}
+
+		adpositionListConfig.computed = {};
+
+		adpositionListConfig.data = function () {
+			return {
+				searchObject: {
+					no: 1,
+					size: 10,
+						key:'',
+						name:''				},
+				dialogVisible: false,
+				defaultProps: {
+					children: 'children',
+					label: 'name'
+				},
+				loading: false,
+				tableData: {},
+			}
+		};
+		adpositionListConfig.methods.showAddView = function () {
+			this.$router.push({ path: 'add'});
+		};
+		adpositionListConfig.mounted = function () {
+			this.getSearchList();
+		}
+
+		var adpositionListView = Vue.component('list-adposition-view', adpositionListConfig);
+	</script>
+	<script type="text/javascript">
+	
+		// 3. 创建 router 实例，然后传 `routes` 配置
+		// 你还可以传别的配置参数, 不过先这么简单着吧。
+		var appConfig = {};
+		appConfig.el = "#app";
+
+		const routes = [
+			{ path: '/view',name: "adpositionShowView", component: adpositionShowView, props: true },
+			{ path: '/add',name: "adpositionAddView", component: adpositionAddView , props: true },
+			{ path: '/update', name: "adpositionUpdateView", component: adpositionUpdateView, props: true },
+			{ path: '/',name: "adpositionListView", component: adpositionListView , props: true }
+		]
+		const router = new VueRouter({
+			routes // (缩写) 相当于 routes: routes
 		})
+
+		var store = new Vuex.Store({
+			state: {
+				count: 0,
+			},
+			mutations: {
+				increment(state) {
+					state.count++
+				},
+
+			}
+		})
+
+		appConfig.router = router;
+
+		appConfig.store = store;
+		appConfig.methods = config.methods;
+		appConfig.mounted = function () {
+		}
+		var vm = new Vue(appConfig);
+
 	</script>
 
 </body>

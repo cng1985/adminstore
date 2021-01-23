@@ -1,0 +1,284 @@
+[#macro adListView]
+<div>
+    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
+        <span>确认要删除该条数据吗?</span>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="handleClose">确 定</el-button>
+        </span>
+    </el-dialog>
+    <div class="search">
+        <el-form label-width="80px">
+            <el-row>
+                <el-col :span="6" style="padding: 0 8px;">
+                    <el-form-item label="标题">
+                        <el-input v-model="searchObject.title" size="small" placeholder="标题" name="title">
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6" style="padding: 0 8px;">
+                    <el-form-item label="广告位">
+                        <el-select size="small" style="width: 100%;" v-model="searchObject.adPosition" filterable
+                            clearable placeholder="请选择">
+                            <el-option v-for="item in adPositionOptions" :key="item.id" :label="item.name"
+                                :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6" style="padding: 0 8px;">
+                    <el-form-item label="广告标识">
+                        <el-input v-model="searchObject.key" size="small" placeholder="" name="key">
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+
+                <el-col :span="6" style="padding: 0 10px;margin-top: 5px;">
+                    <el-row type="flex" justify="end">
+                        <el-button size="small" type="primary" @click="search">搜索</el-button>
+                        <el-button size="small" plain @click="clearData">清除条件</el-button>
+                    </el-row>
+                </el-col>
+            </el-row>
+        </el-form>
+    </div>
+    <div class="data-content">
+        <div class="tool-add">
+            <el-button type="primary" size="small" @click="addView">新增</el-button>
+        </div>
+
+        <el-row :gutter="20"  v-loading="loading" >
+            <el-col :span="6" v-for="item in tableData.list" :key="item.id">
+                <el-card :body-style="{ padding: '0px' }">
+                    <div class="card">
+                        <el-image style="width: 100%; height: 150px" :src="item.path">
+                        </el-image>
+                        <div style="padding:3px 14px;">
+                            标题:<span v-text="item.title"></span>
+                        </div>
+                        <div style="padding:3px 14px;">
+                            广告位:<span v-text="item.adPositionName"></span>
+                        </div>
+                        <div class="state">
+                            <el-button type="primary" size="small" @click="editView(item.id)">编辑</el-button>
+                            <el-button type="danger" size="small" @click="deleteData(item)">删除</el-button>
+                        </div>
+                    </div>
+
+                </el-card>
+            </el-col>
+        </el-row>
+
+        <div class="page">
+            <el-pagination background :current-page="searchObject.no" :page-sizes="[8, 16, 40, 80]"
+                :page-size="tableData.size" :pager-count="5" layout="total, sizes, prev, pager, next, jumper"
+                :page-count="tableData.totalPage" :total="tableData.total" @size-change="sizeChange"
+                @current-change="pageChange">
+            </el-pagination>
+        </div>
+    </div>
+</div>
+[/#macro]
+
+
+[#macro adAddView]
+<div class="model-form">
+    <el-page-header @back="goBack" content="增加广告管理">
+    </el-page-header>
+    <div class="model-content">
+        <el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px">
+            <el-row :gutter="10">
+                <el-col :span="18">
+                    <el-form-item label="标题" size="mini" prop="title">
+                        <el-input v-model="form.title" name="title">
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="18">
+                    <el-form-item label="广告位" size="mini" prop="adPosition">
+                        <el-select style="width: 100%;" v-model="form.adPosition" filterable clearable
+                            placeholder="请选择">
+                            <el-option v-for="item in adPositionOptions" :key="item.id" :label="item.name"
+                                :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="18">
+                    <el-form-item label="广告类型" size="mini" prop="type">
+                        <el-input v-model="form.type" name="type">
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="18">
+                    <el-form-item label="广告图片" size="mini" prop="path">
+                        <avatar v-model="form.path"></avatar>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="18">
+                    <el-form-item label="广告开始时间" size="mini" prop="beginDate">
+                        <el-date-picker v-model="form.beginDate" type="date" value-format="yyyy-MM-dd"
+                            placeholder="选择日期">
+                        </el-date-picker>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="18">
+                    <el-form-item label="广告结束时间" size="mini" prop="endDate">
+                        <el-date-picker v-model="form.endDate" type="date" value-format="yyyy-MM-dd" placeholder="选择日期">
+                        </el-date-picker>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="18">
+                    <el-form-item label="链接地址" size="mini" prop="url">
+                        <el-input v-model="form.url" name="url">
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="18">
+                    <el-form-item label="排序号" size="mini" prop="sortNum">
+                        <el-input-number v-model="form.sortNum" name="sortNum" type="textarea" :min="0" :max="100">
+                        </el-input-number>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="18">
+                    <el-form-item label="内容" size="mini" prop="note">
+                        <el-input v-model="form.note" name="note" type="textarea"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row style="text-align: right;">
+                <el-col :span="18">
+                    <el-button @click="goBack">取消</el-button>
+                    <el-button type="primary" @click="add">确定</el-button>
+                </el-col>
+            </el-row>
+        </el-form>
+    </div>
+</div>
+[/#macro]
+
+[#macro adUpdateView]
+<div class="model-form">
+    <el-page-header @back="goBack" content="更新广告管理">
+    </el-page-header>
+    <div class="model-content">
+        <el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px">
+            <el-row :gutter="10">
+                <el-col :span="18">
+                    <el-form-item label="标题" size="mini" prop="title">
+                        <el-input v-model="form.title" name="title">
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="18">
+                    <el-form-item label="广告位" size="mini" prop="adPosition">
+                        <el-select style="width: 100%;" v-model="form.adPosition" filterable clearable
+                            placeholder="请选择">
+                            <el-option v-for="item in adPositionOptions" :key="item.id" :label="item.name"
+                                :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="18">
+                    <el-form-item label="广告类型" size="mini" prop="type">
+                        <el-input v-model="form.type" name="type">
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="18">
+                    <el-form-item label="广告图片" size="mini" prop="path">
+                        <avatar v-model="form.path"></avatar>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="18">
+                    <el-form-item label="广告开始时间" size="mini" prop="beginDate">
+                        <el-date-picker v-model="form.beginDate" type="date" value-format="yyyy-MM-dd"
+                            placeholder="选择日期">
+                        </el-date-picker>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="18">
+                    <el-form-item label="广告结束时间" size="mini" prop="endDate">
+                        <el-date-picker v-model="form.endDate" type="date" value-format="yyyy-MM-dd" placeholder="选择日期">
+                        </el-date-picker>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="18">
+                    <el-form-item label="链接地址" size="mini" prop="url">
+                        <el-input v-model="form.url" name="url">
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="18">
+                    <el-form-item label="排序号" size="mini" prop="sortNum">
+                        <el-input-number v-model="form.sortNum" name="sortNum" type="textarea" :min="0" :max="100">
+                        </el-input-number>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="18">
+                    <el-form-item label="内容" size="mini" prop="note">
+                        <el-input v-model="form.note" name="note" type="textarea"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row style="text-align: right;">
+                <el-col :span="18">
+                    <el-button @click="goBack">取消</el-button>
+                    <el-button type="primary" @click="updateData">确定</el-button>
+                </el-col>
+            </el-row>
+        </el-form>
+    </div>
+</div>
+[/#macro]
+
+[#macro adShowView]
+<div class="model-form">
+    <el-page-header @back="goBack" content="详情">
+    </el-page-header>
+    <div class="form-title">详细信息</div>
+    <el-form class="viewForm" label-width="80px">
+        <el-col :span="12">
+            <el-form-item label="标题">
+                <div v-html="viewModel.title">></div>
+            </el-form-item>
+        </el-col>
+        <el-col :span="12">
+            <el-form-item label="广告位">
+                <div v-html="viewModel.adPositionName">></div>
+            </el-form-item>
+        </el-col>
+        <el-col :span="12">
+            <el-form-item label="广告类型">
+                <div v-html="viewModel.typeName">></div>
+            </el-form-item>
+        </el-col>
+        <el-col :span="12">
+            <el-form-item label="广告开始时间">
+                <div v-html="viewModel.beginDate">></div>
+            </el-form-item>
+        </el-col>
+        <el-col :span="12">
+            <el-form-item label="广告结束时间">
+                <div v-html="viewModel.endDate">></div>
+            </el-form-item>
+        </el-col>
+        <el-col :span="12">
+            <el-form-item label="链接地址">
+                <div v-html="viewModel.url">></div>
+            </el-form-item>
+        </el-col>
+        <el-col :span="12">
+            <el-form-item label="排序号">
+                <div v-html="viewModel.sortNum">></div>
+            </el-form-item>
+        </el-col>
+        <el-col :span="12">
+            <el-form-item label="内容">
+                <div v-html="viewModel.note">></div>
+            </el-form-item>
+        </el-col>
+    </el-form>
+</div>
+[/#macro]

@@ -1,15 +1,31 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title></title>
-	[#include "/admin/common/commons.html"]
-	[#include "/tenant/common/site.html"]
-	[@baseHead /]
-</head>
+	<title>分类管理</title>
+	<!-- Tell the browser to be responsive to screen width -->
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<!-- Bootstrap 3.3.6 -->
+	<link rel="stylesheet" href="${siteurl}bootstrap/css/bootstrap.min.css">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="${siteurl}plugins/FontAwesome/css/font-awesome.min.css">
+	<!-- Ionicons -->
+	<link rel="stylesheet" href="${siteurl}plugins/ionicons201/css/ionicons.min.css">
+	<!-- Theme style -->
+	<link rel="stylesheet" href="${siteurl}dist/css/AdminLTE.min.css">
+	<!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+	<link rel="stylesheet" href="${siteurl}dist/css/skins/_all-skins.min.css">
 
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	[#include "/admin/common/commons.html"]
+</head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
@@ -25,6 +41,8 @@
 	<aside class="main-sidebar">
 		<!-- sidebar: style can be found in sidebar.less -->
 		<section class="sidebar">
+			<!-- Sidebar user panel -->
+			<!-- Sidebar user panel -->
 			[@user_panel /]
 			<!-- search form -->
 			[@sidebar_form /]
@@ -46,55 +64,53 @@
 	<!-- =============================================== -->
 
 	<!-- Content Wrapper. Contains page content -->
-	<div class="content-wrapper" id="app"   v-cloak >
+	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
-			<!-- 导航 -->
-			<div class="navigation">
-				<i>首页</i> <span></span>
-			</div>
+			<h1>
+				分类管理
+				<small>管理你的分类</small>
+			</h1>
 		</section>
 		<!-- Main content -->
 		<section class="content">
+
 			<!-- Default box -->
-
-			<el-form ref="form" :model="form" label-width="160px" :rules="rules"  >
-				<input type="hidden" name="id" value="${model.id}">
-				<input type="hidden" name="pageNumber" value="${(page.pageNumber)!'1'}">
-				<el-row :gutter="10">
-					<el-col :span="12">
-						<el-form-item label="广告位" size="mini" prop="name">
-							<el-input v-model="form.name" name="name">
-							</el-input>
-						</el-form-item>
-					</el-col>
-					<el-col :span="12">
-						<el-form-item label="宽度" size="mini" prop="width">
-							<el-input-number v-model="form.width" name="width" type="textarea" :min="0" :max="100"></el-input-number>
-						</el-form-item>
-					</el-col>
-					<el-col :span="12">
-						<el-form-item label="高度" size="mini" prop="height">
-							<el-input-number v-model="form.height" name="height" type="textarea" :min="0" :max="100"></el-input-number>
-						</el-form-item>
-					</el-col>
-					<el-col :span="12">
-						<el-form-item label="备注" size="mini" prop="note">
-							<el-input v-model="form.note" name="note" type="textarea"></el-input>
-						</el-form-item>
-					</el-col>
-				</el-row>
-				<el-row style="text-align: right;">
-					<el-row style="text-align: right;">
-						<el-button @click="cancelEdit">取消</el-button>
-						<el-button type="primary" @click="updateData">确定</el-button>
-					</el-row>
-				</el-row>
-			</el-form>
-
+			<div class="col-xs-12">
+				<div class="box box-default box-solid">
+					<div class="box-header with-border">
+						<h3 class="box-title">更新分类</h3>
+					</div>
+					<!-- /.box-header -->
+					<!-- form start -->
+					<form class="form-horizontal" action="${siteurl}admin/adposition/model_update.htm" method="post">
+						<input type="hidden" name="id" value="${model.id}">
+						<input type="hidden" name="pageNumber" value="${pageNumber!'1'}">
+						<div class="box-body">
+							<div class="form-group">
+								<label for="name" class="col-sm-2 control-label">分类名称</label>
+								<div class="col-sm-10">
+									<input class="form-control" id="name" maxlength="20" name="name" placeholder="分类名称" value="${model.name!''}"   type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="code" class="col-sm-2 control-label">分类编码</label>
+								<div class="col-sm-10">
+									<input class="form-control" id="code" maxlength="50" name="code" placeholder="分类编码" value="${model.code!''}"   type="text">
+								</div>
+							</div>
+						</div>
+						<!-- /.box-body -->
+						<div class="box-footer">
+							<button type="submit" class="btn btn-primary pull-right">更新</button>
+						</div>
+						<!-- /.box-footer -->
+					</form>
+				</div>
+			</div>
 			<!-- /.box -->
-		</section>
 
+		</section>
 		<!-- /.content -->
 	</div>
 	<!-- /.content-wrapper -->
@@ -106,75 +122,22 @@
 
 	<!-- /.control-sidebar -->
 	<!-- Add the sidebar's background. This div must be placed
-     immediately after the control sidebar -->
+         immediately after the control sidebar -->
 	<div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-[@baseScript /]
-<script>
-		var vm = new Vue({
-			el: '#app',
-			data: function () {
-				return {
-					form: {
-					     id:"${model.id!}",
-						name: '${model.name!}',
-						width: '${model.width!}',
-						height: '${model.height!}',
-						note: '${model.note!}'					},
-					rules: {
-                        name: [
-							{ required: true, message: '请输入广告位', trigger: 'blur' }
-						  ],
-					}
-				}
-			},
-			mounted: function () {
-			},
-			methods: {
-				cancelEdit(){
-					window.location.href="${siteurl}admin/adposition/view_list.htm";
-				},
-  				updateData(){
-					var self=this;
-					this.$refs["form"].validate((valid) => {
-						if (valid) {
-							self.updateDataPost();
-						} else {
-							console.log('error submit!!');
-							return false;
-						}
-					});
-				},
-				updateDataPost() {
-					var that = this, data = this.form;
-					const loading = this.$loading({
-						lock: true,
-						text: '数据修改中',
-						spinner: 'el-icon-loading',
-						background: 'rgba(0, 0, 0, 0.7)'
-					});
 
-					$.post("${siteurl}tenantRest/adposition/update.htm", data, function (res) {
-						setTimeout(() => {
-							loading.close();
-						}, 300);
-						if (res.code == 0) {
-							that.modelType = 'list';
-							that.$message({
-								message: '修改数据成功',
-								type: 'success'
-							});
-							window.location.href="${siteurl}admin/adposition/view_list.htm";
-						} else {
-							that.$message.error(res.msg);
-						}
-					});
-				}
-			}
-		})
-	</script>
-
+<!-- jQuery 2.2.3 -->
+<script src="${siteurl}plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="${siteurl}bootstrap/js/bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script src="${siteurl}plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="${siteurl}plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="${siteurl}dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="${siteurl}dist/js/demo.js"></script>
 </body>
-
 </html>

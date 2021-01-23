@@ -4,8 +4,11 @@ import com.haoxuer.adminstore.ad.data.entity.Ad;
 import com.haoxuer.adminstore.ad.data.entity.AdPosition;
 import com.haoxuer.adminstore.article.data.entity.Article;
 import com.haoxuer.adminstore.member.controller.admin.Controllers;
+import com.haoxuer.adminstore.member.data.entity.Member;
+import com.haoxuer.adminstore.shop.data.entity.Shop;
 import com.haoxuer.imake.ChainMake;
 import com.haoxuer.imake.template.hibernate.TemplateHibernateDir;
+import com.haoxuer.imake.templates.elementRouter.ElementRouterDir;
 import com.haoxuer.imake.templates.elementui.ElementUIDir;
 
 import java.io.File;
@@ -18,23 +21,34 @@ import java.util.List;
 public class App {
     public static void main(String[] args) {
 
-        System.out.println(Controllers.class.getResource("/").getPath());
-        ChainMake make = new ChainMake(ElementUIDir.class, TemplateHibernateDir.class);
+        viewMake().makes(Member.class);
+    }
+
+    private static ChainMake getChainMake() {
+        ChainMake make = new ChainMake(ElementRouterDir.class, TemplateHibernateDir.class);
         File view = new File("E:\\codes\\maven\\adminstore\\web\\src\\main\\webapp\\WEB-INF\\ftl\\tenant\\default");
         make.setView(view);
-
-        List<Class<?>> cs = new ArrayList<Class<?>>();
-        cs.add(Ad.class);
-
         make.setDao(true);
-        make.setService(true);
+        make.setService(false);
         make.setView(true);
         make.setAction(true);
         make.setRest(true);
         make.setApi(true);
         make.setSo(false);
-        make.makes(cs);
+        return make;
     }
 
-
+    private static ChainMake viewMake() {
+        ChainMake make = new ChainMake(ElementRouterDir.class, TemplateHibernateDir.class);
+        File view = new File("E:\\codes\\maven\\adminstore\\web\\src\\main\\webapp\\WEB-INF\\ftl\\tenant\\default");
+        make.setView(view);
+        make.setDao(false);
+        make.setService(false);
+        make.setView(true);
+        make.setAction(false);
+        make.setRest(false);
+        make.setApi(false);
+        make.setSo(false);
+        return make;
+    }
 }
