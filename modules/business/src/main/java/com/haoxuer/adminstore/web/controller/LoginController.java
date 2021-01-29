@@ -10,6 +10,7 @@
 
 package com.haoxuer.adminstore.web.controller;
 
+import com.haoxuer.discover.rest.base.ResponseObject;
 import com.haoxuer.discover.user.data.entity.UserInfo;
 import com.haoxuer.discover.user.data.entity.UserLoginLog;
 import com.haoxuer.discover.user.data.enums.BindType;
@@ -32,6 +33,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -71,7 +73,21 @@ public class LoginController extends BaseController {
         }
         return getView("login");
     }
-
+    @ResponseBody
+    @RequestMapping(value = "/loginAjax")
+    public ResponseObject loginAjax(String username, String password, String tenant) {
+        ResponseObject result=new ResponseObject();
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        try {
+            subject.login(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setCode(501);
+            result.setMsg("密码错误");
+        }
+        return result;
+    }
 
     @PostMapping(value = "/login")
     public String loginWork(RedirectAttributes attributes) {

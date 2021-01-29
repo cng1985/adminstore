@@ -15,7 +15,7 @@ public class SiteController extends BaseController {
      */
     @GetMapping(value = "/index")
     public String index() {
-        return getView("index");
+        return getView("login");
     }
 
 
