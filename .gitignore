@@ -15,3 +15,5 @@ dependency-reduced-pom.xml
 /docxs
 *.project
 *.db
+/.vscode/
+/.workflow/
