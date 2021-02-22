@@ -22,7 +22,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <discover.version>3.2.5-20210120</discover.version>
+        <discover.version>3.2.6-20210222</discover.version>
         <jodd.version>5.1.4</jodd.version>
         <base.version>1.01</base.version>
         <mybatis.version>3.5.1</mybatis.version>
