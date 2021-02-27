@@ -7,8 +7,13 @@
 	<title>用户管理</title>
 	[#include "/admin/common/commons.html"]
 	[#include "/tenant/common/site.html"]
-	[#include "/tenant/default/member/component.html"]
+	[#include "/tenant/default/member/componentAdd.html"]
+	[#include "/tenant/default/member/componentList.html"]
+	[#include "/tenant/default/member/componentUpdate.html"]
+	[#include "/tenant/default/member/componentShow.html"]
+
 	[@baseHead /]
+	<script type="text/javascript"></script>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -63,25 +68,7 @@
 				</keep-alive>
 				<router-view v-if="!$route.meta.keepAlive">
 				</router-view>
-				<script type="text/x-template" id="my-member-list">
-					[@memberListView /]
-				</script>
 				<!-- Default box -->
-
-				<!-- 增加页面 -->
-				<script type="text/x-template" id="my-member-add">
-					[@memberAddView /]
-				</script>
-				<!-- 更新页面 -->
-				<script type="text/x-template" id="my-member-update">
-					[@memberUpdateView /]
-				</script>
-				<script type="text/x-template" id="my-member-show">
-					[@memberShowView /]
-				</script>
-
-
-				<!-- /.box -->
 			</section>
 
 
@@ -101,6 +88,7 @@
 	</div>
 	<!-- ./wrapper -->
 	[@baseScript /]
+
 	<script type="text/javascript">
 		var config = {};
 
@@ -122,288 +110,12 @@
 
 	</script>
 
-	<script type="text/javascript">
-		//显示组件开始
-		var memberShowConfig = {};
-		memberShowConfig.template = "#my-member-show";
-		memberShowConfig.methods =config.basicMethod();
-		memberShowConfig.data = function () {
-			return {
-				viewModel: {
-				},
-				activeIndex: "1"
-			}
-		};
-
-		memberShowConfig.methods.handleSelect = function (index) {
-			console.log(index)
-			var selectId = this.selectId;
-			if (index == "1") {
-				this.$router.replace({ path: '/view/index', query: { id: selectId, activeIndex: 1, time: Math.random() } })
-			}
-			else if (index == "2") {
-				this.$router.replace({ path: '/view/members', query: { id: selectId, activeIndex: 2, time: Math.random() } })
-			} else {
-
-			}
-		};
-
-		memberShowConfig.mounted = function () {
-		   	var id = this.$route.query.id;
-			var activeIndex = this.$route.query.activeIndex;
-
-			var self = this;
-			var data = {};
-			data.id = id;
-			this.selectId = data.id;
-			if (activeIndex) {
-				this.activeIndex = activeIndex;
-			}
-		}
-		var memberShowView = Vue.component('my-member-view', memberShowConfig);
-		//显示组件结束		
-	</script>
-	<script type="text/javascript">
-		//添加组件开始
-		var memberAddConfig = {};
-		memberAddConfig.template = "#my-member-add";
-		memberAddConfig.methods = config.basicMethod();
-		memberAddConfig.data = function () {
-			return {
-				form: {
-					note: '',
-					sex: '',
-					introduce: '',
-					job: '',
-					no: ''				},
-				rules: {
-				}
-			}
-		};
-		memberAddConfig.mounted = function () {
-		}
-		memberAddConfig.computed = {};
-
-
-		memberAddConfig.methods.add = function () {
-			var self = this;
-			this.$refs["ruleForm"].validate(function(valid){
-				if (valid) {
-					self.addData();
-				} else {
-					console.log('error submit!!');
-					return false;
-				}
-			});
-		}
-
-		memberAddConfig.methods.addData = function () {
-			var self = this, data = this.form;
-			if (this.deforeAddData) {
-				this.deforeAddData();
-			}
-			this.postData("${siteurl}tenantRest/member/create.htm", data, function (res) {
-				if (res.code == 0) {
-					self.$message({
-						message: '添加数据成功',
-						type: 'success'
-					});
-					self.$router.go(-1);
-				} else {
-					self.$message.error(res.msg);
-				}
-			});
-		}
-		var  memberAddView = Vue.component('add-view', memberAddConfig);
-
-
-	</script>
-	<script type="text/javascript">
-		//更新组件开始
-		var memberUpdateConfig = {};
-		memberUpdateConfig.template = "#my-member-update";
-		memberUpdateConfig.methods = config.basicMethod();
-		memberUpdateConfig.methods.updateData = function () {
-			var self = this;
-			this.$refs["ruleForm"].validate(function(valid){
-				if (valid) {
-					self.updateDataPost();
-				} else {
-					console.log('error submit!!');
-					return false;
-				}
-			});
-		}
-
-		memberUpdateConfig.methods.updateDataPost = function () {
-			var self = this, data = this.form;
-			//delete data.memberCatalog;
-			if (this.deforeUpdateData) {
-				this.deforeUpdateData();
-			}
-			this.postData("${siteurl}tenantRest/member/update.htm", data, function (res) {
-				if (res.code == 0) {
-					self.$message({
-						message: '修改数据成功',
-						type: 'success'
-					});
-					//window.history.go(-1)
-					self.$router.go(-1);
-				} else {
-					self.$message.error(res.msg);
-				}
-			});
-		}
-		memberUpdateConfig.data = function () {
-			return {
-				form: {
-					note: '',
-					sex: '',
-					introduce: '',
-					job: '',
-					no: ''				},
-				rules: {
-				}
-			}
-		};
-
-		memberUpdateConfig.mounted = function () {
-			var id = this.$route.query.id;
-			var self = this;
-			var data = {};
-			data.id = id;
-			this.postData("${siteurl}tenantRest/member/view.htm", data, function (res) {
-				if (res.code == 0) {
-					self.form = res;
-				}
-			});
-		}
-		memberUpdateConfig.computed = {};
-
-		var memberUpdateView = Vue.component('update-view', memberUpdateConfig);
-		//更新组件结束
-	</script>
-	<script type="text/javascript">
-		var memberListConfig = {};
-		memberListConfig.template = "#my-member-list";
-		memberListConfig.methods = config.basicMethod();
-
-
-		memberListConfig.methods.addView = function () {
-			this.$router.push({ path: 'add'});
-		}
-		memberListConfig.methods.editView = function (row) {
-			var self = this;
-			var data = {};
-			data.id = row.id;
-			this.$router.push({ path: 'update', query: data });
-
-		}
-
-		memberListConfig.methods.changeTableSort = function (column) {
-			this.searchObject.sortField = column.prop;
-			if ("descending" == column.order) {
-				this.searchObject.sortMethod = "desc";
-			}
-			else if ("ascending" == column.order) {
-				this.searchObject.sortMethod = "asc";
-			}
-			else {
-				this.searchObject.sortMethod = "";
-			}
-			this.getSearchList();
-		}
-		memberListConfig.methods.showView = function (row, column, cell, event) {
-			if (cell.cellIndex > 0) {
-				return;
-			}
-			var param = {};
-			param.id = row.id;
-			var self = this;
-			this.$router.push({ path: 'view', query: param });
-
-		}
-
-		memberListConfig.methods.sizeChange = function (event) {
-			this.searchObject.size = event;
-			this.getSearchList();
-		}
-		memberListConfig.methods.pageChange = function (index) {
-			this.searchObject.no = index;
-			this.getSearchList();
-		}
-		memberListConfig.methods.getSearchList = function () {
-			this.loading = true;
-			var data = this.searchObject, that = this;
-			$.post("${siteurl}tenantRest/member/search.htm", data, function (result) {
-				if (result.code == 0) {
-					that.tableData = result;
-				}
-				setTimeout(function(){
-					that.loading = false;
-				}, 300)
-			});
-		}
-		memberListConfig.methods.search = function () {
-			this.searchObject.no = 1;
-			this.getSearchList();
-		}
-		memberListConfig.methods.clearData = function () {
-		}
-		memberListConfig.methods.deleteData = function (event) {
-			this.selectId = event.id;
-			this.dialogVisible = true;
-		}
-
-		memberListConfig.methods.handleClose = function (done) {
-			this.dialogVisible = false;
-			var self = this;
-			if (self.selectId) {
-				var params = {};
-				params.id = self.selectId;
-				this.postData("${siteurl}tenantRest/member/delete.htm", params, function (res) {
-					if (res.code == 0) {
-						self.$message({
-							message: '删除数据成功',
-							type: 'success'
-						});
-						self.getSearchList();
-					} else {
-						self.$message.error(res.msg);
-					}
-				});
-			}
-
-		}
-
-		memberListConfig.computed = {};
-
-		memberListConfig.data = function () {
-			return {
-				searchObject: {
-					no: 1,
-					size: 10,
-				},
-				dialogVisible: false,
-				defaultProps: {
-					children: 'children',
-					label: 'name'
-				},
-				loading: false,
-				tableData: {},
-			}
-		};
-		memberListConfig.methods.showAddView = function () {
-			this.$router.push({ path: 'add'});
-		};
-		memberListConfig.mounted = function () {
-
-		}
-        memberListConfig.activated = function () {
-			this.getSearchList();
-		}
-		var memberListView = Vue.component('list-member-view', memberListConfig);
-	</script>
+	
+    
+	[@memberAddConfig /]
+	[@memberListConfig /]
+	[@memberShowConfig /]
+	[@memberUpdateConfig /]
 
 	[@childMemberConfig /]
 

@@ -9,7 +9,7 @@ import com.haoxuer.discover.data.enums.State;
 
 /**
 *
-* Created by BigWorld on 2021年01月23日16:23:08.
+* Created by BigWorld on 2021年02月27日21:00:48.
 */
 @Data
 public class MemberSimple implements Serializable {

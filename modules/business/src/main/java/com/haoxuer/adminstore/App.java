@@ -10,6 +10,7 @@ import com.haoxuer.imake.ChainMake;
 import com.haoxuer.imake.template.hibernate.TemplateHibernateDir;
 import com.haoxuer.imake.templates.elementRouter.ElementRouterDir;
 import com.haoxuer.imake.templates.elementui.ElementUIDir;
+import com.haoxuer.imake.templates.elementuiForm.ElementUIFormDir;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class App {
     }
 
     private static ChainMake getChainMake() {
-        ChainMake make = new ChainMake(ElementRouterDir.class, TemplateHibernateDir.class);
+        ChainMake make = new ChainMake(ElementUIFormDir.class, TemplateHibernateDir.class);
         File view = new File("E:\\codes\\maven\\adminstore\\web\\src\\main\\webapp\\WEB-INF\\ftl\\tenant\\default");
         make.setView(view);
         make.setDao(true);
@@ -39,7 +40,7 @@ public class App {
     }
 
     private static ChainMake viewMake() {
-        ChainMake make = new ChainMake(ElementRouterDir.class, TemplateHibernateDir.class);
+        ChainMake make = new ChainMake(ElementUIFormDir.class, TemplateHibernateDir.class);
         File view = new File("E:\\codes\\maven\\adminstore\\web\\src\\main\\webapp\\WEB-INF\\ftl\\tenant\\default");
         make.setView(view);
         make.setDao(false);

@@ -1,0 +1,117 @@
+[#macro memberUpdateView]
+    <div class="model-form">
+        <el-page-header @back="goBack" content="更新用户">
+        </el-page-header>
+        <div class="model-content">
+            <el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px" >
+                <el-row :gutter="10">
+                        <el-col :span="12">
+                            <el-form-item label="个人介绍" size="mini" prop="note">
+                                <el-input v-model="form.note" name="note">
+                                </el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="12">
+                            <el-form-item label="性别" size="mini" prop="sex">
+                                <el-input v-model="form.sex" name="sex">
+                                </el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="12">
+                            <el-form-item label="个人介绍" size="mini" prop="introduce">
+                                <el-input v-model="form.introduce" name="introduce">
+                                </el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="12">
+                            <el-form-item label="职业" size="mini" prop="job">
+                                <el-input v-model="form.job" name="job">
+                                </el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="12">
+                            <el-form-item label="账号" size="mini" prop="no">
+                                <el-input v-model="form.no" name="no">
+                                </el-input>
+                            </el-form-item>
+                        </el-col>
+                </el-row>
+                <el-row style="text-align: right;">
+                    <el-button @click="goBack">取消</el-button>
+                    <el-button type="primary" @click="updateData">确定</el-button>
+                </el-row>
+            </el-form>
+        </div>
+    </div>
+[/#macro]
+
+[#macro memberUpdateConfig]
+<script type="text/x-template" id="my-member-update">
+    [@memberUpdateView /]
+</script>
+<script type="text/javascript">
+    //更新组件开始
+    var memberUpdateConfig = {};
+    memberUpdateConfig.template = "#my-member-update";
+    memberUpdateConfig.methods = config.basicMethod();
+    memberUpdateConfig.methods.updateData = function () {
+        var self = this;
+        this.$refs["ruleForm"].validate(function(valid){
+            if (valid) {
+                self.updateDataPost();
+            } else {
+                console.log('error submit!!');
+                return false;
+            }
+        });
+    }
+
+    memberUpdateConfig.methods.updateDataPost = function () {
+        var self = this, data = this.form;
+        //delete data.memberCatalog;
+        if (this.deforeUpdateData) {
+            this.deforeUpdateData();
+        }
+        this.postData("${siteurl}tenantRest/member/update.htm", data, function (res) {
+            if (res.code == 0) {
+                self.$message({
+                    message: '修改数据成功',
+                    type: 'success'
+                });
+                //window.history.go(-1)
+                self.$router.go(-1);
+            } else {
+                self.$message.error(res.msg);
+            }
+        });
+    }
+    memberUpdateConfig.data = function () {
+        return {
+            form: {
+                note: '',
+                sex: '',
+                introduce: '',
+                job: '',
+                no: ''            },
+            rules: {
+            }
+        }
+    };
+
+    memberUpdateConfig.mounted = function () {
+        var id = this.$route.query.id;
+        var self = this;
+        var data = {};
+        data.id = id;
+        this.postData("${siteurl}tenantRest/member/view.htm", data, function (res) {
+            if (res.code == 0) {
+                self.form = res;
+            }
+        });
+    }
+    memberUpdateConfig.computed = {};
+
+    var memberUpdateView = Vue.component('update-view', memberUpdateConfig);
+    //更新组件结束
+</script>
+[/#macro]

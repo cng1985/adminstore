@@ -1,0 +1,129 @@
+
+[#macro memberShowView]
+<div  class="model-form">
+    <el-page-header @back="goBack" content="详情">
+    </el-page-header>
+
+        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+            <el-menu-item index="1">
+                用户详情
+            </el-menu-item>
+        </el-menu>
+        <div>
+            <router-view></router-view>
+        </div>
+
+</div>
+[/#macro]
+[#macro memberShowConfig]
+<script type="text/x-template" id="my-member-show">
+    [@memberShowView /]
+</script>
+	<script type="text/javascript">
+		//显示组件开始
+		var memberShowConfig = {};
+		memberShowConfig.template = "#my-member-show";
+		memberShowConfig.methods =config.basicMethod();
+		memberShowConfig.data = function () {
+			return {
+				viewModel: {
+				},
+				activeIndex: "1"
+			}
+		};
+
+		memberShowConfig.methods.handleSelect = function (index) {
+			console.log(index)
+			var selectId = this.selectId;
+			if (index == "1") {
+				this.$router.replace({ path: '/view/index', query: { id: selectId, activeIndex: 1, time: Math.random() } })
+			}
+			else if (index == "2") {
+				this.$router.replace({ path: '/view/members', query: { id: selectId, activeIndex: 2, time: Math.random() } })
+			} else {
+
+			}
+		};
+
+		memberShowConfig.mounted = function () {
+		   	var id = this.$route.query.id;
+			var activeIndex = this.$route.query.activeIndex;
+
+			var self = this;
+			var data = {};
+			data.id = id;
+			this.selectId = data.id;
+			if (activeIndex) {
+				this.activeIndex = activeIndex;
+			}
+		}
+		var memberShowView = Vue.component('my-member-view', memberShowConfig);
+		//显示组件结束		
+	</script>
+[/#macro]
+
+
+
+[#macro childMemberView]
+    <div >
+        <el-form class="viewForm" label-width="80px">
+            <el-col :span="12">
+                <el-form-item label="个人介绍">
+                    <div v-html="viewModel.note">></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="性别">
+                    <div v-html="viewModel.sex">></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="个人介绍">
+                    <div v-html="viewModel.introduce">></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="职业">
+                    <div v-html="viewModel.job">></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="账号">
+                    <div v-html="viewModel.no">></div>
+                </el-form-item>
+            </el-col>
+        </el-form>
+    </div>
+ [/#macro]
+
+[#macro childMemberConfig]
+    <script type="text/x-template" id="child-member-show">
+        [@childMemberView /]
+    </script>
+    <script type="text/javascript">
+
+        var childMemberShowConfig = {};
+        childMemberShowConfig.template = "#child-member-show";
+        childMemberShowConfig.methods = config.basicMethod();
+        childMemberShowConfig.data = function () {
+            return {
+                viewModel: {
+                }
+            }
+        };
+        childMemberShowConfig.mounted = function () {
+            var id = this.$route.query.id;
+            var self = this;
+            var data = {};
+            data.id = id;
+            this.postData("${siteurl}tenantRest/member/view.htm", data, function (res) {
+                if (res.code == 0) {
+                    self.viewModel = res;
+
+                }
+            });
+        }
+        var childMemberShowView = Vue.component('child-member-show', childMemberShowConfig);
+    </script>
+[/#macro]
+
