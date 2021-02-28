@@ -237,9 +237,20 @@
             window.location.href = "${siteurl}admin/index.htm"
           } else {
             swal(res.msg + "!", "", "error")
+            $("#password").val("");
           }
         });
 
+      });
+
+      $("#password").keyup(function (event) {
+        var password = $("#password").val();
+        if (password == "" || password.length < 5) {
+          return;
+        }
+        if (event.keyCode == 13) {
+          $("#submit").click();
+        }
       });
       //var banner = $("#banner");
       //var height = banner.height();

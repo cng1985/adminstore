@@ -8,6 +8,7 @@ import com.haoxuer.adminstore.member.data.entity.Member;
 import com.haoxuer.adminstore.shop.data.entity.Shop;
 import com.haoxuer.imake.ChainMake;
 import com.haoxuer.imake.template.hibernate.TemplateHibernateDir;
+import com.haoxuer.imake.template.hibernateSimple.TemplateHibernateSimpleDir;
 import com.haoxuer.imake.templates.elementRouter.ElementRouterDir;
 import com.haoxuer.imake.templates.elementui.ElementUIDir;
 import com.haoxuer.imake.templates.elementuiForm.ElementUIFormDir;
@@ -22,11 +23,11 @@ import java.util.List;
 public class App {
     public static void main(String[] args) {
 
-        viewMake().makes(Member.class);
+        getChainMake().makes(Member.class);
     }
 
     private static ChainMake getChainMake() {
-        ChainMake make = new ChainMake(ElementUIFormDir.class, TemplateHibernateDir.class);
+        ChainMake make = new ChainMake(ElementUIFormDir.class, TemplateHibernateSimpleDir.class);
         File view = new File("E:\\codes\\maven\\adminstore\\web\\src\\main\\webapp\\WEB-INF\\ftl\\tenant\\default");
         make.setView(view);
         make.setDao(true);

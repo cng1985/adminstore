@@ -9,7 +9,7 @@ import com.haoxuer.adminstore.member.data.dao.MemberDao;
 import com.haoxuer.adminstore.member.data.entity.Member;
 
 /**
-* Created by imake on 2021年01月23日16:23:08.
+* Created by imake on 2021年02月28日16:04:56.
 */
 @Repository
 
@@ -25,7 +25,6 @@ public class MemberDaoImpl extends CriteriaDaoImpl<Member, Long> implements Memb
 
 	@Override
 	public Member save(Member bean) {
-
 
         getSession().save(bean);
 		

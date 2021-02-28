@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.haoxuer.discover.user.controller.tenant.BaseTenantRestController;
 import org.apache.shiro.authz.annotation.RequiresUser;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 
 @RequestMapping("/tenantRest/member")
 @RestController
 public class MemberTenantRestController extends BaseTenantRestController {
 
 
+	@RequiresPermissions("member")
     @RequiresUser
     @RequestMapping("create")
     public MemberResponse create(MemberDataRequest request) {
@@ -23,6 +25,7 @@ public class MemberTenantRestController extends BaseTenantRestController {
         return api.create(request);
     }
 
+	@RequiresPermissions("member")
     @RequiresUser
     @RequestMapping("update")
     public MemberResponse update(MemberDataRequest request) {
@@ -30,13 +33,22 @@ public class MemberTenantRestController extends BaseTenantRestController {
         return api.update(request);
     }
 
+	@RequiresPermissions("member")
     @RequiresUser
     @RequestMapping("delete")
     public MemberResponse delete(MemberDataRequest request) {
         init(request);
-        return api.delete(request);
+        MemberResponse result = new MemberResponse();
+        try {
+           result = api.delete(request);
+        } catch (Exception e) {
+           result.setCode(501);
+           result.setMsg("删除失败!");
+        }
+        return result;
     }
 
+	@RequiresPermissions("member")
     @RequiresUser
     @RequestMapping("view")
     public MemberResponse view(MemberDataRequest request) {
@@ -44,6 +56,7 @@ public class MemberTenantRestController extends BaseTenantRestController {
        return api.view(request);
    }
 
+	@RequiresPermissions("member")
     @RequiresUser
     @RequestMapping("list")
     public MemberList list(MemberSearchRequest request) {
@@ -51,6 +64,7 @@ public class MemberTenantRestController extends BaseTenantRestController {
         return api.list(request);
     }
 
+	@RequiresPermissions("member")
     @RequiresUser
     @RequestMapping("search")
     public MemberPage search(MemberSearchRequest request) {

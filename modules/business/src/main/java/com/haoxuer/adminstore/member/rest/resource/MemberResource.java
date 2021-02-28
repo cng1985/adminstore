@@ -24,8 +24,6 @@ import com.haoxuer.discover.data.utils.BeanDataUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 @Transactional
 @Component
 public class MemberResource implements MemberApi {

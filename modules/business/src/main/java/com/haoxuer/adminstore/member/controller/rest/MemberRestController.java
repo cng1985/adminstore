@@ -30,7 +30,14 @@ public class MemberRestController extends BaseRestController {
     @RequestMapping("delete")
     public MemberResponse delete(MemberDataRequest request) {
         init(request);
-        return api.delete(request);
+        MemberResponse result = new MemberResponse();
+        try {
+           result = api.delete(request);
+        } catch (Exception e) {
+           result.setCode(501);
+           result.setMsg("删除失败!");
+        }
+        return result;
     }
 
     @RequestMapping("view")
