@@ -57,6 +57,7 @@
 				<value>com.haoxuer.discover.notice.data.entity</value>
 				<value>com.haoxuer.discover.config.data.entity</value>
 				<value>com.haoxuer.discover.quartz.data.entity</value>
+				<value>com.haoxuer.discover.trade.data.entity</value>
 
 				<value>com.haoxuer.adminstore.member.data.entity</value>
 				<value>com.haoxuer.adminstore.structure.data.entity</value>

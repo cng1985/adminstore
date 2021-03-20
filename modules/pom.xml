@@ -31,7 +31,11 @@
             <artifactId>discover-website</artifactId>
             <version>${discover.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.haoxuer.discover</groupId>
+            <artifactId>discover-trade2</artifactId>
+            <version>${discover.version}</version>
+        </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
