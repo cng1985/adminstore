@@ -96,11 +96,7 @@ public class GlobalController   {
 
   public static boolean isAjaxRequest(HttpServletRequest request) {
     String requestedWith = request.getHeader("x-requested-with");
-    if (requestedWith != null && requestedWith.equalsIgnoreCase("XMLHttpRequest")) {
-      return true;
-    } else {
-      return false;
-    }
+      return requestedWith != null && requestedWith.equalsIgnoreCase("XMLHttpRequest");
   }
 
   @ExceptionHandler(AuthorizationException.class)
@@ -149,7 +145,7 @@ public class GlobalController   {
       out = new ByteArrayOutputStream();
       pout = new PrintStream(out);
       ex.printStackTrace(pout);
-      ret = new String(out.toByteArray());
+      ret = out.toString();
       out.close();
     } catch (Exception e) {
       return ex.getMessage();

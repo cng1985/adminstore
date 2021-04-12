@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class RetryInterceptor {
 
-    private static Logger log = LoggerFactory.getLogger(RetryInterceptor.class);
+    private static final Logger log = LoggerFactory.getLogger(RetryInterceptor.class);
 
     protected int numOfRetries = 3;
     protected int waitTimeInMs = 50;

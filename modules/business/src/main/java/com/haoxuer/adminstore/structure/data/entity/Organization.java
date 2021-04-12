@@ -1,6 +1,11 @@
 package com.haoxuer.adminstore.structure.data.entity;
 
+import com.haoxuer.discover.data.annotations.ColType;
+import com.haoxuer.discover.data.annotations.FormAnnotation;
+import com.haoxuer.discover.data.annotations.FormFieldAnnotation;
 import com.haoxuer.discover.data.entity.CatalogEntity;
+import com.haoxuer.imake.annotation.FiledConvert;
+import com.haoxuer.imake.annotation.FiledName;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -11,6 +16,8 @@ import java.util.List;
  *
  * @author ada
  */
+
+@FormAnnotation(title = "组织架构管理",model = "组织架构",menu = "1,27,54")
 @Data
 @Entity
 @Table(name = "bs_org_data")
@@ -25,6 +32,8 @@ public class Organization extends CatalogEntity {
     /**
      * 父节点
      */
+    @FiledConvert(classType = "Integer")
+    @FiledName
     @ManyToOne
     private Organization parent;
 
@@ -37,6 +46,9 @@ public class Organization extends CatalogEntity {
      * 3为部门 1为公司 2为集团
      */
     private Integer catalog;
+
+    @FormFieldAnnotation(title = "备注", sortNum = "2", grid = true, col = ColType.col_2)
+    private String note;
 
 
     @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)

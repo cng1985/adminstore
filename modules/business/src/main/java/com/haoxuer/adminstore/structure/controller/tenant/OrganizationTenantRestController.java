@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.haoxuer.discover.user.controller.tenant.BaseTenantRestController;
 import org.apache.shiro.authz.annotation.RequiresUser;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 
 @RequestMapping("/tenantRest/organization")
 @RestController
 public class OrganizationTenantRestController extends BaseTenantRestController {
 
 
+	@RequiresPermissions("organization")
     @RequiresUser
     @RequestMapping("create")
     public OrganizationResponse create(OrganizationDataRequest request) {
@@ -23,6 +25,7 @@ public class OrganizationTenantRestController extends BaseTenantRestController {
         return api.create(request);
     }
 
+	@RequiresPermissions("organization")
     @RequiresUser
     @RequestMapping("update")
     public OrganizationResponse update(OrganizationDataRequest request) {
@@ -30,13 +33,22 @@ public class OrganizationTenantRestController extends BaseTenantRestController {
         return api.update(request);
     }
 
+	@RequiresPermissions("organization")
     @RequiresUser
     @RequestMapping("delete")
     public OrganizationResponse delete(OrganizationDataRequest request) {
         init(request);
-        return api.delete(request);
+        OrganizationResponse result = new OrganizationResponse();
+        try {
+           result = api.delete(request);
+        } catch (Exception e) {
+           result.setCode(501);
+           result.setMsg("删除失败!");
+        }
+        return result;
     }
 
+	@RequiresPermissions("organization")
     @RequiresUser
     @RequestMapping("view")
     public OrganizationResponse view(OrganizationDataRequest request) {
@@ -44,6 +56,7 @@ public class OrganizationTenantRestController extends BaseTenantRestController {
        return api.view(request);
    }
 
+	@RequiresPermissions("organization")
     @RequiresUser
     @RequestMapping("list")
     public OrganizationList list(OrganizationSearchRequest request) {
@@ -51,6 +64,7 @@ public class OrganizationTenantRestController extends BaseTenantRestController {
         return api.list(request);
     }
 
+	@RequiresPermissions("organization")
     @RequiresUser
     @RequestMapping("search")
     public OrganizationPage search(OrganizationSearchRequest request) {

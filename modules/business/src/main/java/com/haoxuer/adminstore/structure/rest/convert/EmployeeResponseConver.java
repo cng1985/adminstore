@@ -1,4 +1,4 @@
-package com.haoxuer.adminstore.structure.rest.conver;
+package com.haoxuer.adminstore.structure.rest.convert;
 
 import com.haoxuer.adminstore.structure.api.domain.response.EmployeeResponse;
 import com.haoxuer.adminstore.structure.data.entity.Employee;

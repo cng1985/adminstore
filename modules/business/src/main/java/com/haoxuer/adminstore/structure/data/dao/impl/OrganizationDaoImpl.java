@@ -4,12 +4,13 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.haoxuer.discover.data.core.CriteriaDaoImpl;
 import com.haoxuer.adminstore.structure.data.dao.OrganizationDao;
 import com.haoxuer.adminstore.structure.data.entity.Organization;
 import com.haoxuer.discover.data.core.CatalogDaoImpl;
 
 /**
-* Created by imake on 2020年07月27日08:50:47.
+* Created by imake on 2021年04月12日20:37:02.
 */
 @Repository
 

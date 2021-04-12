@@ -1,21 +1,12 @@
 package com.haoxuer.adminstore;
 
-import com.haoxuer.adminstore.ad.data.entity.Ad;
-import com.haoxuer.adminstore.ad.data.entity.AdPosition;
-import com.haoxuer.adminstore.article.data.entity.Article;
-import com.haoxuer.adminstore.member.controller.admin.Controllers;
-import com.haoxuer.adminstore.member.data.entity.Member;
-import com.haoxuer.adminstore.shop.data.entity.Shop;
+import com.haoxuer.adminstore.structure.data.entity.Organization;
 import com.haoxuer.imake.ChainMake;
 import com.haoxuer.imake.template.hibernate.TemplateHibernateDir;
 import com.haoxuer.imake.template.hibernateSimple.TemplateHibernateSimpleDir;
-import com.haoxuer.imake.templates.elementRouter.ElementRouterDir;
-import com.haoxuer.imake.templates.elementui.ElementUIDir;
 import com.haoxuer.imake.templates.elementuiForm.ElementUIFormDir;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Hello world!
@@ -23,16 +14,16 @@ import java.util.List;
 public class App {
     public static void main(String[] args) {
 
-        getChainMake().makes(Member.class);
+        viewMake().makes(Organization.class);
     }
 
-    private static ChainMake getChainMake() {
+    private static ChainMake code() {
         ChainMake make = new ChainMake(ElementUIFormDir.class, TemplateHibernateSimpleDir.class);
         File view = new File("E:\\codes\\maven\\adminstore\\web\\src\\main\\webapp\\WEB-INF\\ftl\\tenant\\default");
         make.setView(view);
         make.setDao(true);
         make.setService(false);
-        make.setView(true);
+        make.setView(false);
         make.setAction(true);
         make.setRest(true);
         make.setApi(true);

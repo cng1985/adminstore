@@ -30,7 +30,14 @@ public class OrganizationRestController extends BaseRestController {
     @RequestMapping("delete")
     public OrganizationResponse delete(OrganizationDataRequest request) {
         init(request);
-        return api.delete(request);
+        OrganizationResponse result = new OrganizationResponse();
+        try {
+           result = api.delete(request);
+        } catch (Exception e) {
+           result.setCode(501);
+           result.setMsg("删除失败!");
+        }
+        return result;
     }
 
     @RequestMapping("view")

@@ -6,7 +6,7 @@ import  com.haoxuer.discover.data.core.Updater;
 import  com.haoxuer.adminstore.structure.data.entity.Organization;
 
 /**
-* Created by imake on 2020年07月27日08:50:47.
+* Created by imake on 2021年04月12日20:37:02.
 */
 public interface OrganizationDao extends BaseDao<Organization,Integer>{
 

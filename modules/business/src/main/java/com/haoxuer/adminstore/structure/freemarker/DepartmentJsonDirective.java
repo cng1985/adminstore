@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.haoxuer.adminstore.structure.api.domain.simple.OrganizationSimple;
 import com.haoxuer.adminstore.structure.data.entity.Organization;
 import com.haoxuer.adminstore.structure.data.service.OrganizationService;
-import com.haoxuer.adminstore.structure.rest.conver.OrganizationSimpleAllConver;
+import com.haoxuer.adminstore.structure.rest.convert.OrganizationSimpleConvert;
 import com.haoxuer.discover.config.utils.ConverResourceUtils;
 import com.haoxuer.discover.data.page.Filter;
 import com.haoxuer.discover.data.page.Order;
@@ -39,7 +39,9 @@ public class DepartmentJsonDirective implements TemplateDirectiveModel {
         orders.add(Order.asc("sortNum"));
         List<Organization> list = service.list(0, 100, filters, orders);
         if (list != null && list.size() > 0) {
-            List<OrganizationSimple> vs = ConverResourceUtils.converCollect(list, new OrganizationSimpleAllConver());
+            OrganizationSimpleConvert convert=new OrganizationSimpleConvert();
+            convert.setFetch(1);
+            List<OrganizationSimple> vs = ConverResourceUtils.converCollect(list, convert);
             env.getOut().append(new Gson().toJson(vs));
         }else{
             env.getOut().append("[]");

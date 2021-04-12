@@ -3,10 +3,12 @@ package com.haoxuer.adminstore.structure.api.domain.response;
 
 import com.haoxuer.discover.rest.base.ResponseObject;
 import lombok.Data;
+import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
 *
-* Created by imake on 2020年07月27日08:50:47.
+* Created by imake on 2021年04月12日20:57:24.
 */
 
 @Data
@@ -14,21 +16,29 @@ public class OrganizationResponse extends ResponseObject {
 
     private Integer id;
 
+     private Integer parent;
+
+     private String note;
+
      private Integer levelInfo;
 
-     private Integer lft;
+     private String parentName;
 
      private Long num;
 
-     private Integer catalog;
-
-     private String name;
-
+     private Integer sortNum;
 
      private String ids;
 
-     private Integer sortNum;
+     private Integer catalog;
 
-     private Integer rgt;
+     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
+     private Date lastDate;
+
+     private String name;
+
+     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
+     private Date addDate;
+
 
 }
