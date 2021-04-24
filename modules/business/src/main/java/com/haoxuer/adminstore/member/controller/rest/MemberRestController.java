@@ -46,6 +46,14 @@ public class MemberRestController extends BaseRestController {
         return api.view(request);
     }
 
+    @RequestMapping("current")
+    public MemberResponse current(MemberDataRequest request) {
+        init(request);
+        request.setId(request.getUser());
+        return api.view(request);
+    }
+
+
     @RequestMapping("list")
     public MemberList list(MemberSearchRequest request) {
         init(request);

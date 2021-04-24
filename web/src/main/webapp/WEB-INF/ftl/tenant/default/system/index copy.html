@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>系统配置</title>
+    [#include "/admin/common/commons.html"]
+    [#include "/tenant/common/site.html"]
+    [@baseHead /]
+    <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=PYWBZ-QHE3I-L7WGT-5THCC-KOPH7-Y6FSC"></script>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+
+        <header class="main-header">
+            <!-- Header Navbar: style can be found in header.less -->
+            [#include "/admin/common/nav.html"]
+        </header>
+
+        <!-- =============================================== -->
+
+        <!-- Left side column. contains the sidebar -->
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                [@user_panel /]
+                <!-- search form -->
+                [@sidebar_form /]
+                <!-- /.search form -->
+                <!-- sidebar menu: : style can be found in sidebar.less -->
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="header">主面板</li>
+                    [@menustag id=1]
+                    [#list list as item]
+                    [@menu item "1,5,29"]
+                    [/@menu]
+                    [/#list]
+                    [/@menustag]
+                </ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- =============================================== -->
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper" id="app" v-cloak>
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <!-- 导航 -->
+                <div class="navigation">
+                    <i>首页</i> <span>系统配置</span>
+                </div>
+            </section>
+            <!-- Main content -->
+            <section class="content">
+
+                <el-row class="model-form">
+                    <el-col :span="4">
+                        <el-menu style="min-height: 600px;" default-active="1" class="el-menu-vertical-demo"
+                            @select="handleSelect">
+                            <el-menu-item index="1">
+                                <i class="el-icon-menu"></i>
+                                <span slot="title">基本信息</span>
+                            </el-menu-item>
+                            <el-menu-item index="2">
+                                <i class="el-icon-document"></i>
+                                <span slot="title">基本设置</span>
+                            </el-menu-item>
+                        </el-menu>
+                    </el-col>
+                    <el-col :span="20">
+                        <div v-if="selectIndex==1">
+                            <el-form label-width="120px" :model="form">
+                                <el-form-item label="客户名称">
+                                    {{form.name}}
+                                </el-form-item>
+                                <el-form-item label="广告语">
+                                    {{form.demo}}
+                                </el-form-item>
+                                <el-form-item label="运费">
+                                    {{form.freight}}
+                                </el-form-item>
+                                <el-form-item label="送货运费">
+                                    {{form.fee}}元/每件
+                                </el-form-item>
+                                <el-form-item label="公司地址">
+                                    {{form.address}}
+                                </el-form-item>
+                                <el-form-item label="联系电话">
+                                    {{form.phone}}
+                                </el-form-item>
+                                <el-form-item label="开通日期">
+                                    {{form.beginDate}}
+                                </el-form-item>
+                                <el-form-item label="到期日期">
+                                    {{form.expireDate}}
+                                </el-form-item>
+                            </el-form>
+                        </div>
+                        <div v-show="selectIndex==2">
+                            <el-form label-width="120px" :model="form">
+                                <el-form-item label="公司名称">
+                                    <el-input v-model="form.name" size="small"></el-input>
+                                </el-form-item>
+                                <el-form-item label="公司地址">
+                                    <el-input v-model="form.address" size="small">
+                                        <template slot="append">
+                                            <el-button type="primary" size="small" @click="geo">定位</el-button>
+                                        </template>
+                                    </el-input>
+                                </el-form-item>
+                                <el-form-item label="运费">
+                                    <el-input v-model="form.freight" size="small">
+                                        <template slot="append">元</template>
+                                    </el-input>
+                                </el-form-item>
+                                <el-form-item label="送货运费">
+                                    <el-input v-model="form.fee" size="small">
+                                        <template slot="append">元/每件</template>
+                                    </el-input>
+                                </el-form-item>
+                                <el-form-item label="地图信息">
+                                    <div id="map" style="height: 300px;"></div>
+                                </el-form-item>
+                                <el-form-item label="联系电话">
+                                    <el-input v-model="form.phone" size="small"></el-input>
+                                </el-form-item>
+                                <el-form-item label="广告语">
+                                    <el-input v-model="form.demo" maxlength="20" size="small">
+                                    </el-input>
+                                </el-form-item>
+                                <el-form-item label="介绍" prop="note" key="note">
+                                    <el-input type="textarea" v-model="form.note" key="note" size="small">
+                                    </el-input>
+                                </el-form-item>
+                                <el-form-item>
+                                    <el-button type="primary" @click="handleData" size="small">保存信息</el-button>
+                                </el-form-item>
+                            </el-form>
+                        </div>
+                    </el-col>
+                </el-row>
+
+                <!-- /.box -->
+            </section>
+
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+
+        [#include "/admin/common/footer.html"]
+
+        <!-- Control Sidebar -->
+        [#include "/admin/common/aside.html"]
+
+        <!-- /.control-sidebar -->
+        <!-- Add the sidebar's background. This div must be placed
+     immediately after the control sidebar -->
+        <div class="control-sidebar-bg"></div>
+    </div>
+    <!-- ./wrapper -->
+    [@baseScript /]
+    <script>
+        var citylocation, map, marker = null;
+
+        var config = {};
+        config.el = "#app";
+
+        config.methods = {};
+
+        [@configBasicVue /]
+
+        config.methods.beforeAddData = function () {
+            console.info("before add");
+        }
+        config.methods.beforeUpdateData = function () {
+            console.info("before update");
+        }
+
+        config.methods.clearData = function () {
+            this.searchObject.knowledgeCatalog = "";
+            this.searchObject.name = "";
+        }
+        config.mounted = function () {
+            this.loadTenant();
+        }
+        config.methods.loadTenant = function () {
+            var param = {};
+            this.postData("${siteurl}tenantRest/shoptenant/cur.htm", param, function (result) {
+                if (result.code == 0) {
+                    Vue.set(vm.$data, 'form', result);
+                }
+            });
+        }
+        config.methods.geo = function () {
+            var param = {};
+            param.address = this.form.address;
+            var self = this;
+            this.postData("${siteurl}tenantRest/area/lbs.htm", param, function (result) {
+                if (result.code == 0) {
+                    self.form.lat = result.lat;
+                    self.form.lng = result.lng;
+                    if (marker != null) {
+                        marker.setMap(null);
+                    }
+                    if (map) {
+                        center = new qq.maps.LatLng(result.lat, result.lng);
+                        marker = new qq.maps.Marker({
+                            position: center,
+                            map: map
+                        });
+                        map.setCenter(center);
+                    }
+
+                }
+            });
+        }
+        config.methods.handleSelect = function (event) {
+            console.log(event);
+            this.selectIndex = event;
+            if (event == "2") {
+                var tenant = this.form;
+                if (tenant.lat == null) {
+                    return;
+                }
+                if (map) {
+                    center = new qq.maps.LatLng(tenant.lat, tenant.lng);
+                    marker = new qq.maps.Marker({
+                        position: center,
+                        map: map
+                    });
+                    map.setCenter(center);
+                }
+
+            }
+        }
+        config.methods.handleData = function (event) {
+            var self=this;
+            var param = this.form;
+            this.postData("${siteurl}tenantRest/shoptenant/updateCur.htm", param, function (result) {
+                if (result.code == 0) {
+                    Vue.set(vm.$data, 'form', result);
+                    self.$message({
+                    message: '更新成功',
+                    type: 'success'
+                });
+                }else{
+                    self.$message.error(res.msg);
+                }
+            });
+        }
+
+
+
+
+        config.data = function () {
+            return {
+                searchObject: {
+                    no: 1,
+                    size: 10,
+                    knowledgeCatalog: '',
+                    name: ''
+                },
+                modelType: "list",
+                dialogVisible: false,
+                defaultProps: {
+                    children: 'children',
+                    label: 'name'
+                },
+                form: {
+                },
+                form_edit: {
+                    score: '',
+                    note: '',
+                    name: '',
+                    addDate: '',
+                    knowledgeCatalogName: '',
+                    knowledgeCatalog: ''
+                },
+                viewModel: {},
+                loading: false,
+                tableData: {},
+                rules: {
+                    name: [
+                        { required: true, message: '请输入名称', trigger: 'blur' }
+                    ],
+                },
+                selectIndex: 1,
+                knowledgeCatalogOptions: [],
+            }
+        };
+        var vm = new Vue(config);
+
+        var init = function () {
+            var center = new qq.maps.LatLng(33.044998, 107.027);
+            map = new qq.maps.Map(document.getElementById('map'), {
+                center: center,
+                zoom: 20
+            });
+            //获取城市列表接口设置中心点
+            citylocation = new qq.maps.CityService({
+                complete: function (result) {
+                    map.setCenter(result.detail.latLng);
+                }
+            });
+            //调用searchLocalCity();方法    根据用户IP查询城市信息。
+            //citylocation.searchLocalCity();
+
+            qq.maps.event.addListener(
+                map,
+                'click',
+                function (event) {
+                    vm.$data.form.lat = event.latLng.getLat();
+                    vm.$data.form.lng = event.latLng.getLng();
+
+                    if (marker != null) {
+                        marker.setMap(null);
+                    }
+                    center = new qq.maps.LatLng(event.latLng.getLat(), event.latLng.getLng());
+                    marker = new qq.maps.Marker({
+                        position: center,
+                        map: map
+                    });
+
+                }
+            );
+            //创建标记
+            marker = new qq.maps.Marker({
+                position: center,
+                map: map
+            });
+        }
+
+        function geolocation_ip() {
+            var clientip = document.getElementById("client_ip").value;
+            var city = document.getElementById("city");
+            //调用查询ip接口查询信息
+            citylocation.searchCityByIP(clientip);
+        }
+
+        $(document).ready(function () {
+            init();
+        });
+    </script>
+
+</body>
+
+</html>

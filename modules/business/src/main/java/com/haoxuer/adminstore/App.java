@@ -1,10 +1,10 @@
 package com.haoxuer.adminstore;
 
+import com.haoxuer.adminstore.common.data.entity.StoreConfig;
 import com.haoxuer.adminstore.structure.data.entity.Organization;
-import com.haoxuer.imake.ChainMake;
-import com.haoxuer.imake.template.hibernate.TemplateHibernateDir;
-import com.haoxuer.imake.template.hibernateSimple.TemplateHibernateSimpleDir;
-import com.haoxuer.imake.templates.elementuiForm.ElementUIFormDir;
+import com.nbsaas.codemake.CodeMake;
+import com.nbsaas.codemake.template.hibernateSimple.TemplateHibernateSimpleDir;
+import com.nbsaas.codemake.templates.elementuiForm.ElementUIFormDir;
 
 import java.io.File;
 
@@ -14,11 +14,11 @@ import java.io.File;
 public class App {
     public static void main(String[] args) {
 
-        viewMake().makes(Organization.class);
+        code().makes(StoreConfig.class);
     }
 
-    private static ChainMake code() {
-        ChainMake make = new ChainMake(ElementUIFormDir.class, TemplateHibernateSimpleDir.class);
+    private static CodeMake code() {
+        CodeMake make = new CodeMake(ElementUIFormDir.class, TemplateHibernateSimpleDir.class);
         File view = new File("E:\\codes\\maven\\adminstore\\web\\src\\main\\webapp\\WEB-INF\\ftl\\tenant\\default");
         make.setView(view);
         make.setDao(true);
@@ -31,8 +31,8 @@ public class App {
         return make;
     }
 
-    private static ChainMake viewMake() {
-        ChainMake make = new ChainMake(ElementUIFormDir.class, TemplateHibernateDir.class);
+    private static CodeMake viewMake() {
+        CodeMake make = new CodeMake(ElementUIFormDir.class, TemplateHibernateSimpleDir.class);
         File view = new File("E:\\codes\\maven\\adminstore\\web\\src\\main\\webapp\\WEB-INF\\ftl\\tenant\\default");
         make.setView(view);
         make.setDao(false);

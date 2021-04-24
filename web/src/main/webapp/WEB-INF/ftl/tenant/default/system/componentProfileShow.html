@@ -1,0 +1,76 @@
+
+[#macro profileShowView]
+<div  >
+	<el-row>
+		<el-col :span="16">
+			<el-form label-width="120px" :model="form">
+				<el-form-item label="头像" prop="avatar" key="avatarItem">
+					<avatar v-model="form.avatar" size="small" key="avatar"></avatar>
+				</el-form-item>
+				<el-form-item label="昵称" prop="name" key="nameItem">
+					<el-input v-model="form.name" size="small" key="name"></el-input>
+				</el-form-item>
+				<el-form-item label="个人介绍" prop="note" key="note">
+					<el-input type="textarea" v-model="form.note" key="note" size="small">
+					</el-input>
+				</el-form-item>
+				<el-form-item>
+					<el-button type="primary" @click="updateProfile" size="small">更新信息
+					</el-button>
+				</el-form-item>
+			</el-form>
+		</el-col>
+	</el-row>
+</div>
+[/#macro]
+[#macro profileShowConfig]
+<script type="text/x-template" id="my-profile-show">
+    [@profileShowView /]
+</script>
+	<script type="text/javascript">
+		//显示组件开始
+		var profileShowConfig = {};
+		profileShowConfig.template = "#my-profile-show";
+		profileShowConfig.methods =config.basicMethod();
+		profileShowConfig.data = function () {
+			return {
+				form : {
+				},
+				activeIndex: "1"
+			}
+		};
+
+
+		profileShowConfig.mounted = function () {
+			var id = this.$route.query.id;
+			var self = this;
+			var data = {};
+			data.id = id;
+			this.postData("${siteurl}tenantRest/member/current.htm", {}, function (result) {
+                if (result.code == 0) {
+					self.form =result;
+                }
+            });
+		}
+
+		profileShowConfig.methods.updateProfile = function (event) {
+            var self = this;
+
+            var data = self.form;
+            self.postData("${siteurl}tenantRest/member/model_update_basic.htm", data, function (res) {
+                if (res.code != 0) {
+                    self.$message.error(res.msg);
+                } else {
+                    self.$message({
+                        message: '更新信息成功',
+                        type: 'success'
+                    });
+                }
+            })
+        }
+		var profileShowView = Vue.component('my-profile-view', profileShowConfig);
+		//显示组件结束		
+	</script>
+[/#macro]
+
+

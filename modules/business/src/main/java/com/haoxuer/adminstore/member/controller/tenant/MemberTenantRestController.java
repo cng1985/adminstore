@@ -64,6 +64,22 @@ public class MemberTenantRestController extends BaseTenantRestController {
         return api.list(request);
     }
 
+    @RequestMapping("current")
+    public MemberResponse current(MemberDataRequest request) {
+        init(request);
+        request.setId(request.getCreateUser());
+        return api.view(request);
+    }
+    @RequiresPermissions("member")
+    @RequiresUser
+    @RequestMapping("model_update_basic")
+    public MemberResponse model_update_basic(MemberDataRequest request) {
+        init(request);
+        request.setId(request.getCreateUser());
+        return api.update(request);
+    }
+
+
 	@RequiresPermissions("member")
     @RequiresUser
     @RequestMapping("search")
