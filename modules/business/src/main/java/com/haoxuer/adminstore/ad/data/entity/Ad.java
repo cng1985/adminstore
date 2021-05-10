@@ -1,13 +1,8 @@
 package com.haoxuer.adminstore.ad.data.entity;
 
 import com.haoxuer.adminstore.ad.data.enums.AdType;
-import com.haoxuer.discover.data.annotations.ColType;
-import com.haoxuer.discover.data.annotations.FormFieldAnnotation;
-import com.haoxuer.discover.data.annotations.InputType;
 import com.haoxuer.discover.data.entity.SortEntity;
-import com.haoxuer.imake.annotation.FiledConvert;
-import com.haoxuer.imake.annotation.FiledName;
-import com.haoxuer.imake.annotation.SearchItem;
+import com.nbsaas.codemake.annotation.*;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,6 +11,8 @@ import java.util.Date;
 /**
  * Entity - 广告
  */
+
+@FormAnnotation(title = "广告管理",model = "广告",menu = "1,51,53")
 @Data
 @Entity
 @Table(name = "bs_basic_ad")
@@ -24,9 +21,20 @@ public class Ad extends SortEntity {
   /**
    * 标题
    */
-  @SearchItem(label = "广告位",name = "title")
-  @FormFieldAnnotation(title = "标题", sortNum = "10", grid = true, col = ColType.col_2,required = true)
+  @SearchItem(label = "广告名称",name = "title")
+  @FormField(title = "广告名称", sortNum = "10", grid = true, col =22,required = true)
   private String title;
+
+  /**
+   * 广告位
+   */
+  @SearchItem(label = "广告位",name = "adPosition",key = "adPosition.id",sortNum = "-1",type = InputType.select,classType = "Long",operator = "eq")
+  @FormField(title = "广告位", sortNum = "10", grid = true, col = 22,type = InputType.select,option = "adPosition",required = true)
+  @FiledName
+  @FiledConvert
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn()
+  private AdPosition adPosition;
 
   /**
    * 类型
@@ -36,24 +44,25 @@ public class Ad extends SortEntity {
   /**
    * 路径
    */
+  @FormField(title = "广告图片", sortNum = "20", grid = true, col = 22,type = InputType.image)
   private String path;
 
   /**
    * 起始日期
    */
-  @FormFieldAnnotation(title = "广告开始时间", sortNum = "20", grid = true, col = ColType.col_2,type = InputType.el_date_time_picker)
+  @FormField(title = "广告开始时间", sortNum = "20", grid = true, col = 22,type = InputType.el_date_time_picker)
   private Date beginDate;
 
   /**
    * 结束日期
    */
-  @FormFieldAnnotation(title = "广告结束时间", sortNum = "30", grid = true, col = ColType.col_2,type = InputType.el_date_time_picker)
+  @FormField(title = "广告结束时间", sortNum = "30", grid = true, col = 22,type = InputType.el_date_time_picker)
   private Date endDate;
 
   /**
    * 链接地址
    */
-  @FormFieldAnnotation(title = "链接地址", sortNum = "40", grid = true, col = ColType.col_2)
+  @FormField(title = "链接地址", sortNum = "40", grid = true, col = 22)
   private String url;
 
 
@@ -62,18 +71,9 @@ public class Ad extends SortEntity {
    */
   private Integer catalog;
 
-  /**
-   * 广告位
-   */
-  @SearchItem(label = "广告位",name = "adPosition",key = "adPosition",type = InputType.select,classType = "Long",operator = "eq")
-  @FormFieldAnnotation(title = "广告位", sortNum = "50", grid = true, col = ColType.col_2,type = InputType.select,option = "adPosition")
-  @FiledName
-  @FiledConvert
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn()
-  private AdPosition adPosition;
 
-  @FormFieldAnnotation(title = "内容", sortNum = "60", grid = true, col = ColType.col_2)
+
+  @FormField(title = "内容", sortNum = "60", grid = true, col =22,type = InputType.textarea)
   private String note;
 
   private Long bussId;

@@ -5,12 +5,8 @@
  */
 package com.haoxuer.adminstore.ad.data.entity;
 
-import com.haoxuer.discover.data.annotations.FormAnnotation;
-import com.haoxuer.discover.data.annotations.FormFieldAnnotation;
-import com.haoxuer.discover.data.annotations.InputType;
-import com.haoxuer.discover.data.entity.CatalogEntity;
 import com.haoxuer.discover.data.entity.SortEntity;
-import com.haoxuer.imake.annotation.SearchItem;
+import com.nbsaas.codemake.annotation.*;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -23,7 +19,8 @@ import java.util.Set;
  * 
  * 
  */
-@FormAnnotation(list = "广告位管理")
+@ComposeView
+@FormAnnotation(title = "广告位管理",model = "广告位",menu = "1,51,52")
 @Data
 @Entity
 @Table(name = "bs_basic_ad_position")
@@ -37,28 +34,28 @@ public class AdPosition extends SortEntity {
 	/** 名称 */
 
 	@SearchItem(label = "标识",name = "key")
-	@FormFieldAnnotation(title = "标识", sortNum = "10", grid = true,required = true)
+	@FormField(title = "标识", sortNum = "10", grid = true,required = true,col = 22)
 	@Column(length = 30,name = "data_key")
 	private String key;
 
 	@SearchItem(label = "广告位",name = "name")
-	@FormFieldAnnotation(title = "广告位",sortNum = "10",grid = true,required = true)
+	@FormField(title = "广告位",sortNum = "10",grid = true,required = true,col = 22)
 	@Column(nullable = false)
 	private String name;
 
 	/** 宽度 */
 
-	@FormFieldAnnotation(title = "宽度",sortNum = "20",grid = true,type = InputType.el_input_number)
+	@FormField(title = "宽度",sortNum = "20",grid = true,type = InputType.el_input_number,col = 22)
 	@Column(nullable = false)
 	private Integer width;
 
 	/** 高度 */
-	@FormFieldAnnotation(title = "高度",sortNum = "30",grid = true,type = InputType.el_input_number)
+	@FormField(title = "高度",sortNum = "30",grid = true,type = InputType.el_input_number,col = 22)
 	@Column(nullable = false)
 	private Integer height;
 
 	/** 描述 */
-	@FormFieldAnnotation(title = "备注",sortNum = "40",grid = true,type = InputType.textarea)
+	@FormField(title = "备注",sortNum = "40",grid = true,type = InputType.textarea,width = "1000",col = 22)
 	private String note;
 
 	/** 模板 */

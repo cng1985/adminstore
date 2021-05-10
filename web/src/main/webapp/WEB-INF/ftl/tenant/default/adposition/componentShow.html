@@ -1,0 +1,129 @@
+
+[#macro adpositionShowView]
+<div  class="model-form">
+    <el-page-header @back="goBack" content="详情">
+    </el-page-header>
+
+        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+            <el-menu-item index="1">
+                广告位详情
+            </el-menu-item>
+        </el-menu>
+        <div>
+            <router-view></router-view>
+        </div>
+
+</div>
+[/#macro]
+[#macro adpositionShowConfig]
+<script type="text/x-template" id="my-adposition-show">
+    [@adpositionShowView /]
+</script>
+	<script type="text/javascript">
+		//显示组件开始
+		var adpositionShowConfig = {};
+		adpositionShowConfig.template = "#my-adposition-show";
+		adpositionShowConfig.methods =config.basicMethod();
+		adpositionShowConfig.data = function () {
+			return {
+				viewModel: {
+				},
+				activeIndex: "1"
+			}
+		};
+
+		adpositionShowConfig.methods.handleSelect = function (index) {
+			console.log(index)
+			var selectId = this.selectId;
+			if (index == "1") {
+				this.$router.replace({ path: '/view/index', query: { id: selectId, activeIndex: 1, time: Math.random() } })
+			}
+			else if (index == "2") {
+				this.$router.replace({ path: '/view/members', query: { id: selectId, activeIndex: 2, time: Math.random() } })
+			} else {
+
+			}
+		};
+
+		adpositionShowConfig.mounted = function () {
+		   	var id = this.$route.query.id;
+			var activeIndex = this.$route.query.activeIndex;
+
+			var self = this;
+			var data = {};
+			data.id = id;
+			this.selectId = data.id;
+			if (activeIndex) {
+				this.activeIndex = activeIndex;
+			}
+		}
+		var adpositionShowView = Vue.component('my-adposition-view', adpositionShowConfig);
+		//显示组件结束		
+	</script>
+[/#macro]
+
+
+
+[#macro childAdpositionView]
+    <div >
+        <el-form class="viewForm" label-width="80px">
+            <el-col :span="22">
+                <el-form-item label="标识">
+                    <div v-html="viewModel.key">></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="22">
+                <el-form-item label="广告位">
+                    <div v-html="viewModel.name">></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="22">
+                <el-form-item label="宽度">
+                    <div v-html="viewModel.width">></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="22">
+                <el-form-item label="高度">
+                    <div v-html="viewModel.height">></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="22">
+                <el-form-item label="备注">
+                    <div v-html="viewModel.note">></div>
+                </el-form-item>
+            </el-col>
+        </el-form>
+    </div>
+ [/#macro]
+
+[#macro childAdpositionConfig]
+    <script type="text/x-template" id="child-adposition-show">
+        [@childAdpositionView /]
+    </script>
+    <script type="text/javascript">
+
+        var childAdpositionShowConfig = {};
+        childAdpositionShowConfig.template = "#child-adposition-show";
+        childAdpositionShowConfig.methods = config.basicMethod();
+        childAdpositionShowConfig.data = function () {
+            return {
+                viewModel: {
+                }
+            }
+        };
+        childAdpositionShowConfig.mounted = function () {
+            var id = this.$route.query.id;
+            var self = this;
+            var data = {};
+            data.id = id;
+            this.postData("${siteurl}tenantRest/adposition/view.htm", data, function (res) {
+                if (res.code == 0) {
+                    self.viewModel = res;
+
+                }
+            });
+        }
+        var childAdpositionShowView = Vue.component('child-adposition-show', childAdpositionShowConfig);
+    </script>
+[/#macro]
+
