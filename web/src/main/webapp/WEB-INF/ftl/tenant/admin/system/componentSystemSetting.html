@@ -1,0 +1,141 @@
+[#macro settingShowView]
+<div>
+	<el-form label-width="120px" :model="form">
+		<el-form-item label="站点名称">
+			<el-input v-model="form.title" size="small"></el-input>
+		</el-form-item>
+		<el-form-item label="ICP">
+			<el-input v-model="form.icp" size="small">
+			</el-input>
+		</el-form-item>
+		<el-form-item label="公安备案号">
+			<el-input v-model="form.ga" size="small">
+			</el-input>
+		</el-form-item>
+		<el-form-item label="slogan">
+			<el-input v-model="form.slogan" size="small">
+			</el-input>
+		</el-form-item>
+		<el-form-item label="介绍" prop="note" key="note">
+			<el-input type="textarea" v-model="form.note" key="note" size="small">
+			</el-input>
+		</el-form-item>
+		<el-form-item label="地图信息" size="mini">
+			<nb-map zoom="18"  @poi-change="changePoi" :lat="form.lat" :lng="form.lng"></nb-map>
+		</el-form-item>
+		<el-form-item label="联系电话">
+			<el-input v-model="form.phone" size="small"></el-input>
+		</el-form-item>
+		<el-form-item label="广告语">
+			<el-input v-model="form.demo" maxlength="20" size="small">
+			</el-input>
+		</el-form-item>
+		<el-form-item label="公司地址">
+			<el-input v-model="form.address" size="small">
+				<template slot="append">
+					<el-button type="primary" size="small" @click="geo">定位</el-button>
+				</template>
+			</el-input>
+		</el-form-item>
+		<el-form-item>
+			<el-button type="primary" @click="handleData" size="small">保存信息</el-button>
+		</el-form-item>
+	</el-form>
+</div>
+[/#macro]
+[#macro settingShowConfig]
+<script type="text/x-template" id="my-setting-show">
+    [@settingShowView /]
+</script>
+<script type="text/javascript">
+	//显示组件开始
+	var settingShowConfig = {};
+	settingShowConfig.template = "#my-setting-show";
+	settingShowConfig.methods = config.basicMethod();
+	settingShowConfig.data = function () {
+		return {
+			form: {
+			},
+			rules: {
+				name: [
+					{ required: true, message: '请输入名称', trigger: 'blur' }
+				],
+			}
+		}
+	};
+
+
+	settingShowConfig.mounted = function () {
+		var self = this;
+		var param = {};
+		this.postData("${siteurl}tenantRest/webconfig/view.htm", param, function (result) {
+			if (result.code == 0) {
+				self.form = result;
+			}
+		});
+	}
+	settingShowConfig.methods.geo = function (event) {
+        var param = {};
+        param.address = this.form.address;
+        var self = this;
+        this.postData("${siteurl}tenantRest/area/lbs.htm", param, function (result) {
+            if (result.code == 0) {
+                self.form.lat = result.lat;
+                self.form.lng = result.lng;
+                if(result.provinceId){
+                    self.form.province=result.provinceId;
+                }
+                if(result.cityId){
+                    self.form.city=result.cityId;
+                }
+                if(result.countyId){
+                    self.form.county=result.countyId;
+                }
+            }
+        });
+
+    }
+	settingShowConfig.methods.handleSelect = function (event) {
+		console.log(event);
+		this.selectIndex = event;
+		if (event == "2") {
+			var tenant = this.form;
+			if (tenant.lat == null) {
+				return;
+			}
+			if (map) {
+				center = new qq.maps.LatLng(tenant.lat, tenant.lng);
+				marker = new qq.maps.Marker({
+					position: center,
+					map: map
+				});
+				map.setCenter(center);
+			}
+
+		}
+	}
+	settingShowConfig.methods.handleData = function (event) {
+		var self = this;
+		var param = this.form;
+		this.postData("${siteurl}tenantRest/webconfig/update.htm", param, function (result) {
+			if (result.code == 0) {
+				Vue.set(vm.$data, 'form', result);
+				self.$message({
+					message: '更新成功',
+					type: 'success'
+				});
+			} else {
+				self.$message.error(res.msg);
+			}
+		});
+	}
+	settingShowConfig.methods.changePoi = function (event) {
+        console.log(event);
+        this.form.lat = event.lat;
+        this.form.lng = event.lng;
+
+    }
+	var settingShowView = Vue.component('my-setting-view', settingShowConfig);
+		//显示组件结束
+</script>
+[/#macro]

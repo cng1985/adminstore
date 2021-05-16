@@ -1,0 +1,60 @@
+[#macro systemShowView]
+<div>
+	<el-form label-width="120px" :model="form">
+		<el-form-item label="站点名称">
+			{{form.title}}
+		</el-form-item>
+		<el-form-item label="ICP">
+			{{form.icp}}
+		</el-form-item>
+		<el-form-item label="公安备案号">
+			{{form.ga}}
+		</el-form-item>
+		<el-form-item label="slogan">
+			{{form.slogan}}
+		</el-form-item>
+		<el-form-item label="介绍">
+			{{form.note}}
+		</el-form-item>
+		<el-form-item label="公司地址">
+			{{form.address}}
+		</el-form-item>
+		<el-form-item label="联系电话">
+			{{form.phone}}
+		</el-form-item>
+	</el-form>
+</div>
+[/#macro]
+[#macro systemShowConfig]
+<script type="text/x-template" id="my-system-show">
+    [@systemShowView /]
+</script>
+<script type="text/javascript">
+	//显示组件开始
+	var systemShowConfig = {};
+	systemShowConfig.template = "#my-system-show";
+	systemShowConfig.methods = config.basicMethod();
+	systemShowConfig.data = function () {
+		return {
+			form: {
+			},
+			activeIndex: "1"
+		}
+	};
+
+
+	systemShowConfig.mounted = function () {
+		console.info("init show")
+		var self=this;
+		var param = {};
+		this.postData("${siteurl}tenantRest/webconfig/view.htm", param, function (result) {
+			if (result.code == 0) {
+				self.form=result;
+			}
+		});
+	}
+
+	var systemShowView = Vue.component('my-system-view', systemShowConfig);
+		//显示组件结束
+</script>
+[/#macro]

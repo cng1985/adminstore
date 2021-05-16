@@ -38,6 +38,11 @@
             <artifactId>discover-quartz</artifactId>
             <version>${discover.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.haoxuer.discover</groupId>
+            <artifactId>discover-site</artifactId>
+            <version>${discover.version}</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>web</finalName>

@@ -1,0 +1,196 @@
+[#macro userroleListView]
+<div>
+    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
+        <span>确认要删除该条数据吗?</span>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="handleClose">确 定</el-button>
+        </span>
+    </el-dialog>
+    <div class="search">
+        <el-form label-width="80px">
+            <el-row>
+                <el-col :span="6" style="padding: 0 8px;">
+                    <el-form-item label="角色名">
+                        <el-input v-model="searchObject.name" size="small" placeholder="角色名" name="name">
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+
+                <el-col :span="18" style="padding: 0 10px;margin-top: 5px;">
+                    <el-row type="flex" justify="end">
+                        <el-button size="small" type="primary" @click="search">搜索</el-button>
+                        <el-button size="small" plain @click="clearData">清除条件</el-button>
+                    </el-row>
+                </el-col>
+            </el-row>
+        </el-form>
+    </div>
+    <div class="data-content">
+        <div class="tool-add">
+            <el-button type="primary" size="small" @click="addView">新增</el-button>
+        </div>
+
+        <el-table v-loading="loading" :data="tableData.list" @cell-click="showView" @sort-change="changeTableSort"
+            style="width: 100%;font-size: 12px;">
+            <el-table-column label="角色名" prop="name" width="160">
+            </el-table-column>
+            <el-table-column label="别名" prop="alias" width="100">
+            </el-table-column>
+            <el-table-column label="角色类型" prop="typeName" width="100">
+            </el-table-column>
+            <el-table-column label="角色分类" prop="catalogName" width="100">
+            </el-table-column>
+            <el-table-column label="角色描述" prop="description" >
+            </el-table-column>
+            <el-table-column width="160" align="center" fixed="right" label="操作">
+                <template slot-scope="scope">
+                    <el-button type="primary" size="mini" @click="editView(scope.row)">编辑
+                    </el-button>
+                    <el-button type="danger" size="mini" style="cursor: pointer;" @click="deleteData(scope.row)">删除
+                    </el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+
+        <div class="page">
+            <el-pagination background :current-page="searchObject.no" :page-sizes="[10, 20, 50, 100]"
+                :page-size="tableData.size" :pager-count="5" layout="total, sizes, prev, pager, next, jumper"
+                :page-count="tableData.totalPage" :total="tableData.total" @size-change="sizeChange"
+                @current-change="pageChange">
+            </el-pagination>
+        </div>
+    </div>
+</div>
+[/#macro]
+[#macro userroleListConfig]
+<script type="text/x-template" id="my-userrole-list">
+	[@userroleListView /]
+</script>
+<script type="text/javascript">
+    var userroleListConfig = {};
+    userroleListConfig.template = "#my-userrole-list";
+    userroleListConfig.methods = config.basicMethod();
+
+
+    userroleListConfig.methods.addView = function () {
+        this.$router.push({ path: 'add' });
+    }
+    userroleListConfig.methods.editView = function (row) {
+        var self = this;
+        var data = {};
+        data.id = row.id;
+        this.$router.push({ path: 'update', query: data });
+
+    }
+
+    userroleListConfig.methods.changeTableSort = function (column) {
+        this.searchObject.sortField = column.prop;
+        if ("descending" == column.order) {
+            this.searchObject.sortMethod = "desc";
+        }
+        else if ("ascending" == column.order) {
+            this.searchObject.sortMethod = "asc";
+        }
+        else {
+            this.searchObject.sortMethod = "";
+        }
+        this.getSearchList();
+    }
+    userroleListConfig.methods.showView = function (row, column, cell, event) {
+        if (cell.cellIndex > 0) {
+            return;
+        }
+        var param = {};
+        param.id = row.id;
+        var self = this;
+        this.$router.push({ path: 'view', query: param });
+
+    }
+
+    userroleListConfig.methods.sizeChange = function (event) {
+        this.searchObject.size = event;
+        this.getSearchList();
+    }
+    userroleListConfig.methods.pageChange = function (index) {
+        this.searchObject.no = index;
+        this.getSearchList();
+    }
+    userroleListConfig.methods.getSearchList = function () {
+        this.loading = true;
+        var data = this.searchObject, that = this;
+        $.post("${siteurl}tenantRest/userrole/search.htm", data, function (result) {
+            if (result.code == 0) {
+                that.tableData = result;
+            }
+            setTimeout(function () {
+                that.loading = false;
+            }, 300)
+        });
+    }
+    userroleListConfig.methods.search = function () {
+        this.searchObject.no = 1;
+        this.getSearchList();
+    }
+    userroleListConfig.methods.clearData = function () {
+        this.searchObject.name = "";
+    }
+    userroleListConfig.methods.deleteData = function (event) {
+        this.selectId = event.id;
+        this.dialogVisible = true;
+    }
+
+    userroleListConfig.methods.handleClose = function (done) {
+        this.dialogVisible = false;
+        var self = this;
+        if (self.selectId) {
+            var params = {};
+            params.id = self.selectId;
+            this.postData("${siteurl}tenantRest/userrole/delete.htm", params, function (res) {
+                if (res.code == 0) {
+                    self.$message({
+                        message: '删除数据成功',
+                        type: 'success'
+                    });
+                    self.getSearchList();
+                } else {
+                    self.$message.error(res.msg);
+                }
+            });
+        }
+
+    }
+
+    userroleListConfig.computed = {};
+    userroleListConfig.computed.catalogOptions = function () {
+        return this.$store.state.catalogOptions;
+    };
+
+    userroleListConfig.data = function () {
+        return {
+            searchObject: {
+                no: 1,
+                size: 10,
+                name: ''
+            },
+            dialogVisible: false,
+            defaultProps: {
+                children: 'children',
+                label: 'name'
+            },
+            loading: false,
+            tableData: {},
+        }
+    };
+    userroleListConfig.methods.showAddView = function () {
+        this.$router.push({ path: 'add' });
+    };
+    userroleListConfig.mounted = function () {
+
+    }
+    userroleListConfig.activated = function () {
+        this.getSearchList();
+    }
+    var userroleListView = Vue.component('list-userrole-view', userroleListConfig);
+</script>
+[/#macro]

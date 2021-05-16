@@ -14,14 +14,15 @@ public class MemberSimpleConvert implements Conver<MemberSimple, Member> {
              result.setNo(source.getNo());
              result.setNote(source.getNote());
              result.setSex(source.getSex());
-             result.setPhone(source.getPhone());
-             result.setIntroduce(source.getIntroduce());
              result.setCatalog(source.getCatalog());
-             result.setName(source.getName());
+             result.setIntroduce(source.getIntroduce());
              result.setAvatar(source.getAvatar());
-             result.setState(source.getState());
              result.setLoginSize(source.getLoginSize());
              result.setAddDate(source.getAddDate());
+             result.setPhone(source.getPhone());
+             result.setLastDate(source.getLastDate());
+             result.setName(source.getName());
+             result.setState(source.getState());
              result.setJob(source.getJob());
 
              result.setStateName(source.getState()+"");

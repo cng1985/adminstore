@@ -21,6 +21,11 @@
 				<ref bean="userInfoRealm"/>
 			</list>
 		</property>
+		<property name="authenticator.authenticationListeners">
+			<list>
+				<ref bean="userAuthenticationListener"></ref>
+			</list>
+		</property>
 		<property name="cacheManager" ref="shiroEhcacheManager" />
 	</bean>
 

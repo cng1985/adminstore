@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>菜单管理</title>
+	<title>角色分类配置</title>
 	[#include "/admin/common/commons.html"]
 	[#include "/tenant/common/site.html"]
 	[@baseHead /]
@@ -102,7 +102,7 @@
 					<li class="header">主面板</li>
 					[@menustag id=1]
 					[#list list as item]
-					[@menu item "1,2,56"]
+					[@menu item "1,2,8"]
 					[/@menu]
 					[/#list]
 					[/@menustag]
@@ -119,43 +119,26 @@
 			<section class="content-header">
 				<!-- 导航 -->
 				<div class="navigation">
-					<i>首页</i> <span>菜单管理</span>
+					<i>首页</i> <span>角色分类配置</span>
 				</div>
 			</section>
 			<!-- Main content -->
 			<section class="content">
 				<el-tabs v-model="activeName">
-					<el-tab-pane label="表格树" name="third">
+					<el-tab-pane label="角色分类树" name="third">
+						<el-button type="primary" size="mini" @click="append()"  style="margin-bottom:15px;">增加一级分类
+						</el-button>
 						<el-table :data="treeOptions.children" style="width: 100%;margin-bottom: 20px;" row-key="id"
 							border>
-							<el-table-column prop="name" label="菜单名称" sortable width="200" align="left">
+							<el-table-column prop="name" label="角色分类名称" sortable width="260" align="left">
 							</el-table-column>
-							<el-table-column prop="icon" label="图标" width="50" align="center">
-								<template slot-scope="scope">
-									<i :class="scope.row.icon"></i>
-								</template>
+							<el-table-column prop="code" label="编码" width="120" sortable align="center">
+                            </el-table-column>
+							<el-table-column prop="sortNum" label="排序号" width="120"  sortable align="center">
 							</el-table-column>
-							<el-table-column prop="sortNum" label="排序号" width="80" align="center">
+							<el-table-column prop="addDate" label="添加时间" width="160" >
 							</el-table-column>
-
-							<el-table-column prop="catalog" label="功能类型"  width="80"  align="center">
-								<template slot-scope="scope">
-									<span v-if="scope.row.catalog==0">菜单</span>
-									<span v-else>按钮</span>
-								</template>
-							</el-table-column>
-							<el-table-column prop="catalog" label="菜单类型"  width="80"  align="center">
-								<template slot-scope="scope">
-									<span v-if="scope.row.menuType==1">租户</span>
-									<span v-else>通用</span>
-								</template>
-							</el-table-column>
-							<el-table-column prop="permission" label="权限"  width="180" >
-							</el-table-column>
-							<el-table-column prop="ids" label="菜单号"  width="80" >
-							</el-table-column>
-
-							<el-table-column prop="path" label="url">
+							<el-table-column prop="demo" label="备注"  >
 							</el-table-column>
 							<el-table-column label="操作" width="240" align="center"   >
 								<template slot-scope="scope">
@@ -170,7 +153,7 @@
 							</el-table-column>
 						</el-table>
 					</el-tab-pane>
-					<el-tab-pane label="功能树" name="second">
+					<el-tab-pane label="角色分类图" name="second">
 						<vue2-org-tree class="tree-div" :data="treeOptions"
 							:collapsable="collapsable" :expandAll="expandAll" :horizontal="horizontal"
 							:label-class-name="labelClassName" :render-content="renderContent" @on-expand="onExpand"
@@ -178,79 +161,42 @@
 					</el-tab-pane>
 				</el-tabs>
 
-				<el-dialog title="增加分类" :visible.sync="showDialog" width="30%">
+				<el-dialog title="增加角色分类" :visible.sync="showDialog" width="30%">
 					<el-row :gutter="20">
 						<el-col :span="18" :offset="2">
 							<el-row class="input-line">
-								<el-col :span="6">
-									<span class="el-form-item__label title">上级菜单：</span>
+								<el-col :span="8">
+									<span class="el-form-item__label title">上级角色分类：</span>
 								</el-col>
-								<el-col :span="18">
+								<el-col :span="16">
 									<el-input disabled="true" size="small" v-model="form.parentName"></el-input>
 								</el-col>
 							</el-row>
 							<el-row class="input-line">
-								<el-col :span="6">
-									<span class="el-form-item__label title">菜单名称：</span>
+								<el-col :span="8">
+									<span class="el-form-item__label title">角色分类名称：</span>
 								</el-col>
-								<el-col :span="18">
+								<el-col :span="16">
 									<el-input size="small" v-model="form.name"></el-input>
 								</el-col>
 							</el-row>
 							<el-row class="input-line">
-								<el-col :span="6">
-									<span class="el-form-item__label title">图标：</span>
+								<el-col :span="8">
+									<span class="el-form-item__label title">编码：</span>
 								</el-col>
-								<el-col :span="18">
-									<el-input size="small" v-model="form.icon"></el-input>
-								</el-col>
-							</el-row>
-							<el-row class="input-line">
-								<el-col :span="6">
-									<span class="el-form-item__label title">url：</span>
-								</el-col>
-								<el-col :span="18">
-									<el-input size="small" v-model="form.path"></el-input>
+								<el-col :span="16">
+									<el-input size="small" v-model="form.code"></el-input>
 								</el-col>
 							</el-row>
 							<el-row class="input-line">
-								<el-col :span="6">
-									<span class="el-form-item__label title">权限名称：</span>
-								</el-col>
-								<el-col :span="18">
-									<el-input size="small" v-model="form.permission"></el-input>
-								</el-col>
-							</el-row>
-							<el-row class="input-line">
-								<el-col :span="6">
+								<el-col :span="8">
 									<span class="el-form-item__label title">排序号：</span>
 								</el-col>
-								<el-col :span="18">
-									<el-input size="small" v-model="form.sortNum"></el-input>
+								<el-col :span="16">
+									<el-input-number size="small" v-model="form.sortNum"></el-input-number>
 								</el-col>
 							</el-row>
-							<el-row class="input-line">
-								<el-col :span="6">
-									<span class="el-form-item__label title">菜单类型：</span>
-								</el-col>
-								<el-col :span="18">
-									<el-radio-group size="small"  v-model="form.menuType">
-										<el-radio-button label="0">通用</el-radio-button>
-										<el-radio-button label="1">租户</el-radio-button>
-									</el-radio-group>
-								</el-col>
-							</el-row>
-							<el-row class="input-line">
-								<el-col :span="6">
-									<span class="el-form-item__label title">功能类型：</span>
-								</el-col>
-								<el-col :span="18">
-									<el-radio-group size="small"  v-model="form.catalog">
-										<el-radio-button label="0">菜单</el-radio-button>
-										<el-radio-button label="1">按钮</el-radio-button>
-									</el-radio-group>
-								</el-col>
-							</el-row>
+
 						</el-col>
 					</el-row>
 					<span slot="footer" class="dialog-footer">
@@ -258,69 +204,31 @@
 						<el-button size="small" type="primary" @click="addTreeItem">确 定</el-button>
 					</span>
 				</el-dialog>
-				<el-dialog title="编辑菜单" :visible.sync="editDialog" width="30%">
+				<el-dialog title="编辑角色分类" :visible.sync="editDialog" width="30%">
 					<el-row :gutter="20">
 						<el-col :span="18" :offset="2">
 							<el-row class="input-line">
-								<el-col :span="6">
-									<span class="el-form-item__label title">菜单名称：</span>
+								<el-col :span="8">
+									<span class="el-form-item__label title">角色分类名称：</span>
 								</el-col>
-								<el-col :span="18">
+								<el-col :span="16">
 									<el-input size="small" v-model="form.name"></el-input>
 								</el-col>
 							</el-row>
 							<el-row class="input-line">
-								<el-col :span="6">
-									<span class="el-form-item__label title">图标：</span>
+								<el-col :span="8">
+									<span class="el-form-item__label title">编码：</span>
 								</el-col>
-								<el-col :span="18">
-									<el-input size="small" v-model="form.icon"></el-input>
-								</el-col>
-							</el-row>
-							<el-row class="input-line">
-								<el-col :span="6">
-									<span class="el-form-item__label title">url：</span>
-								</el-col>
-								<el-col :span="18">
-									<el-input size="small" v-model="form.path"></el-input>
+								<el-col :span="16">
+									<el-input size="small" v-model="form.code"></el-input>
 								</el-col>
 							</el-row>
 							<el-row class="input-line">
-								<el-col :span="6">
-									<span class="el-form-item__label title">权限名称：</span>
-								</el-col>
-								<el-col :span="18">
-									<el-input size="small" v-model="form.permission"></el-input>
-								</el-col>
-							</el-row>
-							<el-row class="input-line">
-								<el-col :span="6">
+								<el-col :span="8">
 									<span class="el-form-item__label title">排序号：</span>
 								</el-col>
-								<el-col :span="18">
-									<el-input size="small" v-model="form.sortNum"></el-input>
-								</el-col>
-							</el-row>
-							<el-row class="input-line">
-								<el-col :span="6">
-									<span class="el-form-item__label title">菜单类型：</span>
-								</el-col>
-								<el-col :span="18">
-									<el-radio-group size="small"  v-model="form.menuType">
-										<el-radio-button label="0">通用</el-radio-button>
-										<el-radio-button label="1">租户</el-radio-button>
-									</el-radio-group>
-								</el-col>
-							</el-row>
-							<el-row class="input-line">
-								<el-col :span="6">
-									<span class="el-form-item__label title">功能类型：</span>
-								</el-col>
-								<el-col :span="18">
-									<el-radio-group size="small"  v-model="form.catalog">
-										<el-radio-button label="0">菜单</el-radio-button>
-										<el-radio-button label="1">按钮</el-radio-button>
-									</el-radio-group>
+								<el-col :span="16">
+									<el-input-number size="small" v-model="form.sortNum"></el-input-number>
 								</el-col>
 							</el-row>
 						</el-col>
@@ -435,7 +343,11 @@
 		appConfig.methods.getSearchList = function () {
 			this.loading = true;
 			var data = this.searchObject, that = this;
-			$.post("${siteurl}tenantRest/menu/list.htm", data, function (result) {
+			data.fetch=1;
+			data.size=500;
+			data.sortMethod = "asc";
+            data.sortField = "sortNum";
+			$.post("${siteurl}tenantRest/userrolecatalog/list.htm", data, function (result) {
 				if (result.code == 0) {
 					that.treeOptions.children = result.list;
 					//that.treeOptions = result.list;
@@ -464,7 +376,7 @@
 				tableData: {},
 				treeOptions: {
 					id: -1,
-					name: '系统功能结构',
+					name: '角色分类结构',
 					children: []
 				},
 				props: { label: 'name', children: 'children', expand: 'expand' },
@@ -478,7 +390,7 @@
 				form: {
 					name: "",
 					parent: "",
-					sortNum: ""
+					sortNum: "",
 				}
 				, activeName: "third"
 			}
@@ -560,7 +472,7 @@
 			if (this.deforeUpdateData) {
 				this.deforeUpdateData();
 			}
-			this.postData("${siteurl}tenantRest/menu/update.htm", data, function (res) {
+			this.postData("${siteurl}tenantRest/userrolecatalog/update.htm", data, function (res) {
 				if (res.code == 0) {
 					self.$message({
 						message: '修改数据成功',
@@ -586,7 +498,7 @@
 			if (this.parentId) {
 				data.parent = this.parentId;
 			}
-			this.postData("${siteurl}tenantRest/menu/create.htm", data, function (res) {
+			this.postData("${siteurl}tenantRest/userrolecatalog/create.htm", data, function (res) {
 				self.showDialog = false;
 				if (res.code == 0) {
 					self.$message({
@@ -605,7 +517,7 @@
 			if (self.selectId) {
 				var params = {};
 				params.id = self.selectId;
-				this.postData("${siteurl}tenantRest/menu/delete.htm", params, function (res) {
+				this.postData("${siteurl}tenantRest/userrolecatalog/delete.htm", params, function (res) {
 
 					if (res.code == 0) {
 						self.$message({
@@ -618,7 +530,7 @@
 							const index = self.selectData.findIndex(d => d.id === self.selectId);
 							self.selectData.splice(index, 1);
 						} else {
-							
+
 						}
 					} else {
 						self.$message.error(res.msg);

@@ -1,0 +1,146 @@
+[#macro linkUpdateView]
+<div class="model-form">
+    <el-page-header @back="goBack" content="更新友情链接">
+    </el-page-header>
+    <div class="model-content">
+        <el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px">
+            <el-row :gutter="10">
+                <el-col :span="22">
+                    <el-form-item label="链接名称" size="mini" prop="name">
+                        <el-input v-model="form.name" name="name">
+                        </el-input>
+                    </el-form-item>
+
+                </el-col>
+                <el-col :span="22">
+                    <el-form-item label="链接地址" size="mini" prop="url">
+                        <el-input v-model="form.url" name="url">
+                        </el-input>
+                    </el-form-item>
+
+                </el-col>
+                <el-col :span="22">
+                    <el-form-item label="链接类型" size="mini" prop="linkType">
+                        <el-select style="width: 100%;" v-model="form.linkType" filterable clearable placeholder="请选择">
+                            <el-option v-for="item in linkTypeOptions" :key="item.id" :label="item.name"
+                                :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="22">
+                    <el-form-item label="排序号" size="mini" prop="sortNum">
+                        <el-input-number v-model="form.sortNum" name="sortNum" type="textarea" :min="0" :max="100">
+                        </el-input-number>
+                    </el-form-item>
+
+                </el-col>
+                <el-col :span="22">
+                    <el-form-item label="链接打开方式" size="mini" prop="target">
+                        <el-radio v-model="form.target" v-for="item in targetOptions" :key="item.value"
+                            :value="item.value" :label="item.value"><span v-text="item.label"></span></el-radio>
+                    </el-form-item>
+
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="22" style="text-align: right;padding-bottom: 20px;padding-top: 20px;">
+                    <el-button @click="goBack">取消</el-button>
+                    <el-button type="primary" @click="updateData">确定</el-button>
+                </el-col>
+            </el-row>
+        </el-form>
+    </div>
+</div>
+[/#macro]
+
+[#macro linkUpdateConfig]
+<script type="text/x-template" id="my-link-update">
+    [@linkUpdateView /]
+</script>
+<script type="text/javascript">
+    //更新组件开始
+    var linkUpdateConfig = {};
+    linkUpdateConfig.template = "#my-link-update";
+    linkUpdateConfig.methods = config.basicMethod();
+    linkUpdateConfig.methods.updateData = function () {
+        var self = this;
+        this.$refs["ruleForm"].validate(function (valid) {
+            if (valid) {
+                self.updateDataPost();
+            } else {
+                console.log('error submit!!');
+                return false;
+            }
+        });
+    }
+
+    linkUpdateConfig.methods.updateDataPost = function () {
+        var self = this, data = this.form;
+        //delete data.linkCatalog;
+        if (this.deforeUpdateData) {
+            this.deforeUpdateData();
+        }
+        this.postData("${siteurl}tenantRest/link/update.htm", data, function (res) {
+            if (res.code == 0) {
+                self.$message({
+                    message: '修改数据成功',
+                    type: 'success'
+                });
+                //window.history.go(-1)
+                self.$router.go(-1);
+            } else {
+                self.$message.error(res.msg);
+            }
+        });
+    }
+    linkUpdateConfig.data = function () {
+        return {
+            form: {
+                name: '',
+                url: '',
+                linkType: '',
+                sortNum: '',
+                target: ''
+            },
+            targetOptions: [
+                { label: "新窗口", value: "_blank" },
+                { label: "当前窗口", value: "_self" },
+                { label: "父窗口", value: "_parent" },
+                { label: "顶窗口", value: "_top" }
+            ],
+            rules: {
+                name: [
+                    { required: true, message: '请输入链接名称', trigger: 'blur' }
+                ],
+                url: [
+                    { required: true, message: '请输入链接地址', trigger: 'blur' }
+                ],
+            }
+        }
+    };
+
+    linkUpdateConfig.mounted = function () {
+        var id = this.$route.query.id;
+        var self = this;
+        var data = {};
+        data.id = id;
+        this.postData("${siteurl}tenantRest/link/view.htm", data, function (res) {
+            if (res.code == 0) {
+                self.form = res;
+            }
+        });
+    }
+    linkUpdateConfig.computed = {};
+    linkUpdateConfig.computed.linkTypeOptions = function () {
+        return this.$store.state.linkTypeOptions;
+    };
+
+    linkUpdateConfig.destroyed = function () {
+        console.log("destroyed add view ");
+
+    }
+    var linkUpdateView = Vue.component('update-view', linkUpdateConfig);
+    //更新组件结束
+</script>
+[/#macro]

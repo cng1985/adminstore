@@ -8,7 +8,7 @@ import java.util.Date;
 
 /**
 *
-* Created by imake on 2021年02月28日16:04:56.
+* Created by imake on 2021年05月16日17:59:08.
 */
 
 @Data
@@ -22,19 +22,23 @@ public class MemberDataRequest extends BaseRequest {
 
      private String sex;
 
-     private String phone;
+     private Integer catalog;
 
      private String introduce;
 
-     private Integer catalog;
+     private String avatar;
+
+     private Integer loginSize;
+
+     private Date addDate;
+
+     private String phone;
+
+     private Date lastDate;
 
      private String name;
 
-     private String avatar;
-
      private State state;
-
-     private Integer loginSize;
 
      private String job;
 

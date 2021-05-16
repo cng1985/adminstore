@@ -1,0 +1,83 @@
+[#macro logShowView]
+<div>
+    <el-table v-loading="loading" :data="tableData.list" ke="log" @sort-change="changeTableSort"
+        style="width: 100%;font-size: 12px;padding:10px 20px;">
+        <el-table-column label="登陆IP" prop="ip" width="120">
+        </el-table-column>
+        <el-table-column label="登陆时间" prop="addDate" width="160">
+        </el-table-column>
+        <el-table-column label="状态" prop="state" sortable="custom">
+        </el-table-column>
+    </el-table>
+
+    <div class="page">
+        <el-pagination background :current-page="searchObject.no" :page-sizes="[10, 20, 50, 100]"
+            :page-size="tableData.size" :pager-count="5" layout="total, sizes, prev, pager, next, jumper"
+            :page-count="tableData.totalPage" :total="tableData.total" @size-change="sizeChange"
+            @current-change="pageChange">
+        </el-pagination>
+    </div>
+
+</div>
+[/#macro]
+[#macro logShowConfig]
+<script type="text/x-template" id="my-log-show">
+    [@logShowView /]
+</script>
+<script type="text/javascript">
+    //显示组件开始
+    var logShowConfig = {};
+    logShowConfig.template = "#my-log-show";
+    logShowConfig.methods = config.basicMethod();
+    logShowConfig.data = function () {
+        return {
+            searchObject: {
+                no: 1,
+                size: 10
+            },
+            tableData: {},
+            loading: false
+
+        }
+    };
+    logShowConfig.methods.sizeChange = function (event) {
+        this.searchObject.size = event;
+        this.getSearchList();
+    }
+    logShowConfig.methods.pageChange = function (index) {
+        this.searchObject.no = index;
+        this.getSearchList();
+    }
+    logShowConfig.methods.changeTableSort = function (column) {
+        this.searchObject.sortField = column.prop;
+        if ("descending" == column.order) {
+            this.searchObject.sortMethod = "desc";
+        }
+        else if ("ascending" == column.order) {
+            this.searchObject.sortMethod = "asc";
+        }
+        else {
+            this.searchObject.sortMethod = "";
+        }
+        this.getSearchList();
+    }
+    logShowConfig.methods.getSearchList = function () {
+        this.loading = true;
+        var data = this.searchObject;
+        var  self = this;
+        this.postData("${siteurl}tenantRest/userloginlog/searchByUser.htm", data, function (result) {
+            if (result.code == 0) {
+                self.tableData = result;
+            }
+            setTimeout(() => {
+                self.loading = false;
+            }, 300)
+        });
+    }
+    logShowConfig.mounted = function () {
+        this.getSearchList();
+    }
+    var logShowView = Vue.component('my-log-view', logShowConfig);
+		//显示组件结束
+</script>
+[/#macro]

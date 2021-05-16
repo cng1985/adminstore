@@ -67,27 +67,42 @@
 [#macro childMemberView]
     <div >
         <el-form class="viewForm" label-width="80px">
-            <el-col :span="12">
+            <el-col :span="22">
+                <el-form-item label="头像">
+                    <div v-html="viewModel.avatar">></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="22">
+                <el-form-item label="姓名">
+                    <div v-html="viewModel.name">></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="22">
+                <el-form-item label="手机号">
+                    <div v-html="viewModel.phone">></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="22">
                 <el-form-item label="个人介绍">
                     <div v-html="viewModel.note">></div>
                 </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="22">
                 <el-form-item label="性别">
                     <div v-html="viewModel.sex">></div>
                 </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="22">
                 <el-form-item label="个人介绍">
                     <div v-html="viewModel.introduce">></div>
                 </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="22">
                 <el-form-item label="职业">
                     <div v-html="viewModel.job">></div>
                 </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="22">
                 <el-form-item label="账号">
                     <div v-html="viewModel.no">></div>
                 </el-form-item>

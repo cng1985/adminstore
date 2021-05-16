@@ -4,13 +4,13 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>商圈管理</title>
+	<title>友情链接管理</title>
 	[#include "/admin/common/commons.html"]
 	[#include "/tenant/common/site.html"]
-	[#include "/tenant/admin/businesscircle/componentAdd.html"]
-	[#include "/tenant/admin/businesscircle/componentList.html"]
-	[#include "/tenant/admin/businesscircle/componentUpdate.html"]
-	[#include "/tenant/admin/businesscircle/componentShow.html"]
+	[#include "/tenant/admin/link/componentAdd.html"]
+	[#include "/tenant/admin/link/componentList.html"]
+	[#include "/tenant/admin/link/componentUpdate.html"]
+	[#include "/tenant/admin/link/componentShow.html"]
 
 	[@baseHead /]
 	<script type="text/javascript"></script>
@@ -40,7 +40,7 @@
 					<li class="header">主面板</li>
 					[@menustag id=1]
 					[#list list as item]
-					[@menu item "1,41,97"]
+					[@menu item "1,2,7"]
 					[/@menu]
 					[/#list]
 					[/@menustag]
@@ -52,12 +52,12 @@
 		<!-- =============================================== -->
 
 		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper" id="app" v-cloak>
+		<div class="content-wrapper" id="app"   v-cloak  >
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<!-- 导航 -->
 				<div class="navigation">
-					<i>首页</i> <span>商圈管理</span>
+					<i>首页</i> <span>友情链接管理</span>
 				</div>
 			</section>
 			<!-- Main content -->
@@ -99,59 +99,76 @@
 		config.methods.goBack = function () {
 			this.$router.go(-1);
 		}
-		config.basicMethod = function () {
-			var result = {};
-			result.postData = config.methods.postData;
-			result.postJsonData = config.methods.postJsonData;
-			result.goBack = config.methods.goBack;
-			return result;
+		config.basicMethod=function(){
+		   var result={};
+		   result.postData=config.methods.postData;
+           result.postJsonData=config.methods.postJsonData;
+           result.goBack=config.methods.goBack;
+           return result;
+		}
+
+		config.methods.loadLinkTypeOptions= function(){
+				var self=this;
+				var param = {};
+				param.sortMethod = "asc";
+				param.sortField = "id";
+				param.level =1;
+				param.size =500;
+				param.fetch=0;
+				$.post("${siteurl}tenantRest/linktype/list.htm", param, function (result) {
+					if (result.code == 0) {
+						self.$store.commit('updateLinkTypeOptions', result.list);
+					}
+				});
 		}
 
 
 	</script>
 
-	[#include "/tenant/default/common/component.html" /]
-
-	[@nbMap /]
-	[@businesscircleAddConfig /]
-	[@businesscircleListConfig /]
-	[@businesscircleShowConfig /]
-	[@businesscircleUpdateConfig /]
+	
+    
+	[@linkAddConfig /]
+	[@linkListConfig /]
+	[@linkShowConfig /]
+	[@linkUpdateConfig /]
 
 
 	<script type="text/javascript">
-
+	
 		// 3. 创建 router 实例，然后传 `routes` 配置
 		// 你还可以传别的配置参数, 不过先这么简单着吧。
 		var appConfig = {};
 		appConfig.el = "#app";
 
 
-		const routes = [
-			{ path: '/view', name: "businesscircleShowView", component: businesscircleShowView, props: true },
-			{ path: '/add', name: "businesscircleAddView", component: businesscircleAddView, props: true },
-			{ path: '/update', name: "businesscircleUpdateView", component: businesscircleUpdateView, props: true },
-			{
-				path: '/', name: "businesscircleListView", component: businesscircleListView, props: true, meta: {
-					keepAlive: true, //此组件不需要被缓存
+			const routes = [
+				{ path: '/view',name: "linkShowView", component: linkShowView, props: true },
+				{ path: '/add',name: "linkAddView", component: linkAddView , props: true },
+				{ path: '/update', name: "linkUpdateView", component: linkUpdateView, props: true },
+				{ path: '/',name: "linkListView", component: linkListView , props: true , meta: {
+						keepAlive: true, //此组件不需要被缓存
+					}
 				}
-			}
-		]
+			]
 
 
 
 		const router = new VueRouter({
-			routes: routes // (缩写) 相当于 routes: routes
+			routes:routes // (缩写) 相当于 routes: routes
 		})
 
 		var store = new Vuex.Store({
 			state: {
 				count: 0,
+                     linkTypeOptions: [],
 			},
 			mutations: {
-				increment: function (state) {
+				increment:function(state) {
 					state.count++
 				},
+                    updateLinkTypeOptions:function(state, obj) {
+					   state.linkTypeOptions = obj;
+				     },
 
 			}
 		})
@@ -161,6 +178,7 @@
 		appConfig.store = store;
 		appConfig.methods = config.methods;
 		appConfig.mounted = function () {
+             this.loadLinkTypeOptions();
 		}
 		var vm = new Vue(appConfig);
 

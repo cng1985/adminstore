@@ -4,13 +4,13 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>商圈管理</title>
+	<title>用户管理</title>
 	[#include "/admin/common/commons.html"]
 	[#include "/tenant/common/site.html"]
-	[#include "/tenant/admin/businesscircle/componentAdd.html"]
-	[#include "/tenant/admin/businesscircle/componentList.html"]
-	[#include "/tenant/admin/businesscircle/componentUpdate.html"]
-	[#include "/tenant/admin/businesscircle/componentShow.html"]
+	[#include "/tenant/admin/member/componentAdd.html"]
+	[#include "/tenant/admin/member/componentList.html"]
+	[#include "/tenant/admin/member/componentUpdate.html"]
+	[#include "/tenant/admin/member/componentShow.html"]
 
 	[@baseHead /]
 	<script type="text/javascript"></script>
@@ -40,7 +40,7 @@
 					<li class="header">主面板</li>
 					[@menustag id=1]
 					[#list list as item]
-					[@menu item "1,41,97"]
+					[@menu item "1,20,21"]
 					[/@menu]
 					[/#list]
 					[/@menustag]
@@ -52,12 +52,12 @@
 		<!-- =============================================== -->
 
 		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper" id="app" v-cloak>
+		<div class="content-wrapper" id="app"   v-cloak  >
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<!-- 导航 -->
 				<div class="navigation">
-					<i>首页</i> <span>商圈管理</span>
+					<i>首页</i> <span>用户管理</span>
 				</div>
 			</section>
 			<!-- Main content -->
@@ -88,6 +88,9 @@
 	</div>
 	<!-- ./wrapper -->
 	[@baseScript /]
+		[#include "/tenant/default/common/component.html" /]
+		 [@nbSelect /]
+		 [@avatar /]
 
 	<script type="text/javascript">
 		var config = {};
@@ -99,49 +102,52 @@
 		config.methods.goBack = function () {
 			this.$router.go(-1);
 		}
-		config.basicMethod = function () {
-			var result = {};
-			result.postData = config.methods.postData;
-			result.postJsonData = config.methods.postJsonData;
-			result.goBack = config.methods.goBack;
-			return result;
+		config.basicMethod=function(){
+		   var result={};
+		   result.postData=config.methods.postData;
+           result.postJsonData=config.methods.postJsonData;
+           result.goBack=config.methods.goBack;
+           return result;
 		}
 
 
 	</script>
 
-	[#include "/tenant/default/common/component.html" /]
+	
+    
+	[@memberAddConfig /]
+	[@memberListConfig /]
+	[@memberShowConfig /]
+	[@memberUpdateConfig /]
 
-	[@nbMap /]
-	[@businesscircleAddConfig /]
-	[@businesscircleListConfig /]
-	[@businesscircleShowConfig /]
-	[@businesscircleUpdateConfig /]
-
+	[@childMemberConfig /]
 
 	<script type="text/javascript">
-
+	
 		// 3. 创建 router 实例，然后传 `routes` 配置
 		// 你还可以传别的配置参数, 不过先这么简单着吧。
 		var appConfig = {};
 		appConfig.el = "#app";
 
 
-		const routes = [
-			{ path: '/view', name: "businesscircleShowView", component: businesscircleShowView, props: true },
-			{ path: '/add', name: "businesscircleAddView", component: businesscircleAddView, props: true },
-			{ path: '/update', name: "businesscircleUpdateView", component: businesscircleUpdateView, props: true },
-			{
-				path: '/', name: "businesscircleListView", component: businesscircleListView, props: true, meta: {
-					keepAlive: true, //此组件不需要被缓存
+		   const routes = [
+				{ path: '/view',name: "memberShowView", component: memberShowView, props: true, children: [
+                    { path: "/view/index", name: "childMemberShowView", component: childMemberShowView },
+					{ path: "/", component: childMemberShowView }
+				]
+				 },
+				{ path: '/add',name: "memberAddView", component: memberAddView , props: true },
+				{ path: '/update', name: "memberUpdateView", component: memberUpdateView, props: true },
+				{ path: '/',name: "memberListView", component: memberListView , props: true , meta: {
+						keepAlive: true, //此组件不需要被缓存
+					}
 				}
-			}
-		]
+			]
 
 
 
 		const router = new VueRouter({
-			routes: routes // (缩写) 相当于 routes: routes
+			routes:routes // (缩写) 相当于 routes: routes
 		})
 
 		var store = new Vuex.Store({
@@ -149,7 +155,7 @@
 				count: 0,
 			},
 			mutations: {
-				increment: function (state) {
+				increment:function(state) {
 					state.count++
 				},
 
