@@ -1,6 +1,6 @@
 package com.haoxuer.adminstore.member.controller.admin;
 
-import com.haoxuer.adminstore.base.BaseAction;
+import com.haoxuer.discover.controller.BaseAction;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
