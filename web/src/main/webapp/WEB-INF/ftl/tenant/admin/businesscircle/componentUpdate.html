@@ -1,0 +1,146 @@
+[#macro businesscircleUpdateView]
+<div class="model-form">
+    <el-page-header @back="goBack" content="更新商圈">
+    </el-page-header>
+    <div class="model-content">
+        <el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px">
+            <el-row :gutter="10">
+                <el-col :span="22">
+                    <el-form-item label="商圈名称" size="mini" prop="name">
+                        <el-input v-model="form.name" name="name">
+                        </el-input>
+                    </el-form-item>
+
+                </el-col>
+                <el-col :span="22">
+                    <el-form-item label="中心地址" size="mini" prop="address">
+                        <el-input v-model="form.address" name="address">
+                            <template slot="append">
+                                <el-button type="primary" size="small" @click="geo">定位</el-button>
+                            </template>
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="22">
+                    <el-form-item label="地图信息" size="mini">
+                        <nb-map zoom="18" @poi-change="changePoi" :lat="form.lat" :lng="form.lng"></nb-map>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="22" style="text-align: right;padding-bottom: 20px;padding-top: 20px;">
+                    <el-button @click="goBack">取消</el-button>
+                    <el-button type="primary" @click="updateData">确定</el-button>
+                </el-col>
+            </el-row>
+        </el-form>
+    </div>
+</div>
+[/#macro]
+
+[#macro businesscircleUpdateConfig]
+<script type="text/x-template" id="my-businesscircle-update">
+    [@businesscircleUpdateView /]
+</script>
+<script type="text/javascript">
+    //更新组件开始
+    var businesscircleUpdateConfig = {};
+    businesscircleUpdateConfig.template = "#my-businesscircle-update";
+    businesscircleUpdateConfig.methods = config.basicMethod();
+
+    businesscircleUpdateConfig.methods.changePoi = function (event) {
+        console.log(event);
+        this.form.lat = event.lat;
+        this.form.lng = event.lng;
+
+    }
+    businesscircleUpdateConfig.methods.geo = function (event) {
+        var param = {};
+        param.address = this.form.address;
+        var self = this;
+        this.postData("${siteurl}tenantRest/area/lbs.htm", param, function (result) {
+            if (result.code == 0) {
+                self.form.lat = result.lat;
+                self.form.lng = result.lng;
+                if(result.provinceId){
+                    self.form.province=result.provinceId;
+                }
+                if(result.cityId){
+                    self.form.city=result.cityId;
+                }
+                if(result.countyId){
+                    self.form.area=result.countyId;
+                }
+            }
+        });
+
+    }
+    businesscircleUpdateConfig.methods.updateData = function () {
+        var self = this;
+        this.$refs["ruleForm"].validate(function (valid) {
+            if (valid) {
+                self.updateDataPost();
+            } else {
+                console.log('error submit!!');
+                return false;
+            }
+        });
+    }
+
+    businesscircleUpdateConfig.methods.updateDataPost = function () {
+        var self = this, data = this.form;
+        //delete data.businesscircleCatalog;
+        if (this.deforeUpdateData) {
+            this.deforeUpdateData();
+        }
+        this.postData("${siteurl}tenantRest/businesscircle/update.htm", data, function (res) {
+            if (res.code == 0) {
+                self.$message({
+                    message: '修改数据成功',
+                    type: 'success'
+                });
+                //window.history.go(-1)
+                self.$router.go(-1);
+            } else {
+                self.$message.error(res.msg);
+            }
+        });
+    }
+    businesscircleUpdateConfig.data = function () {
+        return {
+            form: {
+                name: '',
+                address: ''
+            },
+            rules: {
+                name: [
+                    { required: true, message: '请输入商圈名称', trigger: 'blur' }
+                ],
+                address: [
+                    { required: true, message: '请输入中心地址', trigger: 'blur' }
+                ]
+            }
+        }
+    };
+
+    businesscircleUpdateConfig.mounted = function () {
+        var id = this.$route.query.id;
+        var self = this;
+        var data = {};
+        data.id = id;
+        this.postData("${siteurl}tenantRest/businesscircle/view.htm", data, function (res) {
+            if (res.code == 0) {
+                self.form = res;
+            }
+        });
+    }
+    businesscircleUpdateConfig.computed = {};
+
+    businesscircleUpdateConfig.destroyed = function () {
+        console.log("destroyed add view ");
+
+    }
+    var businesscircleUpdateView = Vue.component('update-view', businesscircleUpdateConfig);
+    //更新组件结束
+</script>
+[/#macro]
