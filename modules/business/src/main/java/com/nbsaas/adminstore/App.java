@@ -1,10 +1,6 @@
 package com.nbsaas.adminstore;
 
-import com.haoxuer.discover.user.data.entity.Structure;
 import com.haoxuer.discover.user.data.entity.UserLoginLog;
-import com.nbsaas.adminstore.member.data.entity.Member;
-import com.nbsaas.adminstore.oa.data.entity.WorkLogger;
-import com.nbsaas.adminstore.structure.data.entity.Organization;
 import com.nbsaas.codemake.CodeMake;
 import com.nbsaas.codemake.template.hibernateSimple.TemplateHibernateSimpleDir;
 import com.nbsaas.codemake.templates.elementuiForm.ElementUIFormDir;
