@@ -8,7 +8,7 @@ import java.util.Date;
 
 /**
 *
-* Created by imake on 2020年11月06日23:28:28.
+* Created by imake on 2021年05月10日16:52:39.
 */
 
 @Data
@@ -16,27 +16,31 @@ public class AdDataRequest extends BaseRequest {
 
     private Long id;
 
-     private String path;
-
-     private Date beginDate;
-
      private String note;
 
      private String title;
 
      private Date endDate;
 
-     private Integer sortNum;
-
      private Integer catalog;
 
-     private Long adPosition;
-
      private Long bussId;
+
+     private Date addDate;
 
      private AdType type;
 
      private String url;
+
+     private String path;
+
+     private Date beginDate;
+
+     private Integer sortNum;
+
+     private Long adPosition;
+
+     private Date lastDate;
 
 
 }

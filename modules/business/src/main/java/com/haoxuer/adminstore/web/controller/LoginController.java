@@ -22,6 +22,7 @@ import com.haoxuer.discover.user.data.service.UserInfoService;
 import com.haoxuer.discover.user.data.service.UserLoginLogService;
 import com.haoxuer.discover.user.shiro.utils.UserUtil;
 import com.haoxuer.discover.web.controller.front.BaseController;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -73,13 +74,34 @@ public class LoginController extends BaseController {
         }
         return getView("login");
     }
+    public static String getIpAddr(HttpServletRequest request) throws Exception {
+        String ip = request.getHeader("X-Real-IP");
+        if (!StringUtils.isBlank(ip) && !"unknown".equalsIgnoreCase(ip)) {
+            return ip;
+        } else {
+            ip = request.getHeader("X-Forwarded-For");
+            if (!StringUtils.isBlank(ip) && !"unknown".equalsIgnoreCase(ip)) {
+                int index = ip.indexOf(44);
+                return index != -1 ? ip.substring(0, index) : ip;
+            } else {
+                return request.getRemoteAddr();
+            }
+        }
+    }
     @ResponseBody
     @RequestMapping(value = "/loginAjax")
-    public ResponseObject loginAjax(String username, String password, String tenant) {
+    public ResponseObject loginAjax(String username, String password,HttpServletRequest request) {
         ResponseObject result=new ResponseObject();
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        String ip="";
         try {
+            ip=getIpAddr(request);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            token.setHost(ip);
             subject.login(token);
         } catch (Exception e) {
             e.printStackTrace();

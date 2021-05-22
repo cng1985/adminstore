@@ -9,7 +9,7 @@ import com.haoxuer.discover.data.enums.State;
 
 /**
 *
-* Created by BigWorld on 2021年02月28日16:04:56.
+* Created by BigWorld on 2021年05月16日17:59:08.
 */
 @Data
 public class MemberSimple implements Serializable {
@@ -19,15 +19,17 @@ public class MemberSimple implements Serializable {
      private String no;
      private String note;
      private String sex;
-     private String phone;
-     private String introduce;
      private Integer catalog;
-     private String name;
+     private String introduce;
      private String avatar;
-     private State state;
      private Integer loginSize;
      @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
      private Date addDate;
+     private String phone;
+     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
+     private Date lastDate;
+     private String name;
+     private State state;
      private String job;
 
      private String stateName;

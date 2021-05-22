@@ -10,8 +10,20 @@
         <div class="search">
             <el-form label-width="80px">
                 <el-row>
+                    <el-col :span="6" style="padding: 0 8px;">
+                        <el-form-item label="姓名">
+                            <el-input v-model="searchObject.name" size="small" placeholder="" name="name">
+                            </el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6" style="padding: 0 8px;">
+                        <el-form-item label="手机号">
+                            <el-input v-model="searchObject.phone" size="small" placeholder="" name="phone">
+                            </el-input>
+                        </el-form-item>
+                    </el-col>
 
-            <el-col :span="24" style="padding: 0 10px;margin-top: 5px;">
+            <el-col :span="12" style="padding: 0 10px;margin-top: 5px;">
                 <el-row type="flex" justify="end">
                     <el-button size="small" type="primary" @click="search">搜索</el-button>
                     <el-button size="small" plain @click="clearData">清除条件</el-button>
@@ -26,6 +38,20 @@
             </div>
 
             <el-table v-loading="loading" :data="tableData.list"  @cell-click="showView" @sort-change="changeTableSort" style="width: 100%;font-size: 12px;">
+                        <el-table-column label="姓名"
+
+                                        prop="name"
+                        
+                         width="100"  
+                        >
+                        </el-table-column>
+                        <el-table-column label="手机号"
+
+                                        prop="phone"
+                        
+                         width="100"  
+                        >
+                        </el-table-column>
                         <el-table-column label="个人介绍"
 
                                         prop="note"
@@ -151,6 +177,8 @@
         this.getSearchList();
     }
     memberListConfig.methods.clearData = function () {
+                this.searchObject.name = "";
+                this.searchObject.phone = "";
     }
     memberListConfig.methods.deleteData = function (event) {
         this.selectId = event.id;
@@ -185,7 +213,8 @@
             searchObject: {
                 no: 1,
                 size: 10,
-            },
+                    name:'',
+                    phone:''            },
             dialogVisible: false,
             defaultProps: {
                 children: 'children',

@@ -6,23 +6,24 @@ import com.haoxuer.discover.data.page.Search;
 import lombok.Data;
 import java.util.Date;
 
+
 /**
 *
-* Created by imake on 2020年11月06日23:22:43.
+* Created by imake on 2021年05月10日16:20:02.
 */
 
 @Data
 public class AdPositionSearchRequest extends BasePageRequest {
 
+    //标识
+     @Search(name = "key",operator = Filter.Operator.like)
+     private String key;
+
     //广告位
      @Search(name = "name",operator = Filter.Operator.like)
      private String name;
 
-    @Search(name = "adPosition.id",operator = Filter.Operator.eq)
-    private Long adPosition;
 
-    @Search(name = "key",operator = Filter.Operator.like)
-    private String key;
 
 
     private String sortField;

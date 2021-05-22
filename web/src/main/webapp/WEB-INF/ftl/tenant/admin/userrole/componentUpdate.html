@@ -1,0 +1,207 @@
+[#macro userroleUpdateView]
+<div class="model-form">
+    <el-page-header @back="goBack" content="更新角色">
+    </el-page-header>
+    <div class="model-content">
+        <el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px">
+            <el-row :gutter="10">
+                <el-col :span="22">
+                    <el-form-item label="角色名" size="mini" prop="name">
+                        <el-input v-model="form.name" name="name">
+                        </el-input>
+                    </el-form-item>
+
+                </el-col>
+                <el-col :span="22">
+                    <el-form-item label="别名" size="mini" prop="alias">
+                        <el-input v-model="form.alias" name="alias">
+                        </el-input>
+                    </el-form-item>
+
+                </el-col>
+                <el-col :span="22">
+					<el-form-item label="角色分类" size="mini" prop="catalog">
+						<el-select style="width: 100%;" v-model="form.catalog" filterable clearable placeholder="请选择">
+							<el-option v-for="item in catalogOptions" :key="item.id" :label="item.name"
+								:value="item.id">
+							</el-option>
+						</el-select>
+					</el-form-item>
+				</el-col>
+                <el-col :span="22">
+                    <el-form-item label="角色描述" size="mini" prop="description">
+                        <el-input type="textarea" v-model="form.description" name="description">
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="22">
+                    <el-form-item label="权限" size="mini" prop="description">
+                        <el-tree @check="checkPermission" :data="treeData" ref="tree" check-strictly
+                            show-checkbox node-key="permission" :default-checked-keys="form.authorities">
+                        </el-tree>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="22" style="text-align: right;padding-bottom: 20px;padding-top: 20px;">
+                    <el-button @click="goBack">取消</el-button>
+                    <el-button type="primary" @click="updateData">确定</el-button>
+                </el-col>
+            </el-row>
+        </el-form>
+    </div>
+</div>
+[/#macro]
+
+[#macro userroleUpdateConfig]
+<script type="text/x-template" id="my-userrole-update">
+    [@userroleUpdateView /]
+</script>
+<script type="text/javascript">
+    //更新组件开始
+    var userroleUpdateConfig = {};
+    userroleUpdateConfig.template = "#my-userrole-update";
+    userroleUpdateConfig.methods = config.basicMethod();
+    userroleUpdateConfig.methods.updateData = function () {
+        var self = this;
+        this.$refs["ruleForm"].validate(function (valid) {
+            if (valid) {
+                self.updateDataPost();
+            } else {
+                console.log('error submit!!');
+                return false;
+            }
+        });
+    }
+
+    userroleUpdateConfig.methods.updateDataPost = function () {
+        var self = this, data = this.form;
+        //delete data.userroleCatalog;
+        if (this.deforeUpdateData) {
+            this.deforeUpdateData();
+        }
+        data.addDate="";
+        data.lastDate="";
+
+        this.postJsonData("${siteurl}tenantRest/userrole/updateJson.htm", data, function (res) {
+            if (res.code == 0) {
+                self.$message({
+                    message: '修改数据成功',
+                    type: 'success'
+                });
+                //window.history.go(-1)
+                self.$router.go(-1);
+            } else {
+                self.$message.error(res.msg);
+            }
+        });
+    }
+    userroleUpdateConfig.data = function () {
+        return {
+            form: {
+                name: '',
+                alias: '',
+                type: '',
+                description: ''
+            },
+            treeData:[],
+            rules: {
+            }
+        }
+    };
+    userroleUpdateConfig.methods.checkPermission = function (checkedNode, checkedKeys, halfCheckedNodes, halfCheckedKeys) {
+        //this.handleCheck(checkedNode, checkedKeys, this.$refs.treeApiScope);
+        var refDom = this.$refs.tree;
+        var permissionKeys=checkedKeys.checkedKeys;
+        //parentPermission
+        if (checkedNode.parent) {
+
+            const children =[];
+            if(checkedNode.children){
+                var length=checkedNode.children.length;
+                for (let index = 0; index < length; index++) {
+                    const element = checkedNode.children[index];
+                    children.push(element.permission);
+                }
+                //children=checkedNode.children.map(item=>item.permission);
+            }
+
+            //选中了
+            if (permissionKeys.indexOf(checkedNode.permission) != -1) {
+                //勾选了a
+                if(checkedNode.parentPermission){
+                    permissionKeys.push(checkedNode.parentPermission);
+                }
+
+                //设置下一级
+                if (checkedNode.children) {
+                    permissionKeys=permissionKeys.concat(children);
+                }
+
+                //const tempArr = Array.from(new Set(checkedKeys.concat(children)));
+                refDom.setCheckedKeys(permissionKeys);
+            }else{
+               // let checkedKeysSet = new Set(permissionKeys);
+                var  childrenSet = new Set(children);
+                var permissionKeys =permissionKeys.filter(ele => !childrenSet.has(ele));
+                refDom.setCheckedKeys(permissionKeys);
+            }
+        }
+
+        this.form.authorities = permissionKeys;
+    }
+
+
+    userroleUpdateConfig.methods.handleCheck = function (checkedNodes, b, refDom) {
+        if (checkedNodes.children) {
+            const children = this.myFlat(checkedNodes.children, Infinity);
+            const checkedKeys = b.checkedKeys.slice();
+            if (b.checkedKeys.indexOf(checkedNodes.permission) != -1) {
+                //勾选了a
+                const tempArr = Array.from(new Set(checkedKeys.concat(children)));
+                refDom.setCheckedKeys(tempArr);
+            } else {
+                //取消勾选a，计算差集
+                let checkedKeysSet = new Set(checkedKeys);
+                let childrenSet = new Set(children);
+                let newArr = [...checkedKeysSet].filter(ele => !childrenSet.has(ele));
+                refDom.setCheckedKeys(newArr);
+            }
+        }
+    }
+    userroleUpdateConfig.mounted = function () {
+        var id = this.$route.query.id;
+        var self = this;
+        var data = {};
+        data.id = id;
+        this.postData("${siteurl}tenantRest/userrole/view.htm", data, function (res) {
+            if (res.code == 0) {
+                self.form = res;
+            }
+        });
+
+        var params = {};
+        params.size = 100;
+        params.level = 2;
+        params.fetch = 1;
+        params.sortField = "sortNum";
+        params.sortMethod = "asc";
+
+        this.postData("${siteurl}tenantRest/menu/list.htm", params, function (res) {
+            if (res.code == 0) {
+                self.treeData = res.list;
+            }
+        });
+    }
+    userroleUpdateConfig.computed = {};
+	userroleUpdateConfig.computed.catalogOptions = function () {
+		return this.$store.state.catalogOptions;
+	};
+    userroleUpdateConfig.destroyed = function () {
+        console.log("destroyed add view ");
+
+    }
+    var userroleUpdateView = Vue.component('update-view', userroleUpdateConfig);
+    //更新组件结束
+</script>
+[/#macro]

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>商圈管理</title>
+	[#include "/admin/common/commons.html"]
+	[#include "/tenant/common/site.html"]
+	[#include "/tenant/admin/businesscircle/componentAdd.html"]
+	[#include "/tenant/admin/businesscircle/componentList.html"]
+	[#include "/tenant/admin/businesscircle/componentUpdate.html"]
+	[#include "/tenant/admin/businesscircle/componentShow.html"]
+
+	[@baseHead /]
+	<script type="text/javascript"></script>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<div class="wrapper">
+
+		<header class="main-header">
+			<!-- Header Navbar: style can be found in header.less -->
+			[#include "/admin/common/nav.html"]
+		</header>
+
+		<!-- =============================================== -->
+
+		<!-- Left side column. contains the sidebar -->
+		<aside class="main-sidebar">
+			<!-- sidebar: style can be found in sidebar.less -->
+			<section class="sidebar">
+				[@user_panel /]
+				<!-- search form -->
+				[@sidebar_form /]
+				<!-- /.search form -->
+				<!-- sidebar menu: : style can be found in sidebar.less -->
+				<ul class="sidebar-menu" data-widget="tree">
+					<li class="header">主面板</li>
+					[@menustag id=1]
+					[#list list as item]
+					[@menu item "1,41,97"]
+					[/@menu]
+					[/#list]
+					[/@menustag]
+				</ul>
+			</section>
+			<!-- /.sidebar -->
+		</aside>
+
+		<!-- =============================================== -->
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper" id="app" v-cloak>
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<!-- 导航 -->
+				<div class="navigation">
+					<i>首页</i> <span>商圈管理</span>
+				</div>
+			</section>
+			<!-- Main content -->
+			<section class="content">
+				<keep-alive>
+					<router-view v-if="$route.meta.keepAlive">
+					</router-view>
+				</keep-alive>
+				<router-view v-if="!$route.meta.keepAlive">
+				</router-view>
+				<!-- Default box -->
+			</section>
+
+
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+
+		[#include "/admin/common/footer.html"]
+
+		<!-- Control Sidebar -->
+		[#include "/admin/common/aside.html"]
+
+		<!-- /.control-sidebar -->
+		<!-- Add the sidebar's background. This div must be placed
+     immediately after the control sidebar -->
+		<div class="control-sidebar-bg"></div>
+	</div>
+	<!-- ./wrapper -->
+	[@baseScript /]
+
+	<script type="text/javascript">
+		var config = {};
+
+		config.methods = {};
+
+		[@configBasicVue /]
+
+		config.methods.goBack = function () {
+			this.$router.go(-1);
+		}
+		config.basicMethod = function () {
+			var result = {};
+			result.postData = config.methods.postData;
+			result.postJsonData = config.methods.postJsonData;
+			result.goBack = config.methods.goBack;
+			return result;
+		}
+
+
+	</script>
+
+	[#include "/tenant/default/common/component.html" /]
+
+	[@nbMap /]
+	[@businesscircleAddConfig /]
+	[@businesscircleListConfig /]
+	[@businesscircleShowConfig /]
+	[@businesscircleUpdateConfig /]
+
+
+	<script type="text/javascript">
+
+		// 3. 创建 router 实例，然后传 `routes` 配置
+		// 你还可以传别的配置参数, 不过先这么简单着吧。
+		var appConfig = {};
+		appConfig.el = "#app";
+
+
+		const routes = [
+			{ path: '/view', name: "businesscircleShowView", component: businesscircleShowView, props: true },
+			{ path: '/add', name: "businesscircleAddView", component: businesscircleAddView, props: true },
+			{ path: '/update', name: "businesscircleUpdateView", component: businesscircleUpdateView, props: true },
+			{
+				path: '/', name: "businesscircleListView", component: businesscircleListView, props: true, meta: {
+					keepAlive: true, //此组件不需要被缓存
+				}
+			}
+		]
+
+
+
+		const router = new VueRouter({
+			routes: routes // (缩写) 相当于 routes: routes
+		})
+
+		var store = new Vuex.Store({
+			state: {
+				count: 0,
+			},
+			mutations: {
+				increment: function (state) {
+					state.count++
+				},
+
+			}
+		})
+
+		appConfig.router = router;
+
+		appConfig.store = store;
+		appConfig.methods = config.methods;
+		appConfig.mounted = function () {
+		}
+		var vm = new Vue(appConfig);
+
+	</script>
+
+</body>
+
+</html>

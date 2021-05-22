@@ -1,0 +1,83 @@
+
+[#macro adShowView]
+<div  class="model-form">
+    <el-page-header @back="goBack" content="详情">
+    </el-page-header>
+
+        <div class="form-title">详细信息</div>
+        <el-form class="viewForm" label-width="80px">
+            <el-col :span="22">
+                <el-form-item label="广告名称">
+                    <div v-html="viewModel.title"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="22">
+                <el-form-item label="广告位">
+                    <div v-html="viewModel.adPositionName"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="22">
+                <el-form-item label="广告图片">
+                    <div v-html="viewModel.path"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="22">
+                <el-form-item label="广告开始时间">
+                    <div v-html="viewModel.beginDate"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="22">
+                <el-form-item label="广告结束时间">
+                    <div v-html="viewModel.endDate"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="22">
+                <el-form-item label="链接地址">
+                    <div v-html="viewModel.url"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="22">
+                <el-form-item label="内容">
+                    <div v-html="viewModel.note"></div>
+                </el-form-item>
+            </el-col>
+        </el-form>
+
+</div>
+[/#macro]
+[#macro adShowConfig]
+<script type="text/x-template" id="my-ad-show">
+    [@adShowView /]
+</script>
+	<script type="text/javascript">
+		//显示组件开始
+		var adShowConfig = {};
+		adShowConfig.template = "#my-ad-show";
+		adShowConfig.methods =config.basicMethod();
+		adShowConfig.data = function () {
+			return {
+				viewModel: {
+				},
+				activeIndex: "1"
+			}
+		};
+
+
+		adShowConfig.mounted = function () {
+			var id = this.$route.query.id;
+			var self = this;
+			var data = {};
+			data.id = id;
+			this.postData("${siteurl}tenantRest/ad/view.htm", data, function (res) {
+				if (res.code == 0) {
+					self.viewModel = res;
+
+				}
+			});
+		}
+		var adShowView = Vue.component('my-ad-view', adShowConfig);
+		//显示组件结束		
+	</script>
+[/#macro]
+
+

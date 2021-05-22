@@ -1,0 +1,73 @@
+
+[#macro linkShowView]
+<div  class="model-form">
+    <el-page-header @back="goBack" content="详情">
+    </el-page-header>
+
+        <div class="form-title">详细信息</div>
+        <el-form class="viewForm" label-width="80px">
+            <el-col :span="22">
+                <el-form-item label="链接名称">
+                    <div v-html="viewModel.name"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="22">
+                <el-form-item label="链接地址">
+                    <div v-html="viewModel.url"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="22">
+                <el-form-item label="链接类型">
+                    <div v-html="viewModel.linkTypeName"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="22">
+                <el-form-item label="排序号">
+                    <div v-html="viewModel.sortNum"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="22">
+                <el-form-item label="链接打开方式">
+                    <div v-html="viewModel.target"></div>
+                </el-form-item>
+            </el-col>
+        </el-form>
+
+</div>
+[/#macro]
+[#macro linkShowConfig]
+<script type="text/x-template" id="my-link-show">
+    [@linkShowView /]
+</script>
+	<script type="text/javascript">
+		//显示组件开始
+		var linkShowConfig = {};
+		linkShowConfig.template = "#my-link-show";
+		linkShowConfig.methods =config.basicMethod();
+		linkShowConfig.data = function () {
+			return {
+				viewModel: {
+				},
+				activeIndex: "1"
+			}
+		};
+
+
+		linkShowConfig.mounted = function () {
+			var id = this.$route.query.id;
+			var self = this;
+			var data = {};
+			data.id = id;
+			this.postData("${siteurl}tenantRest/link/view.htm", data, function (res) {
+				if (res.code == 0) {
+					self.viewModel = res;
+
+				}
+			});
+		}
+		var linkShowView = Vue.component('my-link-view', linkShowConfig);
+		//显示组件结束		
+	</script>
+[/#macro]
+
+

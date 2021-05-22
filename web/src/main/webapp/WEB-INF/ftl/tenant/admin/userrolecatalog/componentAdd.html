@@ -1,0 +1,85 @@
+
+<!-- 增加页面开始 -->
+
+[#macro userrolecatalogAddView]
+    <div  class="model-form">
+        <el-page-header @back="goBack" content="增加角色分类">
+        </el-page-header>
+        <div class="model-content">
+            <el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px" >
+                <el-row :gutter="10">
+                </el-row>
+               <el-row>
+                    <el-col :span="24"  style="text-align: right;padding-bottom: 20px;padding-top: 20px;">
+                        <el-button @click="goBack">取消</el-button>
+                        <el-button type="primary" @click="add">确定</el-button>
+                    </el-col>
+			    </el-row>
+            </el-form>
+        </div>
+    </div>
+[/#macro]
+
+[#macro userrolecatalogAddConfig]
+<script type="text/x-template" id="my-userrolecatalog-add">
+	[@userrolecatalogAddView /]
+</script>
+<script type="text/javascript">
+		//添加组件开始
+		var userrolecatalogAddConfig = {};
+		userrolecatalogAddConfig.template = "#my-userrolecatalog-add";
+		userrolecatalogAddConfig.methods = config.basicMethod();
+		userrolecatalogAddConfig.data = function () {
+			return {
+				form: {
+				},
+				rules: {
+				}
+			}
+		};
+		userrolecatalogAddConfig.mounted = function () {
+		}
+		userrolecatalogAddConfig.computed = {};
+
+
+		userrolecatalogAddConfig.methods.add = function () {
+			var self = this;
+			this.$refs["ruleForm"].validate(function(valid){
+				if (valid) {
+					self.addData();
+				} else {
+					console.log('error submit!!');
+					return false;
+				}
+			});
+		}
+
+		userrolecatalogAddConfig.methods.addData = function () {
+			var self = this, data = this.form;
+			if (this.deforeAddData) {
+				this.deforeAddData();
+			}
+			this.postData("${siteurl}tenantRest/userrolecatalog/create.htm", data, function (res) {
+				if (res.code == 0) {
+					self.$message({
+						message: '添加数据成功',
+						type: 'success'
+					});
+					self.$router.go(-1);
+				} else {
+					self.$message.error(res.msg);
+				}
+			});
+		}
+
+        userrolecatalogAddConfig.destroyed = function () {
+            console.log("destroyed add view ");
+            
+	    }
+		var  userrolecatalogAddView = Vue.component('add-view', userrolecatalogAddConfig);
+
+
+</script>
+[/#macro]
+
+<!-- 增加页面结束 -->

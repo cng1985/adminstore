@@ -1,0 +1,125 @@
+<!-- 增加页面开始 -->
+
+[#macro userroleAddView]
+<div class="model-form">
+	<el-page-header @back="goBack" content="增加角色">
+	</el-page-header>
+	<div class="model-content">
+		<el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px">
+			<el-row :gutter="10">
+				<el-col :span="22">
+					<el-form-item label="角色名" size="mini" prop="name">
+						<el-input v-model="form.name" name="name">
+						</el-input>
+					</el-form-item>
+
+				</el-col>
+				<el-col :span="22">
+					<el-form-item label="别名" size="mini" prop="alias">
+						<el-input v-model="form.alias" name="alias">
+						</el-input>
+					</el-form-item>
+
+				</el-col>
+				<el-col :span="22">
+					<el-form-item label="角色分类" size="mini" prop="catalog">
+						<el-select style="width: 100%;" v-model="form.catalog" filterable clearable placeholder="请选择">
+							<el-option v-for="item in catalogOptions" :key="item.id" :label="item.name"
+								:value="item.id">
+							</el-option>
+						</el-select>
+					</el-form-item>
+				</el-col>
+				<el-col :span="22">
+					<el-form-item label="角色描述" size="mini" prop="description">
+						<el-input type="textarea"  v-model="form.description" name="description">
+						</el-input>
+					</el-form-item>
+
+				</el-col>
+			</el-row>
+			<el-row>
+				<el-col :span="24" style="text-align: right;padding-bottom: 20px;padding-top: 20px;">
+					<el-button @click="goBack">取消</el-button>
+					<el-button type="primary" @click="add">确定</el-button>
+				</el-col>
+			</el-row>
+		</el-form>
+	</div>
+</div>
+[/#macro]
+
+[#macro userroleAddConfig]
+<script type="text/x-template" id="my-userrole-add">
+	[@userroleAddView /]
+</script>
+<script type="text/javascript">
+	//添加组件开始
+	var userroleAddConfig = {};
+	userroleAddConfig.template = "#my-userrole-add";
+	userroleAddConfig.methods = config.basicMethod();
+	userroleAddConfig.data = function () {
+		return {
+			form: {
+				name: '',
+				alias: '',
+				type: 'CUSTOM',
+				catalog: '',
+				description: ''
+			},
+			rules: {
+				name: [
+					{ required: true, message: '请输入角色名', trigger: 'blur' }
+				],
+			}
+		}
+	};
+	userroleAddConfig.mounted = function () {
+	}
+	userroleAddConfig.computed = {};
+	userroleAddConfig.computed.catalogOptions = function () {
+		return this.$store.state.catalogOptions;
+	};
+
+
+	userroleAddConfig.methods.add = function () {
+		var self = this;
+		this.$refs["ruleForm"].validate(function (valid) {
+			if (valid) {
+				self.addData();
+			} else {
+				console.log('error submit!!');
+				return false;
+			}
+		});
+	}
+
+	userroleAddConfig.methods.addData = function () {
+		var self = this, data = this.form;
+		if (this.deforeAddData) {
+			this.deforeAddData();
+		}
+		this.postData("${siteurl}tenantRest/userrole/create.htm", data, function (res) {
+			if (res.code == 0) {
+				self.$message({
+					message: '添加数据成功',
+					type: 'success'
+				});
+				self.$router.go(-1);
+			} else {
+				self.$message.error(res.msg);
+			}
+		});
+	}
+
+	userroleAddConfig.destroyed = function () {
+		console.log("destroyed add view ");
+
+	}
+	var userroleAddView = Vue.component('add-view', userroleAddConfig);
+
+
+</script>
+[/#macro]
+
+<!-- 增加页面结束 -->

@@ -1,0 +1,48 @@
+
+[#macro userrolecatalogShowView]
+<div  class="model-form">
+    <el-page-header @back="goBack" content="详情">
+    </el-page-header>
+
+        <div class="form-title">详细信息</div>
+        <el-form class="viewForm" label-width="80px">
+        </el-form>
+
+</div>
+[/#macro]
+[#macro userrolecatalogShowConfig]
+<script type="text/x-template" id="my-userrolecatalog-show">
+    [@userrolecatalogShowView /]
+</script>
+	<script type="text/javascript">
+		//显示组件开始
+		var userrolecatalogShowConfig = {};
+		userrolecatalogShowConfig.template = "#my-userrolecatalog-show";
+		userrolecatalogShowConfig.methods =config.basicMethod();
+		userrolecatalogShowConfig.data = function () {
+			return {
+				viewModel: {
+				},
+				activeIndex: "1"
+			}
+		};
+
+
+		userrolecatalogShowConfig.mounted = function () {
+			var id = this.$route.query.id;
+			var self = this;
+			var data = {};
+			data.id = id;
+			this.postData("${siteurl}tenantRest/userrolecatalog/view.htm", data, function (res) {
+				if (res.code == 0) {
+					self.viewModel = res;
+
+				}
+			});
+		}
+		var userrolecatalogShowView = Vue.component('my-userrolecatalog-view', userrolecatalogShowConfig);
+		//显示组件结束		
+	</script>
+[/#macro]
+
+

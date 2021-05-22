@@ -4,13 +4,13 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>用户管理</title>
+	<title>角色管理</title>
 	[#include "/admin/common/commons.html"]
 	[#include "/tenant/common/site.html"]
-	[#include "/tenant/default/member/componentAdd.html"]
-	[#include "/tenant/default/member/componentList.html"]
-	[#include "/tenant/default/member/componentUpdate.html"]
-	[#include "/tenant/default/member/componentShow.html"]
+	[#include "/tenant/admin/userrole/componentAdd.html"]
+	[#include "/tenant/admin/userrole/componentList.html"]
+	[#include "/tenant/admin/userrole/componentUpdate.html"]
+	[#include "/tenant/admin/userrole/componentShow.html"]
 
 	[@baseHead /]
 	<script type="text/javascript"></script>
@@ -40,7 +40,7 @@
 					<li class="header">主面板</li>
 					[@menustag id=1]
 					[#list list as item]
-					[@menu item "1,20,21"]
+					[@menu item "1,2,4"]
 					[/@menu]
 					[/#list]
 					[/@menustag]
@@ -57,7 +57,7 @@
 			<section class="content-header">
 				<!-- 导航 -->
 				<div class="navigation">
-					<i>首页</i> <span>用户管理</span>
+					<i>首页</i> <span>角色管理</span>
 				</div>
 			</section>
 			<!-- Main content -->
@@ -107,17 +107,31 @@
            return result;
 		}
 
+		config.methods.loadCatalogOptions= function(){
+				var self=this;
+				var param = {};
+				param.sortMethod = "asc";
+				param.sortField = "id";
+				param.level =1;
+				param.size =500;
+				param.fetch=0;
+				$.post("${siteurl}tenantRest/userrolecatalog/list.htm", param, function (result) {
+					if (result.code == 0) {
+						self.$store.commit('updateCatalogOptions', result.list);
+					}
+				});
+		}
+
 
 	</script>
 
 	
     
-	[@memberAddConfig /]
-	[@memberListConfig /]
-	[@memberShowConfig /]
-	[@memberUpdateConfig /]
+	[@userroleAddConfig /]
+	[@userroleListConfig /]
+	[@userroleShowConfig /]
+	[@userroleUpdateConfig /]
 
-	[@childMemberConfig /]
 
 	<script type="text/javascript">
 	
@@ -127,15 +141,11 @@
 		appConfig.el = "#app";
 
 
-		   const routes = [
-				{ path: '/view',name: "memberShowView", component: memberShowView, props: true, children: [
-                    { path: "/view/index", name: "childMemberShowView", component: childMemberShowView },
-					{ path: "/", component: childMemberShowView }
-				]
-				 },
-				{ path: '/add',name: "memberAddView", component: memberAddView , props: true },
-				{ path: '/update', name: "memberUpdateView", component: memberUpdateView, props: true },
-				{ path: '/',name: "memberListView", component: memberListView , props: true , meta: {
+			const routes = [
+				{ path: '/view',name: "userroleShowView", component: userroleShowView, props: true },
+				{ path: '/add',name: "userroleAddView", component: userroleAddView , props: true },
+				{ path: '/update', name: "userroleUpdateView", component: userroleUpdateView, props: true },
+				{ path: '/',name: "userroleListView", component: userroleListView , props: true , meta: {
 						keepAlive: true, //此组件不需要被缓存
 					}
 				}
@@ -150,11 +160,15 @@
 		var store = new Vuex.Store({
 			state: {
 				count: 0,
+                     catalogOptions: [],
 			},
 			mutations: {
 				increment:function(state) {
 					state.count++
 				},
+                    updateCatalogOptions:function(state, obj) {
+					   state.catalogOptions = obj;
+				     },
 
 			}
 		})
@@ -164,6 +178,7 @@
 		appConfig.store = store;
 		appConfig.methods = config.methods;
 		appConfig.mounted = function () {
+             this.loadCatalogOptions();
 		}
 		var vm = new Vue(appConfig);
 

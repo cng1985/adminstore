@@ -1,3 +1,123 @@
+[#macro selectConsumer]
+<script type="text/x-template" id="my-component">
+    <div>
+        <div class="search">
+            <el-form label-width="110px">
+                <el-row :gutter="20" class="row-bg">
+                    <el-col :span="8">
+                        <el-form-item label="联系人姓名">
+                            <el-input size="small" v-model="searchObject.name" placeholder="联系人姓名">
+                            </el-input>
+                        </el-form-item>
+
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="手机号码">
+                            <el-input size="small" v-model="searchObject.phone" placeholder="手机号码">
+                            </el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8"  style="text-align: right;">
+                        <el-button size="small" type="primary" @click="searchHandle">搜 索</el-button>
+                        <el-button size="small" plain @click="clearData">清除条件</el-button>
+
+                    </el-col>
+                </el-row>
+            </el-form>
+        </div>
+        <el-table  v-loading="loading" :data="vipUserDate.list" :header-cell-style="{
+            'background-color': '#f7f7f7',
+            'color': '#666'
+        }" style="width: 100%;font-size: 12px;margin-top: 10px;">
+            <el-table-column label="客户名称" width="220" prop="shop">
+            </el-table-column>
+            <el-table-column width="180" label="联系人姓名" prop="name">
+            </el-table-column>
+            <el-table-column width="180" label="手机号码" prop="phone">
+            </el-table-column>
+            <el-table-column width="180" label="状态" prop="shippingAddress">
+            </el-table-column>
+            <el-table-column  label="客户等级" prop="level">
+            </el-table-column>
+            <el-table-column align="center" header-align="center" width="180" fixed="right" label="操作">
+                <template slot-scope="scope">
+                    <a href="javascript:void(0);" @click="jumpActivity(scope.row.id)">{{title}}</a>
+                </template>
+            </el-table-column>
+        </el-table>
+        <div class="page">
+            <el-pagination background layout="prev, pager, next" :page-size="searchObject.size"
+                :page-count="vipUserDate.totalPage" :current-page="searchObject.no" :total="vipUserDate.total"
+                @current-change="vipUserDateChange">
+            </el-pagination>
+        </div>
+    </div>
+    
+ </script>
+
+<script>
+    Vue.component('select-consumer', {
+        template: '#my-component',
+        props: ['title'],
+        data: function () {
+            return {
+                searchObject: {
+                    no: 1,
+                    size: 10,
+                    name: '',
+                    level: '',
+                    levelOptions: [],
+                    area: '',
+                    manager: '',
+                    managerOptions: [],
+                    time: '',
+                    label: '',
+                    phone: "",
+                    labelOptions: [],
+                },
+                vipUserDate: {},
+                loading: false
+            }
+        },
+        mounted: function () {
+            console.info("init");
+            this.getVipUserList();
+        },
+        methods: {
+            vipUserDateChange(index) {
+                this.searchObject.no = index;
+                this.getVipUserList();
+            },
+            getVipUserList() {
+                var that = this;
+                data = that.searchObject;
+                that.loading = true;
+                $.post("${siteurl}tenantRest/customer/search.htm", data, function (res) {
+                    if (res.code == 0) {
+                        console.log(res);
+                        that.vipUserDate = res;
+                    }
+                    setTimeout(() => {
+                        that.loading = false;
+                    }, 300)
+                });
+            },
+            jumpActivity(id) {
+                this.$emit('select-customer', id);
+                console.info(id);
+            },
+            clearData() {
+                this.searchObject.phone = "";
+                this.searchObject.name = "";
+            },
+            searchHandle() {
+                this.getVipUserList();
+            }
+        }
+    });
+</script>
+[/#macro]
+
 [#macro avatar]
 <style>
     .avatar-uploader .el-upload {
@@ -153,172 +273,168 @@
 
 
 
-
-[#macro products]
+[#macro nbSelect]
 <style>
-    .goodsInfo {
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-    }
 
-    .goodsInfo img {
-        width: 50px;
-        height: 50px;
-        margin-right: 5px;
-    }
-
-    .goodsInfo div {
-        flex: 1;
-        font-size: 12px;
-        line-height: 16px;
-    }
 </style>
-<script type="text/x-template" id="my-products">
-    <div>
-        <el-input  readonly placeholder="请选择商品" v-model="productName">
-            <template slot="append">
-                <el-button @click="selectProduct" type="primary">选择</el-button>
-            </template>
-          </el-input>
-
-          
-          <el-dialog title="选择商品" :visible.sync="productVisible" width="50%">
-            <div class="search">
-                <el-form label-width="80px">
-                    <el-row>
-                        <el-col :span="18" style="padding: 0 8px;">
-                            <el-form-item label="商品名称">
-                                <el-input  v-model="searchObject.name" size="small"
-                                    placeholder="商品名称"></el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="6" style="padding: 0px 10px;">
-                            <el-row type="flex" justify="end">
-                                <el-button size="small" type="primary" @click="search">搜索</el-button>
-                                <el-button size="small" plain @click="clearData">清除条件</el-button>
-                            </el-row>
-                        </el-col>
-                    </el-row>
-                </el-form>
-            </div>
-            <el-table height="300" :data="tableData.list" style="width: 100%">
-                <el-table-column label="商品名称/规格" width="200" prop="date">
-                    <template slot-scope="scope">
-                        <div class="goodsInfo">
-                            <img :src="scope.row.logo" alt="">
-                            <div class="goodsName">{{scope.row.name}}</div>
-                        </div>
-                    </template>
-                </el-table-column>
-                <el-table-column width="80" label="商品分类" prop="catalog">
-                </el-table-column>
-                <el-table-column width="120" sortable label="市场价" prop="marketPrice">
-                </el-table-column>
-                <el-table-column width="120" sortable label="销售价" prop="salePrice">
-                </el-table-column>
-                <el-table-column align="right">
-                    <template slot-scope="scope">
-                        <el-button size="mini" @click="handleSelect(scope.row)">选择商品</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-            <div class="page">
-                <el-pagination background :current-page="searchObject.no"  :page-sizes="[10, 20, 50, 100]" :page-size="searchObject.size"
-                    :pager-count="5" layout="total,prev, pager, next" :page-count="tableData.totalPage"
-                    :total="tableData.total"  @size-change="sizeChange"  @current-change="pageChange">
-                </el-pagination>
-            </div>
-            <span slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="confirmSelect">确 定</el-button>
-            </span>
-        </el-dialog>
-    </div>
+<script type="text/x-template" id="my-nb-select">
+    <el-select style="width:100%;" clearable filterable  @change="changeData" v-model="selectValue" placeholder="请选择">
+        <el-option
+          v-for="item in options"
+          :key="item.name"
+          :label="item.name"
+          :value="item.name">
+        </el-option>
+      </el-select>
 </script>
 
 
 <script>
-    Vue.component('products', {
-        template: '#my-products',
-        props: ['value',"name"],
+    Vue.component('nb-select', {
+        template: '#my-nb-select',
+        props: ['value', "catalog"],
         data: function () {
             return {
-                productId: "",
-                productName: "",
+                selectValue: "",
                 loading: false,
-                productVisible: false,
-                searchObject: {
-                    name: "",
-                    no: 1,
-                    size: 10
-                },
-                tableData: {},
+                options: []
             }
         },
         mounted: function () {
-            console.info("products init");
-            this.productId = this.value;
+            console.info("init");
+            this.loadDatas();
+            this.selectValue = this.value;
         },
         watch: {
             value: function (val) {
-                this.productId = val;
-                if (val == null || val == "") {
-                    this.productName = "";
-                }
-            },
-            name: function (val) {
-                this.productName = val;
-                if (val == null || val == "") {
-                    this.productName = "";
-                }
+                this.selectValue = val;
             }
         },
         methods: {
-            selectProduct() {
-                console.info("products");
-                this.productVisible = true;
-                this.search();
-            },
-            confirmSelect() {
-                this.productVisible = false;
-            },
-            uploadSuccess(res, fileData) {
-                this.productId = res.url;
-                this.$emit('input', res.url);
-            },
-            pageChange(index) {
-                this.searchObject.no = index;
-                this.getSearchList();
-            },
-            sizeChange(event) {
-                this.searchObject.size = event;
-                this.getSearchList();
-            },
-            clearData() {
-                this.searchObject.name = "";
-            },
-            search() {
-                this.searchObject.no = 1;
-                this.getSearchList();
-            },
-            getSearchList() {
-                this.loading = true;
-                var data = this.searchObject, that = this;
-                data.state="onSale";
-                $.post("${siteurl}tenantRest/product/search.htm", data, function (result) {
-                    if (result.code == 0) {
-                        that.tableData = result;
+            loadDatas() {
+                var self = this;
+                var param = {};
+                param.key = this.catalog;
+                $.post("${siteurl}tenantRest/tenantdictionaryitem/list.htm", param, function (res) {
+                    if (res.code == 0) {
+                        self.options = res.list;
                     }
-                    setTimeout(() => {
-                        that.loading = false;
-                    }, 300)
                 });
             },
-            handleSelect(row) {
-                this.productId = row.id;
-                this.productName = row.name;
-                this.$emit('input', row.id);
-                this.productVisible = false;
+            changeData(value) {
+                console.info(value);
+                this.$emit('input', value);
+            }
+        }
+    });
+</script>
+[/#macro]
+
+[#macro nbMap]
+<script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=PYWBZ-QHE3I-L7WGT-5THCC-KOPH7-Y6FSC"></script>
+<script type="text/x-template" id="my-nb-map">
+    <div id="map" style="height: 300px;"></div>
+</script>
+<script>
+    Vue.component('nb-map', {
+        template: '#my-nb-map',
+        props: ['lat', "lng", "zoom", "showOnly"],
+        data: function () {
+            return {
+                selectValue: "",
+                loading: false,
+                options: []
+            }
+        },
+        mounted: function () {
+            console.info("init map");
+            if (this.lat) {
+                this.initMap(this.lat, this.lng);
+            } else {
+                this.initMap();
+            }
+
+        },
+        watch: {
+            lat: function (val) {
+                console.info("lat:" + this.lat)
+                this.initMap(this.lat, this.lng)
+            }
+        },
+        methods: {
+            loadDatas() {
+            },
+            changeData(value) {
+                console.info(value);
+                this.$emit('poi-change', value);
+            },
+            initMap(lat, lng) {
+                var tempZoom = this.zoom;
+                if (tempZoom == null || tempZoom == undefined) {
+                    tempZoom = 20;
+                } else {
+                    tempZoom = parseInt(tempZoom);
+                }
+                console.log("初始化地图");
+                var center = new qq.maps.LatLng(33.044998, 107.027);
+                if (lat != null && lng != null) {
+                    center = new qq.maps.LatLng(lat, lng);
+                }
+                map = new qq.maps.Map(document.getElementById('map'), {
+                    center: center,
+                    zoom: tempZoom
+                });
+                //获取城市列表接口设置中心点
+                citylocation = new qq.maps.CityService({
+                    complete: function (result) {
+                        map.setCenter(result.detail.latLng);
+                    }
+                });
+                //调用searchLocalCity();方法    根据用户IP查询城市信息。
+                //citylocation.searchLocalCity();
+                var self = this;
+
+                qq.maps.event.addListener(
+                    map,
+                    'click',
+                    function (event) {
+                        var lat = event.latLng.getLat();
+                        var lng = event.latLng.getLng();
+                        var showOnly = self.showOnly;
+                        if(showOnly==undefined||showOnly==null){
+                            showOnly=false;
+                        }
+                        if(showOnly){
+                            return;
+                        }
+
+                        console.info(self);
+                        if (self) {
+                            var tempEvent = {};
+                            tempEvent.lat = lat;
+                            tempEvent.lng = lng;
+                            self.$emit('poi-change', tempEvent);
+                        }
+
+                        if (marker != null) {
+                            marker.setMap(null);
+                        }
+                        center = new qq.maps.LatLng(event.latLng.getLat(), event.latLng.getLng());
+                        marker = new qq.maps.Marker({
+                            position: center,
+                            map: map
+                        });
+
+                    }
+                );
+                //创建标记
+                marker = new qq.maps.Marker({
+                    position: center,
+                    map: map
+                });
+            },
+            updatePoi(event) {
+                console.info("updatePoi:" + event);
             }
         }
     });

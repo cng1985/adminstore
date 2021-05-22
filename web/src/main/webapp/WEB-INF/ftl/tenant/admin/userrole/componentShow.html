@@ -1,0 +1,73 @@
+
+[#macro userroleShowView]
+<div  class="model-form">
+    <el-page-header @back="goBack" content="详情">
+    </el-page-header>
+
+        <div class="form-title">详细信息</div>
+        <el-form class="viewForm" label-width="80px">
+            <el-col :span="12">
+                <el-form-item label="角色名">
+                    <div v-html="viewModel.name"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="别名">
+                    <div v-html="viewModel.alias"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="角色类型">
+                    <div v-html="viewModel.typeName"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="角色分类">
+                    <div v-html="viewModel.catalogName"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="角色描述">
+                    <div v-html="viewModel.description"></div>
+                </el-form-item>
+            </el-col>
+        </el-form>
+
+</div>
+[/#macro]
+[#macro userroleShowConfig]
+<script type="text/x-template" id="my-userrole-show">
+    [@userroleShowView /]
+</script>
+	<script type="text/javascript">
+		//显示组件开始
+		var userroleShowConfig = {};
+		userroleShowConfig.template = "#my-userrole-show";
+		userroleShowConfig.methods =config.basicMethod();
+		userroleShowConfig.data = function () {
+			return {
+				viewModel: {
+				},
+				activeIndex: "1"
+			}
+		};
+
+
+		userroleShowConfig.mounted = function () {
+			var id = this.$route.query.id;
+			var self = this;
+			var data = {};
+			data.id = id;
+			this.postData("${siteurl}tenantRest/userrole/view.htm", data, function (res) {
+				if (res.code == 0) {
+					self.viewModel = res;
+
+				}
+			});
+		}
+		var userroleShowView = Vue.component('my-userrole-view', userroleShowConfig);
+		//显示组件结束		
+	</script>
+[/#macro]
+
+

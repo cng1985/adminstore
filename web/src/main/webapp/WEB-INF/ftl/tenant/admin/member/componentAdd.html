@@ -1,0 +1,146 @@
+
+<!-- 增加页面开始 -->
+
+[#macro memberAddView]
+    <div  class="model-form">
+        <el-page-header @back="goBack" content="增加用户">
+        </el-page-header>
+        <div class="model-content">
+            <el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px" >
+                <el-row :gutter="10">
+ <el-col :span="22">
+     <el-form-item label="头像" size="mini" prop="avatar">
+         <avatar  v-model="form.avatar"  ></avatar>
+     </el-form-item>
+      
+ </el-col>
+ <el-col :span="22">
+     <el-form-item label="姓名" size="mini" prop="name">
+             <el-input v-model="form.name" name="name">
+             </el-input>
+     </el-form-item>
+      
+ </el-col>
+ <el-col :span="22">
+     <el-form-item label="手机号" size="mini" prop="phone">
+             <el-input v-model="form.phone" name="phone">
+             </el-input>
+     </el-form-item>
+      
+ </el-col>
+ <el-col :span="22">
+     <el-form-item label="个人介绍" size="mini" prop="note">
+             <el-input v-model="form.note" name="note">
+             </el-input>
+     </el-form-item>
+      
+ </el-col>
+ <el-col :span="22">
+     <el-form-item label="性别" size="mini" prop="sex">
+         <nb-select catalog="sex" v-model="form.sex"></nb-select>
+     </el-form-item>
+      
+ </el-col>
+ <el-col :span="22">
+     <el-form-item label="个人介绍" size="mini" prop="introduce">
+             <el-input v-model="form.introduce" name="introduce">
+             </el-input>
+     </el-form-item>
+      
+ </el-col>
+ <el-col :span="22">
+     <el-form-item label="职业" size="mini" prop="job">
+             <el-input v-model="form.job" name="job">
+             </el-input>
+     </el-form-item>
+      
+ </el-col>
+ <el-col :span="22">
+     <el-form-item label="账号" size="mini" prop="no">
+             <el-input v-model="form.no" name="no">
+             </el-input>
+     </el-form-item>
+      
+ </el-col>
+                </el-row>
+               <el-row>
+                    <el-col :span="24"  style="text-align: right;padding-bottom: 20px;padding-top: 20px;">
+                        <el-button @click="goBack">取消</el-button>
+                        <el-button type="primary" @click="add">确定</el-button>
+                    </el-col>
+			    </el-row>
+            </el-form>
+        </div>
+    </div>
+[/#macro]
+
+[#macro memberAddConfig]
+<script type="text/x-template" id="my-member-add">
+	[@memberAddView /]
+</script>
+<script type="text/javascript">
+		//添加组件开始
+		var memberAddConfig = {};
+		memberAddConfig.template = "#my-member-add";
+		memberAddConfig.methods = config.basicMethod();
+		memberAddConfig.data = function () {
+			return {
+				form: {
+					avatar: '',
+					name: '',
+					phone: '',
+					note: '',
+					sex: '',
+					introduce: '',
+					job: '',
+					no: ''				},
+				rules: {
+				}
+			}
+		};
+		memberAddConfig.mounted = function () {
+		}
+		memberAddConfig.computed = {};
+
+
+		memberAddConfig.methods.add = function () {
+			var self = this;
+			this.$refs["ruleForm"].validate(function(valid){
+				if (valid) {
+					self.addData();
+				} else {
+					console.log('error submit!!');
+					return false;
+				}
+			});
+		}
+
+		memberAddConfig.methods.addData = function () {
+			var self = this, data = this.form;
+			if (this.deforeAddData) {
+				this.deforeAddData();
+			}
+			this.postData("${siteurl}tenantRest/member/create.htm", data, function (res) {
+				if (res.code == 0) {
+					self.$message({
+						message: '添加数据成功',
+						type: 'success'
+					});
+					self.$router.go(-1);
+				} else {
+					self.$message.error(res.msg);
+				}
+			});
+		}
+
+        memberAddConfig.destroyed = function () {
+            console.log("destroyed add view ");
+            
+	    }
+		var  memberAddView = Vue.component('add-view', memberAddConfig);
+
+
+</script>
+[/#macro]
+
+<!-- 增加页面结束 -->

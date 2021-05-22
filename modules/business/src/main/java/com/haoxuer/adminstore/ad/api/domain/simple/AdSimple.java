@@ -9,9 +9,8 @@ import com.haoxuer.adminstore.ad.data.enums.AdType;
 
 /**
 *
-* Created by BigWorld on 2020年11月06日23:28:28.
+* Created by BigWorld on 2021年05月10日16:52:39.
 */
-
 @Data
 public class AdSimple implements Serializable {
 
@@ -32,6 +31,8 @@ public class AdSimple implements Serializable {
      private Date beginDate;
      private Integer sortNum;
      private Long adPosition;
+     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
+     private Date lastDate;
      private String adPositionName;
 
      private String typeName;

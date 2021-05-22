@@ -8,11 +8,19 @@ import java.util.Date;
 
 /**
 *
-* Created by imake on 2021年02月28日16:04:56.
+* Created by imake on 2021年05月16日17:59:08.
 */
 
 @Data
 public class MemberSearchRequest extends BasePageRequest {
+
+    //姓名
+     @Search(name = "name",operator = Filter.Operator.like)
+     private String name;
+
+    //手机号
+     @Search(name = "phone",operator = Filter.Operator.like)
+     private String phone;
 
 
 

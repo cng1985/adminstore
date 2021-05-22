@@ -37,6 +37,11 @@
             <version>${discover.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.haoxuer.discover</groupId>
+            <artifactId>discover-area</artifactId>
+            <version>${discover.version}</version>
+        </dependency>
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
