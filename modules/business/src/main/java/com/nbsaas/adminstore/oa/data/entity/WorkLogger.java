@@ -22,12 +22,12 @@ public class WorkLogger extends UserEntity {
 
 
     @SearchItem(label = "标题",name = "title")
-    @FormField(title = "标题", sortNum = "2", grid = true, col = 22)
+    @FormField(title = "标题", sortNum = "2",width = "260",grid = true, col = 22,required = true)
     private String title;
 
-    @FormField(title = "工作时间", sortNum = "2", grid = true, col = 22,type = InputType.date)
+    @FormField(title = "工作时间", sortNum = "2",width = "160",grid = true, col = 22,type = InputType.date)
     private Date recordDate;
 
-    @FormField(title = "具体内容", sortNum = "2", grid = true, col = 22,type = InputType.richText)
+    @FormField(title = "具体内容", sortNum = "2", col = 22,type = InputType.richText)
     private String note;
 }

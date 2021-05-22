@@ -2,6 +2,7 @@ package com.nbsaas.adminstore;
 
 import com.haoxuer.discover.user.data.entity.Structure;
 import com.nbsaas.adminstore.member.data.entity.Member;
+import com.nbsaas.adminstore.oa.data.entity.WorkLogger;
 import com.nbsaas.adminstore.structure.data.entity.Organization;
 import com.nbsaas.codemake.CodeMake;
 import com.nbsaas.codemake.template.hibernateSimple.TemplateHibernateSimpleDir;
@@ -15,7 +16,7 @@ import java.io.File;
 public class App {
     public static void main(String[] args) {
 
-        viewMake().makes(Organization.class);
+        viewMake().makes(WorkLogger.class);
     }
 
     private static CodeMake code() {

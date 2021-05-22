@@ -26,6 +26,13 @@
             </div>
 
             <el-table v-loading="loading" :data="tableData.list"  @cell-click="showView" @sort-change="changeTableSort" style="width: 100%;font-size: 12px;">
+                        <el-table-column label="备注"
+
+                                        prop="note"
+                        
+                         width="100"  
+                        >
+                        </el-table-column>
                 <el-table-column width="160" align="center" fixed="right" label="操作">
                     <template slot-scope="scope">
                         <el-button type="primary" size="mini" @click="editView(scope.row)">编辑

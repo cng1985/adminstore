@@ -389,7 +389,7 @@
 										</template>
 									</el-table-column>
 									<el-table-column width="150" label="部门" :show-overflow-tooltip="true"
-										prop="organizationName">
+										prop="orgName">
 									</el-table-column>
 									<el-table-column label="所属区域" :show-overflow-tooltip="true" prop="areaName">
 									</el-table-column>
@@ -512,7 +512,7 @@
 								<el-col :span="12">
 									<el-form-item label="部门" size="mini" prop="organization">
 										<el-cascader size="small" style="width: 100%;" clearable :show-all-levels="true"
-											v-model="form_edit.organization" :options="departmentOptions"
+											v-model="form_edit.org" :options="departmentOptions"
 											:props="defaultProps">
 										</el-cascader>
 									</el-form-item>
@@ -523,15 +523,6 @@
 											v-model="form_edit.area" :options="areaOptions"  :props="areaProps" >
 										</el-cascader>
 									</el-form-item>
-								</el-col>
-								<el-col :span="12">
-									<el-form-item label="数据范围" size="mini" prop="dataScope">
-										<el-radio v-model="form_edit.dataScope" label="my">本人相关</el-radio>
-										<el-radio v-model="form_edit.dataScope" label="myDepartment">本部门</el-radio>
-										<el-radio v-model="form_edit.dataScope" label="myAllDepartment">本部门及下属部门</el-radio>
-										<el-radio v-model="form_edit.dataScope" label="all">全部</el-radio>
-									</el-form-item>
-
 								</el-col>
 								<el-col :span="12">
 									<el-form-item label="角色" size="mini" prop="selectRoles">

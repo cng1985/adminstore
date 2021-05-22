@@ -6,6 +6,11 @@
 
         <div class="form-title">详细信息</div>
         <el-form class="viewForm" label-width="80px">
+            <el-col :span="22">
+                <el-form-item label="备注">
+                    <div v-html="viewModel.note"></div>
+                </el-form-item>
+            </el-col>
         </el-form>
 
 </div>

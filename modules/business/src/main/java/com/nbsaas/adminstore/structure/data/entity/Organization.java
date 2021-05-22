@@ -1,11 +1,8 @@
 package com.nbsaas.adminstore.structure.data.entity;
 
 import com.haoxuer.discover.data.annotations.ColType;
-import com.haoxuer.discover.data.annotations.FormAnnotation;
-import com.haoxuer.discover.data.annotations.FormFieldAnnotation;
 import com.haoxuer.discover.data.entity.CatalogEntity;
-import com.haoxuer.imake.annotation.FiledConvert;
-import com.haoxuer.imake.annotation.FiledName;
+import com.nbsaas.codemake.annotation.*;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,7 +13,7 @@ import java.util.List;
  *
  * @author ada
  */
-
+@CatalogClass
 @FormAnnotation(title = "组织架构管理",model = "组织架构",menu = "1,27,54")
 @Data
 @Entity
@@ -47,7 +44,7 @@ public class Organization extends CatalogEntity {
      */
     private Integer catalog;
 
-    @FormFieldAnnotation(title = "备注", sortNum = "2", grid = true, col = ColType.col_2)
+    @FormField(title = "备注", sortNum = "2", grid = true, col = 22)
     private String note;
 
 

@@ -1,10 +1,17 @@
 [#macro organizationUpdateView]
     <div class="model-form">
-        <el-page-header @back="goBack" content="更新">
+        <el-page-header @back="goBack" content="更新组织架构">
         </el-page-header>
         <div class="model-content">
             <el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px" >
                 <el-row :gutter="10">
+ <el-col :span="22">
+     <el-form-item label="备注" size="mini" prop="note">
+             <el-input v-model="form.note" name="note">
+             </el-input>
+     </el-form-item>
+      
+ </el-col>
                 </el-row>
                 <el-row>
                     <el-col :span="24"  style="text-align: right;padding-bottom: 20px;padding-top: 20px;">
@@ -60,7 +67,7 @@
     organizationUpdateConfig.data = function () {
         return {
             form: {
-            },
+                note: ''            },
             rules: {
             }
         }
