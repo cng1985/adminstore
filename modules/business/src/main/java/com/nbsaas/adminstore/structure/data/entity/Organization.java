@@ -20,7 +20,7 @@ import java.util.List;
 @FormAnnotation(title = "组织架构管理",model = "组织架构",menu = "1,27,54")
 @Data
 @Entity
-@Table(name = "bs_org_data")
+@Table(name = "sys_structure")
 public class Organization extends CatalogEntity {
 
     public static Organization fromId(Integer id) {

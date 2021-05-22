@@ -1,0 +1,48 @@
+
+[#macro organizationShowView]
+<div  class="model-form">
+    <el-page-header @back="goBack" content="详情">
+    </el-page-header>
+
+        <div class="form-title">详细信息</div>
+        <el-form class="viewForm" label-width="80px">
+        </el-form>
+
+</div>
+[/#macro]
+[#macro organizationShowConfig]
+<script type="text/x-template" id="my-organization-show">
+    [@organizationShowView /]
+</script>
+	<script type="text/javascript">
+		//显示组件开始
+		var organizationShowConfig = {};
+		organizationShowConfig.template = "#my-organization-show";
+		organizationShowConfig.methods =config.basicMethod();
+		organizationShowConfig.data = function () {
+			return {
+				viewModel: {
+				},
+				activeIndex: "1"
+			}
+		};
+
+
+		organizationShowConfig.mounted = function () {
+			var id = this.$route.query.id;
+			var self = this;
+			var data = {};
+			data.id = id;
+			this.postData("${siteurl}tenantRest/organization/view.htm", data, function (res) {
+				if (res.code == 0) {
+					self.viewModel = res;
+
+				}
+			});
+		}
+		var organizationShowView = Vue.component('my-organization-view', organizationShowConfig);
+		//显示组件结束		
+	</script>
+[/#macro]
+
+

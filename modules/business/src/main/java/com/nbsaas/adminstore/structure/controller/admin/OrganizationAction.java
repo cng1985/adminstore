@@ -1,13 +1,14 @@
 package com.nbsaas.adminstore.structure.controller.admin;
 
-import com.haoxuer.discover.web.base.BaseAction;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+
+import org.springframework.context.annotation.Scope;
+import com.haoxuer.discover.controller.BaseAction;
 /**
 *
-* Created by imake on 2021年04月12日20:37:02.
+* Created by imake on 2021年05月22日10:28:14.
 */
 
 @Scope("prototype")

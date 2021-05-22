@@ -2,6 +2,7 @@ package com.nbsaas.adminstore.structure.data.entity;
 
 
 
+import com.haoxuer.discover.user.data.enums.DataScope;
 import com.nbsaas.adminstore.structure.enums.PermissionType;
 import com.haoxuer.discover.data.annotations.ColType;
 import com.haoxuer.discover.data.annotations.FormAnnotation;
@@ -9,6 +10,7 @@ import com.haoxuer.discover.data.annotations.FormFieldAnnotation;
 import com.haoxuer.discover.data.entity.AbstractEntity;
 import com.haoxuer.discover.user.data.entity.UserRole;
 import com.haoxuer.imake.annotation.SearchItem;
+import com.nbsaas.codemake.annotation.FormField;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -40,12 +42,18 @@ public class Employee extends AbstractEntity {
     @FormFieldAnnotation(title = "职位", sortNum = "3", grid = true, col = ColType.col_2)
     private String job;
 
+
+    @JoinColumn(name = "structure_id")
     @FormFieldAnnotation(title = "主要部门", sortNum = "4", grid = true, col = ColType.col_2)
     @ManyToOne(fetch = FetchType.LAZY)
     private Organization org;
 
     @FormFieldAnnotation(title = "权限类型", sortNum = "5", grid = true, col = ColType.col_2)
     private PermissionType permissionType;
+
+
+    @FormField(title = "数据范围", sortNum = "2", grid = true, col = 22)
+    private DataScope dataScope;
 
     private String avatar;
 
