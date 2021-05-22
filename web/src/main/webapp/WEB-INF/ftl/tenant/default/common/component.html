@@ -315,9 +315,12 @@
                 var self = this;
                 var param = {};
                 param.key = this.catalog;
-                $.post("${siteurl}tenantRest/dictionary/key.htm", param, function (res) {
+                param.sortField="sortNum";
+                param.sortMethod="asc";
+
+                $.post("${siteurl}tenantRest/dictionaryitem/list.htm", param, function (res) {
                     if (res.code == 0) {
-                        self.options = res.items;
+                        self.options = res.list;
                     }
                 });
             },
