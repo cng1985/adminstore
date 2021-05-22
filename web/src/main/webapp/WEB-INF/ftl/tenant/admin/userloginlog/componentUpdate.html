@@ -1,0 +1,128 @@
+[#macro userloginlogUpdateView]
+    <div class="model-form">
+        <el-page-header @back="goBack" content="更新登录日志">
+        </el-page-header>
+        <div class="model-content">
+            <el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px" >
+                <el-row :gutter="10">
+ <el-col :span="12">
+     <el-form-item label="用户姓名" size="mini" prop="user">
+             <el-input v-model="form.user" name="user">
+             </el-input>
+     </el-form-item>
+      
+ </el-col>
+ <el-col :span="12">
+     <el-form-item label="登陆账号" size="mini" prop="account">
+             <el-input v-model="form.account" name="account">
+             </el-input>
+     </el-form-item>
+      
+ </el-col>
+ <el-col :span="12">
+     <el-form-item label="登录IP" size="mini" prop="ip">
+             <el-input v-model="form.ip" name="ip">
+             </el-input>
+     </el-form-item>
+      
+ </el-col>
+ <el-col :span="12">
+     <el-form-item label="客户端" size="mini" prop="client">
+             <el-input v-model="form.client" name="client">
+             </el-input>
+     </el-form-item>
+      
+ </el-col>
+ <el-col :span="12">
+     <el-form-item label="状态" size="mini" prop="state">
+             <el-input v-model="form.state" name="state">
+             </el-input>
+     </el-form-item>
+      
+ </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="24"  style="text-align: right;padding-bottom: 20px;padding-top: 20px;">
+                        <el-button @click="goBack">取消</el-button>
+                        <el-button type="primary" @click="updateData">确定</el-button>
+                    </el-col>
+			     </el-row>
+            </el-form>
+        </div>
+    </div>
+[/#macro]
+
+[#macro userloginlogUpdateConfig]
+<script type="text/x-template" id="my-userloginlog-update">
+    [@userloginlogUpdateView /]
+</script>
+<script type="text/javascript">
+    //更新组件开始
+    var userloginlogUpdateConfig = {};
+    userloginlogUpdateConfig.template = "#my-userloginlog-update";
+    userloginlogUpdateConfig.methods = config.basicMethod();
+    userloginlogUpdateConfig.methods.updateData = function () {
+        var self = this;
+        this.$refs["ruleForm"].validate(function(valid){
+            if (valid) {
+                self.updateDataPost();
+            } else {
+                console.log('error submit!!');
+                return false;
+            }
+        });
+    }
+
+    userloginlogUpdateConfig.methods.updateDataPost = function () {
+        var self = this, data = this.form;
+        //delete data.userloginlogCatalog;
+        if (this.deforeUpdateData) {
+            this.deforeUpdateData();
+        }
+        this.postData("${siteurl}tenantRest/userloginlog/update.htm", data, function (res) {
+            if (res.code == 0) {
+                self.$message({
+                    message: '修改数据成功',
+                    type: 'success'
+                });
+                //window.history.go(-1)
+                self.$router.go(-1);
+            } else {
+                self.$message.error(res.msg);
+            }
+        });
+    }
+    userloginlogUpdateConfig.data = function () {
+        return {
+            form: {
+                user: '',
+                account: '',
+                ip: '',
+                client: '',
+                state: ''            },
+            rules: {
+            }
+        }
+    };
+
+    userloginlogUpdateConfig.mounted = function () {
+        var id = this.$route.query.id;
+        var self = this;
+        var data = {};
+        data.id = id;
+        this.postData("${siteurl}tenantRest/userloginlog/view.htm", data, function (res) {
+            if (res.code == 0) {
+                self.form = res;
+            }
+        });
+    }
+    userloginlogUpdateConfig.computed = {};
+
+    userloginlogUpdateConfig.destroyed = function () {
+            console.log("destroyed add view ");
+            
+	}
+    var userloginlogUpdateView = Vue.component('update-view', userloginlogUpdateConfig);
+    //更新组件结束
+</script>
+[/#macro]

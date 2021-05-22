@@ -1,6 +1,7 @@
 package com.nbsaas.adminstore;
 
 import com.haoxuer.discover.user.data.entity.Structure;
+import com.haoxuer.discover.user.data.entity.UserLoginLog;
 import com.nbsaas.adminstore.member.data.entity.Member;
 import com.nbsaas.adminstore.oa.data.entity.WorkLogger;
 import com.nbsaas.adminstore.structure.data.entity.Organization;
@@ -16,7 +17,7 @@ import java.io.File;
 public class App {
     public static void main(String[] args) {
 
-        viewMake().makes(WorkLogger.class);
+        viewMake().makes(UserLoginLog.class);
     }
 
     private static CodeMake code() {
@@ -41,7 +42,7 @@ public class App {
         make.setDao(false);
         make.setService(false);
         make.setView(true);
-        make.setAction(true);
+        make.setAction(false);
         make.setRest(false);
         make.setApi(false);
         make.setSo(false);

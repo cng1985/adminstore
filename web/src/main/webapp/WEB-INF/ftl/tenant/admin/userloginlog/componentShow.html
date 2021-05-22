@@ -1,0 +1,73 @@
+
+[#macro userloginlogShowView]
+<div  class="model-form">
+    <el-page-header @back="goBack" content="详情">
+    </el-page-header>
+
+        <div class="form-title">详细信息</div>
+        <el-form class="viewForm" label-width="80px">
+            <el-col :span="12">
+                <el-form-item label="用户姓名">
+                    <div v-html="viewModel.userName"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="登陆账号">
+                    <div v-html="viewModel.account"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="登录IP">
+                    <div v-html="viewModel.ip"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="客户端">
+                    <div v-html="viewModel.client"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="状态">
+                    <div v-html="viewModel.stateName"></div>
+                </el-form-item>
+            </el-col>
+        </el-form>
+
+</div>
+[/#macro]
+[#macro userloginlogShowConfig]
+<script type="text/x-template" id="my-userloginlog-show">
+    [@userloginlogShowView /]
+</script>
+	<script type="text/javascript">
+		//显示组件开始
+		var userloginlogShowConfig = {};
+		userloginlogShowConfig.template = "#my-userloginlog-show";
+		userloginlogShowConfig.methods =config.basicMethod();
+		userloginlogShowConfig.data = function () {
+			return {
+				viewModel: {
+				},
+				activeIndex: "1"
+			}
+		};
+
+
+		userloginlogShowConfig.mounted = function () {
+			var id = this.$route.query.id;
+			var self = this;
+			var data = {};
+			data.id = id;
+			this.postData("${siteurl}tenantRest/userloginlog/view.htm", data, function (res) {
+				if (res.code == 0) {
+					self.viewModel = res;
+
+				}
+			});
+		}
+		var userloginlogShowView = Vue.component('my-userloginlog-view', userloginlogShowConfig);
+		//显示组件结束		
+	</script>
+[/#macro]
+
+
