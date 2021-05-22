@@ -16,8 +16,13 @@
                         </el-input>
                     </el-form-item>
                 </el-col>
-
-                <el-col :span="18" style="padding: 0 10px;margin-top: 5px;">
+                <el-col :span="6" style="padding: 0 8px;">
+                    <el-form-item label="登录状态">
+                        <el-radio v-model="searchObject.state" label="fail">登录失败</el-radio>
+                        <el-radio v-model="searchObject.state" label="success">登录成功</el-radio>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12" style="padding: 0 10px;margin-top: 5px;">
                     <el-row type="flex" justify="end">
                         <el-button size="small" type="primary" @click="search">搜索</el-button>
                         <el-button size="small" plain @click="clearData">清除条件</el-button>
@@ -39,7 +44,7 @@
             </el-table-column>
             <el-table-column label="状态" prop="stateName" width="100">
             </el-table-column>
-            <el-table-column label="登录时间" prop="addDate" >
+            <el-table-column label="登录时间" prop="addDate">
             </el-table-column>
             <el-table-column width="80" align="center" fixed="right" label="操作">
                 <template slot-scope="scope">
@@ -131,6 +136,7 @@
     userloginlogListConfig.methods.clearData = function () {
         this.searchObject.userId = "";
         this.searchObject.userName = "";
+        this.searchObject.state = "";
     }
     userloginlogListConfig.methods.deleteData = function (event) {
         this.selectId = event.id;
@@ -166,7 +172,8 @@
                 no: 1,
                 size: 10,
                 userId: '',
-                userName: ''
+                userName: '',
+                state:""
             },
             dialogVisible: false,
             defaultProps: {
