@@ -16,7 +16,7 @@
 
 
 	<!-- 对包中的所有类进行扫描，以完成Bean创建和自动依赖注入的功能 需要更改 -->
-	<context:component-scan base-package="com.haoxuer.adminstore" />
+	<context:component-scan base-package="com.nbsaas.adminstore" />
 
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -60,11 +60,11 @@
 				<value>com.haoxuer.discover.trade.data.entity</value>
 				<value>com.haoxuer.discover.area.data.entity</value>
 
-				<value>com.haoxuer.adminstore.member.data.entity</value>
-				<value>com.haoxuer.adminstore.structure.data.entity</value>
-				<value>com.haoxuer.adminstore.article.data.entity</value>
-				<value>com.haoxuer.adminstore.ad.data.entity</value>
-
+				<value>com.nbsaas.adminstore.member.data.entity</value>
+				<value>com.nbsaas.adminstore.structure.data.entity</value>
+				<value>com.nbsaas.adminstore.article.data.entity</value>
+				<value>com.nbsaas.adminstore.ad.data.entity</value>
+				<value>com.nbsaas.adminstore.oa.data.entity</value>
 			</list>
 		</property>
 		<property name="entityInterceptor" ref="treeInterceptor">

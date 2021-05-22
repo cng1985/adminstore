@@ -1,0 +1,63 @@
+
+[#macro workloggerShowView]
+<div  class="model-form">
+    <el-page-header @back="goBack" content="详情">
+    </el-page-header>
+
+        <div class="form-title">详细信息</div>
+        <el-form class="viewForm" label-width="80px">
+            <el-col :span="22">
+                <el-form-item label="标题">
+                    <div v-html="viewModel.title"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="22">
+                <el-form-item label="工作时间">
+                    <div v-html="viewModel.recordDate"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="22">
+                <el-form-item label="具体内容">
+                    <div v-html="viewModel.note"></div>
+                </el-form-item>
+            </el-col>
+        </el-form>
+
+</div>
+[/#macro]
+[#macro workloggerShowConfig]
+<script type="text/x-template" id="my-worklogger-show">
+    [@workloggerShowView /]
+</script>
+	<script type="text/javascript">
+		//显示组件开始
+		var workloggerShowConfig = {};
+		workloggerShowConfig.template = "#my-worklogger-show";
+		workloggerShowConfig.methods =config.basicMethod();
+		workloggerShowConfig.data = function () {
+			return {
+				viewModel: {
+				},
+				activeIndex: "1"
+			}
+		};
+
+
+		workloggerShowConfig.mounted = function () {
+			var id = this.$route.query.id;
+			var self = this;
+			var data = {};
+			data.id = id;
+			this.postData("${siteurl}tenantRest/worklogger/view.htm", data, function (res) {
+				if (res.code == 0) {
+					self.viewModel = res;
+
+				}
+			});
+		}
+		var workloggerShowView = Vue.component('my-worklogger-view', workloggerShowConfig);
+		//显示组件结束		
+	</script>
+[/#macro]
+
+

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nbsaas.adminstore.analysis.mapper.OrderMapper">
+
+    <select id="num" parameterType="com.nbsaas.adminstore.analysis.request.OrderNumRequest" resultType="com.nbsaas.adminstore.analysis.simple.LongName"  >
+        SELECT COUNT(bs_tenant_order_info.id) AS num, DATE_FORMAT(bs_tenant_order_info.addDate,'%Y-%m-%d') AS label
+        FROM bs_tenant_order_info
+        <where>
+            <if test="tenant != null">
+                bs_tenant_order_info.tenant_id=#{tenant}
+            </if>
+            <if test="beginDate != null">
+                AND bs_tenant_order_info.addDate &gt;=  #{beginDate}
+            </if>
+            <if test="endDate != null">
+                AND bs_tenant_order_info.addDate &lt;=  #{endDate}
+            </if>
+        </where>
+        GROUP BY label
+        ORDER BY label DESC
+        LIMIT 30
+    </select>
+    <select id="month" resultType="com.nbsaas.adminstore.analysis.simple.LongName">
+        SELECT COUNT(bs_tenant_order_info.id) AS num, DATE_FORMAT(bs_tenant_order_info.addDate,'%Y-%m') AS label
+        FROM bs_tenant_order_info
+        <where>
+            <if test="tenant != null">
+                bs_tenant_order_info.tenant_id=#{tenant}
+            </if>
+            <if test="beginDate != null">
+                AND bs_tenant_order_info.addDate &gt;=  #{beginDate}
+            </if>
+            <if test="endDate != null">
+                AND bs_tenant_order_info.addDate &lt;=  #{endDate}
+            </if>
+        </where>
+        GROUP BY label
+        ORDER BY label DESC
+        LIMIT 30
+    </select>
+</mapper>

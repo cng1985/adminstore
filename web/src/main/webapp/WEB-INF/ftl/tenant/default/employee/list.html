@@ -525,6 +525,15 @@
 									</el-form-item>
 								</el-col>
 								<el-col :span="12">
+									<el-form-item label="数据范围" size="mini" prop="dataScope">
+										<el-radio v-model="form_edit.dataScope" label="my">本人相关</el-radio>
+										<el-radio v-model="form_edit.dataScope" label="myDepartment">本部门</el-radio>
+										<el-radio v-model="form_edit.dataScope" label="myAllDepartment">本部门及下属部门</el-radio>
+										<el-radio v-model="form_edit.dataScope" label="all">全部</el-radio>
+									</el-form-item>
+
+								</el-col>
+								<el-col :span="12">
 									<el-form-item label="角色" size="mini" prop="selectRoles">
 										<el-checkbox-group style="width: 100%;" v-model="form_edit.selectRoles">
 											<el-checkbox v-for="item in roleOptions" :label="item.id" :key="item.id">
