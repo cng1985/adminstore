@@ -46,7 +46,7 @@
 			var self = this;
 			var data = {};
 			data.id = id;
-			this.postData("${siteurl}tenantRest/member/viewCurrent.htm", {}, function (result) {
+			this.postData("${siteurl}tenantRest/userinfo/current.htm", {}, function (result) {
                 if (result.code == 0) {
 					self.form =result;
                 }
@@ -57,7 +57,7 @@
             var self = this;
 
             var data = self.form;
-            self.postData("${siteurl}tenantRest/member/updateCurrent.htm", data, function (res) {
+            self.postData("${siteurl}tenantRest/userinfo/updateCurrent.htm", data, function (res) {
                 if (res.code != 0) {
                     self.$message.error(res.msg);
                 } else {
