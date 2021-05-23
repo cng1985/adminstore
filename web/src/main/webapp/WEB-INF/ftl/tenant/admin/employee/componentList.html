@@ -14,7 +14,7 @@
                     <i v-if="treeTitle != '部门管理'" class="el-icon-close" @click="chooseDepartment"></i>
                 </span>
                 <div class="tree">
-                    <el-tree :highlight-current="true" :expand-on-click-node="false" :data="departmentOptions"
+                    <el-tree :highlight-current="true" :expand-on-click-node="false" :data="orgOptions"
                         :props="defaultProps" @node-click="chooseDepartment">
                         <span class="custom-tree-node jk" slot-scope="{ node, data }">
                             <span>{{data.name}}</span>
@@ -54,9 +54,11 @@
                   
                     <el-table-column width="160" align="center" fixed="right" label="操作">
                         <template slot-scope="scope">
+                            <el-button type="text" size="mini" @click="show(scope.row)">详情
+                            </el-button>
                             <el-button type="text" size="mini" @click="editView(scope.row)">编辑
                             </el-button>
-                            <el-button type="text" size="mini" style="cursor: pointer;"
+                            <el-button type="text" class="danger" size="mini" style="cursor: pointer;"
                                 @click="deleteData(scope.row)">删除
                             </el-button>
                         </template>
@@ -125,7 +127,13 @@
         this.$router.push({ path: 'view', query: param });
 
     }
+    employeeListConfig.methods.show = function (row) {
+        var param = {};
+        param.id = row.id;
+        var self = this;
+        this.$router.push({ path: 'view', query: param });
 
+    }
     employeeListConfig.methods.sizeChange = function (event) {
         this.searchObject.size = event;
         this.getSearchList();
@@ -209,7 +217,7 @@
             defaultProps: {
                 emitPath: false,
                 checkStrictly: true,
-                children: 'child',
+                children: 'children',
                 label: 'name',
                 value: 'id'
             },
