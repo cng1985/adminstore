@@ -11,6 +11,8 @@
 	[#include "/tenant/admin/member/componentList.html"]
 	[#include "/tenant/admin/member/componentUpdate.html"]
 	[#include "/tenant/admin/member/componentShow.html"]
+	[#include "/tenant/admin/member/componentAccount.html"]
+	[#include "/tenant/admin/member/componentRestPassword.html"]
 
 	[@baseHead /]
 	<script type="text/javascript"></script>
@@ -121,6 +123,8 @@
 	[@memberUpdateConfig /]
 
 	[@childMemberConfig /]
+	[@accountListConfig /]
+	[@restPasswordConfig /]
 
 	<script type="text/javascript">
 	
@@ -133,7 +137,9 @@
 		   const routes = [
 				{ path: '/view',name: "memberShowView", component: memberShowView, props: true, children: [
                     { path: "/view/index", name: "childMemberShowView", component: childMemberShowView },
-					{ path: "/", component: childMemberShowView }
+					{ path: "/", component: childMemberShowView },
+					{ path: "/account", component: accountListView },
+					{ path: "/restPassword", component: restPasswordView },
 				]
 				 },
 				{ path: '/add',name: "memberAddView", component: memberAddView , props: true },

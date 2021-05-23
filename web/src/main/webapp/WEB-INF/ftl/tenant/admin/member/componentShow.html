@@ -1,17 +1,22 @@
-
 [#macro memberShowView]
-<div  class="model-form">
+<div class="model-form">
     <el-page-header @back="goBack" content="详情">
     </el-page-header>
 
-        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-            <el-menu-item index="1">
-                用户详情
-            </el-menu-item>
-        </el-menu>
-        <div>
-            <router-view></router-view>
-        </div>
+    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+        <el-menu-item index="1">
+            用户详情
+        </el-menu-item>
+        <el-menu-item index="7">
+            账号管理
+        </el-menu-item>
+        <el-menu-item index="8">
+            重置密码
+        </el-menu-item>
+    </el-menu>
+    <div style="margin-top: 20px;">
+        <router-view></router-view>
+    </div>
 
 </div>
 [/#macro]
@@ -19,131 +24,134 @@
 <script type="text/x-template" id="my-member-show">
     [@memberShowView /]
 </script>
-	<script type="text/javascript">
-		//显示组件开始
-		var memberShowConfig = {};
-		memberShowConfig.template = "#my-member-show";
-		memberShowConfig.methods =config.basicMethod();
-		memberShowConfig.data = function () {
-			return {
-				viewModel: {
-				},
-				activeIndex: "1"
-			}
-		};
+<script type="text/javascript">
+    //显示组件开始
+    var memberShowConfig = {};
+    memberShowConfig.template = "#my-member-show";
+    memberShowConfig.methods = config.basicMethod();
+    memberShowConfig.data = function () {
+        return {
+            viewModel: {
+            },
+            activeIndex: "1"
+        }
+    };
 
-		memberShowConfig.methods.handleSelect = function (index) {
-			console.log(index)
-			var selectId = this.selectId;
-			if (index == "1") {
-				this.$router.replace({ path: '/view/index', query: { id: selectId, activeIndex: 1, time: Math.random() } })
-			}
-			else if (index == "2") {
-				this.$router.replace({ path: '/view/members', query: { id: selectId, activeIndex: 2, time: Math.random() } })
-			} else {
+    memberShowConfig.methods.handleSelect = function (index) {
+        console.log(index)
+        var selectId = this.selectId;
+        if (index == "1") {
+            this.$router.replace({ path: '/view/index', query: { id: selectId, activeIndex: 1, time: Math.random() } })
+        }
+        else if (index == "2") {
+            this.$router.replace({ path: '/view/members', query: { id: selectId, activeIndex: 2, time: Math.random() } })
+        } else if (index == "7") {
+            this.$router.replace({ path: '/account', query: { id: selectId, activeIndex: 7, time: Math.random() } })
+        } else if (index == "8") {
+            this.$router.replace({ path: '/restPassword', query: { id: selectId, activeIndex: 8, time: Math.random() } })
+        } else {
 
-			}
-		};
+        }
+    };
 
-		memberShowConfig.mounted = function () {
-		   	var id = this.$route.query.id;
-			var activeIndex = this.$route.query.activeIndex;
+    memberShowConfig.mounted = function () {
+        var id = this.$route.query.id;
+        var activeIndex = this.$route.query.activeIndex;
 
-			var self = this;
-			var data = {};
-			data.id = id;
-			this.selectId = data.id;
-			if (activeIndex) {
-				this.activeIndex = activeIndex;
-			}
-		}
-		var memberShowView = Vue.component('my-member-view', memberShowConfig);
-		//显示组件结束		
-	</script>
+        var self = this;
+        var data = {};
+        data.id = id;
+        this.selectId = data.id;
+        if (activeIndex) {
+            this.activeIndex = activeIndex;
+        }
+    }
+    var memberShowView = Vue.component('my-member-view', memberShowConfig);
+		//显示组件结束
+</script>
 [/#macro]
 
 
 
 [#macro childMemberView]
-    <div >
-        <el-form class="viewForm" label-width="80px">
-            <el-col :span="22">
-                <el-form-item label="头像">
-                    <div v-html="viewModel.avatar">></div>
-                </el-form-item>
-            </el-col>
-            <el-col :span="22">
-                <el-form-item label="姓名">
-                    <div v-html="viewModel.name">></div>
-                </el-form-item>
-            </el-col>
-            <el-col :span="22">
-                <el-form-item label="手机号">
-                    <div v-html="viewModel.phone">></div>
-                </el-form-item>
-            </el-col>
-            <el-col :span="22">
-                <el-form-item label="个人介绍">
-                    <div v-html="viewModel.note">></div>
-                </el-form-item>
-            </el-col>
-            <el-col :span="22">
-                <el-form-item label="性别">
-                    <div v-html="viewModel.sex">></div>
-                </el-form-item>
-            </el-col>
-            <el-col :span="22">
-                <el-form-item label="个人介绍">
-                    <div v-html="viewModel.introduce">></div>
-                </el-form-item>
-            </el-col>
-            <el-col :span="22">
-                <el-form-item label="职业">
-                    <div v-html="viewModel.job">></div>
-                </el-form-item>
-            </el-col>
-            <el-col :span="22">
-                <el-form-item label="账号">
-                    <div v-html="viewModel.no">></div>
-                </el-form-item>
-            </el-col>
-            <el-col :span="22">
-                <el-form-item label="数据权限">
-                    <div v-html="viewModel.dataScopeName">></div>
-                </el-form-item>
-            </el-col>
-        </el-form>
-    </div>
- [/#macro]
-
-[#macro childMemberConfig]
-    <script type="text/x-template" id="child-member-show">
-        [@childMemberView /]
-    </script>
-    <script type="text/javascript">
-
-        var childMemberShowConfig = {};
-        childMemberShowConfig.template = "#child-member-show";
-        childMemberShowConfig.methods = config.basicMethod();
-        childMemberShowConfig.data = function () {
-            return {
-                viewModel: {
-                }
-            }
-        };
-        childMemberShowConfig.mounted = function () {
-            var id = this.$route.query.id;
-            var self = this;
-            var data = {};
-            data.id = id;
-            this.postData("${siteurl}tenantRest/member/view.htm", data, function (res) {
-                if (res.code == 0) {
-                    self.viewModel = res;
-
-                }
-            });
-        }
-        var childMemberShowView = Vue.component('child-member-show', childMemberShowConfig);
-    </script>
+<div>
+    <el-form class="viewForm" label-width="80px">
+        <el-col :span="22">
+            <el-form-item label="头像">
+                <div v-html="viewModel.avatar">></div>
+            </el-form-item>
+        </el-col>
+        <el-col :span="22">
+            <el-form-item label="姓名">
+                <div v-html="viewModel.name">></div>
+            </el-form-item>
+        </el-col>
+        <el-col :span="22">
+            <el-form-item label="手机号">
+                <div v-html="viewModel.phone">></div>
+            </el-form-item>
+        </el-col>
+        <el-col :span="22">
+            <el-form-item label="个人介绍">
+                <div v-html="viewModel.note">></div>
+            </el-form-item>
+        </el-col>
+        <el-col :span="22">
+            <el-form-item label="性别">
+                <div v-html="viewModel.sex">></div>
+            </el-form-item>
+        </el-col>
+        <el-col :span="22">
+            <el-form-item label="个人介绍">
+                <div v-html="viewModel.introduce">></div>
+            </el-form-item>
+        </el-col>
+        <el-col :span="22">
+            <el-form-item label="职业">
+                <div v-html="viewModel.job">></div>
+            </el-form-item>
+        </el-col>
+        <el-col :span="22">
+            <el-form-item label="账号">
+                <div v-html="viewModel.no">></div>
+            </el-form-item>
+        </el-col>
+        <el-col :span="22">
+            <el-form-item label="数据权限">
+                <div v-html="viewModel.dataScopeName">></div>
+            </el-form-item>
+        </el-col>
+    </el-form>
+</div>
 [/#macro]
 
+[#macro childMemberConfig]
+<script type="text/x-template" id="child-member-show">
+        [@childMemberView /]
+    </script>
+<script type="text/javascript">
+
+    var childMemberShowConfig = {};
+    childMemberShowConfig.template = "#child-member-show";
+    childMemberShowConfig.methods = config.basicMethod();
+    childMemberShowConfig.data = function () {
+        return {
+            viewModel: {
+            }
+        }
+    };
+    childMemberShowConfig.mounted = function () {
+        var id = this.$route.query.id;
+        var self = this;
+        var data = {};
+        data.id = id;
+        this.postData("${siteurl}tenantRest/member/view.htm", data, function (res) {
+            if (res.code == 0) {
+                self.viewModel = res;
+
+            }
+        });
+    }
+    var childMemberShowView = Vue.component('child-member-show', childMemberShowConfig);
+</script>
+[/#macro]
