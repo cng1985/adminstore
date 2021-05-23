@@ -1,43 +1,43 @@
-
 <!-- 增加页面开始 -->
 
 [#macro workloggerAddView]
-    <div  class="model-form">
-        <el-page-header @back="goBack" content="增加工作日志">
-        </el-page-header>
-        <div class="model-content">
-            <el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px" >
-                <el-row :gutter="10">
- <el-col :span="22">
-     <el-form-item label="标题" size="mini" prop="title">
-             <el-input v-model="form.title" name="title">
-             </el-input>
-     </el-form-item>
-      
- </el-col>
- <el-col :span="22">
-     <el-form-item label="工作时间" size="mini" prop="recordDate">
-         <el-date-picker v-model="form.recordDate" type="date"   value-format="yyyy-MM-dd"  placeholder="选择日期">
-         </el-date-picker>
-     </el-form-item>
-      
- </el-col>
- <el-col :span="22">
-         <div style="margin-left: 160px;">
-			<div id="uenote" name="note" type="text/plain"></div>
-		</div>
-      
- </el-col>
-                </el-row>
-               <el-row>
-                    <el-col :span="24"  style="text-align: right;padding-bottom: 20px;padding-top: 20px;">
-                        <el-button @click="goBack">取消</el-button>
-                        <el-button type="primary" @click="add">确定</el-button>
-                    </el-col>
-			    </el-row>
-            </el-form>
-        </div>
-    </div>
+<div class="model-form">
+	<el-page-header @back="goBack" content="增加工作日志">
+	</el-page-header>
+	<div class="model-content">
+		<el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px">
+			<el-row :gutter="10">
+				<el-col :span="22">
+					<el-form-item label="标题" size="mini" prop="title">
+						<el-input v-model="form.title" name="title">
+						</el-input>
+					</el-form-item>
+
+				</el-col>
+				<el-col :span="22">
+					<el-form-item label="工作时间" size="mini" prop="recordDate">
+						<el-date-picker v-model="form.recordDate" type="date" value-format="yyyy-MM-dd"
+							placeholder="选择日期">
+						</el-date-picker>
+					</el-form-item>
+
+				</el-col>
+				<el-col :span="22">
+					<div style="margin-left: 160px;">
+						<div id="uenote" name="note" type="text/plain"></div>
+					</div>
+
+				</el-col>
+			</el-row>
+			<el-row>
+				<el-col :span="22" style="text-align: right;padding-bottom: 20px;padding-top: 20px;">
+					<el-button @click="goBack">取消</el-button>
+					<el-button type="primary" @click="add">确定</el-button>
+				</el-col>
+			</el-row>
+		</el-form>
+	</div>
+</div>
 [/#macro]
 
 [#macro workloggerAddConfig]
@@ -45,69 +45,70 @@
 	[@workloggerAddView /]
 </script>
 <script type="text/javascript">
-            var uenote ;
-		//添加组件开始
-		var workloggerAddConfig = {};
-		workloggerAddConfig.template = "#my-worklogger-add";
-		workloggerAddConfig.methods = config.basicMethod();
-		workloggerAddConfig.data = function () {
-			return {
-				form: {
-					title: '',
-					recordDate: '',
-					note: ''				},
-				rules: {
-                        title: [
-							{ required: true, message: '请输入标题', trigger: 'blur' }
-						],
-				}
+	var uenote;
+	//添加组件开始
+	var workloggerAddConfig = {};
+	workloggerAddConfig.template = "#my-worklogger-add";
+	workloggerAddConfig.methods = config.basicMethod();
+	workloggerAddConfig.data = function () {
+		return {
+			form: {
+				title: '',
+				recordDate: '',
+				note: ''
+			},
+			rules: {
+				title: [
+					{ required: true, message: '请输入标题', trigger: 'blur' }
+				],
 			}
-		};
-		workloggerAddConfig.mounted = function () {
-                 uenote = initEditor("uenote");;
 		}
-		workloggerAddConfig.computed = {};
+	};
+	workloggerAddConfig.mounted = function () {
+		uenote = initEditor("uenote");;
+	}
+	workloggerAddConfig.computed = {};
 
 
-		workloggerAddConfig.methods.add = function () {
-			var self = this;
-			this.$refs["ruleForm"].validate(function(valid){
-				if (valid) {
-					self.addData();
-				} else {
-					console.log('error submit!!');
-					return false;
-				}
-			});
-		}
-
-		workloggerAddConfig.methods.addData = function () {
-			var self = this, data = this.form;
-			if (this.deforeAddData) {
-				this.deforeAddData();
+	workloggerAddConfig.methods.add = function () {
+		var self = this;
+		this.$refs["ruleForm"].validate(function (valid) {
+			if (valid) {
+				self.addData();
+			} else {
+				console.log('error submit!!');
+				return false;
 			}
-                    if (uenote) {
-                        data.note = uenote.getContent();
-                    }
-			this.postData("${siteurl}tenantRest/worklogger/create.htm", data, function (res) {
-				if (res.code == 0) {
-					self.$message({
-						message: '添加数据成功',
-						type: 'success'
-					});
-					self.$router.go(-1);
-				} else {
-					self.$message.error(res.msg);
-				}
-			});
-		}
+		});
+	}
 
-        workloggerAddConfig.destroyed = function () {
-            console.log("destroyed add view ");
-            
-                  UE.getEditor('uenote').destroy();
-	    }
-		var  workloggerAddView = Vue.component('add-view', workloggerAddConfig);
+	workloggerAddConfig.methods.addData = function () {
+		var self = this, data = this.form;
+		if (this.deforeAddData) {
+			this.deforeAddData();
+		}
+		if (uenote) {
+			data.note = uenote.getContent();
+		}
+		this.postData("${siteurl}tenantRest/worklogger/create.htm", data, function (res) {
+			if (res.code == 0) {
+				self.$message({
+					message: '添加数据成功',
+					type: 'success'
+				});
+				self.$router.go(-1);
+			} else {
+				self.$message.error(res.msg);
+			}
+		});
+	}
+
+	workloggerAddConfig.destroyed = function () {
+		console.log("destroyed add view ");
+
+		UE.getEditor('uenote').destroy();
+	}
+	var workloggerAddView = Vue.component('add-view', workloggerAddConfig);
 
 
 </script>

@@ -40,6 +40,11 @@
         </dependency>
         <dependency>
             <groupId>com.haoxuer.discover</groupId>
+            <artifactId>discover-function</artifactId>
+            <version>${discover.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.haoxuer.discover</groupId>
             <artifactId>discover-site</artifactId>
             <version>${discover.version}</version>
         </dependency>

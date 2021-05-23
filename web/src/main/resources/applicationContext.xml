@@ -59,6 +59,7 @@
 				<value>com.haoxuer.discover.quartz.data.entity</value>
 				<value>com.haoxuer.discover.trade.data.entity</value>
 				<value>com.haoxuer.discover.area.data.entity</value>
+				<value>com.haoxuer.discover.function.data.entity</value>
 
 				<value>com.nbsaas.adminstore.member.data.entity</value>
 				<value>com.nbsaas.adminstore.structure.data.entity</value>
