@@ -1,5 +1,6 @@
 package com.nbsaas.adminstore.structure.rest.convert;
 
+import com.haoxuer.discover.user.data.enums.DataScope;
 import com.nbsaas.adminstore.structure.api.domain.simple.EmployeeSimple;
 import com.nbsaas.adminstore.structure.data.entity.Employee;
 import com.haoxuer.discover.data.rest.core.Conver;
@@ -19,6 +20,9 @@ public class EmployeeSimpleConver implements Conver<EmployeeSimple, Employee> {
         if (source.getOrg() != null) {
             result.setOrg(source.getOrg().getId());
             result.setOrgName(source.getOrg().getName());
+        }
+        if (source.getDataScope()==null){
+            source.setDataScope(DataScope.my);
         }
         result.setDataScope(source.getDataScope());
         if (source.getDataScope()!=null){

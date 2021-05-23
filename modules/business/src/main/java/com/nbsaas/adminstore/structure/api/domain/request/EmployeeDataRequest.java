@@ -2,6 +2,7 @@ package com.nbsaas.adminstore.structure.api.domain.request;
 
 
 import com.haoxuer.discover.user.api.domain.request.BaseRequest;
+import com.haoxuer.discover.user.data.enums.DataScope;
 import lombok.Data;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class EmployeeDataRequest extends BaseRequest {
     private String newPassword;
 
     private List<Long> selectRoles;
+    private DataScope dataScope;
 
 
 }

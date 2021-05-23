@@ -115,6 +115,7 @@ public class EmployeeResource implements EmployeeApi {
         bean.setPhone(request.getPhone());
         bean.setName(request.getName());
         bean.setDataType(request.getDataType());
+        bean.setDataScope(request.getDataScope());
         if (request.getOrg() != null) {
             bean.setOrg(organizationDao.findById(request.getOrg()));
         }
