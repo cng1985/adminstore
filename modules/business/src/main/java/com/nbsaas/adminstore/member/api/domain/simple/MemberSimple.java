@@ -26,7 +26,6 @@ public class MemberSimple implements Serializable {
      private Integer loginSize;
      @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
      private Date addDate;
-     private DataScope dataScope;
      private String phone;
      @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
      private Date lastDate;
@@ -35,6 +34,7 @@ public class MemberSimple implements Serializable {
      private String job;
 
      private String stateName;
-     private String dataScopeName;
+ private String dataScopeName;
+ private DataScope dataScope;
 
 }

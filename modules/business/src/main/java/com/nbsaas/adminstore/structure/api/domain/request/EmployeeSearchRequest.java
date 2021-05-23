@@ -21,6 +21,8 @@ public class EmployeeSearchRequest extends BasePageRequest {
      @Search(name = "phone",operator = Filter.Operator.like)
      private String phone;
 
+    @Search(name = "org.id",operator = Filter.Operator.eq)
+    private Integer org;
 
     private String sortField;
 

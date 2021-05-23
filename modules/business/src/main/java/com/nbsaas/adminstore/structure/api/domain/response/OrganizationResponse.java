@@ -2,43 +2,45 @@ package com.nbsaas.adminstore.structure.api.domain.response;
 
 
 import com.haoxuer.discover.rest.base.ResponseObject;
+import com.haoxuer.discover.user.data.enums.DataScope;
 import lombok.Data;
+
 import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
-*
-* Created by imake on 2021年04月12日20:57:24.
-*/
+ * Created by imake on 2021年04月12日20:57:24.
+ */
 
 @Data
 public class OrganizationResponse extends ResponseObject {
 
     private Integer id;
 
-     private Integer parent;
+    private Integer parent;
 
-     private String note;
+    private String note;
 
-     private Integer levelInfo;
+    private Integer levelInfo;
 
-     private String parentName;
+    private String parentName;
 
-     private Long num;
+    private Long num;
 
-     private Integer sortNum;
+    private Integer sortNum;
 
-     private String ids;
+    private String ids;
 
-     private Integer catalog;
+    private Integer catalog;
 
-     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
-     private Date lastDate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
+    private Date lastDate;
 
-     private String name;
+    private String name;
 
-     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
-     private Date addDate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
+    private Date addDate;
 
 
 }

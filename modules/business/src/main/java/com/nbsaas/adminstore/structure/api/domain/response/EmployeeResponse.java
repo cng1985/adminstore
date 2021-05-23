@@ -2,6 +2,7 @@ package com.nbsaas.adminstore.structure.api.domain.response;
 
 
 import com.haoxuer.discover.rest.base.ResponseObject;
+import com.haoxuer.discover.user.data.enums.DataScope;
 import lombok.Data;
 
 import java.util.List;
@@ -34,6 +35,7 @@ public class EmployeeResponse extends ResponseObject {
     private String orgName;
 
     private List<Long> selectRoles;
-
+    private String dataScopeName;
+    private DataScope dataScope;
 
 }

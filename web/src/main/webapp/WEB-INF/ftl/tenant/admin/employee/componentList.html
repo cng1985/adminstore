@@ -7,38 +7,30 @@
             <el-button type="primary" @click="handleClose">确 定</el-button>
         </span>
     </el-dialog>
-    <div class="search">
-        <el-form label-width="80px">
-            <el-row>
-                <el-col :span="6" style="padding: 0 8px;">
-                    <el-form-item label="姓名">
-                        <el-input v-model="searchObject.name" size="small" placeholder="姓名" name="name">
-                        </el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="6" style="padding: 0 8px;">
-                    <el-form-item label="电话">
-                        <el-input v-model="searchObject.phone" size="small" placeholder="电话" name="phone">
-                        </el-input>
-                    </el-form-item>
-                </el-col>
-
-                <el-col :span="12" style="padding: 0 10px;margin-top: 5px;">
-                    <el-row type="flex" justify="end">
-                        <el-button size="small" type="primary" @click="search">搜索</el-button>
-                        <el-button size="small" plain @click="clearData">清除条件</el-button>
-                    </el-row>
-                </el-col>
-            </el-row>
-        </el-form>
-    </div>
     <div class="data-content">
         <el-row style="height: 100%;">
             <el-col :span="4" class="goods_content_l">
-                fsdsd
+                <span class="title">{{treeTitle}}
+                    <i v-if="treeTitle != '部门管理'" class="el-icon-close" @click="chooseDepartment"></i>
+                </span>
+                <div class="tree">
+                    <el-tree :highlight-current="true" :expand-on-click-node="false" :data="departmentOptions"
+                        :props="defaultProps" @node-click="chooseDepartment">
+                        <span class="custom-tree-node jk" slot-scope="{ node, data }">
+                            <span>{{data.name}}</span>
+                        </span>
+                    </el-tree>
+                </div>
 
             </el-col>
             <el-col :span="20" style="padding-left: 15px;">
+                <div class="department">
+                    <el-row>
+                        <el-col :span="20">
+                            {{treeTitle}} {{tableData.total}}人
+                        </el-col>
+                    </el-row>
+                </div>
                 <div class="tool-add">
                     <el-button size="mini" @click="addView">新增</el-button>
                 </div>
@@ -47,27 +39,24 @@
                     @sort-change="changeTableSort" style="width: 100%;font-size: 12px;">
                     <el-table-column label="姓名" prop="name" width="100">
                     </el-table-column>
-                    <el-table-column label="电话" prop="phone" width="100">
-                    </el-table-column>
-                    <el-table-column label="数据范围" prop="dataScopeName" width="100">
-                    </el-table-column>
-                    <el-table-column label="账号" prop="no" width="100">
+                    <el-table-column label="职位" prop="job" width="100">
                     </el-table-column>
                     <el-table-column label="email" prop="email" width="100">
                     </el-table-column>
-                    <el-table-column label="职位" prop="job" width="100">
+                    <el-table-column label="电话" prop="phone" width="100">
                     </el-table-column>
-                    <el-table-column label="主要部门" prop="orgName" width="100">
+                    <el-table-column label="所在部门" prop="orgName" width="100">
                     </el-table-column>
-                    <el-table-column label="辅助部门" prop="departments" width="100">
+                    <el-table-column label="数据范围" prop="dataScopeName" >
                     </el-table-column>
-                    <el-table-column label="权限类型" prop="permissionTypeName" width="100">
-                    </el-table-column>
+
+
+                  
                     <el-table-column width="160" align="center" fixed="right" label="操作">
                         <template slot-scope="scope">
-                            <el-button type="primary" size="mini" @click="editView(scope.row)">编辑
+                            <el-button type="text" size="mini" @click="editView(scope.row)">编辑
                             </el-button>
-                            <el-button type="danger" size="mini" style="cursor: pointer;"
+                            <el-button type="text" size="mini" style="cursor: pointer;"
                                 @click="deleteData(scope.row)">删除
                             </el-button>
                         </template>
@@ -96,7 +85,6 @@
         label: '高管'
     }];
     var departments = [@departmentJson /];
-    var roles = [@userRoleJson /];
     var areas = [];
     var employeeListConfig = {};
     employeeListConfig.template = "#my-employee-list";
@@ -212,11 +200,46 @@
             },
             loading: false,
             tableData: {},
+            treeTitle: '部门管理',
+            filterText: '',
+            departmentOptions: departments,
+            labelOptions: labels,
+            roleOptions: roles,
+            areaOptions: areas,
+            defaultProps: {
+                emitPath: false,
+                checkStrictly: true,
+                children: 'child',
+                label: 'name',
+                value: 'id'
+            },
         }
     };
     employeeListConfig.methods.showAddView = function () {
         this.$router.push({ path: 'add' });
     };
+
+    employeeListConfig.methods.chooseDepartment = function (data) {
+        if (data == undefined) {
+            this.getSearchList();
+            return;
+        }
+        if (!data.id) {
+            this.treeTitle = '部门管理';
+            //this.parentId="";
+            //this.$refs.tree.setChecked([]);
+            $(".is-focusable").removeClass("is-current");
+            this.chooseDepartment();
+        } else {
+            this.treeTitle = data.name;
+        }
+        this.parentId = data.id;
+        this.searchObject.org = data.id;
+        this.searchObject.no = 1;
+        this.loading = true;
+        var that = this;
+        this.getSearchList();
+    }
     employeeListConfig.mounted = function () {
 
     }

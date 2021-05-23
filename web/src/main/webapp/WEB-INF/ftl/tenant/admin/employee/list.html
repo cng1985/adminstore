@@ -14,6 +14,289 @@
 
 	[@baseHead /]
 	<script type="text/javascript"></script>
+	<style>
+		.content-header {
+			padding: 0;
+		}
+	
+		.content {
+			padding: 10px 10px;
+		}
+	
+		ul {
+			padding: 0;
+			margin: 0;
+			list-style: none;
+		}
+	
+		[v-cloak] {
+			display: none;
+		}
+	
+		/* 导航 */
+		.navigation {
+			height: 60px;
+			line-height: 60px;
+			background-color: #f9f9f9;
+			padding-left: 10px;
+		}
+	
+		.navigation i {
+			color: #d9dee5;
+			display: inline-block;
+			font-size: 14px;
+			color: #666666;
+			font-style: normal;
+		}
+	
+		.navigation i::after {
+			content: '/';
+			display: inline-block;
+			margin: 0 5px;
+		}
+	
+		.navigation span {
+			font-weight: 700;
+			font-size: 14px;
+			color: #666666;
+		}
+	
+		/* 商品资料 */
+		.goods {
+			background-color: #fff;
+			padding: 0px 0px;
+			overflow: auto;
+		}
+	
+		/* 搜索 */
+		.search {
+			height: 58px;
+			background-color: #f9f9f9;
+			padding: 16px 0px 3px;
+			box-sizing: border-box;
+		}
+	
+		.goodsChoose input {
+			border-right: 0 !important;
+		}
+	
+		/* tab切换 */
+		.tab .el-menu--horizontal>.el-menu-item {
+			height: 36px;
+			line-height: 36px;
+		}
+	
+		/* 商品内容 */
+		.goods_content {
+			height: 100%;
+		}
+	
+		.goods_content_l .tree {
+			background-color: #f9f9f9;
+			height: 100%;
+			padding: 10px 0;
+		}
+	
+		.goods_content_l .title {
+			line-height: 40px;
+			cursor: pointer;
+			display: block;
+			background-color: #f9f9f9;
+			margin-bottom: 10px;
+			padding-left: 20px;
+		}
+	
+		.goods_content_l .title i {
+			float: right;
+			margin: 14px;
+		}
+	
+		.goods_content_l .el-tree {
+			background-color: transparent;
+		}
+	
+		.goods_content_l .el-tree .el-tree-node__label {
+			font-size: 13px;
+			font-weight: bold;
+		}
+	
+		.goods_content_l .el-tree-node {
+			margin: 5px 0;
+		}
+	
+		.goods_content_l .el-tree-node__content:hover {
+			background-color: #f9f9f9;
+		}
+	
+		.add_goods {
+			padding: 10px 0 5px 0;
+		}
+	
+		.goodsInfo {
+			overflow: hidden;
+			display: flex;
+			align-items: center;
+		}
+	
+		.goodsInfo img {
+			width: 50px;
+			height: 50px;
+			margin-right: 5px;
+			background-color: red;
+		}
+	
+		.goodsInfo div {
+			flex: 1;
+			font-size: 12px;
+			line-height: 16px;
+		}
+	
+		.goodsTitle {
+			background: #5491de;
+			color: #fff;
+			font-style: normal;
+			border-radius: 2px;
+			height: 14px;
+			width: 14px;
+			line-height: 14px;
+			padding: 0;
+			font-size: 12px;
+			display: inline-block;
+			text-align: center;
+			margin-right: 4px;
+		}
+	
+		.chlidrenGoodsList li {
+			min-height: 64px;
+			padding: 10px 0;
+			display: flex;
+			padding-left: 80px;
+			border-bottom: 1px solid #f9f9f9;
+		}
+	
+		.chlidrenGoodsList li div {
+			align-items: center;
+			display: flex;
+		}
+	
+		.el-table--enable-row-transition .el-table__body td {
+			padding: 10px 0 !important;
+		}
+	
+		.more {
+			margin-left: 10px;
+		}
+	
+		.el-popover .item {
+			font-size: 12px;
+			color: #000;
+			line-height: 20px;
+			cursor: pointer;
+		}
+	
+		.department {
+			line-height: 40px;
+		}
+	
+		.el-dialog__header {
+			padding: 14px 16px;
+			border-radius: 2px 2px 0 0;
+			background: #fff;
+			color: #666;
+			border-bottom: 1px solid #e9e9e9;
+		}
+	
+		.el-dialog__header .el-dialog__title {
+			margin: 0;
+			font-size: 14px;
+			line-height: 21px;
+			font-weight: bold;
+		}
+	
+		.el-dialog__header .el-dialog__headerbtn {
+			top: 14px;
+		}
+	
+		.personnelUpload {
+			width: 100%;
+		}
+	
+		.personnelUpload .el-upload {
+			width: 100%;
+		}
+	
+		.personnelUpload .el-upload .el-upload-dragger {
+			width: 100%;
+		}
+	
+		.personnelUpload .el-upload .el-upload__input {
+			display: none;
+		}
+	
+		.el-tree-node__content {
+			padding: 0 10px !important;
+		}
+	
+		.el-tree-node__content>label.el-checkbox {
+			position: absolute;
+			right: 15px;
+		}
+	
+		.departmentDialog .el-row {
+			height: 300px;
+		}
+	
+		.departmentDialog .title {
+			line-height: 18px;
+			font-size: 13px;
+			color: #9B9B9B;
+			margin-bottom: 18px;
+		}
+	
+		.departmentDialog li {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			font-size: 13px;
+			color: #3C3C3C;
+			line-height: 28px;
+			padding: 0 2px;
+			cursor: pointer;
+		}
+	
+		.is-current>.el-tree-node__content {
+			background-color: #2984EF !important;
+			color: #fff;
+		}
+	
+		.custom-tree-node i {
+			position: absolute;
+			right: 14px;
+			display: none;
+			overflow: hidden;
+		}
+	
+		.el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content i {
+			display: inline-block;
+		}
+	
+		.page {
+			text-align: right;
+			margin: 10px 0;
+		}
+	
+		.s-bg2 {
+			background: #000;
+		}
+	
+		.s-c {
+			color: bule;
+		}
+	
+		label {
+			margin: 0;
+		}
+	</style>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -115,7 +398,7 @@
 				param.level =1;
 				param.size =500;
 				param.fetch=0;
-				$.post("${siteurl}tenantRest/org/list.htm", param, function (result) {
+				$.post("${siteurl}tenantRest/organization/list.htm", param, function (result) {
 					if (result.code == 0) {
 						self.$store.commit('updateOrgOptions', result.list);
 					}

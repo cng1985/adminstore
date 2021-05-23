@@ -1,87 +1,74 @@
 [#macro employeeUpdateView]
-    <div class="model-form">
-        <el-page-header @back="goBack" content="更新员工">
-        </el-page-header>
-        <div class="model-content">
-            <el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px" >
-                <el-row :gutter="10">
- <el-col :span="12">
-     <el-form-item label="姓名" size="mini" prop="name">
-             <el-input v-model="form.name" name="name">
-             </el-input>
-     </el-form-item>
-      
- </el-col>
- <el-col :span="12">
-     <el-form-item label="电话" size="mini" prop="phone">
-             <el-input v-model="form.phone" name="phone">
-             </el-input>
-     </el-form-item>
-      
- </el-col>
- <el-col :span="22">
-     <el-form-item label="数据范围" size="mini" prop="dataScope">
-             <el-input v-model="form.dataScope" name="dataScope">
-             </el-input>
-     </el-form-item>
-      
- </el-col>
- <el-col :span="12">
-     <el-form-item label="账号" size="mini" prop="no">
-             <el-input v-model="form.no" name="no">
-             </el-input>
-     </el-form-item>
-      
- </el-col>
- <el-col :span="12">
-     <el-form-item label="email" size="mini" prop="email">
-             <el-input v-model="form.email" name="email">
-             </el-input>
-     </el-form-item>
-      
- </el-col>
- <el-col :span="12">
-     <el-form-item label="职位" size="mini" prop="job">
-             <el-input v-model="form.job" name="job">
-             </el-input>
-     </el-form-item>
-      
- </el-col>
- <el-col :span="12">
-     <el-form-item label="主要部门" size="mini" prop="org">
-             <el-select style="width: 100%;"  v-model="form.org" filterable clearable
-                     placeholder="请选择">
-                 <el-option v-for="item in orgOptions" :key="item.id"
-                         :label="item.name" :value="item.id">
-                 </el-option>
-             </el-select>
-     </el-form-item>
-      
- </el-col>
- <el-col :span="12">
-     <el-form-item label="辅助部门" size="mini" prop="departments">
-             <el-input v-model="form.departments" name="departments">
-             </el-input>
-     </el-form-item>
-      
- </el-col>
- <el-col :span="12">
-     <el-form-item label="权限类型" size="mini" prop="permissionType">
-             <el-input v-model="form.permissionType" name="permissionType">
-             </el-input>
-     </el-form-item>
-      
- </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="24"  style="text-align: right;padding-bottom: 20px;padding-top: 20px;">
-                        <el-button @click="goBack">取消</el-button>
-                        <el-button type="primary" @click="updateData">确定</el-button>
-                    </el-col>
-			     </el-row>
-            </el-form>
-        </div>
+<div class="model-form">
+    <el-page-header @back="goBack" content="更新员工">
+    </el-page-header>
+    <div class="model-content">
+        <el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px">
+            <el-row :gutter="10">
+                <el-col :span="12">
+                    <el-form-item label="姓名" size="mini" prop="name">
+                        <el-input v-model="form.name" name="name">
+                        </el-input>
+                    </el-form-item>
+
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="电话" size="mini" prop="phone">
+                        <el-input v-model="form.phone" name="phone">
+                        </el-input>
+                    </el-form-item>
+
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="数据范围" size="mini" prop="dataScope">
+                        <el-radio v-model="form.dataScope" label="my">本人相关</el-radio>
+                        <el-radio v-model="form.dataScope" label="myDepartment">本部门</el-radio>
+                        <el-radio v-model="form.dataScope" label="myAllDepartment">本部门及下属部门</el-radio>
+                        <el-radio v-model="form.dataScope" label="all">全部</el-radio>
+                    </el-form-item>
+
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="email" size="mini" prop="email">
+                        <el-input v-model="form.email" name="email">
+                        </el-input>
+                    </el-form-item>
+
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="职位" size="mini" prop="job">
+                        <el-input v-model="form.job" name="job">
+                        </el-input>
+                    </el-form-item>
+
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="主要部门" size="mini" prop="org">
+                        <el-select style="width: 100%;" v-model="form.org" filterable clearable placeholder="请选择">
+                            <el-option v-for="item in orgOptions" :key="item.id" :label="item.name" :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="角色" size="mini" prop="selectRoles">
+                        <el-checkbox-group style="width: 100%;" v-model="form.selectRoles">
+                            <el-checkbox v-for="item in roleOptions" :label="item.id" :key="item.id">
+                                {{item.name}}</el-checkbox>
+                        </el-checkbox-group>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="24" style="text-align: right;padding-bottom: 20px;padding-top: 20px;">
+                    <el-button @click="goBack">取消</el-button>
+                    <el-button type="primary" @click="updateData">确定</el-button>
+                </el-col>
+            </el-row>
+        </el-form>
     </div>
+</div>
 [/#macro]
 
 [#macro employeeUpdateConfig]
@@ -90,12 +77,14 @@
 </script>
 <script type="text/javascript">
     //更新组件开始
+    var roles = [@userRoleJson /];
+
     var employeeUpdateConfig = {};
     employeeUpdateConfig.template = "#my-employee-update";
     employeeUpdateConfig.methods = config.basicMethod();
     employeeUpdateConfig.methods.updateData = function () {
         var self = this;
-        this.$refs["ruleForm"].validate(function(valid){
+        this.$refs["ruleForm"].validate(function (valid) {
             if (valid) {
                 self.updateDataPost();
             } else {
@@ -111,7 +100,7 @@
         if (this.deforeUpdateData) {
             this.deforeUpdateData();
         }
-        this.postData("${siteurl}tenantRest/employee/update.htm", data, function (res) {
+        this.postJsonData("${siteurl}tenantRest/employee/update.htm", data, function (res) {
             if (res.code == 0) {
                 self.$message({
                     message: '修改数据成功',
@@ -135,8 +124,13 @@
                 job: '',
                 org: '',
                 departments: '',
-                permissionType: ''            },
+                permissionType: ''
+            },
+            roleOptions: roles,
             rules: {
+                name: [
+                    { required: true, message: '请输入姓名', trigger: 'blur' }
+                ]
             }
         }
     };
@@ -153,14 +147,14 @@
         });
     }
     employeeUpdateConfig.computed = {};
-              employeeUpdateConfig.computed.orgOptions = function () {
-                    return this.$store.state.orgOptions;
-                };
+    employeeUpdateConfig.computed.orgOptions = function () {
+        return this.$store.state.orgOptions;
+    };
 
     employeeUpdateConfig.destroyed = function () {
-            console.log("destroyed add view ");
-            
-	}
+        console.log("destroyed add view ");
+
+    }
     var employeeUpdateView = Vue.component('update-view', employeeUpdateConfig);
     //更新组件结束
 </script>

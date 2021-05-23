@@ -1,6 +1,7 @@
 package com.nbsaas.adminstore.structure.api.domain.simple;
 
 
+import com.haoxuer.discover.user.data.enums.DataScope;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -31,5 +32,6 @@ public class EmployeeSimple implements Serializable {
     private Integer org;
 
     private String orgName;
-
+    private String dataScopeName;
+    private DataScope dataScope;
 }

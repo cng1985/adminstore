@@ -20,7 +20,12 @@ public class EmployeeSimpleConver implements Conver<EmployeeSimple, Employee> {
             result.setOrg(source.getOrg().getId());
             result.setOrgName(source.getOrg().getName());
         }
-
+        result.setDataScope(source.getDataScope());
+        if (source.getDataScope()!=null){
+            result.setDataScopeName(source.getDataScope()+"");
+        }else{
+            result.setDataScopeName("");
+        }
         return result;
     }
 }
