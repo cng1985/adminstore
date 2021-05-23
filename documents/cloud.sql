@@ -4001,6 +4001,31 @@ INSERT INTO `bs_config` (`id`, `addDate`, `lastDate`, `name`, `phone`, `account_
 	(1, '2019-09-11 19:10:35', '2019-09-11 19:10:35', '后台管理系统', '', NULL);
 /*!40000 ALTER TABLE `bs_config` ENABLE KEYS */;
 
+-- 导出  表 adminstore.bs_customer 结构
+DROP TABLE IF EXISTS `bs_customer`;
+CREATE TABLE IF NOT EXISTS `bs_customer` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `addDate` datetime DEFAULT NULL,
+  `lastDate` datetime DEFAULT NULL,
+  `beginDate` datetime DEFAULT NULL,
+  `introducer` varchar(30) DEFAULT NULL,
+  `name` varchar(30) DEFAULT NULL,
+  `note` varchar(255) DEFAULT NULL,
+  `phone` varchar(30) DEFAULT NULL,
+  `score` int(11) DEFAULT NULL,
+  `creator_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK28tiqhrbhilj3cqxmvjp8hvke` (`creator_id`),
+  CONSTRAINT `FK28tiqhrbhilj3cqxmvjp8hvke` FOREIGN KEY (`creator_id`) REFERENCES `user_info` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  adminstore.bs_customer 的数据：~1 rows (大约)
+DELETE FROM `bs_customer`;
+/*!40000 ALTER TABLE `bs_customer` DISABLE KEYS */;
+INSERT INTO `bs_customer` (`id`, `addDate`, `lastDate`, `beginDate`, `introducer`, `name`, `note`, `phone`, `score`, `creator_id`) VALUES
+	(1, '2021-05-23 15:18:00', '2021-05-23 15:18:37', '2021-05-28 00:00:00', '423', '423', '<p>23423<br/></p>', '234', 0, 1);
+/*!40000 ALTER TABLE `bs_customer` ENABLE KEYS */;
+
 -- 导出  表 adminstore.bs_exception_log 结构
 DROP TABLE IF EXISTS `bs_exception_log`;
 CREATE TABLE IF NOT EXISTS `bs_exception_log` (
@@ -4190,11 +4215,11 @@ CREATE TABLE IF NOT EXISTS `menu` (
   CONSTRAINT `FKqcf9gem97gqa5qjm4d3elcqt5` FOREIGN KEY (`pid`) REFERENCES `menu` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.menu 的数据：~56 rows (大约)
+-- 正在导出表  adminstore.menu 的数据：~57 rows (大约)
 DELETE FROM `menu`;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
 INSERT INTO `menu` (`id`, `addDate`, `code`, `ids`, `lastDate`, `levelInfo`, `lft`, `name`, `rgt`, `sortNum`, `catalog`, `icon`, `nums`, `path`, `permission`, `pid`, `menuType`) VALUES
-	(1, '2017-09-25 14:25:39', '', '1', '2017-09-25 14:25:39', 1, 1, '管理系统', 116, 0, 0, '', NULL, '', '1', NULL, 1),
+	(1, '2017-09-25 14:25:39', '', '1', '2017-09-25 14:25:39', 1, 1, '管理系统', 118, 0, 0, '', NULL, '', '1', NULL, 1),
 	(2, '2018-08-21 21:48:58', NULL, '1,2', '2018-08-21 21:48:58', 2, 2, '系统设置', 29, 55, 0, 'fa  fa-gear', 0, '', '2', 1, NULL),
 	(3, '2017-09-25 14:34:37', NULL, '1,2,3', '2017-09-25 14:34:37', 3, 3, '菜单管理', 4, 0, 0, 'fa  fa-reorder', 0, 'admin/menu/view_list.htm', 'menu', 2, NULL),
 	(4, '2017-09-25 14:36:59', '', '1,2,4', '2017-09-25 14:36:59', 3, 5, '角色管理', 6, 0, 0, 'fa  fa-tree', 0, 'admin/userrole/view_list.htm', 'userrole', 2, 0),
@@ -4213,45 +4238,46 @@ INSERT INTO `menu` (`id`, `addDate`, `code`, `ids`, `lastDate`, `levelInfo`, `lf
 	(17, '2018-07-10 21:58:05', NULL, '1,15,17', '2018-07-10 21:58:05', 3, 39, '存储插件配置', 40, 0, 0, 'fa  fa-cloud-upload', 0, 'admin/plugin_storage/list.htm', 'plugin_storage', 15, NULL),
 	(18, '2018-07-10 21:57:36', NULL, '1,15,18', '2018-07-10 21:57:36', 3, 41, '推送插件配置', 42, 0, 0, 'fa fa-circle-o', 0, 'admin/plugin_push/list.htm', 'plugin_push', 15, NULL),
 	(19, '2017-12-27 14:04:52', NULL, '1,19', '2017-12-27 14:04:52', 2, 52, '控制台', 53, 0, 0, 'fa fa-home', 0, 'admin/index.htm', '19', 1, NULL),
-	(20, '2017-12-27 14:19:54', NULL, '1,20', '2017-12-27 14:19:54', 2, 54, '用户管理', 61, 0, 0, 'fa  fa-users', 0, '', '20', 1, NULL),
+	(20, '2017-12-27 14:19:54', NULL, '1,20', '2017-12-27 14:19:54', 2, 54, '用户管理', 59, 0, 0, 'fa  fa-users', 0, '', '20', 1, NULL),
 	(21, '2017-12-27 14:27:31', NULL, '1,20,21', '2017-12-27 14:27:31', 3, 55, '用户管理', 56, 0, 0, 'fa fa-user', 0, 'admin/member/view_list.htm', 'member', 20, NULL),
-	(22, '2019-09-12 16:09:33', NULL, '1,20,22', '2019-09-12 16:09:33', 3, 57, '账号管理', 58, 0, 0, 'fa fa-list', 0, 'admin/member/accounts.htm', 'accounts', 20, NULL),
-	(23, '2017-12-27 15:05:28', NULL, '1,20,23', '2017-12-27 15:05:28', 3, 59, '登陆日志', 60, 0, 0, 'fa fa-support', 0, 'admin/userloginlog/view_list.htm', 'userloginlog', 20, NULL),
+	(23, '2017-12-27 15:05:28', NULL, '1,20,23', '2017-12-27 15:05:28', 3, 57, '登陆日志', 58, 0, 0, 'fa fa-support', 0, 'admin/userloginlog/view_list.htm', 'userloginlog', 20, NULL),
 	(24, '2018-12-17 22:04:25', NULL, '1,15,24', '2018-12-17 22:04:25', 3, 43, '支付插件管理', 44, 0, 0, 'fa fa-circle-o', 0, '', '24', 15, NULL),
 	(25, '2018-12-17 22:04:32', NULL, '1,15,25', '2018-12-17 22:04:32', 3, 45, '第三方登陆插件配置', 46, 0, 0, 'fa fa-circle-o', 0, 'admin/plugin_oauth/list.htm', 'plugin_oauth', 15, NULL),
 	(26, '2018-12-17 22:04:29', NULL, '1,15,26', '2018-12-17 22:04:29', 3, 47, '邮件插件配置', 48, 0, 0, 'fa fa-circle-o', 0, '', '26', 15, NULL),
-	(27, '2020-11-17 21:16:02', NULL, '1,27', '2020-11-17 21:16:02', 2, 62, '组织管理', 67, 0, 0, 'fa fa-circle-o', 0, '', '27', 1, NULL),
-	(28, '2018-07-10 21:25:38', NULL, '1,28', '2018-07-10 21:25:38', 2, 68, '云储存', 73, NULL, 0, 'fa fa-circle-o', NULL, '', '', 1, NULL),
-	(29, '2018-07-10 21:28:12', NULL, '1,28,29', '2018-07-10 21:28:12', 3, 69, ' Bucket管理 ', 70, NULL, 0, 'fa fa-circle-o', NULL, '', '', 28, NULL),
-	(30, '2018-07-10 21:29:17', NULL, '1,28,30', '2018-07-10 21:29:17', 3, 71, '统计分析', 72, NULL, 0, 'fa fa-circle-o', NULL, '', '', 28, NULL),
-	(31, '2018-07-10 21:30:49', NULL, '1,31', '2018-07-10 21:30:49', 2, 74, '积分系统', 79, NULL, 0, 'fa fa-circle-o', NULL, '', '', 1, NULL),
-	(32, '2018-07-10 21:31:03', NULL, '1,31,32', '2018-07-10 21:31:03', 3, 75, '积分明细', 76, NULL, 0, 'fa fa-circle-o', NULL, '', '', 31, NULL),
-	(33, '2018-07-10 21:31:09', NULL, '1,31,33', '2018-07-10 21:31:09', 3, 77, '积分规则管理', 78, NULL, 0, 'fa fa-circle-o', NULL, '', '', 31, NULL),
-	(34, '2018-07-16 15:02:29', NULL, '1,34', '2018-07-16 15:02:29', 2, 80, '定时任务管理', 87, 3, 0, 'fa  fa-calendar-plus-o', 0, '', '34', 1, NULL),
-	(35, '2018-07-16 14:57:01', NULL, '1,34,35', '2018-07-16 14:57:01', 3, 81, '控制台', 82, 0, 0, 'fa fa-dashboard', 0, 'admin/crontask/index.htm', '35', 34, NULL),
-	(36, '2018-07-16 14:57:20', NULL, '1,34,36', '2018-07-16 14:57:20', 3, 83, '任务管理', 84, 0, 0, 'fa   fa-list-ol', 0, 'admin/crontask/view_list.htm', 'crontask', 34, NULL),
-	(37, '2018-07-16 14:56:48', NULL, '1,34,37', '2018-07-16 14:56:48', 3, 85, '运行记录', 86, 0, 0, 'fa fa-reorder', 0, 'admin/crontaskrecord/view_list.htm', 'crontaskrecord', 34, NULL),
-	(38, '2018-07-16 14:58:54', NULL, '1,38', '2018-07-16 14:58:54', 2, 88, '消息通知', 95, 5, 0, 'fa  fa-comments', 0, '', '38', 1, NULL),
-	(39, '2018-12-07 08:56:04', NULL, '1,38,39', '2018-12-07 08:56:04', 3, 89, '收件箱', 90, 0, 0, 'fa fa-circle-o', 0, 'admin/usernotificationmember/view_list.htm', 'usernotificationmember', 38, NULL),
-	(40, '2018-07-16 15:00:19', NULL, '1,38,40', '2018-07-16 15:00:19', 3, 91, '通知分类', 92, NULL, 0, 'fa fa-circle-o', NULL, 'admin/usernotificationcatalog/view_list.htm', 'usernotificationcatalog', 38, NULL),
-	(41, '2018-07-16 15:08:44', NULL, '1,41', '2018-07-16 15:08:44', 2, 96, '分类管理', 101, 8, 0, 'fa  fa-tree', 0, '', 'types', 1, NULL),
-	(42, '2018-07-16 15:07:53', NULL, '1,41,42', '2018-07-16 15:07:53', 3, 97, '地区管理', 98, 0, 0, 'fa  fa-building-o', 0, 'admin/area/view_list.htm', 'area', 41, NULL),
+	(27, '2020-11-17 21:16:02', NULL, '1,27', '2020-11-17 21:16:02', 2, 60, '组织管理', 65, 0, 0, 'fa fa-th', 0, '', '27', 1, NULL),
+	(28, '2018-07-10 21:25:38', NULL, '1,28', '2018-07-10 21:25:38', 2, 66, '云储存', 71, NULL, 0, 'fa fa-circle-o', NULL, '', '', 1, NULL),
+	(29, '2018-07-10 21:28:12', NULL, '1,28,29', '2018-07-10 21:28:12', 3, 67, ' Bucket管理 ', 68, NULL, 0, 'fa fa-circle-o', NULL, '', '', 28, NULL),
+	(30, '2018-07-10 21:29:17', NULL, '1,28,30', '2018-07-10 21:29:17', 3, 69, '统计分析', 70, NULL, 0, 'fa fa-circle-o', NULL, '', '', 28, NULL),
+	(31, '2018-07-10 21:30:49', NULL, '1,31', '2018-07-10 21:30:49', 2, 72, '积分系统', 77, NULL, 0, 'fa fa-circle-o', NULL, '', '', 1, NULL),
+	(32, '2018-07-10 21:31:03', NULL, '1,31,32', '2018-07-10 21:31:03', 3, 73, '积分明细', 74, NULL, 0, 'fa fa-circle-o', NULL, '', '', 31, NULL),
+	(33, '2018-07-10 21:31:09', NULL, '1,31,33', '2018-07-10 21:31:09', 3, 75, '积分规则管理', 76, NULL, 0, 'fa fa-circle-o', NULL, '', '', 31, NULL),
+	(34, '2018-07-16 15:02:29', NULL, '1,34', '2018-07-16 15:02:29', 2, 78, '定时任务管理', 85, 3, 0, 'fa  fa-calendar-plus-o', 0, '', '34', 1, NULL),
+	(35, '2018-07-16 14:57:01', NULL, '1,34,35', '2018-07-16 14:57:01', 3, 79, '控制台', 80, 0, 0, 'fa fa-dashboard', 0, 'admin/crontask/index.htm', '35', 34, NULL),
+	(36, '2018-07-16 14:57:20', NULL, '1,34,36', '2018-07-16 14:57:20', 3, 81, '任务管理', 82, 0, 0, 'fa   fa-list-ol', 0, 'admin/crontask/view_list.htm', 'crontask', 34, NULL),
+	(37, '2018-07-16 14:56:48', NULL, '1,34,37', '2018-07-16 14:56:48', 3, 83, '运行记录', 84, 0, 0, 'fa fa-reorder', 0, 'admin/crontaskrecord/view_list.htm', 'crontaskrecord', 34, NULL),
+	(38, '2018-07-16 14:58:54', NULL, '1,38', '2018-07-16 14:58:54', 2, 86, '消息通知', 93, 5, 0, 'fa  fa-comments', 0, '', '38', 1, NULL),
+	(39, '2018-12-07 08:56:04', NULL, '1,38,39', '2018-12-07 08:56:04', 3, 87, '收件箱', 88, 0, 0, 'fa fa-circle-o', 0, 'admin/usernotificationmember/view_list.htm', 'usernotificationmember', 38, NULL),
+	(40, '2018-07-16 15:00:19', NULL, '1,38,40', '2018-07-16 15:00:19', 3, 89, '通知分类', 90, NULL, 0, 'fa fa-circle-o', NULL, 'admin/usernotificationcatalog/view_list.htm', 'usernotificationcatalog', 38, NULL),
+	(41, '2018-07-16 15:08:44', NULL, '1,41', '2018-07-16 15:08:44', 2, 94, '分类管理', 99, 8, 0, 'fa  fa-tree', 0, '', 'types', 1, NULL),
+	(42, '2018-07-16 15:07:53', NULL, '1,41,42', '2018-07-16 15:07:53', 3, 95, '地区管理', 96, 0, 0, 'fa  fa-building-o', 0, 'admin/area/view_list.htm', 'area', 41, NULL),
 	(43, '2018-12-01 11:07:37', NULL, '1,2,43', '2018-12-01 11:07:37', 3, 21, '个人资料管理', 22, -1, 0, 'glyphicon glyphicon-user', 0, 'admin/system/profile.htm', 'admin_system_profile', 2, NULL),
-	(44, '2018-12-07 08:57:37', NULL, '1,38,44', '2018-12-07 08:57:37', 3, 93, '通知管理', 94, 3, 0, 'fa fa-circle-o', NULL, 'admin/usernotification/view_list.htm', 'usernotification', 38, NULL),
+	(44, '2018-12-07 08:57:37', NULL, '1,38,44', '2018-12-07 08:57:37', 3, 91, '通知管理', 92, 3, 0, 'fa fa-circle-o', NULL, 'admin/usernotification/view_list.htm', 'usernotification', 38, NULL),
 	(45, '2018-12-17 22:04:21', NULL, '1,15,45', '2018-12-17 22:04:21', 3, 49, '服务管理', 50, -1, 0, 'fa fa-circle-o', NULL, 'admin/plugin_proxy/list.htm', 'plugin_proxy', 15, NULL),
 	(47, '2019-09-11 19:15:40', NULL, '1,2,47', '2019-09-11 19:15:40', 3, 23, '数据字典管理', 24, 0, 0, 'fa  fa-square', 0, 'admin/dictionary/view_list.htm', 'dictionary', 2, NULL),
 	(48, '2019-09-11 19:14:28', NULL, '1,2,48', '2019-09-11 19:14:28', 3, 25, '系统配置', 26, -1, 0, 'fa  fa-cogs', 0, 'admin/system/index.htm', 'admin_system_index', 2, NULL),
-	(49, '2019-09-12 16:43:16', NULL, '1,49', '2019-09-12 16:43:16', 2, 102, '云服务', 105, 0, 0, 'fa  fa-cloud', 0, '', '49', 1, NULL),
-	(50, '2019-09-12 16:43:04', NULL, '1,49,50', '2019-09-12 16:43:04', 3, 103, '云函数', 104, 0, 0, 'fa  fa-code', 0, 'admin/function/view_list.htm', 'function', 49, NULL),
-	(51, '2019-09-17 20:47:13', NULL, '1,51', '2019-09-17 20:47:13', 2, 106, '广告中心', 111, 0, 0, 'fa fa fa-buysellads', 0, '', '51', 1, NULL),
-	(52, '2019-09-17 20:49:56', NULL, '1,51,52', '2019-09-17 20:49:56', 3, 107, '广告位管理', 108, 0, 0, 'fa  fa-minus-square', 0, 'admin/adposition/view_list.htm', 'adposition', 51, NULL),
-	(53, '2019-09-17 20:50:11', NULL, '1,51,53', '2019-09-17 20:50:11', 3, 109, '广告管理', 110, 0, 0, 'fa fa-life-buoy', 0, 'admin/ad/view_list.htm', 'ad', 51, NULL),
-	(54, '2020-11-17 21:16:43', NULL, '1,27,54', '2020-11-17 21:16:43', 3, 63, '组织架构', 64, 0, 0, 'fa fa-circle-o', 0, 'admin/organization/view_list.htm', 'organization', 27, NULL),
-	(55, '2020-11-17 21:16:54', NULL, '1,27,55', '2020-11-17 21:16:54', 3, 65, '员工管理', 66, 0, 0, 'fa fa-circle-o', 0, 'admin/employee/view_list.htm', 'employee', 27, NULL),
+	(49, '2019-09-12 16:43:16', NULL, '1,49', '2019-09-12 16:43:16', 2, 100, '云服务', 103, 0, 0, 'fa  fa-cloud', 0, '', '49', 1, NULL),
+	(50, '2019-09-12 16:43:04', NULL, '1,49,50', '2019-09-12 16:43:04', 3, 101, '云函数', 102, 0, 0, 'fa  fa-code', 0, 'admin/function/view_list.htm', 'function', 49, NULL),
+	(51, '2019-09-17 20:47:13', NULL, '1,51', '2019-09-17 20:47:13', 2, 104, '广告中心', 109, 0, 0, 'fa fa fa-buysellads', 0, '', '51', 1, NULL),
+	(52, '2019-09-17 20:49:56', NULL, '1,51,52', '2019-09-17 20:49:56', 3, 105, '广告位管理', 106, 0, 0, 'fa  fa-minus-square', 0, 'admin/adposition/view_list.htm', 'adposition', 51, NULL),
+	(53, '2019-09-17 20:50:11', NULL, '1,51,53', '2019-09-17 20:50:11', 3, 107, '广告管理', 108, 0, 0, 'fa fa-life-buoy', 0, 'admin/ad/view_list.htm', 'ad', 51, NULL),
+	(54, '2020-11-17 21:16:43', NULL, '1,27,54', '2020-11-17 21:16:43', 3, 61, '组织架构', 62, 0, 0, 'fa fa-circle-o', 0, 'admin/organization/view_list.htm', 'organization', 27, NULL),
+	(55, '2020-11-17 21:16:54', NULL, '1,27,55', '2020-11-17 21:16:54', 3, 63, '员工管理', 64, 0, 0, 'fa fa-circle-o', 0, 'admin/employee/view_list.htm', 'employee', 27, NULL),
 	(56, '2021-04-09 18:43:19', NULL, '1,2,56', '2021-04-09 18:43:19', 3, 27, '菜单树管理', 28, NULL, 0, 'fa fa-circle-o', NULL, 'admin/menu/tree.htm', 'menu', 2, NULL),
-	(57, '2021-05-16 14:40:09', NULL, '1,41,57', '2021-05-16 14:40:09', 3, 99, '商圈管理', 100, 1, 0, 'fa  fa-cloud', NULL, 'admin/businesscircle/view_list.htm', 'businesscircle', 41, 0),
-	(58, '2021-05-23 14:35:29', NULL, '1,58', '2021-05-23 14:35:29', 2, 112, 'oa系统', 115, 0, 0, 'fa fa-circle-o', NULL, '', '58', 1, 0),
-	(59, '2021-05-23 14:35:43', NULL, '1,58,59', '2021-05-23 14:35:43', 3, 113, '工作日志管理', 114, NULL, 0, 'fa fa-circle-o', NULL, 'admin/worklogger/view_list.htm', 'worklogger', 58, NULL);
+	(57, '2021-05-16 14:40:09', NULL, '1,41,57', '2021-05-16 14:40:09', 3, 97, '商圈管理', 98, 1, 0, 'fa  fa-cloud', NULL, 'admin/businesscircle/view_list.htm', 'businesscircle', 41, 0),
+	(58, '2021-05-23 14:35:29', NULL, '1,58', '2021-05-23 14:35:29', 2, 110, 'oa系统', 113, 0, 0, 'fa  fa-bookmark', NULL, '', '58', 1, 0),
+	(59, '2021-05-23 14:35:43', NULL, '1,58,59', '2021-05-23 14:35:43', 3, 111, '工作日志管理', 112, NULL, 0, 'fa fa-circle-o', NULL, 'admin/worklogger/view_list.htm', 'worklogger', 58, NULL),
+	(60, '2021-05-23 15:14:40', NULL, '1,60', '2021-05-23 15:14:40', 2, 114, '客户中心', 117, 0, 0, 'fa  fa-users', NULL, '', '60', 1, NULL),
+	(61, '2021-05-23 15:15:14', NULL, '1,60,61', '2021-05-23 15:15:14', 3, 115, '客户管理', 116, NULL, NULL, 'fa fa-circle-o', NULL, 'admin/customer/view_list.htm', 'customer', 60, NULL);
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 
 -- 导出  表 adminstore.plugin_config 结构
@@ -4959,7 +4985,7 @@ CREATE TABLE IF NOT EXISTS `user_identification` (
 DELETE FROM `user_identification`;
 /*!40000 ALTER TABLE `user_identification` DISABLE KEYS */;
 INSERT INTO `user_identification` (`id`, `addDate`, `lastDate`, `bindType`, `no`, `user_id`, `loginSize`) VALUES
-	(1, '2018-12-01 10:26:11', '2021-05-23 14:41:16', 2, 'ada', 1, 16),
+	(1, '2018-12-01 10:26:11', '2021-05-23 15:28:33', 2, 'ada', 1, 23),
 	(2, '2018-12-01 10:26:23', '2018-12-01 10:26:23', 2, 'admin', 2, NULL),
 	(9, '2019-09-12 16:03:06', '2019-09-12 16:03:06', 2, '3', 10, NULL);
 /*!40000 ALTER TABLE `user_identification` ENABLE KEYS */;
@@ -5007,7 +5033,7 @@ CREATE TABLE IF NOT EXISTS `user_info` (
 DELETE FROM `user_info`;
 /*!40000 ALTER TABLE `user_info` DISABLE KEYS */;
 INSERT INTO `user_info` (`id`, `addDate`, `lastDate`, `avatar`, `catalog`, `loginSize`, `name`, `phone`, `state`, `edge`, `introduce`, `note`, `sex`, `household_id`, `companyName`, `email`, `job`, `account_id`, `storeState`, `no`, `dataType`, `permissionType`, `org_id`, `dataScope`, `structure_id`) VALUES
-	(1, '2017-12-27 14:44:00', '2021-05-23 14:52:12', '', 0, 1129, '管理员3321', '', NULL, NULL, '', 'o21', '', NULL, NULL, NULL, '', NULL, NULL, 'o', NULL, NULL, NULL, 0, NULL),
+	(1, '2017-12-27 14:44:00', '2021-05-23 15:31:23', '', 0, 1166, '管理员3321', '', NULL, NULL, '', 'o21', '', NULL, NULL, NULL, '', NULL, NULL, 'o', NULL, NULL, NULL, 0, NULL),
 	(2, '2019-09-12 16:31:05', '2021-05-23 14:29:51', NULL, 0, 39, 'super', 'a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL),
 	(10, '2019-09-12 16:26:00', '2021-05-23 14:29:51', '', 0, 6, '333', '', NULL, NULL, '3', '1', '2', NULL, NULL, NULL, '4', NULL, NULL, '', NULL, NULL, NULL, 0, NULL);
 /*!40000 ALTER TABLE `user_info` ENABLE KEYS */;
@@ -5095,7 +5121,7 @@ CREATE TABLE IF NOT EXISTS `user_login_log` (
   CONSTRAINT `FKj91w0nnfocpdp796lr3ot4lxs` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.user_login_log 的数据：~54 rows (大约)
+-- 正在导出表  adminstore.user_login_log 的数据：~63 rows (大约)
 DELETE FROM `user_login_log`;
 /*!40000 ALTER TABLE `user_login_log` DISABLE KEYS */;
 INSERT INTO `user_login_log` (`id`, `addDate`, `lastDate`, `ip`, `state`, `user_id`, `account`, `client`, `note`, `password`) VALUES
@@ -5153,7 +5179,15 @@ INSERT INTO `user_login_log` (`id`, `addDate`, `lastDate`, `ip`, `state`, `user_
 	(53, '2021-05-16 19:53:22', '2021-05-16 19:53:22', '127.0.0.1', 1, 1, 'ada', 'web', NULL, NULL),
 	(54, '2021-05-23 14:29:48', '2021-05-23 14:29:48', '127.0.0.1', 1, 1, 'ada', 'web', NULL, NULL),
 	(55, '2021-05-23 14:36:59', '2021-05-23 14:36:59', '127.0.0.1', 1, 1, 'ada', 'web', NULL, NULL),
-	(56, '2021-05-23 14:41:16', '2021-05-23 14:41:16', '127.0.0.1', 1, 1, 'ada', 'web', NULL, NULL);
+	(56, '2021-05-23 14:41:16', '2021-05-23 14:41:16', '127.0.0.1', 1, 1, 'ada', 'web', NULL, NULL),
+	(57, '2021-05-23 15:03:46', '2021-05-23 15:03:46', '127.0.0.1', 1, 1, 'ada', 'web', NULL, NULL),
+	(58, '2021-05-23 15:16:41', '2021-05-23 15:16:41', '127.0.0.1', 1, 1, 'ada', 'web', NULL, NULL),
+	(59, '2021-05-23 15:17:04', '2021-05-23 15:17:04', '127.0.0.1', 1, 1, 'ada', 'web', NULL, NULL),
+	(60, '2021-05-23 15:18:14', '2021-05-23 15:18:14', '127.0.0.1', 1, 1, 'ada', 'web', NULL, NULL),
+	(61, '2021-05-23 15:21:05', '2021-05-23 15:21:05', '192.168.4.108', 0, 1, 'ada', 'web', NULL, '1qaz2wsx3edc'),
+	(62, '2021-05-23 15:21:10', '2021-05-23 15:21:10', '192.168.4.108', 1, 1, 'ada', 'web', NULL, NULL),
+	(63, '2021-05-23 15:28:28', '2021-05-23 15:28:28', '192.168.4.108', 1, 1, 'ada', 'web', NULL, NULL),
+	(64, '2021-05-23 15:28:33', '2021-05-23 15:28:33', '192.168.4.108', 1, 1, 'ada', 'web', NULL, NULL);
 /*!40000 ALTER TABLE `user_login_log` ENABLE KEYS */;
 
 -- 导出  表 adminstore.user_notification 结构
@@ -5350,7 +5384,7 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 DELETE FROM `user_role`;
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
 INSERT INTO `user_role` (`id`, `addDate`, `lastDate`, `alias`, `description`, `name`, `roleType`, `catalog_id`) VALUES
-	(1, '2021-05-16 14:47:28', '2021-05-23 14:36:34', '', '', 'admin', 0, 2),
+	(1, '2021-05-16 14:47:28', '2021-05-23 15:16:57', '', '', 'admin', 0, 2),
 	(2, '2020-11-17 21:43:48', '2020-11-17 21:43:48', '管理员', '后台管理员', '管理员', 0, 2);
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 
@@ -5363,7 +5397,7 @@ CREATE TABLE IF NOT EXISTS `user_role_authority` (
   CONSTRAINT `FKo6xok4ngrsuacqkyjpqbykn9l` FOREIGN KEY (`role_id`) REFERENCES `user_role` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.user_role_authority 的数据：~75 rows (大约)
+-- 正在导出表  adminstore.user_role_authority 的数据：~77 rows (大约)
 DELETE FROM `user_role_authority`;
 /*!40000 ALTER TABLE `user_role_authority` DISABLE KEYS */;
 INSERT INTO `user_role_authority` (`role_id`, `permission`) VALUES
@@ -5410,6 +5444,8 @@ INSERT INTO `user_role_authority` (`role_id`, `permission`) VALUES
 	(1, 'adposition'),
 	(1, 'ad'),
 	(1, '58'),
+	(1, 'worklogger'),
+	(1, '60'),
 	(1, '15'),
 	(1, 'plugin_proxy'),
 	(1, 'plugin_sendcode'),
@@ -5441,7 +5477,7 @@ INSERT INTO `user_role_authority` (`role_id`, `permission`) VALUES
 	(1, 'tmpl'),
 	(1, 'dictionary'),
 	(1, '1'),
-	(1, 'worklogger');
+	(1, 'customer');
 /*!40000 ALTER TABLE `user_role_authority` ENABLE KEYS */;
 
 -- 导出  表 adminstore.user_role_catalog 结构
