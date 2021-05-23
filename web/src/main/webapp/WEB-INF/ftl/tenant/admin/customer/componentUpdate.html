@@ -1,0 +1,147 @@
+[#macro customerUpdateView]
+    <div class="model-form">
+        <el-page-header @back="goBack" content="更新客户">
+        </el-page-header>
+        <div class="model-content">
+            <el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px" >
+                <el-row :gutter="10">
+ <el-col :span="12">
+     <el-form-item label="客户名称" size="mini" prop="name">
+             <el-input v-model="form.name" name="name">
+             </el-input>
+     </el-form-item>
+      
+ </el-col>
+ <el-col :span="12">
+     <el-form-item label="联系电话" size="mini" prop="phone">
+             <el-input v-model="form.phone" name="phone">
+             </el-input>
+     </el-form-item>
+      
+ </el-col>
+ <el-col :span="12">
+     <el-form-item label="介绍人" size="mini" prop="introducer">
+             <el-input v-model="form.introducer" name="introducer">
+             </el-input>
+     </el-form-item>
+      
+ </el-col>
+ <el-col :span="12">
+     <el-form-item label="关系分数" size="mini" prop="score">
+         <el-input-number v-model="form.score" name="score" type="textarea" :min="0" :max="100"></el-input-number>
+     </el-form-item>
+      
+ </el-col>
+ <el-col :span="12">
+     <el-form-item label="合作日期" size="mini" prop="beginDate">
+         <el-date-picker v-model="form.beginDate" type="date"   value-format="yyyy-MM-dd"  placeholder="选择日期">
+         </el-date-picker>
+     </el-form-item>
+      
+ </el-col>
+ <el-col :span="23">
+         <div style="margin-left: 160px;">
+			<div id="uenote" name="note" type="text/plain"></div>
+		</div>
+      
+ </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="24"  style="text-align: right;padding-bottom: 20px;padding-top: 20px;">
+                        <el-button @click="goBack">取消</el-button>
+                        <el-button type="primary" @click="updateData">确定</el-button>
+                    </el-col>
+			     </el-row>
+            </el-form>
+        </div>
+    </div>
+[/#macro]
+
+[#macro customerUpdateConfig]
+<script type="text/x-template" id="my-customer-update">
+    [@customerUpdateView /]
+</script>
+<script type="text/javascript">
+    //更新组件开始
+            var uenote ;
+    var customerUpdateConfig = {};
+    customerUpdateConfig.template = "#my-customer-update";
+    customerUpdateConfig.methods = config.basicMethod();
+    customerUpdateConfig.methods.updateData = function () {
+        var self = this;
+        this.$refs["ruleForm"].validate(function(valid){
+            if (valid) {
+                self.updateDataPost();
+            } else {
+                console.log('error submit!!');
+                return false;
+            }
+        });
+    }
+
+    customerUpdateConfig.methods.updateDataPost = function () {
+        var self = this, data = this.form;
+        //delete data.customerCatalog;
+        if (this.deforeUpdateData) {
+            this.deforeUpdateData();
+        }
+                if (uenote) {
+                    data.note = uenote.getContent();
+                }
+        this.postData("${siteurl}tenantRest/customer/update.htm", data, function (res) {
+            if (res.code == 0) {
+                self.$message({
+                    message: '修改数据成功',
+                    type: 'success'
+                });
+                //window.history.go(-1)
+                self.$router.go(-1);
+            } else {
+                self.$message.error(res.msg);
+            }
+        });
+    }
+    customerUpdateConfig.data = function () {
+        return {
+            form: {
+                name: '',
+                phone: '',
+                introducer: '',
+                score: '',
+                beginDate: '',
+                note: ''            },
+            rules: {
+                    name: [
+                        { required: true, message: '请输入客户名称', trigger: 'blur' }
+                    ],
+            }
+        }
+    };
+
+    customerUpdateConfig.mounted = function () {
+        var id = this.$route.query.id;
+        var self = this;
+        var data = {};
+        data.id = id;
+        this.postData("${siteurl}tenantRest/customer/view.htm", data, function (res) {
+            if (res.code == 0) {
+                self.form = res;
+                    uenote = initEditor("uenote");;
+                    uenote.ready(function () {
+                    //设置编辑器的内容
+                        uenote.setContent(res.note);
+                    });
+            }
+        });
+    }
+    customerUpdateConfig.computed = {};
+
+    customerUpdateConfig.destroyed = function () {
+            console.log("destroyed add view ");
+            
+                  UE.getEditor('uenote').destroy();
+	}
+    var customerUpdateView = Vue.component('update-view', customerUpdateConfig);
+    //更新组件结束
+</script>
+[/#macro]

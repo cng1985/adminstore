@@ -1,6 +1,7 @@
 package com.nbsaas.adminstore;
 
 import com.haoxuer.discover.user.data.entity.UserLoginLog;
+import com.nbsaas.adminstore.customer.data.entity.Customer;
 import com.nbsaas.adminstore.oa.data.entity.WorkLogger;
 import com.nbsaas.adminstore.structure.data.entity.Employee;
 import com.nbsaas.codemake.CodeMake;
@@ -15,7 +16,7 @@ import java.io.File;
 public class App {
     public static void main(String[] args) {
 
-        viewMake().makes(WorkLogger.class);
+        code().makes(Customer.class);
     }
 
     private static CodeMake code() {

@@ -1,0 +1,134 @@
+
+[#macro customerShowView]
+<div  class="model-form">
+    <el-page-header @back="goBack" content="详情">
+    </el-page-header>
+
+        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+            <el-menu-item index="1">
+                客户详情
+            </el-menu-item>
+        </el-menu>
+        <div>
+            <router-view></router-view>
+        </div>
+
+</div>
+[/#macro]
+[#macro customerShowConfig]
+<script type="text/x-template" id="my-customer-show">
+    [@customerShowView /]
+</script>
+	<script type="text/javascript">
+		//显示组件开始
+		var customerShowConfig = {};
+		customerShowConfig.template = "#my-customer-show";
+		customerShowConfig.methods =config.basicMethod();
+		customerShowConfig.data = function () {
+			return {
+				viewModel: {
+				},
+				activeIndex: "1"
+			}
+		};
+
+		customerShowConfig.methods.handleSelect = function (index) {
+			console.log(index)
+			var selectId = this.selectId;
+			if (index == "1") {
+				this.$router.replace({ path: '/view/index', query: { id: selectId, activeIndex: 1, time: Math.random() } })
+			}
+			else if (index == "2") {
+				this.$router.replace({ path: '/view/members', query: { id: selectId, activeIndex: 2, time: Math.random() } })
+			} else {
+
+			}
+		};
+
+		customerShowConfig.mounted = function () {
+		   	var id = this.$route.query.id;
+			var activeIndex = this.$route.query.activeIndex;
+
+			var self = this;
+			var data = {};
+			data.id = id;
+			this.selectId = data.id;
+			if (activeIndex) {
+				this.activeIndex = activeIndex;
+			}
+		}
+		var customerShowView = Vue.component('my-customer-view', customerShowConfig);
+		//显示组件结束		
+	</script>
+[/#macro]
+
+
+
+[#macro childCustomerView]
+    <div >
+        <el-form class="viewForm" label-width="120px">
+            <el-col :span="12">
+                <el-form-item label="客户名称">
+                    <div v-html="viewModel.name">></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="联系电话">
+                    <div v-html="viewModel.phone">></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="介绍人">
+                    <div v-html="viewModel.introducer">></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="关系分数">
+                    <div v-html="viewModel.score">></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="合作日期">
+                    <div v-html="viewModel.beginDate">></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="23">
+                <el-form-item label="内容">
+                    <div v-html="viewModel.note">></div>
+                </el-form-item>
+            </el-col>
+        </el-form>
+    </div>
+ [/#macro]
+
+[#macro childCustomerConfig]
+    <script type="text/x-template" id="child-customer-show">
+        [@childCustomerView /]
+    </script>
+    <script type="text/javascript">
+
+        var childCustomerShowConfig = {};
+        childCustomerShowConfig.template = "#child-customer-show";
+        childCustomerShowConfig.methods = config.basicMethod();
+        childCustomerShowConfig.data = function () {
+            return {
+                viewModel: {
+                }
+            }
+        };
+        childCustomerShowConfig.mounted = function () {
+            var id = this.$route.query.id;
+            var self = this;
+            var data = {};
+            data.id = id;
+            this.postData("${siteurl}tenantRest/customer/view.htm", data, function (res) {
+                if (res.code == 0) {
+                    self.viewModel = res;
+
+                }
+            });
+        }
+        var childCustomerShowView = Vue.component('child-customer-show', childCustomerShowConfig);
+    </script>
+[/#macro]
+
