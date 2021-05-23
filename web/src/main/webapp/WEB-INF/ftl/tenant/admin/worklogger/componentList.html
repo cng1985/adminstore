@@ -41,11 +41,16 @@
             </el-table-column>
             <el-table-column label="添加人" prop="creatorName" >
             </el-table-column>
-            <el-table-column width="160" align="center" fixed="right" label="操作">
+            <el-table-column width="180" align="center" fixed="right" label="操作">
                 <template slot-scope="scope">
-                    <el-button type="primary" size="mini" @click="editView(scope.row)">编辑
+                    <el-button type="text" size="mini" icon="el-icon-info" @click="show(scope.row)">详情
                     </el-button>
-                    <el-button type="danger" size="mini" style="cursor: pointer;" @click="deleteData(scope.row)">删除
+
+                    <el-button type="text" size="mini" icon="el-icon-edit" @click="editView(scope.row)">编辑
+                    </el-button>
+
+                    <el-button type="text" icon="el-icon-delete" class="danger" size="mini" style="cursor: pointer;"
+                        @click="deleteData(scope.row)">删除
                     </el-button>
                 </template>
             </el-table-column>
@@ -105,7 +110,13 @@
         this.$router.push({ path: 'view', query: param });
 
     }
+    workloggerListConfig.methods.show = function (row) {
+        var param = {};
+        param.id = row.id;
+        var self = this;
+        this.$router.push({ path: 'view', query: param });
 
+    }
     workloggerListConfig.methods.sizeChange = function (event) {
         this.searchObject.size = event;
         this.getSearchList();

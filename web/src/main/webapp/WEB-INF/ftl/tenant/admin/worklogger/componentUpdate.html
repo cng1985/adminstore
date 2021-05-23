@@ -1,41 +1,40 @@
 [#macro workloggerUpdateView]
-<div class="model-form">
-    <el-page-header @back="goBack" content="更新工作日志">
-    </el-page-header>
-    <div class="model-content">
-        <el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px">
-            <el-row :gutter="10">
-                <el-col :span="22">
-                    <el-form-item label="标题" size="mini" prop="title">
-                        <el-input v-model="form.title" name="title">
-                        </el-input>
-                    </el-form-item>
-
-                </el-col>
-                <el-col :span="22">
-                    <el-form-item label="工作时间" size="mini" prop="recordDate">
-                        <el-date-picker v-model="form.recordDate" type="date" value-format="yyyy-MM-dd"
-                            placeholder="选择日期">
-                        </el-date-picker>
-                    </el-form-item>
-
-                </el-col>
-                <el-col :span="22">
-                    <div style="margin-left: 160px;">
-                        <div id="uenote" name="note" type="text/plain"></div>
-                    </div>
-
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :span="22" style="text-align: right;padding-bottom: 20px;padding-top: 20px;">
-                    <el-button @click="goBack">取消</el-button>
-                    <el-button type="primary" @click="updateData">确定</el-button>
-                </el-col>
-            </el-row>
-        </el-form>
+    <div class="model-form">
+        <el-page-header @back="goBack" content="更新工作日志">
+        </el-page-header>
+        <div class="model-content">
+            <el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px" >
+                <el-row :gutter="10">
+ <el-col :span="22">
+     <el-form-item label="标题" size="mini" prop="title">
+             <el-input v-model="form.title" name="title">
+             </el-input>
+     </el-form-item>
+      
+ </el-col>
+ <el-col :span="22">
+     <el-form-item label="工作时间" size="mini" prop="recordDate">
+         <el-date-picker v-model="form.recordDate" type="date"   value-format="yyyy-MM-dd"  placeholder="选择日期">
+         </el-date-picker>
+     </el-form-item>
+      
+ </el-col>
+ <el-col :span="22">
+         <div style="margin-left: 160px;">
+			<div id="uenote" name="note" type="text/plain"></div>
+		</div>
+      
+ </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="24"  style="text-align: right;padding-bottom: 20px;padding-top: 20px;">
+                        <el-button @click="goBack">取消</el-button>
+                        <el-button type="primary" @click="updateData">确定</el-button>
+                    </el-col>
+			     </el-row>
+            </el-form>
+        </div>
     </div>
-</div>
 [/#macro]
 
 [#macro workloggerUpdateConfig]
@@ -44,13 +43,13 @@
 </script>
 <script type="text/javascript">
     //更新组件开始
-    var uenote;
+            var uenote ;
     var workloggerUpdateConfig = {};
     workloggerUpdateConfig.template = "#my-worklogger-update";
     workloggerUpdateConfig.methods = config.basicMethod();
     workloggerUpdateConfig.methods.updateData = function () {
         var self = this;
-        this.$refs["ruleForm"].validate(function (valid) {
+        this.$refs["ruleForm"].validate(function(valid){
             if (valid) {
                 self.updateDataPost();
             } else {
@@ -66,9 +65,9 @@
         if (this.deforeUpdateData) {
             this.deforeUpdateData();
         }
-        if (uenote) {
-            data.note = uenote.getContent();
-        }
+                if (uenote) {
+                    data.note = uenote.getContent();
+                }
         this.postData("${siteurl}tenantRest/worklogger/update.htm", data, function (res) {
             if (res.code == 0) {
                 self.$message({
@@ -87,12 +86,11 @@
             form: {
                 title: '',
                 recordDate: '',
-                note: ''
-            },
+                note: ''            },
             rules: {
-                title: [
-                    { required: true, message: '请输入标题', trigger: 'blur' }
-                ],
+                    title: [
+                        { required: true, message: '请输入标题', trigger: 'blur' }
+                    ],
             }
         }
     };
@@ -105,21 +103,21 @@
         this.postData("${siteurl}tenantRest/worklogger/view.htm", data, function (res) {
             if (res.code == 0) {
                 self.form = res;
-                uenote = initEditor("uenote");;
-                uenote.ready(function () {
+                    uenote = initEditor("uenote");;
+                    uenote.ready(function () {
                     //设置编辑器的内容
-                    uenote.setContent(res.note);
-                });
+                        uenote.setContent(res.note);
+                    });
             }
         });
     }
     workloggerUpdateConfig.computed = {};
 
     workloggerUpdateConfig.destroyed = function () {
-        console.log("destroyed add view ");
-
-        UE.getEditor('uenote').destroy();
-    }
+            console.log("destroyed add view ");
+            
+                  UE.getEditor('uenote').destroy();
+	}
     var workloggerUpdateView = Vue.component('update-view', workloggerUpdateConfig);
     //更新组件结束
 </script>
