@@ -65,7 +65,7 @@
 				<value>com.nbsaas.adminstore.structure.data.entity</value>
 				<value>com.nbsaas.adminstore.article.data.entity</value>
 				<value>com.nbsaas.adminstore.ad.data.entity</value>
-				<value>com.nbsaas.adminstore.oa.data.entity</value>
+				<value>com.nbsaas.adminstore.customer.data.entity</value>
 			</list>
 		</property>
 		<property name="entityInterceptor" ref="treeInterceptor">

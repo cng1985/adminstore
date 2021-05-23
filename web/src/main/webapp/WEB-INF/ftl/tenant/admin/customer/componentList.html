@@ -1,102 +1,78 @@
 [#macro customerListView]
-    <div>
-        <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
-            <span>确认要删除该条数据吗?</span>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="handleClose">确 定</el-button>
-            </span>
-        </el-dialog>
-        <div class="search">
-            <el-form label-width="100px">
-                <el-row>
-                    <el-col :span="6" style="padding: 0 8px;">
-                        <el-form-item label="客户名称">
-                            <el-input v-model="searchObject.name" size="small" placeholder="客户名称" name="name">
-                            </el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6" style="padding: 0 8px;">
-                        <el-form-item label="介绍人">
-                            <el-input v-model="searchObject.introducer" size="small" placeholder="介绍人" name="introducer">
-                            </el-input>
-                        </el-form-item>
-                    </el-col>
+<div>
+    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
+        <span>确认要删除该条数据吗?</span>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="handleClose">确 定</el-button>
+        </span>
+    </el-dialog>
+    <div class="search">
+        <el-form label-width="100px">
+            <el-row>
+                <el-col :span="6" style="padding: 0 8px;">
+                    <el-form-item label="客户名称">
+                        <el-input v-model="searchObject.name" size="small" placeholder="客户名称" name="name">
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6" style="padding: 0 8px;">
+                    <el-form-item label="介绍人">
+                        <el-input v-model="searchObject.introducer" size="small" placeholder="介绍人" name="introducer">
+                        </el-input>
+                    </el-form-item>
+                </el-col>
 
-            <el-col :span="12" style="padding: 0 10px;margin-top: 5px;">
-                <el-row type="flex" justify="end">
-                    <el-button size="small" type="primary" @click="search">搜索</el-button>
-                    <el-button size="small" plain @click="clearData">清除条件</el-button>
-                </el-row>
-            </el-col>
+                <el-col :span="12" style="padding: 0 10px;margin-top: 5px;">
+                    <el-row type="flex" justify="end">
+                        <el-button size="small" type="primary" @click="search">搜索</el-button>
+                        <el-button size="small" plain @click="clearData">清除条件</el-button>
+                    </el-row>
+                </el-col>
             </el-row>
-            </el-form>
+        </el-form>
+    </div>
+    <div class="data-content">
+        <div class="tool-add">
+            <el-button type="primary" size="small" @click="addView">新增</el-button>
         </div>
-        <div class="data-content">
-            <div  class="tool-add">
-                <el-button type="primary" size="small" @click="addView">新增</el-button>
-            </div>
 
-            <el-table v-loading="loading" :data="tableData.list"  @cell-click="showView" @sort-change="changeTableSort" style="width: 100%;font-size: 12px;">
-                        <el-table-column label="客户名称"
+        <el-table v-loading="loading" :data="tableData.list" @cell-click="showView" @sort-change="changeTableSort"
+            style="width: 100%;font-size: 12px;">
+            <el-table-column label="客户名称" prop="name" width="100">
+            </el-table-column>
+            <el-table-column label="联系电话" prop="phone" width="100">
+            </el-table-column>
+            <el-table-column label="介绍人" prop="introducer" width="100">
+            </el-table-column>
+            <el-table-column label="关系分数" prop="score" sortable="custom" width="100">
+            </el-table-column>
+            <el-table-column label="合作日期" prop="beginDate">
+            </el-table-column>
+            <el-table-column width="180" align="center" fixed="right" label="操作">
+                <template slot-scope="scope">
+                    <el-button type="text" size="mini" icon="el-icon-info" @click="show(scope.row)">详情
+                    </el-button>
 
-                                        prop="name"
-                        
-                         width="100"  
-                        >
-                        </el-table-column>
-                        <el-table-column label="联系电话"
+                    <el-button type="text" size="mini" icon="el-icon-edit" @click="editView(scope.row)">编辑
+                    </el-button>
 
-                                        prop="phone"
-                        
-                         width="100"  
-                        >
-                        </el-table-column>
-                        <el-table-column label="介绍人"
+                    <el-button type="text" icon="el-icon-delete" class="danger" size="mini" style="cursor: pointer;"
+                        @click="deleteData(scope.row)">删除
+                    </el-button>
+                </template>
+            </el-table-column>
+        </el-table>
 
-                                        prop="introducer"
-                        
-                         width="100"  
-                        >
-                        </el-table-column>
-                        <el-table-column label="关系分数"
-
-                                        prop="score"
-                        sortable="custom" 
-                         width="100"  
-                        >
-                        </el-table-column>
-                        <el-table-column label="合作日期"
-
-                                        prop="beginDate"
-                        
-                         width="160"  
-                        >
-                        </el-table-column>
-                <el-table-column width="180" align="center" fixed="right" label="操作">
-                    <template slot-scope="scope">
-                         <el-button type="text" size="mini" icon="el-icon-info" @click="show(scope.row)">详情
-                         </el-button>
-
-                         <el-button type="text" size="mini" icon="el-icon-edit" @click="editView(scope.row)">编辑
-                         </el-button>
-
-                         <el-button type="text" icon="el-icon-delete" class="danger" size="mini" style="cursor: pointer;"
-                                @click="deleteData(scope.row)">删除
-                         </el-button>                   
-                    </template>
-                </el-table-column>
-                </el-table>
-
-            <div class="page">
-                <el-pagination background :current-page="searchObject.no" :page-sizes="[10, 20, 50, 100]"
-                            :page-size="tableData.size" :pager-count="5"
-                            layout="total, sizes, prev, pager, next, jumper" :page-count="tableData.totalPage"
-                            :total="tableData.total" @size-change="sizeChange" @current-change="pageChange">
-                </el-pagination>
-            </div>
+        <div class="page">
+            <el-pagination background :current-page="searchObject.no" :page-sizes="[10, 20, 50, 100]"
+                :page-size="tableData.size" :pager-count="5" layout="total, sizes, prev, pager, next, jumper"
+                :page-count="tableData.totalPage" :total="tableData.total" @size-change="sizeChange"
+                @current-change="pageChange">
+            </el-pagination>
         </div>
     </div>
+</div>
 [/#macro]
 [#macro customerListConfig]
 <script type="text/x-template" id="my-customer-list">
@@ -109,7 +85,7 @@
 
 
     customerListConfig.methods.addView = function () {
-        this.$router.push({ path: 'add'});
+        this.$router.push({ path: 'add' });
     }
     customerListConfig.methods.editView = function (row) {
         var self = this;
@@ -164,7 +140,7 @@
             if (result.code == 0) {
                 that.tableData = result;
             }
-            setTimeout(function(){
+            setTimeout(function () {
                 that.loading = false;
             }, 300)
         });
@@ -174,8 +150,8 @@
         this.getSearchList();
     }
     customerListConfig.methods.clearData = function () {
-                this.searchObject.name = "";
-                this.searchObject.introducer = "";
+        this.searchObject.name = "";
+        this.searchObject.introducer = "";
     }
     customerListConfig.methods.deleteData = function (event) {
         this.selectId = event.id;
@@ -210,8 +186,9 @@
             searchObject: {
                 no: 1,
                 size: 10,
-                    name:'',
-                    introducer:''            },
+                name: '',
+                introducer: ''
+            },
             dialogVisible: false,
             defaultProps: {
                 children: 'children',
@@ -222,7 +199,7 @@
         }
     };
     customerListConfig.methods.showAddView = function () {
-        this.$router.push({ path: 'add'});
+        this.$router.push({ path: 'add' });
     };
     customerListConfig.mounted = function () {
 
