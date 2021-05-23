@@ -1,6 +1,7 @@
 package com.nbsaas.adminstore;
 
 import com.haoxuer.discover.user.data.entity.UserLoginLog;
+import com.nbsaas.adminstore.structure.data.entity.Employee;
 import com.nbsaas.codemake.CodeMake;
 import com.nbsaas.codemake.template.hibernateSimple.TemplateHibernateSimpleDir;
 import com.nbsaas.codemake.templates.elementuiForm.ElementUIFormDir;
@@ -13,7 +14,7 @@ import java.io.File;
 public class App {
     public static void main(String[] args) {
 
-        viewMake().makes(UserLoginLog.class);
+        viewMake().makes(Employee.class);
     }
 
     private static CodeMake code() {

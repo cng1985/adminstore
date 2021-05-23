@@ -1,0 +1,93 @@
+
+[#macro employeeShowView]
+<div  class="model-form">
+    <el-page-header @back="goBack" content="详情">
+    </el-page-header>
+
+        <div class="form-title">详细信息</div>
+        <el-form class="viewForm" label-width="80px">
+            <el-col :span="12">
+                <el-form-item label="姓名">
+                    <div v-html="viewModel.name"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="电话">
+                    <div v-html="viewModel.phone"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="22">
+                <el-form-item label="数据范围">
+                    <div v-html="viewModel.dataScopeName"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="账号">
+                    <div v-html="viewModel.no"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="email">
+                    <div v-html="viewModel.email"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="职位">
+                    <div v-html="viewModel.job"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="主要部门">
+                    <div v-html="viewModel.orgName"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="辅助部门">
+                    <div v-html="viewModel.departments"></div>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="权限类型">
+                    <div v-html="viewModel.permissionTypeName"></div>
+                </el-form-item>
+            </el-col>
+        </el-form>
+
+</div>
+[/#macro]
+[#macro employeeShowConfig]
+<script type="text/x-template" id="my-employee-show">
+    [@employeeShowView /]
+</script>
+	<script type="text/javascript">
+		//显示组件开始
+		var employeeShowConfig = {};
+		employeeShowConfig.template = "#my-employee-show";
+		employeeShowConfig.methods =config.basicMethod();
+		employeeShowConfig.data = function () {
+			return {
+				viewModel: {
+				},
+				activeIndex: "1"
+			}
+		};
+
+
+		employeeShowConfig.mounted = function () {
+			var id = this.$route.query.id;
+			var self = this;
+			var data = {};
+			data.id = id;
+			this.postData("${siteurl}tenantRest/employee/view.htm", data, function (res) {
+				if (res.code == 0) {
+					self.viewModel = res;
+
+				}
+			});
+		}
+		var employeeShowView = Vue.component('my-employee-view', employeeShowConfig);
+		//显示组件结束		
+	</script>
+[/#macro]
+
+
