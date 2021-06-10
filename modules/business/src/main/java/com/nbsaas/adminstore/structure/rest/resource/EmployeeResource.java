@@ -1,5 +1,11 @@
 package com.nbsaas.adminstore.structure.rest.resource;
 
+import com.haoxuer.discover.user.data.dao.UserBindDao;
+import com.haoxuer.discover.user.data.dao.UserSecurityDao;
+import com.haoxuer.discover.user.data.entity.UserBind;
+import com.haoxuer.discover.user.data.entity.UserInfo;
+import com.haoxuer.discover.user.data.entity.UserSecurity;
+import com.haoxuer.discover.user.utils.SecurityUtil;
 import com.nbsaas.adminstore.structure.api.apis.EmployeeApi;
 import com.nbsaas.adminstore.structure.api.domain.list.EmployeeList;
 import com.nbsaas.adminstore.structure.api.domain.page.EmployeePage;
@@ -30,6 +36,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import com.haoxuer.discover.user.rest.conver.PageableConver;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -51,32 +58,43 @@ public class EmployeeResource implements EmployeeApi {
     @Autowired
     private UserRoleDao roleDao;
 
+    @Autowired
+    private UserBindDao bindDao;
+
+    @Autowired
+    private UserSecurityDao securityDao;
+
     @Override
     public EmployeeResponse create(EmployeeDataRequest request) {
         EmployeeResponse result = new EmployeeResponse();
-        if (request.getNo() == null) {
-            result.setCode(501);
-            result.setMsg("账号不能为空");
-            return result;
-        }
-        if (request.getPassword() == null) {
-            result.setCode(502);
-            result.setMsg("密码不能为空");
-            return result;
-        }
-        UserRegisterRequest registerRequest = new UserRegisterRequest();
-        registerRequest.setNo(request.getNo());
-        registerRequest.setPassword(request.getPassword());
-        registerRequest.setBindType(BindType.account);
-        UserBasicResponse response = userInfoDao.register(registerRequest);
-        if (response.getCode() != 0) {
-            result.setCode(503);
-            result.setMsg(response.getMsg());
-            return result;
-        }
-        Employee bean = dataDao.findById(response.getId());
-        bean.setNo(request.getNo());
+        Employee bean = new Employee();
         handleData(request, bean);
+        dataDao.save(bean);
+
+        if (StringUtils.hasText(request.getPhone())){
+            UserBind temp = this.bindDao.findByType( request.getPhone(), BindType.phone);
+            if (temp==null){
+                temp= new UserBind();
+                temp.setBindType(BindType.phone);
+                temp.setNo(request.getPhone());
+                temp.setUser(UserInfo.fromId(bean.getId()));
+                temp.setLoginSize(0L);
+                this.bindDao.save(temp);
+            }
+        }
+        if (StringUtils.hasText(request.getPassword())){
+            UserSecurity security = securityDao.findByUser(bean.getId(), SecurityType.account);
+            if (security == null) {
+                security=new UserSecurity();
+                security.setUser(UserInfo.fromId(bean.getId()));
+                security.setSecurityType(SecurityType.account);
+                securityDao.save(security);
+            }
+            SecurityUtil securityUtil = new SecurityUtil();
+            security.setPassword(securityUtil.entryptPassword(request.getPassword()));
+            security.setSalt(securityUtil.getSalt());
+        }
+
         result = new EmployeeResponseConver().conver(bean);
 
         return result;

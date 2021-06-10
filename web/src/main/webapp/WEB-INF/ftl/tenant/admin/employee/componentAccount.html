@@ -123,7 +123,7 @@
     accountListConfig.methods.getSearchList = function () {
         this.loading = true;
         var data = this.searchObject, that = this;
-        $.post("${siteurl}tenantRest/tenantuserbind/search.htm", data, function (result) {
+        $.post("${siteurl}tenantRest/userbind/search.htm", data, function (result) {
             if (result.code == 0) {
                 that.tableData = result;
             }
@@ -154,7 +154,7 @@
         if (self.selectId) {
             var params = {};
             params.id = self.selectId;
-            this.postData("${siteurl}tenantRest/tenantuserbind/delete.htm", params, function (res) {
+            this.postData("${siteurl}tenantRest/userbind/delete.htm", params, function (res) {
                 if (res.code == 0) {
                     self.$message({
                         message: '删除数据成功',
@@ -233,7 +233,7 @@
     accountListConfig.methods.restPassword = function (done) {
        var self=this;
        var params=this.form;
-       this.postData("${siteurl}tenantRest/tenantuserbind/create.htm", params, function (res) {
+       this.postData("${siteurl}tenantRest/userbind/create.htm", params, function (res) {
             if (res.code == 0) {
                 self.$message({
                     message: '添加账号成功',

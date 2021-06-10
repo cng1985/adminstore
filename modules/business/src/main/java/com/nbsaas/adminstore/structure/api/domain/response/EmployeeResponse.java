@@ -38,4 +38,6 @@ public class EmployeeResponse extends ResponseObject {
     private String dataScopeName;
     private DataScope dataScope;
 
+    private List<String> structures;
+
 }

@@ -130,7 +130,7 @@
         var self = this;
         var data = {};
         data.id = id;
-        this.postData("${siteurl}tenantRest/staff/view.htm", data, function (res) {
+        this.postData("${siteurl}tenantRest/employee/view.htm", data, function (res) {
             if (res.code == 0) {
                 self.viewModel = res;
 

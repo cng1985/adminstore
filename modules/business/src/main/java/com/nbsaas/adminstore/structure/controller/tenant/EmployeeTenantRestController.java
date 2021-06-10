@@ -25,7 +25,7 @@ public class EmployeeTenantRestController extends BaseTenantRestController {
         return api.create(request);
     }
     @RequestMapping("createJson")
-    public EmployeeResponse createJson(EmployeeDataRequest request) {
+    public EmployeeResponse createJson(@RequestBody EmployeeDataRequest request) {
         init(request);
         return api.create(request);
     }

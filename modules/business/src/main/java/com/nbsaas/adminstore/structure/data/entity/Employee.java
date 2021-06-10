@@ -2,6 +2,7 @@ package com.nbsaas.adminstore.structure.data.entity;
 
 
 import com.haoxuer.discover.data.entity.AbstractEntity;
+import com.haoxuer.discover.user.data.entity.BaseUser;
 import com.haoxuer.discover.user.data.entity.UserRole;
 import com.haoxuer.discover.user.data.enums.DataScope;
 import com.nbsaas.adminstore.structure.enums.PermissionType;
@@ -15,8 +16,8 @@ import java.util.Set;
 @Data
 @FormAnnotation(title = "员工管理", model = "员工", menu = "1,27,55")
 @Entity
-@Table(name = "user_info")
-public class Employee extends AbstractEntity {
+@DiscriminatorValue("100")
+public class Employee extends BaseUser {
 
     @SearchItem(label = "姓名",name = "name",key = "name")
     @FormField(title = "姓名", sortNum = "1", grid = true, col = 12)
