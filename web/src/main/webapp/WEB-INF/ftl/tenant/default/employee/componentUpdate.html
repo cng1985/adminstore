@@ -6,7 +6,7 @@
         <el-form ref="ruleForm" :rules="rules" :model="form" label-width="160px">
             <el-row :gutter="10">
                 <el-col :span="24">
-                    <el-form-item label="头像1" size="mini" prop="avatar">
+                    <el-form-item label="头像" size="mini" prop="avatar">
                         <avatar v-model="form.avatar"></avatar>
                     </el-form-item>
                 </el-col>
@@ -100,7 +100,7 @@
     employeeUpdateConfig.methods.selectStructure = function (events) {
         var self = this;
         if(events.length>0){
-            this.form.org=events[events.length-1];
+            this.form.structure=events[events.length-1];
         }
     }
 
@@ -149,7 +149,7 @@
     employeeUpdateConfig.methods.loadRoles = function () {
         var self = this;
         var param = {};
-        this.postData("${siteurl}tenantRest/userrole/list.htm", param, function (res) {
+        this.postData("${siteurl}tenantRest/tenantuserrole/list.htm", param, function (res) {
             if (res.code == 0) {
                 self.roles = res.list;
             }

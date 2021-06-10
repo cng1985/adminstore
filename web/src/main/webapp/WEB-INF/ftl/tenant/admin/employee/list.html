@@ -11,9 +11,12 @@
 	[#include "/tenant/admin/employee/componentList.html"]
 	[#include "/tenant/admin/employee/componentUpdate.html"]
 	[#include "/tenant/admin/employee/componentShow.html"]
+	[#include "/tenant/admin/employee/componentAccount.html"]
+	[#include "/tenant/admin/employee/componentRestPassword.html"]
 
 	[@baseHead /]
 	<script type="text/javascript"></script>
+
 	<style>
 		.goods_content_l .tree {
 			background-color: #f9f9f9;
@@ -80,12 +83,17 @@
 		.department {
 			line-height: 40px;
 		}
-		.right-content{
+
+		.right-content {
 			padding-left: 15px;
 			border-left: solid 1px #E6E8EE;
 		}
-		.el-table td{
+
+		.el-table td {
 			padding: 5px 0px;
+		}
+		.el-cascader{
+			width: 100%;
 		}
 	</style>
 </head>
@@ -162,7 +170,11 @@
 	</div>
 	<!-- ./wrapper -->
 	[@baseScript /]
+	[#include "/tenant/default/common/component.html" /]
 
+
+
+	[@avatar /]
 	<script type="text/javascript">
 		var config = {};
 
@@ -203,12 +215,13 @@
 
 	[@employeeAddConfig /]
 	[@employeeListConfig /]
-	[@employeeShowConfig /]
+	[@staffShowConfig /]
 	[@employeeUpdateConfig /]
-
+    [@childStaffConfig  /] 
+	[@accountListConfig /]
+	[@restPasswordConfig /]
 
 	<script type="text/javascript">
-
 		// 3. 创建 router 实例，然后传 `routes` 配置
 		// 你还可以传别的配置参数, 不过先这么简单着吧。
 		var appConfig = {};
@@ -216,7 +229,14 @@
 
 
 		const routes = [
-			{ path: '/view', name: "employeeShowView", component: employeeShowView, props: true },
+			{
+				path: '/view', name: "staffShowView", component: staffShowView, props: true, children: [
+					{ path: "/view/index", name: "childStaffShowView", component: childStaffShowView },
+					{ path: "/", component: childStaffShowView },
+					{ path: "/account", component: accountListView },
+					{ path: "/restPassword", component: restPasswordView }
+				]
+			}, 
 			{ path: '/add', name: "employeeAddView", component: employeeAddView, props: true },
 			{ path: '/update', name: "employeeUpdateView", component: employeeUpdateView, props: true },
 			{

@@ -19,16 +19,23 @@ import org.apache.shiro.authz.annotation.RequiresUser;
 public class EmployeeTenantRestController extends BaseTenantRestController {
 
 
-    @RequiresUser
     @RequestMapping("create")
     public EmployeeResponse create(EmployeeDataRequest request) {
         init(request);
         return api.create(request);
     }
-
-    @RequiresUser
+    @RequestMapping("createJson")
+    public EmployeeResponse createJson(EmployeeDataRequest request) {
+        init(request);
+        return api.create(request);
+    }
     @RequestMapping("update")
-    public EmployeeResponse update(@RequestBody EmployeeDataRequest request) {
+    public EmployeeResponse update(EmployeeDataRequest request) {
+        init(request);
+        return api.update(request);
+    }
+    @RequestMapping("updateJson")
+    public EmployeeResponse updateJson(@RequestBody EmployeeDataRequest request) {
         init(request);
         return api.update(request);
     }

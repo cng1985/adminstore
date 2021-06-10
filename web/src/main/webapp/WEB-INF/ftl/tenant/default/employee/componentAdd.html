@@ -128,7 +128,7 @@
 	employeeAddConfig.methods.loadRoles = function () {
 		var self = this;
 		var param = {};
-		this.postData("${siteurl}tenantRest/userrole/list.htm", param, function (res) {
+		this.postData("${siteurl}tenantRest/tenantuserrole/list.htm", param, function (res) {
 			if (res.code == 0) {
 				self.roles = res.list;
 			}

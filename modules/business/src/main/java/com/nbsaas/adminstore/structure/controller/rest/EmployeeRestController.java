@@ -8,6 +8,7 @@ import com.nbsaas.adminstore.structure.api.domain.response.EmployeeResponse;
 import com.nbsaas.adminstore.structure.api.domain.request.EmployeeDataRequest;
 import com.nbsaas.adminstore.structure.api.domain.request.EmployeeSearchRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.haoxuer.discover.user.controller.rest.BaseRestController;
@@ -22,13 +23,21 @@ public class EmployeeRestController extends BaseRestController {
         init(request);
         return api.create(request);
     }
-
+    @RequestMapping("createJson")
+    public EmployeeResponse createJson(EmployeeDataRequest request) {
+        init(request);
+        return api.create(request);
+    }
     @RequestMapping("update")
     public EmployeeResponse update(EmployeeDataRequest request) {
         init(request);
         return api.update(request);
     }
-
+    @RequestMapping("updateJson")
+    public EmployeeResponse updateJson(@RequestBody EmployeeDataRequest request) {
+        init(request);
+        return api.update(request);
+    }
     @RequestMapping("delete")
     public EmployeeResponse delete(EmployeeDataRequest request) {
         init(request);

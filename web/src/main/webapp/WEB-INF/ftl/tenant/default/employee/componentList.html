@@ -45,7 +45,7 @@
                     </el-table-column>
                     <el-table-column label="电话" prop="phone" width="100">
                     </el-table-column>
-                    <el-table-column label="所在部门" prop="orgName" width="100">
+                    <el-table-column label="所在部门" prop="structureName" width="100">
                     </el-table-column>
                     <el-table-column label="数据范围" prop="dataScopeName">
                     </el-table-column>
@@ -240,7 +240,7 @@
             this.treeTitle = data.name;
         }
         this.parentId = data.id;
-        this.searchObject.org = data.id;
+        this.searchObject.structure = data.id;
         this.searchObject.no = 1;
         this.loading = true;
         var that = this;
