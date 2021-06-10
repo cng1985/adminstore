@@ -315,10 +315,7 @@
                 var self = this;
                 var param = {};
                 param.key = this.catalog;
-                param.sortField="sortNum";
-                param.sortMethod="asc";
-
-                $.post("${siteurl}tenantRest/dictionaryitem/list.htm", param, function (res) {
+                $.post("${siteurl}tenantRest/tenantdictionaryitem/list.htm", param, function (res) {
                     if (res.code == 0) {
                         self.options = res.list;
                     }
