@@ -4019,7 +4019,7 @@ CREATE TABLE IF NOT EXISTS `bs_customer` (
   CONSTRAINT `FK28tiqhrbhilj3cqxmvjp8hvke` FOREIGN KEY (`creator_id`) REFERENCES `user_info` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.bs_customer 的数据：~1 rows (大约)
+-- 正在导出表  adminstore.bs_customer 的数据：~0 rows (大约)
 DELETE FROM `bs_customer`;
 /*!40000 ALTER TABLE `bs_customer` DISABLE KEYS */;
 INSERT INTO `bs_customer` (`id`, `addDate`, `lastDate`, `beginDate`, `introducer`, `name`, `note`, `phone`, `score`, `creator_id`) VALUES
@@ -4088,7 +4088,8 @@ CREATE TABLE IF NOT EXISTS `bs_oa_work_logger` (
 DELETE FROM `bs_oa_work_logger`;
 /*!40000 ALTER TABLE `bs_oa_work_logger` DISABLE KEYS */;
 INSERT INTO `bs_oa_work_logger` (`id`, `addDate`, `lastDate`, `note`, `recordDate`, `title`, `creator_id`) VALUES
-	(1, '2021-05-23 14:37:00', '2021-05-23 14:38:10', '<p>678678686<br/></p>', '2021-05-23 00:00:00', '678', 1);
+	(1, '2021-05-23 14:37:00', '2021-05-23 14:38:10', '<p>678678686<br/></p>', '2021-05-23 00:00:00', '678', 1),
+	(2, '2021-06-10 13:52:33', '2021-06-10 13:52:33', '<p>13<br/></p>', '2021-06-17 00:00:00', '12', 1);
 /*!40000 ALTER TABLE `bs_oa_work_logger` ENABLE KEYS */;
 
 -- 导出  表 adminstore.bs_org_data 结构
@@ -4215,7 +4216,7 @@ CREATE TABLE IF NOT EXISTS `menu` (
   CONSTRAINT `FKqcf9gem97gqa5qjm4d3elcqt5` FOREIGN KEY (`pid`) REFERENCES `menu` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.menu 的数据：~57 rows (大约)
+-- 正在导出表  adminstore.menu 的数据：~54 rows (大约)
 DELETE FROM `menu`;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
 INSERT INTO `menu` (`id`, `addDate`, `code`, `ids`, `lastDate`, `levelInfo`, `lft`, `name`, `rgt`, `sortNum`, `catalog`, `icon`, `nums`, `path`, `permission`, `pid`, `menuType`) VALUES
@@ -4692,7 +4693,7 @@ CREATE TABLE IF NOT EXISTS `sys_structure` (
   CONSTRAINT `FKt36aqf18w4kny9gd6xnxkb9o0` FOREIGN KEY (`parent_id`) REFERENCES `sys_structure` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.sys_structure 的数据：~7 rows (大约)
+-- 正在导出表  adminstore.sys_structure 的数据：~6 rows (大约)
 DELETE FROM `sys_structure`;
 /*!40000 ALTER TABLE `sys_structure` DISABLE KEYS */;
 INSERT INTO `sys_structure` (`id`, `addDate`, `code`, `ids`, `lastDate`, `levelInfo`, `lft`, `name`, `rgt`, `sortNum`, `catalog`, `note`, `num`, `parent_id`) VALUES
@@ -4859,7 +4860,7 @@ CREATE TABLE IF NOT EXISTS `task` (
 DELETE FROM `task`;
 /*!40000 ALTER TABLE `task` DISABLE KEYS */;
 INSERT INTO `task` (`id`, `addDate`, `lastDate`, `cron`, `name`, `note`, `nums`, `recordState`, `state`, `url`, `user_id`, `nextDate`) VALUES
-	(1, '2019-09-12 16:39:22', '2021-05-23 14:30:11', '1 50 23 * * ?', '测试', '11', 114323, 4, 1, 'https://api.maotouin.com/uinfo/crawler/sync_company_new.htm', NULL, '2021-05-23 23:50:01');
+	(1, '2019-09-12 16:39:22', '2021-06-10 14:09:20', '1 50 23 * * ?', '测试', '11', 114323, 4, 1, 'https://api.maotouin.com/uinfo/crawler/sync_company_new.htm', NULL, '2021-06-10 23:50:01');
 /*!40000 ALTER TABLE `task` ENABLE KEYS */;
 
 -- 导出  表 adminstore.task_attribute 结构
@@ -4985,7 +4986,7 @@ CREATE TABLE IF NOT EXISTS `user_identification` (
 DELETE FROM `user_identification`;
 /*!40000 ALTER TABLE `user_identification` DISABLE KEYS */;
 INSERT INTO `user_identification` (`id`, `addDate`, `lastDate`, `bindType`, `no`, `user_id`, `loginSize`) VALUES
-	(1, '2018-12-01 10:26:11', '2021-05-23 15:28:33', 2, 'ada', 1, 23),
+	(1, '2018-12-01 10:26:11', '2021-06-10 14:12:32', 2, 'ada', 1, 27),
 	(2, '2018-12-01 10:26:23', '2018-12-01 10:26:23', 2, 'admin', 2, NULL),
 	(9, '2019-09-12 16:03:06', '2019-09-12 16:03:06', 2, '3', 10, NULL);
 /*!40000 ALTER TABLE `user_identification` ENABLE KEYS */;
@@ -5033,9 +5034,9 @@ CREATE TABLE IF NOT EXISTS `user_info` (
 DELETE FROM `user_info`;
 /*!40000 ALTER TABLE `user_info` DISABLE KEYS */;
 INSERT INTO `user_info` (`id`, `addDate`, `lastDate`, `avatar`, `catalog`, `loginSize`, `name`, `phone`, `state`, `edge`, `introduce`, `note`, `sex`, `household_id`, `companyName`, `email`, `job`, `account_id`, `storeState`, `no`, `dataType`, `permissionType`, `org_id`, `dataScope`, `structure_id`) VALUES
-	(1, '2017-12-27 14:44:00', '2021-05-23 15:31:23', '', 0, 1166, '管理员3321', '', NULL, NULL, '', 'o21', '', NULL, NULL, NULL, '', NULL, NULL, 'o', NULL, NULL, NULL, 0, NULL),
+	(1, '2017-12-27 14:44:00', '2021-06-10 14:12:32', '', 0, 1197, '管理员3321', '', NULL, NULL, '', 'o21', '', NULL, NULL, NULL, '', NULL, NULL, 'o', NULL, NULL, NULL, 0, 7),
 	(2, '2019-09-12 16:31:05', '2021-05-23 14:29:51', NULL, 0, 39, 'super', 'a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL),
-	(10, '2019-09-12 16:26:00', '2021-05-23 14:29:51', '', 0, 6, '333', '', NULL, NULL, '3', '1', '2', NULL, NULL, NULL, '4', NULL, NULL, '', NULL, NULL, NULL, 0, NULL);
+	(10, '2019-09-12 16:26:00', '2021-06-10 14:01:22', '', 0, 6, '333', '1', NULL, NULL, '3', '1', '2', NULL, NULL, '2', '4', NULL, NULL, '', NULL, NULL, NULL, 2, NULL);
 /*!40000 ALTER TABLE `user_info` ENABLE KEYS */;
 
 -- 导出  表 adminstore.user_info_attribute 结构
@@ -5187,7 +5188,11 @@ INSERT INTO `user_login_log` (`id`, `addDate`, `lastDate`, `ip`, `state`, `user_
 	(61, '2021-05-23 15:21:05', '2021-05-23 15:21:05', '192.168.4.108', 0, 1, 'ada', 'web', NULL, '1qaz2wsx3edc'),
 	(62, '2021-05-23 15:21:10', '2021-05-23 15:21:10', '192.168.4.108', 1, 1, 'ada', 'web', NULL, NULL),
 	(63, '2021-05-23 15:28:28', '2021-05-23 15:28:28', '192.168.4.108', 1, 1, 'ada', 'web', NULL, NULL),
-	(64, '2021-05-23 15:28:33', '2021-05-23 15:28:33', '192.168.4.108', 1, 1, 'ada', 'web', NULL, NULL);
+	(64, '2021-05-23 15:28:33', '2021-05-23 15:28:33', '192.168.4.108', 1, 1, 'ada', 'web', NULL, NULL),
+	(65, '2021-06-10 13:52:12', '2021-06-10 13:52:12', '127.0.0.1', 1, 1, 'ada', 'web', NULL, NULL),
+	(66, '2021-06-10 13:58:52', '2021-06-10 13:58:52', '127.0.0.1', 1, 1, 'ada', 'web', NULL, NULL),
+	(67, '2021-06-10 14:00:11', '2021-06-10 14:00:11', '127.0.0.1', 1, 1, 'ada', 'web', NULL, NULL),
+	(68, '2021-06-10 14:12:32', '2021-06-10 14:12:32', '127.0.0.1', 1, 1, 'ada', 'web', NULL, NULL);
 /*!40000 ALTER TABLE `user_login_log` ENABLE KEYS */;
 
 -- 导出  表 adminstore.user_notification 结构
@@ -5520,7 +5525,7 @@ CREATE TABLE IF NOT EXISTS `user_role_links` (
   CONSTRAINT `FKpm1oweb01msxxqf212qmd0984` FOREIGN KEY (`roles_id`) REFERENCES `user_role` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  adminstore.user_role_links 的数据：~6 rows (大约)
+-- 正在导出表  adminstore.user_role_links 的数据：~5 rows (大约)
 DELETE FROM `user_role_links`;
 /*!40000 ALTER TABLE `user_role_links` DISABLE KEYS */;
 INSERT INTO `user_role_links` (`user_id`, `roles_id`) VALUES
