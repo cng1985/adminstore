@@ -29,8 +29,8 @@ public class Organization extends CatalogEntity {
     /**
      * 父节点
      */
-    @FiledConvert(classType = "Integer")
-    @FiledName
+    @FieldConvert(classType = "Integer")
+    @FieldName
     @ManyToOne
     private Organization parent;
 

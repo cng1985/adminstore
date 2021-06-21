@@ -30,8 +30,8 @@ public class Ad extends SortEntity {
    */
   @SearchItem(label = "广告位",name = "adPosition",key = "adPosition.id",sortNum = "-1",type = InputType.select,classType = "Long",operator = "eq")
   @FormField(title = "广告位", sortNum = "10", grid = true, col = 22,type = InputType.select,option = "adPosition",required = true)
-  @FiledName
-  @FiledConvert
+  @FieldName
+  @FieldConvert
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn()
   private AdPosition adPosition;

@@ -2,7 +2,7 @@ package com.nbsaas.adminstore.article.data.entity;
 
 import com.haoxuer.discover.config.data.entity.User;
 import com.haoxuer.discover.data.entity.AbstractEntity;
-import com.haoxuer.imake.annotation.FiledConvert;
+import com.nbsaas.codemake.annotation.FieldConvert;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -19,11 +19,11 @@ import javax.persistence.Table;
 @Table(name = "article_like")
 public class ArticleLike extends AbstractEntity {
 
-    @FiledConvert(classType = "Long")
+    @FieldConvert(classType = "Long")
     @ManyToOne(fetch = FetchType.LAZY)
     private Article article;
 
-    @FiledConvert(classType = "Long")
+    @FieldConvert(classType = "Long")
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 

@@ -37,8 +37,8 @@ public class Employee extends AbstractWorker {
     @FormField(title = "职位", sortNum = "3", grid = true, col = 12)
     private String job;
 
-    @FiledName
-    @FiledConvert
+    @FieldName
+    @FieldConvert
     @JoinColumn(name = "structure_id")
     @FormField(title = "主要部门", sortNum = "4", grid = true, type = InputType.select,option = "org")
     @ManyToOne(fetch = FetchType.LAZY)
