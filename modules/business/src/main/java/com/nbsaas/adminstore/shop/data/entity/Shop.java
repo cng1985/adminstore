@@ -1,9 +1,9 @@
 package com.nbsaas.adminstore.shop.data.entity;
 
-import com.haoxuer.discover.data.annotations.FormAnnotation;
 import com.haoxuer.discover.data.entity.AbstractEntity;
 import com.haoxuer.discover.data.enums.StoreState;
-import com.haoxuer.imake.annotation.ComposeView;
+import com.nbsaas.codemake.annotation.ComposeView;
+import com.nbsaas.codemake.annotation.FormAnnotation;
 import lombok.Data;
 
 import javax.persistence.Entity;

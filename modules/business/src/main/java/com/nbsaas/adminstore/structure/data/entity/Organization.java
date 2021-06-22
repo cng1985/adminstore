@@ -1,6 +1,5 @@
 package com.nbsaas.adminstore.structure.data.entity;
 
-import com.haoxuer.discover.data.annotations.ColType;
 import com.haoxuer.discover.data.entity.CatalogEntity;
 import com.nbsaas.codemake.annotation.*;
 import lombok.Data;

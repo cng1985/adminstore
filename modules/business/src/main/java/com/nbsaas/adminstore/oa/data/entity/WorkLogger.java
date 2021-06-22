@@ -1,8 +1,5 @@
 package com.nbsaas.adminstore.oa.data.entity;
 
-import com.haoxuer.discover.data.annotations.ColType;
-import com.haoxuer.discover.data.annotations.FormFieldAnnotation;
-import com.haoxuer.discover.data.entity.AbstractEntity;
 import com.haoxuer.discover.user.data.entity.UserEntity;
 import com.nbsaas.codemake.annotation.*;
 import lombok.Data;
