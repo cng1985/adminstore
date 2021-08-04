@@ -34,9 +34,9 @@ public class EmployeeResponse extends ResponseObject {
 
     private String orgName;
 
-    private List<Long> selectRoles;
     private String dataScopeName;
     private DataScope dataScope;
+    private List<Long> selectRoles;
 
     private List<String> structures;
 

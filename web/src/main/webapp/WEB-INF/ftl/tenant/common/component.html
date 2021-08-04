@@ -1,0 +1,442 @@
+[#macro selectConsumer]
+<script type="text/x-template" id="my-component">
+    <div>
+        <div class="search">
+            <el-form label-width="110px">
+                <el-row :gutter="20" class="row-bg">
+                    <el-col :span="8">
+                        <el-form-item label="联系人姓名">
+                            <el-input size="small" v-model="searchObject.name" placeholder="联系人姓名">
+                            </el-input>
+                        </el-form-item>
+
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="手机号码">
+                            <el-input size="small" v-model="searchObject.phone" placeholder="手机号码">
+                            </el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8"  style="text-align: right;">
+                        <el-button size="small" type="primary" @click="searchHandle">搜 索</el-button>
+                        <el-button size="small" plain @click="clearData">清除条件</el-button>
+
+                    </el-col>
+                </el-row>
+            </el-form>
+        </div>
+        <el-table  v-loading="loading" :data="vipUserDate.list" :header-cell-style="{
+            'background-color': '#f7f7f7',
+            'color': '#666'
+        }" style="width: 100%;font-size: 12px;margin-top: 10px;">
+            <el-table-column label="客户名称" width="220" prop="shop">
+            </el-table-column>
+            <el-table-column width="180" label="联系人姓名" prop="name">
+            </el-table-column>
+            <el-table-column width="180" label="手机号码" prop="phone">
+            </el-table-column>
+            <el-table-column width="180" label="状态" prop="shippingAddress">
+            </el-table-column>
+            <el-table-column  label="客户等级" prop="level">
+            </el-table-column>
+            <el-table-column align="center" header-align="center" width="180" fixed="right" label="操作">
+                <template slot-scope="scope">
+                    <a href="javascript:void(0);" @click="jumpActivity(scope.row.id)">{{title}}</a>
+                </template>
+            </el-table-column>
+        </el-table>
+        <div class="page">
+            <el-pagination background layout="prev, pager, next" :page-size="searchObject.size"
+                :page-count="vipUserDate.totalPage" :current-page="searchObject.no" :total="vipUserDate.total"
+                @current-change="vipUserDateChange">
+            </el-pagination>
+        </div>
+    </div>
+    
+ </script>
+
+<script>
+    Vue.component('select-consumer', {
+        template: '#my-component',
+        props: ['title'],
+        data: function () {
+            return {
+                searchObject: {
+                    no: 1,
+                    size: 10,
+                    name: '',
+                    level: '',
+                    levelOptions: [],
+                    area: '',
+                    manager: '',
+                    managerOptions: [],
+                    time: '',
+                    label: '',
+                    phone: "",
+                    labelOptions: [],
+                },
+                vipUserDate: {},
+                loading: false
+            }
+        },
+        mounted: function () {
+            console.info("init");
+            this.getVipUserList();
+        },
+        methods: {
+            vipUserDateChange(index) {
+                this.searchObject.no = index;
+                this.getVipUserList();
+            },
+            getVipUserList() {
+                var that = this;
+                data = that.searchObject;
+                that.loading = true;
+                $.post("${siteurl}tenantRest/customer/search.htm", data, function (res) {
+                    if (res.code == 0) {
+                        console.log(res);
+                        that.vipUserDate = res;
+                    }
+                    setTimeout(() => {
+                        that.loading = false;
+                    }, 300)
+                });
+            },
+            jumpActivity(id) {
+                this.$emit('select-customer', id);
+                console.info(id);
+            },
+            clearData() {
+                this.searchObject.phone = "";
+                this.searchObject.name = "";
+            },
+            searchHandle() {
+                this.getVipUserList();
+            }
+        }
+    });
+</script>
+[/#macro]
+
+[#macro avatar]
+<style>
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        width: 64px;
+        height: 64px;
+    }
+
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+
+    .avatar-uploader input[type="file"] {
+        display: none;
+    }
+
+    .el-upload--picture-card {
+        background-color: #fbfdff;
+        border: 1px dashed #c0ccda;
+        border-radius: 6px;
+        box-sizing: border-box;
+        width: 64px;
+        height: 64px;
+        line-height: 64px;
+        vertical-align: top;
+    }
+
+    .el-upload--picture-card i {
+        font-size: 18px;
+    }
+
+    .el-upload--picture-card input {
+        display: none;
+    }
+
+    .el-upload-list--picture-card .el-upload-list__item {
+        overflow: hidden;
+        background-color: #fff;
+        border: 1px solid #c0ccda;
+        border-radius: 6px;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        width: 64px;
+        height: 64px;
+        margin: 0 8px 8px 0;
+        display: inline-block;
+    }
+
+    .el-upload-list--picture-card .el-upload-list__item-actions span+span {
+        margin-left: 10px;
+    }
+
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+
+    .avatar-uploader-icon {
+        font-size: 20px;
+        color: #8c939d;
+        width: 100%;
+        height: 100%;
+        line-height: 62px;
+        text-align: center;
+    }
+
+    .avatar {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    .el-card__body img {
+        width: 100%;
+    }
+
+    .el-card {
+        margin: 10px 0px;
+    }
+
+    .card {
+        position: relative;
+    }
+
+    .card:hover .state {
+        display: flex;
+
+    }
+
+    .card .state {
+        display: none;
+        flex-direction: row;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, .5);
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        justify-content: center;
+        align-items: flex-end;
+        padding-bottom: 10px;
+    }
+</style>
+<script type="text/x-template" id="my-avatar">
+    <el-upload action="${uploadUrl!}" :show-file-list="false"
+    :on-success="uploadSuccess" list-type="picture-card">
+    <img v-if="src" :src="src" class="avatar">
+    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+    </el-upload>
+</script>
+
+
+<script>
+    Vue.component('avatar', {
+        template: '#my-avatar',
+        props: ['value'],
+        data: function () {
+            return {
+                src: "",
+                loading: false
+            }
+        },
+        mounted: function () {
+            console.info(this.value);
+            console.info("init");
+            this.src = this.value;
+        },
+        watch: {
+            value: function (val) {
+                this.src = val;
+            }
+        },
+        methods: {
+            uploadSuccess(res, fileData) {
+                this.src = res.url;
+                this.$emit('input', res.url);
+            }
+        }
+    });
+</script>
+[/#macro]
+
+
+
+[#macro nbSelect]
+<style>
+
+</style>
+<script type="text/x-template" id="my-nb-select">
+    <el-select style="width:100%;" clearable filterable  @change="changeData" v-model="selectValue" placeholder="请选择">
+        <el-option
+          v-for="item in options"
+          :key="item.name"
+          :label="item.name"
+          :value="item.name">
+        </el-option>
+      </el-select>
+</script>
+
+
+<script>
+    Vue.component('nb-select', {
+        template: '#my-nb-select',
+        props: ['value', "catalog"],
+        data: function () {
+            return {
+                selectValue: "",
+                loading: false,
+                options: []
+            }
+        },
+        mounted: function () {
+            console.info("init");
+            this.loadDatas();
+            this.selectValue = this.value;
+        },
+        watch: {
+            value: function (val) {
+                this.selectValue = val;
+            }
+        },
+        methods: {
+            loadDatas() {
+                var self = this;
+                var param = {};
+                param.key = this.catalog;
+                $.post("${siteurl}tenantRest/tenantdictionaryitem/list.htm", param, function (res) {
+                    if (res.code == 0) {
+                        self.options = res.list;
+                    }
+                });
+            },
+            changeData(value) {
+                console.info(value);
+                this.$emit('input', value);
+            }
+        }
+    });
+</script>
+[/#macro]
+
+[#macro nbMap]
+<script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=PYWBZ-QHE3I-L7WGT-5THCC-KOPH7-Y6FSC"></script>
+<script type="text/x-template" id="my-nb-map">
+    <div id="map" style="height: 300px;"></div>
+</script>
+<script>
+    Vue.component('nb-map', {
+        template: '#my-nb-map',
+        props: ['lat', "lng", "zoom", "showOnly"],
+        data: function () {
+            return {
+                selectValue: "",
+                loading: false,
+                options: []
+            }
+        },
+        mounted: function () {
+            console.info("init map");
+            if (this.lat) {
+                this.initMap(this.lat, this.lng);
+            } else {
+                this.initMap();
+            }
+
+        },
+        watch: {
+            lat: function (val) {
+                console.info("lat:" + this.lat)
+                this.initMap(this.lat, this.lng)
+            }
+        },
+        methods: {
+            loadDatas() {
+            },
+            changeData(value) {
+                console.info(value);
+                this.$emit('poi-change', value);
+            },
+            initMap(lat, lng) {
+                var tempZoom = this.zoom;
+                if (tempZoom == null || tempZoom == undefined) {
+                    tempZoom = 20;
+                } else {
+                    tempZoom = parseInt(tempZoom);
+                }
+                console.log("初始化地图");
+                var center = new qq.maps.LatLng(33.044998, 107.027);
+                if (lat != null && lng != null) {
+                    center = new qq.maps.LatLng(lat, lng);
+                }
+                map = new qq.maps.Map(document.getElementById('map'), {
+                    center: center,
+                    zoom: tempZoom
+                });
+                //获取城市列表接口设置中心点
+                citylocation = new qq.maps.CityService({
+                    complete: function (result) {
+                        map.setCenter(result.detail.latLng);
+                    }
+                });
+                //调用searchLocalCity();方法    根据用户IP查询城市信息。
+                //citylocation.searchLocalCity();
+                var self = this;
+
+                qq.maps.event.addListener(
+                    map,
+                    'click',
+                    function (event) {
+                        var lat = event.latLng.getLat();
+                        var lng = event.latLng.getLng();
+                        var showOnly = self.showOnly;
+                        if(showOnly==undefined||showOnly==null){
+                            showOnly=false;
+                        }
+                        if(showOnly){
+                            return;
+                        }
+
+                        console.info(self);
+                        if (self) {
+                            var tempEvent = {};
+                            tempEvent.lat = lat;
+                            tempEvent.lng = lng;
+                            self.$emit('poi-change', tempEvent);
+                        }
+
+                        if (marker != null) {
+                            marker.setMap(null);
+                        }
+                        center = new qq.maps.LatLng(event.latLng.getLat(), event.latLng.getLng());
+                        marker = new qq.maps.Marker({
+                            position: center,
+                            map: map
+                        });
+
+                    }
+                );
+                //创建标记
+                marker = new qq.maps.Marker({
+                    position: center,
+                    map: map
+                });
+            },
+            updatePoi(event) {
+                console.info("updatePoi:" + event);
+            }
+        }
+    });
+</script>
+[/#macro]
