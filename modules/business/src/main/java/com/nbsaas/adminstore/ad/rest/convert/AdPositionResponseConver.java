@@ -1,4 +1,4 @@
-package com.nbsaas.adminstore.ad.rest.conver;
+package com.nbsaas.adminstore.ad.rest.convert;
 
 import com.nbsaas.adminstore.ad.api.domain.response.AdPositionResponse;
 import com.nbsaas.adminstore.ad.data.entity.AdPosition;
