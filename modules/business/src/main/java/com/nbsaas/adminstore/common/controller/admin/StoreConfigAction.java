@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 
 import org.springframework.context.annotation.Scope;
-import com.haoxuer.discover.web.base.BaseAction;
+import com.haoxuer.discover.controller.BaseAction;
 /**
 *
 * Created by imake on 2021年04月24日18:10:25.

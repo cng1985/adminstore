@@ -16,7 +16,7 @@ import com.nbsaas.adminstore.shop.api.apis.ShopApi;
 import com.nbsaas.adminstore.shop.api.domain.page.ShopPage;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.context.annotation.Scope;
-import com.haoxuer.discover.web.base.BaseAction;
+import com.haoxuer.discover.controller.BaseAction;
 /**
 *
 * Created by imake on 2021年01月23日16:17:59.

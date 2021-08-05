@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
-import com.haoxuer.discover.web.base.BaseAction;
+import com.haoxuer.discover.controller.BaseAction;
 
 /**
 * Created by imake on 2020年11月04日20:16:48.

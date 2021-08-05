@@ -16,7 +16,7 @@ import com.nbsaas.adminstore.ad.data.entity.AdPosition;
 import com.nbsaas.adminstore.ad.data.service.AdPositionService;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.context.annotation.Scope;
-import com.haoxuer.discover.web.base.BaseAction;
+import com.haoxuer.discover.controller.BaseAction;
 /**
 *
 * Created by imake on 2020年11月06日23:22:43.

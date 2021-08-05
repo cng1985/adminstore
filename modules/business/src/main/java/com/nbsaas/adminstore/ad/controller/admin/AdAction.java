@@ -1,5 +1,6 @@
 package com.nbsaas.adminstore.ad.controller.admin;
 
+import com.haoxuer.discover.controller.BaseAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import com.nbsaas.adminstore.ad.data.entity.Ad;
 import com.nbsaas.adminstore.ad.data.service.AdService;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.context.annotation.Scope;
-import com.haoxuer.discover.web.base.BaseAction;
 /**
 *
 * Created by imake on 2020年11月06日23:28:28.
@@ -25,7 +25,7 @@ import com.haoxuer.discover.web.base.BaseAction;
 
 @Scope("prototype")
 @Controller
-public class AdAction extends BaseAction{
+public class AdAction extends BaseAction {
 
 	public static final String MODEL = "model";
 

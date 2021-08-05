@@ -16,7 +16,7 @@ import com.nbsaas.adminstore.article.data.entity.Article;
 import com.nbsaas.adminstore.article.data.service.ArticleService;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.context.annotation.Scope;
-import com.haoxuer.discover.web.base.BaseAction;
+import com.haoxuer.discover.controller.BaseAction;
 /**
 *
 * Created by imake on 2020年11月04日20:17:53.
