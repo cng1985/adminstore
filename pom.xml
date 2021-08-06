@@ -22,11 +22,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <discover.version>3.3.8-20210622</discover.version>
+        <discover.version>3.3.9-20210805</discover.version>
         <jodd.version>5.1.4</jodd.version>
         <base.version>1.01</base.version>
         <mybatis.version>3.5.1</mybatis.version>
-        <code-make.version>1.0.7</code-make.version>
+        <code-make.version>1.0.8</code-make.version>
     </properties>
     <dependencies>
         <dependency>
