@@ -15,7 +15,7 @@
     <repositories>
         <repository>
             <id>aliyun</id>
-            <url>http://maven.aliyun.com/nexus/content/repositories/central/</url>
+            <url>https://maven.aliyun.com/repository/public</url>
         </repository>
     </repositories>
     <properties>
