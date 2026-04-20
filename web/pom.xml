@@ -23,6 +23,11 @@
             <version>1.01</version>
         </dependency>
         <dependency>
+            <groupId>com.haoxuer.adminstore</groupId>
+            <artifactId>ai</artifactId>
+            <version>1.01</version>
+        </dependency>
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
